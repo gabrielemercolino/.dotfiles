@@ -4,6 +4,7 @@
   imports = [
 	./sh.nix
 	./git.nix
+	./hyprland.nix
   ];  
 
 
