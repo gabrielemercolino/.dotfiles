@@ -17,17 +17,17 @@
 	};
 
 	wayland.windowManager.hyprland.settings = {
-	    "$mainMod" = "SUPER";
+	    "$mod" = "SUPER";
 	    bind =
 	      [
-	        "$mainMod, RETURN, exec, kitty"
-		"$mainMod, Q, killactive," 
-		"$mainMod, M, exit, "
-		"$mainMod, E, exec, dolphin"
-		"$mainMod, V, togglefloating, "
-		"$mainMod, R, exec, rofi -show drun"
-		"$mainMod, P, pseudo, # dwindle"
-		"$mainMod, J, togglesplit," # dwindle
+	        "$mod, RETURN, exec, kitty"
+		"$mod, Q, killactive," 
+		"$mod, M, exit, "
+		"$mod, E, exec, dolphin"
+		"$mod, V, togglefloating, "
+		"$mod, R, exec, rofi -show drun"
+		"$mod, P, pseudo, # dwindle"
+		"$mod, J, togglesplit," # dwindle
 	      ]
 	      ++ (
 	        # workspaces
