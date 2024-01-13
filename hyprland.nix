@@ -16,7 +16,7 @@
 			
 			    touchpad {
 			        natural_scroll = "no";
-			    }
+			    };
 			
 			    sensitivity = 0;
 			};
