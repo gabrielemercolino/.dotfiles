@@ -2,9 +2,9 @@
 
 {
   imports = [
-	../../user/sh.nix
+	../../user/shell/config.nix
 	../../user/git.nix
-	 (./. + ("../../user/"+userSettings.windowManager)+".nix")
+	 (./. + ("../../../user/"+userSettings.windowManager)+".nix")
 	#./hyprland.nix
   ];  
 
