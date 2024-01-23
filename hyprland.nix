@@ -149,7 +149,7 @@ misc {
 	home.packages = with pkgs; [
 		kitty
 		rofi
-		firefox
 		nerdfonts
+		google-chrome
 	];
 }

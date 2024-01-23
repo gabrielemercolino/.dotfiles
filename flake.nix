@@ -12,6 +12,12 @@
 		lib = nixpkgs.lib;
 		system = "x86_64-linux";
 		pkgs = nixpkgs.legacyPackages.${system};
+		systemSettings = rec {
+			profile = "work";
+		};
+		userSettings = rec {
+			windowManager = "hyprland";
+		};
 	in {
 		nixosConfigurations = {
 			nixos = lib.nixosSystem {
@@ -23,7 +29,11 @@
 		homeConfigurations = {
 			gabriele = home-manager.lib.homeManagerConfiguration {
 				inherit pkgs;
-				modules = [ ./home.nix ];
+				#modules = [ ./home.nix ];
+				modules = [  (./. + "/profiles"+("/"+systemSettings.profile)+"/home.nix") ];
+				extraSpecialArgs = {
+					inherit userSettings;
+				};
 			};
 		};	
 	};
