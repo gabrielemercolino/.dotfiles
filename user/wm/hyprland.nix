@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, userSettings,... }:
 
 {
 	wayland.windowManager.hyprland = {
@@ -18,16 +18,17 @@
 
 	wayland.windowManager.hyprland.settings = {
 	    "$mainMod" = "SUPER";
+			"$terminal" = userSettings.terminal;
 	    bind =
 	      [
-	        "$mainMod, RETURN, exec, kitty"
-		"$mainMod, Q, killactive," 
-		"$mainMod, M, exit, "
-		"$mainMod, E, exec, dolphin"
-		"$mainMod, V, togglefloating, "
-		"$mainMod, R, exec, rofi -show drun"
-		"$mainMod, P, pseudo, # dwindle"
-		"$mainMod, J, togglesplit," # dwindle
+	        "$mainMod, RETURN, exec, $terminal"
+					"$mainMod, Q, killactive," 
+					"$mainMod, M, exit, "
+					"$mainMod, E, exec, dolphin"
+					"$mainMod, V, togglefloating, "
+					"$mainMod, R, exec, ${pkgs.rofi}/bin/rofi -show drun"
+					"$mainMod, P, pseudo, # dwindle"
+					"$mainMod, J, togglesplit,"
 	      ]
 	      ++ (
 	        # workspaces
@@ -147,9 +148,6 @@ misc {
 	'';
 
 	home.packages = with pkgs; [
-		kitty
-		rofi
 		nerdfonts
-		google-chrome
 	];
 }

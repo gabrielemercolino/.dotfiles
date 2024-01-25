@@ -2,10 +2,11 @@
 
 {
   imports = [
-	../../user/shell/config.nix
-	../../user/git.nix
-	 (./. + ("../../../user/"+userSettings.windowManager)+".nix")
-	#./hyprland.nix
+	../../user/sh.nix
+  ../../user/git.nix
+	(./. + ("../../../user/wm/"+userSettings.windowManager)+".nix")
+	(./. + ("../../../user/apps/browsers/"+userSettings.browser)+".nix")
+	(./. + ("../../../user/apps/terminal/"+userSettings.terminal)+".nix")
   ];  
 
   nixpkgs.config.allowUnfree = true;

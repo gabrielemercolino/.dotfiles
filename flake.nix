@@ -17,6 +17,8 @@
 		};
 		userSettings = rec {
 			windowManager = "hyprland";
+			browser = "chrome";
+			terminal = "kitty";
 		};
 	in {
 		nixosConfigurations = {
