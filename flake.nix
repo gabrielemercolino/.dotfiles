@@ -19,6 +19,7 @@
 			windowManager = "hyprland";
 			browser = "chrome";
 			terminal = "kitty";
+			font = "nerd";
 		};
 	in {
 		nixosConfigurations = {
@@ -35,6 +36,7 @@
 				modules = [  (./. + "/profiles"+("/"+systemSettings.profile)+"/home.nix") ];
 				extraSpecialArgs = {
 					inherit userSettings;
+					inherit systemSettings;
 				};
 			};
 		};	
