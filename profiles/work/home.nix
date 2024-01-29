@@ -2,8 +2,8 @@
 
 {
   imports = [
-	../../user/sh.nix
-  ../../user/git.nix
+	../../user/shell/sh.nix
+  ../../user/shell/git.nix
 	(./. + ("../../../user/wm/"+userSettings.windowManager)+".nix")
 	(./. + ("../../../user/apps/browsers/"+userSettings.browser)+".nix")
 	(./. + ("../../../user/apps/terminal/"+userSettings.terminal)+".nix")
