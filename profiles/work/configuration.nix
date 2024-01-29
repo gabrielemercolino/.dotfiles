@@ -1,13 +1,9 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, ... }:
 
 {
   imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
+    [
+      ../../system/hardware-configuration.nix
     ];
 
   # Bootloader.
@@ -27,6 +23,7 @@
   # Set your time zone.
   time.timeZone = "Europe/Rome";
   time.hardwareClockInLocalTime = true;
+  
   # Select internationalisation properties.
   i18n.defaultLocale = "it_IT.UTF-8";
 
