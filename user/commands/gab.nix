@@ -4,7 +4,7 @@ let
   gabScript = ''
     set -e
 
-    STARTING_DIR = $(pwd)
+    STARTING_DIR=$(pwd)
 
     function nixos_update {
       sudo nixos-rebuild switch --flake .#system
