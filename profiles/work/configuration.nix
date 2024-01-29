@@ -64,15 +64,7 @@
   nixpkgs.config.allowUnfreePredicate = (_ : true);
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    vim
-    wget
-    curl
-    git
-    gcc
-    neofetch
-    htop
-  ];
+  environment.systemPackages = with pkgs; [];
 
   # default shell: zsh
   environment.shells = with pkgs; [zsh];
