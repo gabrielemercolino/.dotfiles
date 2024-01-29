@@ -1,7 +1,7 @@
 ## Install home-manager:
 
 ```sh
-sudo nixos-generate-config --show-hardware-config >> ./hardware-configuration.nix
+sudo nixos-generate-config --show-hardware-config >> ./system/hardware-configuration.nix
 ```
 
 ```sh
