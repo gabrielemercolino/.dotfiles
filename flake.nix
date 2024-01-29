@@ -12,25 +12,28 @@
 		lib = nixpkgs.lib;
 		system = "x86_64-linux";
 		pkgs = nixpkgs.legacyPackages.${system};
+		
 		systemSettings = rec {
 			profile = "work";
 		};
+
 		userSettings = rec {
 			windowManager = "hyprland";
 			browser = "chrome";
 			terminal = "kitty";
 			font = "nerd";
 		};
+
 	in {
 		nixosConfigurations = {
-			nixos = lib.nixosSystem {
+			system = lib.nixosSystem {
 				inherit system;
-				modules = [ ./configuration.nix ];
+				modules = [ (./. + "/profiles"+("/"+systemSettings.profile)+"/configuration.nix") ];
 			};
 		};
 		
 		homeConfigurations = {
-			gabriele = home-manager.lib.homeManagerConfiguration {
+			user = home-manager.lib.homeManagerConfiguration {
 				inherit pkgs;
 				#modules = [ ./home.nix ];
 				modules = [  (./. + "/profiles"+("/"+systemSettings.profile)+"/home.nix") ];

@@ -2,8 +2,8 @@
 let
 	myShellAliases =  {
 		ll = "ls -l";
-		niu = "sudo nixos-rebuild switch --flake ~/.dotfiles/";
-		hmu = "home-manager switch --flake ~/.dotfiles/";
+		niu = "cd ~/.dotfiles && sudo nixos-rebuild switch --flake .#system";
+		hmu = "cd ~/.dotfiles && home-manager switch --flake .#user";
   	};
 in
 
