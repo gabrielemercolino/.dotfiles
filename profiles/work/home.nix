@@ -4,6 +4,7 @@
   imports = [
 	../../user/shell/sh.nix
   ../../user/shell/git.nix
+  ../../user/commands/gab.nix
 	(./. + ("../../../user/wm/"+userSettings.windowManager)+".nix")
 	(./. + ("../../../user/apps/browsers/"+userSettings.browser)+".nix")
 	(./. + ("../../../user/apps/terminal/"+userSettings.terminal)+".nix")
