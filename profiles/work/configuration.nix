@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, userSettings, systemSettings, ... }:
 
 {
   imports =
@@ -21,22 +21,22 @@
   networking.networkmanager.enable = true;
 
   # Set your time zone.
-  time.timeZone = "Europe/Rome";
+  time.timeZone = systemSettings.timeZone;
   time.hardwareClockInLocalTime = true;
   
   # Select internationalisation properties.
-  i18n.defaultLocale = "it_IT.UTF-8";
+  i18n.defaultLocale = systemSettings.locale;
 
   i18n.extraLocaleSettings = {
-    LC_ADDRESS = "it_IT.UTF-8";
-    LC_IDENTIFICATION = "it_IT.UTF-8";
-    LC_MEASUREMENT = "it_IT.UTF-8";
-    LC_MONETARY = "it_IT.UTF-8";
-    LC_NAME = "it_IT.UTF-8";
-    LC_NUMERIC = "it_IT.UTF-8";
-    LC_PAPER = "it_IT.UTF-8";
-    LC_TELEPHONE = "it_IT.UTF-8";
-    LC_TIME = "it_IT.UTF-8";
+    LC_ADDRESS = systemSettings.locale;
+    LC_IDENTIFICATION = systemSettings.locale;
+    LC_MEASUREMENT = systemSettings.locale;
+    LC_MONETARY = systemSettings.locale;
+    LC_NAME = systemSettings.locale;
+    LC_NUMERIC = systemSettings.locale;
+    LC_PAPER = systemSettings.locale;
+    LC_TELEPHONE = systemSettings.locale;
+    LC_TIME = systemSettings.locale;
   };
 
   # Configure keymap in X11
@@ -49,15 +49,15 @@
   console.keyMap = "it";
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.gabriele = {
+  users.users.${userSettings.userName} = {
     isNormalUser = true;
-    description = "Gabriele";
+    description = userSettings.name;
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [];
   };
 
   # Enable automatic login for the user.
-  services.getty.autologinUser = "gabriele";
+  services.getty.autologinUser = userSettings.userName;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
