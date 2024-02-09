@@ -15,10 +15,14 @@
 		
 		systemSettings = rec {
 			profile = "personal";
+
+			timeZone = "Europe/Rome";
+			locale = "it_IT.UTF-8";
 		};
 
 		userSettings = rec {
 			userName = "gabriele";
+			name = "Gabriele";
 
 			wm = "hyprland";
 			browser = "chrome";
@@ -31,13 +35,16 @@
 			system = lib.nixosSystem {
 				inherit system;
 				modules = [ (./. + "/profiles"+("/"+systemSettings.profile)+"/configuration.nix") ];
+				specialArgs = {
+					inherit userSettings;
+					inherit systemSettings;
+				};
 			};
 		};
 		
 		homeConfigurations = {
 			user = home-manager.lib.homeManagerConfiguration {
 				inherit pkgs;
-				#modules = [ ./home.nix ];
 				modules = [  (./. + "/profiles"+("/"+systemSettings.profile)+"/home.nix") ];
 				extraSpecialArgs = {
 					inherit userSettings;
