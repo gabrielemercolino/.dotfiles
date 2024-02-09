@@ -5,7 +5,7 @@
 	../../user/shell/sh.nix
   ../../user/shell/git.nix
   ../../user/commands/gab.nix
-	(./. + ("../../../user/wm/"+userSettings.windowManager)+".nix")
+	(./. + ("../../../user/wm/"+userSettings.wm+"/"+userSettings.wm)+".nix")
 	(./. + ("../../../user/apps/browsers/"+userSettings.browser)+".nix")
 	(./. + ("../../../user/apps/terminal/"+userSettings.terminal)+".nix")
 	(./. + ("../../../user/fonts/"+userSettings.font)+".nix")
@@ -16,8 +16,8 @@
 
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home.username = "gabriele";
-  home.homeDirectory = "/home/gabriele";
+  home.username = userSettings.userName;
+  home.homeDirectory = "/home/${userSettings.userName}";
   
   home.stateVersion = "23.11";
 

@@ -14,11 +14,13 @@
 		pkgs = nixpkgs.legacyPackages.${system};
 		
 		systemSettings = rec {
-			profile = "work";
+			profile = "personal";
 		};
 
 		userSettings = rec {
-			windowManager = "hyprland";
+			userName = "gabriele";
+
+			wm = "hyprland";
 			browser = "chrome";
 			terminal = "kitty";
 			font = "nerd";
