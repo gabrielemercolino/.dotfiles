@@ -4,6 +4,7 @@
   imports =
     [
       ../../system/hardware-configuration.nix
+      (./. + ("../../../system/fonts/"+userSettings.font)+".nix")
     ];
 
   # Bootloader.

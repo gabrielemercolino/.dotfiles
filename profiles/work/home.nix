@@ -8,7 +8,6 @@
 	(./. + ("../../../user/wm/"+userSettings.wm+"/"+userSettings.wm)+".nix")
 	(./. + ("../../../user/apps/browsers/"+userSettings.browser)+".nix")
 	(./. + ("../../../user/apps/terminal/"+userSettings.terminal)+".nix")
-	(./. + ("../../../user/fonts/"+userSettings.font)+".nix")
   ];  
 
   nixpkgs.config.allowUnfree = true;
