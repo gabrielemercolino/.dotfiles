@@ -1,4 +1,4 @@
-{ pkgs, userSettings, ... }:
+{ pkgs, userSettings, systemSettings, ... }:
 
 let
   gabScript = ''
@@ -53,7 +53,7 @@ let
       homemanager_update
     }
 
-    cd ~/.dotfiles
+    cd ${systemSettings.dotfiles}
 
     case $OPERATION in
 

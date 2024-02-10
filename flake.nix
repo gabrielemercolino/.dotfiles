@@ -10,10 +10,11 @@
 	outputs = { self, nixpkgs, home-manager, ... } : 
 	let
 		lib = nixpkgs.lib;
-		system = "x86_64-linux";
 		pkgs = nixpkgs.legacyPackages.${system};
 		
 		systemSettings = rec {
+			system = "x86_64-linux";
+			dotfiles = "~/.dotfiles";
 			profile = "personal";
 
 			timeZone = "Europe/Rome";
@@ -33,7 +34,7 @@
 	in {
 		nixosConfigurations = {
 			system = lib.nixosSystem {
-				inherit system;
+				system = systemSettings.system;
 				modules = [ (./. + "/profiles"+("/"+systemSettings.profile)+"/configuration.nix") ];
 				specialArgs = {
 					inherit userSettings;
