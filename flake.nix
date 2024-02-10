@@ -10,7 +10,7 @@
 	outputs = { self, nixpkgs, home-manager, ... } : 
 	let
 		lib = nixpkgs.lib;
-		pkgs = nixpkgs.legacyPackages.${system};
+		pkgs = nixpkgs.legacyPackages.${systemSettings.system};
 		
 		systemSettings = rec {
 			system = "x86_64-linux";
