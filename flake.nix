@@ -14,8 +14,12 @@
 		
 		systemSettings = rec {
 			system = "x86_64-linux";
+			hostName = "nixos";
+
 			dotfiles = "~/.dotfiles";
 			profile = "personal";
+
+			keyLayout = "it";
 
 			timeZone = "Europe/Rome";
 			locale = "it_IT.UTF-8";

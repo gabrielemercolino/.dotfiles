@@ -11,7 +11,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = systemSettings.hostName; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -23,7 +23,7 @@
 
   # Set your time zone.
   time.timeZone = systemSettings.timeZone;
-  time.hardwareClockInLocalTime = true;
+  time.hardwareClockInLocalTime = true; # In case you use dual boot with windows
   
   # Select internationalisation properties.
   i18n.defaultLocale = systemSettings.locale;
@@ -42,12 +42,12 @@
 
   # Configure keymap in X11
   services.xserver = {
-    layout = "it";
+    layout = systemSettings.keyLayout;
     xkbVariant = "";
   };
 
   # Configure console keymap
-  console.keyMap = "it";
+  console.keyMap = systemSettings.keyLayout;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${userSettings.userName} = {
