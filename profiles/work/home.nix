@@ -7,7 +7,7 @@
 	(./. + ("../../../user/wm/"+userSettings.wm)+"/config.nix")
 	(./. + ("../../../user/apps/browsers/"+userSettings.browser)+".nix")
 	(./. + ("../../../user/apps/terminal/"+userSettings.terminal)+".nix")
-  ../../../user/apps/git/config.nix
+  ../../user/apps/git/config.nix
   ];  
 
   nixpkgs.config.allowUnfree = true;
