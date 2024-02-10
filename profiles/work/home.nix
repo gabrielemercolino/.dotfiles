@@ -3,11 +3,11 @@
 {
   imports = [
 	../../user/shell/sh.nix
-  ../../user/shell/git.nix
   ../../user/commands/gab.nix
-	(./. + ("../../../user/wm/"+userSettings.wm+"/"+userSettings.wm)+".nix")
+	(./. + ("../../../user/wm/"+userSettings.wm)+"/config.nix")
 	(./. + ("../../../user/apps/browsers/"+userSettings.browser)+".nix")
 	(./. + ("../../../user/apps/terminal/"+userSettings.terminal)+".nix")
+  ../../../user/apps/git/config.nix
   ];  
 
   nixpkgs.config.allowUnfree = true;
