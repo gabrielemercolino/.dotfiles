@@ -4,7 +4,9 @@
   imports =
     [
       ../../system/hardware-configuration.nix
-      (./. + ("../../../system/fonts/"+userSettings.font)+".nix")
+      ../../system/hardware/opengl.nix
+      (./. + "../../../system/fonts"+("/"+userSettings.font)+".nix")
+      (./. + "../../../system/wm"+("/"+userSettings.wm)+".nix")
     ];
 
   # Bootloader.
@@ -40,12 +42,6 @@
     LC_TIME = systemSettings.locale;
   };
 
-  # Configure keymap in X11
-  services.xserver = {
-    layout = systemSettings.keyLayout;
-    xkbVariant = "";
-  };
-
   # Configure console keymap
   console.keyMap = systemSettings.keyLayout;
 
@@ -63,10 +59,7 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowUnfreePredicate = (_ : true);
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [];
-
+  
   # default shell: zsh
   environment.shells = with pkgs; [zsh];
   users.defaultUserShell = pkgs.zsh;
@@ -84,8 +77,6 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
-
-  hardware.opengl.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
