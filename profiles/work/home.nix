@@ -8,11 +8,17 @@
 	(./. + ("../../../user/apps/browsers/"+userSettings.browser)+".nix")
 	(./. + ("../../../user/apps/terminal/"+userSettings.terminal)+".nix")
   ../../user/apps/git/config.nix
+  ../../user/apps/editors/sublime.nix
+  ../../user/languages/config.nix
   ];  
 
-  nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.allowUnfreePredicate = (pkg: true);
-
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowUnfreePredicate = (_ : true);
+    permittedInsecurePackages = [
+      "openssl-1.1.1w"
+    ];
+  };
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = userSettings.userName;

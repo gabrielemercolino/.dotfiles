@@ -57,8 +57,15 @@
   services.getty.autologinUser = userSettings.userName;
 
   # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.allowUnfreePredicate = (_ : true);
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowUnfreePredicate = (_ : true);
+    permittedInsecurePackages = [
+      "openssl-1.1.1w"
+    ];
+  };
+
+  environment.systemPackages = with pkgs; [ git ];
   
   # default shell: zsh
   environment.shells = with pkgs; [zsh];
