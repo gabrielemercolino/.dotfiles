@@ -16,6 +16,29 @@
 	    enableNvidiaPatches = true;
 	};
 
+	home.packages = with pkgs; [
+	    hyprland-protocols
+	    
+	    wtype
+	    wev
+	    wlr-randr
+	    wl-clipboard
+	    
+	    libva-utils
+	    
+	    libsForQt5.qt5.qtwayland
+	    qt6.qtwayland
+	    
+	    xdg-utils
+	    xdg-desktop-portal
+	    xdg-desktop-portal-gtk
+	    xdg-desktop-portal-hyprland
+  	];
+
+  	programs.waybar = {
+    	enable = true;
+    };
+
 	wayland.windowManager.hyprland.settings = {
 	    "$mainMod" = "SUPER";
 			"$terminal" = userSettings.terminal;
