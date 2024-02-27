@@ -2,7 +2,7 @@
 
 {
 	imports = [
-		./clang.nix
+		#./clang.nix
 		./gcc.nix
 		./meson.nix
 
