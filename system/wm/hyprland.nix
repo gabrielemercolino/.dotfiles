@@ -3,6 +3,8 @@
 {
 	imports = [
     ./wayland.nix
+    ./dbus.nix
+    ./pulseaudio.nix
   ];
 
   programs = {
