@@ -3,12 +3,14 @@
 {
   imports = [
 	../../user/shell/sh.nix
+  ../../user/shell/utility.nix
   ../../user/commands/gab.nix
 	(./. + ("../../../user/wm/"+userSettings.wm)+"/config.nix")
 	(./. + ("../../../user/apps/browsers/"+userSettings.browser)+".nix")
 	(./. + ("../../../user/apps/terminal/"+userSettings.terminal)+".nix")
   ../../user/apps/git/config.nix
   ../../user/apps/editors/sublime.nix
+  ../../user/apps/editors/jetbrains.nix
   ../../user/languages/config.nix
   ];  
 

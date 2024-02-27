@@ -1,12 +1,11 @@
 { pkgs, ... }:
 
 {
-  home.packages = with pkg; [
-    vim # TODO: move out
+  home.packages = with pkgs; [
     wget
     curl
-    gcc
     neofetch
     htop
+    pavucontrol
   ];
 }
