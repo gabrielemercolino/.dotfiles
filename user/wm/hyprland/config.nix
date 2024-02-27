@@ -45,13 +45,13 @@
 	    bind =
 	      [
 	        "$mainMod, RETURN, exec, $terminal"
-					"$mainMod, Q, killactive," 
-					"$mainMod, M, exit, "
-					"$mainMod, E, exec, dolphin"
-					"$mainMod, V, togglefloating, "
-					"$mainMod, R, exec, ${pkgs.rofi}/bin/rofi -show drun"
-					"$mainMod, P, pseudo, # dwindle"
-					"$mainMod, J, togglesplit,"
+			"$mainMod, Q, killactive," 
+			"$mainMod, M, exit, "
+			"$mainMod, E, exec, dolphin"
+			"$mainMod, V, togglefloating, "
+			"$mainMod, R, exec, ${pkgs.rofi}/bin/rofi -show drun"
+			"$mainMod, P, pseudo, # dwindle"
+			"$mainMod, J, togglesplit,"
 	      ]
 	      ++ (
 	        # workspaces
@@ -77,6 +77,8 @@ monitor=,highres,auto,1
 
 # Some default env vars.
 env = XCURSOR_SIZE,24
+
+exec-once = ${pkgs.waybar}/bin/waybar
 
 # For all categories, see https://wiki.hyprland.org/Configuring/Variables/
 input {
