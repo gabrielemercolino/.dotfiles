@@ -2,8 +2,7 @@
 
 {
 	imports = [
-		cpp/meson.nix
-		cpp/gcc.nix
-		java/jdk.nix
+		cpp/cpp.nix
+		java/java.nix
 	];
 }
