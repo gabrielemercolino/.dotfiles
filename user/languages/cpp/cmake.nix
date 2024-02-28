@@ -2,6 +2,6 @@
 
 {
 	home.packages = with pkgs; [
-		SDL2
+		cmake
 	];
 }
