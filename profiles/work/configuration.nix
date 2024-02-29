@@ -10,6 +10,11 @@
       (./. + "../../../system/wm"+("/"+userSettings.wm)+".nix")
     ];
 
+  services.logind.extraConfig = ''
+    # don’t shutdown when power button is short-pressed
+    HandlePowerKey=ignore
+  '';
+
   networking.hostName = systemSettings.hostName; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
