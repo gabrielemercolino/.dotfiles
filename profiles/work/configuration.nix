@@ -4,7 +4,7 @@
   imports =
     [
       ../../system/hardware-configuration.nix
-      ../../system/bootloader.nix
+      ../../system/hardware/bootloader.nix
       ../../system/hardware/opengl.nix
       (./. + "../../../system/fonts"+("/"+userSettings.font)+".nix")
       (./. + "../../../system/wm"+("/"+userSettings.wm)+".nix")
