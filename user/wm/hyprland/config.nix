@@ -1,77 +1,96 @@
-{ config, pkgs, userSettings,... }:
+{ config, pkgs, userSettings, systemSettings, ... }:
 
 {
-	wayland.windowManager.hyprland = {
-	    # Whether to enable Hyprland wayland compositor
-	    enable = true;
-	    # The hyprland package to use
-	    package = pkgs.hyprland;
-	    # Whether to enable XWayland
-	    xwayland.enable = true;		
-	
-	    # Optional
-	    # Whether to enable hyprland-session.target on hyprland startup
-	    systemd.enable = true;
-	    # Whether to enable patching wlroots for better Nvidia support
-	    enableNvidiaPatches = true;
-	};
-
-	home.packages = with pkgs; [
-	    hyprland-protocols
-	    
-	    wtype
-	    wev
-	    wlr-randr
-	    wl-clipboard
-	    
-	    libva-utils
-	    
-	    libsForQt5.qt5.qtwayland
-	    qt6.qtwayland
-	    
-	    xdg-utils
-	    xdg-desktop-portal
-	    xdg-desktop-portal-gtk
-	    xdg-desktop-portal-hyprland
-  	];
-
-  	programs.waybar = {
-    	enable = true;
+    wayland.windowManager.hyprland = {
+        # Whether to enable Hyprland wayland compositor
+        enable = true;
+        # The hyprland package to use
+        package = pkgs.hyprland;
+        # Whether to enable XWayland
+        xwayland.enable = true;		
+    
+        # Optional
+        # Whether to enable hyprland-session.target on hyprland startup
+        systemd.enable = true;
+        # Whether to enable patching wlroots for better Nvidia support
+        enableNvidiaPatches = true;
     };
 
-	wayland.windowManager.hyprland.settings = {
-	    "$mainMod" = "SUPER";
-			"$terminal" = userSettings.terminal;
-	    bind =
-	      [
-	        "$mainMod, RETURN, exec, $terminal"
-			"$mainMod, Q, killactive," 
-			"$mainMod, M, exit, "
-			"$mainMod, E, exec, dolphin"
-			"$mainMod, V, togglefloating, "
-			"$mainMod, R, exec, ${pkgs.rofi}/bin/rofi -show drun"
-			"$mainMod, P, pseudo, # dwindle"
-			"$mainMod, J, togglesplit,"
-	      ]
-	      ++ (
-	        # workspaces
-	        # binds $mod + [shift +] {1..10} to [move to] workspace {1..10}
-	        builtins.concatLists (builtins.genList (
-	            x: let
-	              ws = let
-	                c = (x + 1) / 10;
-	              in
-	                builtins.toString (x + 1 - (c * 10));
-	            in [
-	              "$mainMod, ${ws}, workspace, ${toString (x + 1)}"
-	              "$mainMod SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}"
-	            ]
-	          )
-	          10)
-	      );
-	  };
+    home.packages = with pkgs; [
+        hyprland-protocols
+        
+        wtype
+        wev
+        wlr-randr
+        wl-clipboard
+        
+        libva-utils
+        
+        libsForQt5.qt5.qtwayland
+        qt6.qtwayland
+        
+        xdg-utils
+        xdg-desktop-portal
+        xdg-desktop-portal-gtk
+        xdg-desktop-portal-hyprland
+    ];
 
-	wayland.windowManager.hyprland.extraConfig = ''
+    programs.waybar = {
+        enable = true;
+    };
+
+    wayland.windowManager.hyprland.settings = {
+        "$mainMod" = "SUPER";
+        "$terminal" = userSettings.terminal;
+        bindm = [
+            # Move/resize windows with mainMod + LMB/RMB and dragging
+            "$mainMod, mouse:272, movewindow"
+            "$mainMod, mouse:273, resizewindow"
+        ];
+        bind =
+        [
+            "$mainMod, RETURN, exec, $terminal"
+            "$mainMod, Q, killactive," 
+            "$mainMod, M, exit, "
+            "$mainMod, E, exec, dolphin"
+            "$mainMod, V, togglefloating, "
+            "$mainMod, R, exec, ${pkgs.rofi}/bin/rofi -show drun"
+            "$mainMod, P, pseudo, # dwindle"
+            "$mainMod, J, togglesplit,"
+
+            # Override power-off and reboot commands
+            "$mainMod SHIFT, R, exec, systemctl reboot"
+            "$mainMod SHIFT, P, exec, systemctl poweroff"
+
+            "$mainMod SHIFT, B, exec, ${pkgs.brightnessctl}/bin/brightnessctl set +5%"
+            "$mainMod SHIFT, N, exec, ${pkgs.brightnessctl}/bin/brightnessctl set 5%-"
+            " , XF86PowerOff, exec, "
+
+            # Move focus with mainMod + arrow keys
+            "$mainMod, left, movefocus, l"
+            "$mainMod, right, movefocus, r"
+            "$mainMod, up, movefocus, u"
+            "$mainMod, down, movefocus, d"
+        ]
+          ++ (
+            # workspaces
+            # binds $mod + [shift +] {1..10} to [move to] workspace {1..10}
+            builtins.concatLists (builtins.genList (
+                x: let
+                  ws = let
+                    c = (x + 1) / 10;
+                  in
+                    builtins.toString (x + 1 - (c * 10));
+                in [
+                  "$mainMod, ${ws}, workspace, ${toString (x + 1)}"
+                  "$mainMod SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}"
+                ]
+              )
+              10)
+          );
+      };
+
+    wayland.windowManager.hyprland.extraConfig = ''
 # See https://wiki.hyprland.org/Configuring/Monitors/
 monitor=,highres,auto,1
 
@@ -79,23 +98,6 @@ monitor=,highres,auto,1
 env = XCURSOR_SIZE,24
 
 exec-once = ${pkgs.waybar}/bin/waybar
-
-# For all categories, see https://wiki.hyprland.org/Configuring/Variables/
-input {
-    kb_layout = it
-    kb_variant =
-    kb_model =
-    kb_options =
-    kb_rules =
-
-    follow_mouse = 1
-
-    touchpad {
-        natural_scroll = no
-    }
-
-    sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
-}
 
 general {
     # See https://wiki.hyprland.org/Configuring/Variables/ for more
@@ -155,6 +157,23 @@ master {
     new_is_master = true
 }
 
+# For all categories, see https://wiki.hyprland.org/Configuring/Variables/
+input {
+    kb_layout = ${systemSettings.keyLayout}
+    kb_variant =
+    kb_model =
+    kb_options =
+    kb_rules =
+
+    follow_mouse = 1
+
+    touchpad {
+        natural_scroll = no
+    }
+
+    sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
+}
+
 gestures {
     # See https://wiki.hyprland.org/Configuring/Variables/ for more
     workspace_swipe = on
@@ -170,5 +189,5 @@ misc {
 # Example windowrule v2
 # windowrulev2 = float,class:^(kitty)$,title:^(kitty)$
 # See https://wiki.hyprland.org/Configuring/Window-Rules/ for more
-	'';
+    '';
 }
