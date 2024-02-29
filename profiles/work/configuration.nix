@@ -4,14 +4,11 @@
   imports =
     [
       ../../system/hardware-configuration.nix
+      ../../system/bootloader.nix
       ../../system/hardware/opengl.nix
       (./. + "../../../system/fonts"+("/"+userSettings.font)+".nix")
       (./. + "../../../system/wm"+("/"+userSettings.wm)+".nix")
     ];
-
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = systemSettings.hostName; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
