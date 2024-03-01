@@ -1,11 +1,12 @@
 { pkgs, userSettings, systemSettings, ... }:
 
 let
+  templateDevFlake = "${builtins.readFile ./templateDevFlake.nix}";
+
   gabScript = ''
     set -e
 
     STARTING_DIR=$(pwd)
-    ERROR="0"
     OPERATION=$1
     SPECIFICATION=$2
 
@@ -53,6 +54,12 @@ let
       homemanager_update
     }
 
+    function developCase {
+      cd $STARTING_DIR
+      touch flake.nix
+      echo '${templateDevFlake}' > flake.nix
+    }
+
     cd ${systemSettings.dotfiles}
 
     case $OPERATION in
@@ -65,16 +72,18 @@ let
       updateCase
       ;;
 
+      dev)
+      developCase
+      ;;
+
       *)
       echo "WTF"
-      ERROR="1"
+      exit 1
       ;;
 
     esac
 
     cd $STARTING_DIR
-
-    [[ $ERROR == "1" ]] && exit 1 || exit 0
   '';
 in
 {
