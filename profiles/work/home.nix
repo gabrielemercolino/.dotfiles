@@ -11,6 +11,7 @@
   ../../user/apps/git/config.nix
   ../../user/apps/editors/sublime.nix
   ../../user/apps/editors/jetbrains.nix
+  ../../user/apps/editors/neovim.nix
   ../../user/languages/config.nix
   ];  
 
