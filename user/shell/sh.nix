@@ -21,6 +21,6 @@ in
 			plugins = ["git" "sudo"];
 		};
 		syntaxHighlighting.enable = true;
-  };
+  	};
 
 }
