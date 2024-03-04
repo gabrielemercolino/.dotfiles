@@ -42,6 +42,8 @@
 			}
 
 			neodev-nvim
+
+			nvim-treesitter.withAllGrammars
     	];
 
     	extraLuaConfig = ''
