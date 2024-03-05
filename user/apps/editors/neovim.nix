@@ -5,7 +5,7 @@
 	let
     	toLua = str: "lua << EOF\n${str}\nEOF\n";
     	toLuaFile = file: "lua << EOF\n${builtins.readFile file}\nEOF\n";
-  	in
+  in
   	{
 		enable = true;
 
@@ -13,12 +13,12 @@
 		vimAlias = true;
 		vimdiffAlias = true;
 
-    	extraPackages = with pkgs; [
+		extraPackages = with pkgs; [
     		lua-language-server
-			rnix-lsp
+				rnix-lsp
   			xclip
-      		wl-clipboard
-    	];
+				wl-clipboard
+    ];
 
 		plugins = with pkgs.vimPlugins; [
 			{
@@ -31,9 +31,14 @@
 			#	config = "colorscheme gruvbox";
 			#}
 
+			#{
+			#	plugin = tokyonight-nvim;
+			#	config = "colorscheme tokyonight";
+			#}
+
 			{
-				plugin = tokyonight-nvim;
-				config = "colorscheme tokyonight";
+				plugin = monokai-pro-nvim; 
+				config = "colorscheme monokai-pro";
 			}
 
 			{
@@ -41,10 +46,20 @@
 				config = toLuaFile ./nvim/plugins/lualine.lua;
 			}
 
+      nvim-web-devicons
+
 			neodev-nvim
 
 			nvim-treesitter.withAllGrammars
-    	];
+
+			{
+				plugin = telescope-nvim;
+				config = toLuaFile ./nvim/plugins/telescope.lua;
+			}
+
+			telescope-fzf-native-nvim
+
+    ];
 
     	extraLuaConfig = ''
       		${builtins.readFile ./nvim/options.lua}
