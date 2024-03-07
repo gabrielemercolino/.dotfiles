@@ -59,6 +59,7 @@
 
 			telescope-fzf-native-nvim
 
+      neo-tree-nvim
     ];
 
     	extraLuaConfig = ''
