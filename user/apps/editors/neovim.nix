@@ -21,24 +21,26 @@
     ];
 
 		plugins = with pkgs.vimPlugins; [
+      todo-comments-nvim
+
+      gitsigns-nvim
+      diffview-nvim
+
 			{
 				plugin = comment-nvim;
 				config = toLua "require(\"Comment\").setup()";
 			}
 
-			#{
-			#	plugin = gruvbox-nvim;
-			#	config = "colorscheme gruvbox";
-			#}
+      {
+			#	plugin = monokai-pro-nvim; 
+			#	config = "colorscheme monokai-pro";
 
-			#{
-			#	plugin = tokyonight-nvim;
+      #	plugin = tokyonight-nvim;
 			#	config = "colorscheme tokyonight";
-			#}
 
-			{
-				plugin = monokai-pro-nvim; 
-				config = "colorscheme monokai-pro";
+      	plugin = gruvbox-nvim;
+				config = "colorscheme gruvbox";
+
 			}
 
 			{
@@ -46,24 +48,35 @@
 				config = toLuaFile ./nvim/plugins/lualine.lua;
 			}
 
-      nvim-web-devicons
+			nvim-web-devicons
 
 			neodev-nvim
 
-			nvim-treesitter.withAllGrammars
+      nvim-treesitter.withAllGrammars
+      nvim-treesitter-textobjects
+      nvim-treesitter-endwise
 
 			{
 				plugin = telescope-nvim;
 				config = toLuaFile ./nvim/plugins/telescope.lua;
 			}
 
-			telescope-fzf-native-nvim
+      telescope-symbols-nvim
+      telescope-fzf-native-nvim
+      
+      {
+        plugin = neo-tree-nvim;
+        config = toLuaFile ./nvim/plugins/neotree.lua;
+      }
 
-      neo-tree-nvim
+      {
+        plugin = which-key-nvim;
+        config = toLuaFile ./nvim/plugins/whichkey.lua;
+      }
     ];
 
-    	extraLuaConfig = ''
+    extraLuaConfig = ''
       		${builtins.readFile ./nvim/options.lua}
-    	'';
+    '';
 	};
 }
