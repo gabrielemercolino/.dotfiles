@@ -17,7 +17,7 @@
 			hostName = "nixos";
 
 			dotfiles = "~/.dotfiles";
-			profile = "personal";
+			profile = "work";
 
 			keyLayout = "it";
 
