@@ -1,8 +1,9 @@
 { config, pkgs, ... }:
 let
 	myShellAliases =  {
-		ll = "ls -l";
-		la = "ls -a";
+    ls = "eza --icons";
+		ll = "eza -l --icons";
+		la = "eza -la --icons";
   	};
 in
 
@@ -21,6 +22,7 @@ in
 			plugins = ["git" "sudo"];
 		};
 		syntaxHighlighting.enable = true;
-  	};
-
+  };
+  
+  home.packages = [pkgs.eza];
 }
