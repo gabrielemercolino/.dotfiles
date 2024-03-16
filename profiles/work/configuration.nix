@@ -8,6 +8,7 @@
       ../../system/hardware/opengl.nix
       (./. + "../../../system/fonts"+("/"+userSettings.font)+".nix")
       (./. + "../../../system/wm"+("/"+userSettings.wm)+".nix")
+      ../../system/virtualization/docker.nix
     ];
 
   services.logind.extraConfig = ''
