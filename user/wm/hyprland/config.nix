@@ -112,7 +112,7 @@
         
         cpu = {
           "interval" = 5;
-          "format" = " {}%";
+          "format" = " {usage}%";
           "max-length" = 10;
         };
 
