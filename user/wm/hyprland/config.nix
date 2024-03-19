@@ -240,6 +240,7 @@
       #pulseaudio,
       #network,
       #clock,
+      #idle_inhibitor,
       #tray {
         border-radius: 4px;
         margin: 6px 3px;
@@ -306,7 +307,8 @@
         padding-right: 17px;
       }
 
-      #clock {
+      #clock,
+      #idle_inhibitor {
         font-family: JetBrainsMono Nerd Font;
         background-color: #cba6f7;
       }
