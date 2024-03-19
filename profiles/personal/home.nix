@@ -2,6 +2,6 @@
 
 {
   imports = [
-    ../work/home.nix
+    ../base/home.nix
   ];
 }

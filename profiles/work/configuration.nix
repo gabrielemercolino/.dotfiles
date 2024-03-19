@@ -1,9 +1,8 @@
 { ... }:
 
 {
-  imports =
-    [
-      ../work/configuration.nix
-      ../../system/virtualization/docker.nix
-    ];
+  imports = [
+    ../base/configuration.nix
+    ../../system/virtualization/docker.nix
+  ];
 }

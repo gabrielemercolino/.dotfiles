@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../work/configuration.nix
+    ../base/configuration.nix
     ../../system/apps/steam.nix
   ];
 }
