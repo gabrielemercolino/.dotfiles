@@ -6,6 +6,7 @@
     curl
     neofetch
     htop
+    btop
     pavucontrol
   ];
 }

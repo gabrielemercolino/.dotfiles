@@ -351,6 +351,8 @@
       # Override power-off and reboot commands
       "$mainMod SHIFT, R, exec, systemctl reboot"
       "$mainMod SHIFT, P, exec, systemctl poweroff"
+      
+      "$mainMod SHIFT, H, exec, ${pkgs.kitty}/bin/kitty ${pkgs.btop}/bin/btop"
 
       "$mainMod SHIFT, B, exec, ${pkgs.brightnessctl}/bin/brightnessctl set +5%"
       "$mainMod SHIFT, N, exec, ${pkgs.brightnessctl}/bin/brightnessctl set 5%-"
