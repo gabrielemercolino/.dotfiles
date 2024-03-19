@@ -1,12 +1,36 @@
-{ config, pkgs, userSettings, ... }:
+{ pkgs, userSettings, ... }:
 
 {
   imports = [
-	../base/home.nix
-  ../../user/apps/editors/sublime.nix
-  ../../user/apps/editors/jetbrains.nix
-  ../../user/apps/editors/nixvim.nix
-  ];  
+	../../user/shell/sh.nix
+  ../../user/shell/utility.nix
+  ../../user/commands/gab.nix
+	(./. + ("../../../user/wm/"+userSettings.wm)+"/config.nix")
+	(./. + ("../../../user/apps/browsers/"+userSettings.browser)+".nix")
+	(./. + ("../../../user/apps/terminal/"+userSettings.terminal)+".nix")
+  ../../user/apps/git/config.nix
+ ];  
+
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowUnfreePredicate = (_ : true);
+    permittedInsecurePackages = [
+      "openssl-1.1.1w"  # for sublime
+    ];
+  };
+
+  # Home Manager needs a bit of information about you and the paths it should
+  # manage.
+  home.username = userSettings.userName;
+  home.homeDirectory = "/home/${userSettings.userName}";
+  
+  home.stateVersion = "23.11";
+
+  # The home.packages option allows you to install Nix packages into your
+  # environment.
+  home.packages = with pkgs; [
+  	
+  ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -35,7 +59,9 @@
   #  /etc/profiles/per-user/gabriele/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    EDITOR = "nvim";
+    # EDITOR = "emacs";
   };
   
+  # Let Home Manager install and manage itself.
+  programs.home-manager.enable = true;
 }
