@@ -2,13 +2,13 @@
 
 {
   imports = [
-	../../user/shell/sh.nix
-  ../../user/shell/utility.nix
+	../../user/shell
   ../../user/commands/gab.nix
-	(./. + ("../../../user/wm/"+userSettings.wm)+"/config.nix")
+	(./. + ("../../../user/wm/"+userSettings.wm))
 	(./. + ("../../../user/apps/browsers/"+userSettings.browser)+".nix")
 	(./. + ("../../../user/apps/terminal/"+userSettings.terminal)+".nix")
-  ../../user/apps/git/config.nix
+  ../../user/apps/git
+  ../../user/apps/social
  ];  
 
   nixpkgs.config = {
