@@ -9,9 +9,10 @@
     la = "eza -la --icons";
   };
 in {
-  includes = [
+  imports = [
     ./utility.nix
   ];
+
   programs.bash = {
     enable = true;
     shellAliases = myShellAliases;
