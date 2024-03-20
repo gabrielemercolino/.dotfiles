@@ -1,6 +1,10 @@
 { config, pkgs, systemSettings, ... }:
 
 {
+  imports = [
+    ./pipewire.nix
+  ];
+
 	environment.systemPackages = [ pkgs.wayland ];
 
   # Configure xwayland
