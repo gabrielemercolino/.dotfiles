@@ -39,7 +39,6 @@
       wm = "hyprland";
       browser = "chrome";
       terminal = "kitty";
-      font = "nerd";
     };
   in {
     nixosConfigurations = {
