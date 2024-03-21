@@ -6,7 +6,7 @@
       ../../system/hardware-configuration.nix
       ../../system/hardware/bootloader.nix
       ../../system/hardware/opengl.nix
-      (./. + "../../../system/fonts"+("/"+userSettings.font)+".nix")
+      ../../system/fonts
       (./. + "../../../system/wm"+("/"+userSettings.wm)+".nix")
     ];
 
