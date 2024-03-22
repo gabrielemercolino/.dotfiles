@@ -61,12 +61,18 @@
       # Override power-off and reboot commands
       "$mainMod SHIFT, R, exec, systemctl reboot"
       "$mainMod SHIFT, P, exec, systemctl poweroff"
-      
+      ", XF86PowerOff, exec, "
+     
       "$mainMod SHIFT, H, exec, ${pkgs.kitty}/bin/kitty ${pkgs.btop}/bin/btop"
-
-      "$mainMod SHIFT, B, exec, ${pkgs.brightnessctl}/bin/brightnessctl set +5%"
-      "$mainMod SHIFT, N, exec, ${pkgs.brightnessctl}/bin/brightnessctl set 5%-"
-      " , XF86PowerOff, exec, "
+      
+      # Brightness control
+      ", XF86MonBrightnessUp, exec, ${pkgs.brightnessctl}/bin/brightnessctl set +5%"
+      ", XF86MonBrightnessDown, exec, ${pkgs.brightnessctl}/bin/brightnessctl set 5%-"
+      
+      # Volume control
+      ", XF86AudioRaiseVolume, exec, ${pkgs.pamixer}/bin/pamixer -i 5"
+      ", XF86AudioLowerVolume, exec, ${pkgs.pamixer}/bin/pamixer -d 5"
+      ", XF86AudioMute, exec, ${pkgs.pamixer}/bin/pamixer -t"
 
       # Move focus with mainMod + arrow keys
       "$mainMod, left, movefocus, l"
