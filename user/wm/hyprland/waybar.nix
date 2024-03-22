@@ -88,7 +88,7 @@
 
         clock = {
           "interval" = 1;
-          "format" = "  {:%I:%M %p}";
+          "format" = "  {:%H:%M %p}";
           "timezone" = "${systemSettings.timeZone}";
           "tooltip-format" = ''<tt>{calendar}</tt>'';
         };
