@@ -47,6 +47,15 @@
       "$mainMod, mouse:272, movewindow"
       "$mainMod, mouse:273, resizewindow"
     ];
+    binde = [
+      # Brightness control
+      ", XF86MonBrightnessUp, exec, ${pkgs.brightnessctl}/bin/brightnessctl set +5%"
+      ", XF86MonBrightnessDown, exec, ${pkgs.brightnessctl}/bin/brightnessctl set 5%-"
+      
+      # Volume control
+      ", XF86AudioRaiseVolume, exec, ${pkgs.pamixer}/bin/pamixer -i 5"
+      ", XF86AudioLowerVolume, exec, ${pkgs.pamixer}/bin/pamixer -d 5"
+    ];
     bind = [
       "$mainMod, RETURN, exec, $terminal"
       "$mainMod, Q, killactive," 
@@ -64,14 +73,8 @@
       ", XF86PowerOff, exec, "
      
       "$mainMod SHIFT, H, exec, ${pkgs.kitty}/bin/kitty ${pkgs.btop}/bin/btop"
-      
-      # Brightness control
-      ", XF86MonBrightnessUp, exec, ${pkgs.brightnessctl}/bin/brightnessctl set +5%"
-      ", XF86MonBrightnessDown, exec, ${pkgs.brightnessctl}/bin/brightnessctl set 5%-"
-      
-      # Volume control
-      ", XF86AudioRaiseVolume, exec, ${pkgs.pamixer}/bin/pamixer -i 5"
-      ", XF86AudioLowerVolume, exec, ${pkgs.pamixer}/bin/pamixer -d 5"
+    
+      # Audio control
       ", XF86AudioMute, exec, ${pkgs.pamixer}/bin/pamixer -t"
 
       # Move focus with mainMod + arrow keys
