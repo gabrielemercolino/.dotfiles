@@ -3,6 +3,7 @@
 {
   imports = [
     ./pipewire.nix
+    #./pulseaudio.nix
   ];
 
 	environment.systemPackages = [ pkgs.wayland ];
