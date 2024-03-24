@@ -10,8 +10,10 @@
 
   # Configure xwayland
   services.xserver = {
-    layout = systemSettings.keyLayout;
-    xkbVariant = "";
+    xkb = {
+      variant = "";
+      layout = systemSettings.keyLayout;
+    };
     enable = true;
     displayManager.gdm = {
       enable = true;
