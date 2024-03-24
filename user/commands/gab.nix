@@ -6,16 +6,15 @@ let
   gabScript = ''
     set -e
 
-    STARTING_DIR=$(pwd)
     OPERATION=$1
     SPECIFICATION=$2
 
     function nixos_update {
-      sudo nixos-rebuild switch --flake .#system
+      sudo nixos-rebuild switch --flake ${systemSettings.dotfiles}#system
     }
 
     function homemanager_update {
-      home-manager switch --flake .#user
+      nix run home-manager/master --extra-experimental-features nix-command --extra-experimental-features flakes -- switch --flake ${systemSettings.dotfiles}#user
     }
 
     function syncCase {
@@ -55,12 +54,9 @@ let
     }
 
     function developCase {
-      cd $STARTING_DIR
       touch flake.nix
       echo '${templateDevFlake}' > flake.nix
     }
-
-    cd ${systemSettings.dotfiles}
 
     case $OPERATION in
 
@@ -77,13 +73,10 @@ let
       ;;
 
       *)
-      echo "WTF"
       exit 1
       ;;
 
     esac
-
-    cd $STARTING_DIR
   '';
 in
 {
