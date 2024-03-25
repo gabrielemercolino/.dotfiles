@@ -60,11 +60,12 @@
       "$mainMod, RETURN, exec, $terminal"
       "$mainMod, Q, killactive," 
       "$mainMod, M, exit, "
-      "$mainMod, E, exec, dolphin"
       "$mainMod, V, togglefloating, "
-      "$mainMod, R, exec, ${pkgs.rofi}/bin/rofi -show drun"
+      "$mainMod, SPACE, exec, ${pkgs.rofi}/bin/rofi -show drun"
       "$mainMod, P, pseudo, # dwindle"
       "$mainMod, J, togglesplit,"
+      
+      # reload waybar
       "$mainMod, W, exec, pkill .waybar-wrapped && ${pkgs.waybar}/bin/waybar"
 
       # Override power-off and reboot commands
@@ -72,6 +73,7 @@
       "$mainMod SHIFT, P, exec, systemctl poweroff"
       ", XF86PowerOff, exec, "
      
+      # system stats
       "$mainMod SHIFT, H, exec, ${pkgs.kitty}/bin/kitty ${pkgs.btop}/bin/btop"
     
       # Audio control
@@ -82,6 +84,11 @@
       "$mainMod, right, movefocus, r"
       "$mainMod, up, movefocus, u"
       "$mainMod, down, movefocus, d"
+
+      # apps
+      "$mainMod, T, exec, ${pkgs.telegram-desktop}/bin/telegram-desktop"
+      "$mainMod, C, exec, ${pkgs.vscodium}/bin/codium"
+
     ] ++ (
       # workspaces
       # binds $mod + [shift +] {1..10} to [move to] workspace {1..10}
