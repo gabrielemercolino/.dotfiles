@@ -7,12 +7,15 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     nixvim.url = "github:gabrielemercolino/.nixvim";
+
+    stylix.url = "github:danth/stylix";
   };
 
   outputs = {
     self,
     nixpkgs,
     home-manager,
+    stylix,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -39,6 +42,12 @@
       wm = "hyprland";
       browser = "chrome";
       terminal = "kitty";
+
+      theme = "default";
+
+      # TODO: make it easier to use
+      font = "Font Awesome"; # Selected font
+      fontPkg = pkgs.font-awesome; # Font package
     };
   in {
     nixosConfigurations = {
@@ -50,6 +59,8 @@
           inherit systemSettings;
           inherit inputs;
           inherit outputs;
+
+          inherit (inputs) stylix;
         };
       };
     };
@@ -63,6 +74,8 @@
           inherit systemSettings;
           inherit inputs;
           inherit outputs;
+
+          inherit (inputs) stylix;
         };
       };
     };

@@ -9,6 +9,7 @@
 	(./. + ("../../../user/apps/terminal/"+userSettings.terminal)+".nix")
   ../../user/apps/git
   ../../user/apps/social
+  ../../user/style/stylix.nix
  ];  
 
   nixpkgs.config = {

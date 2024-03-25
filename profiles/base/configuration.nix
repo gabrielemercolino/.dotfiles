@@ -8,6 +8,7 @@
       ../../system/hardware/opengl.nix
       ../../system/fonts
       (./. + "../../../system/wm"+("/"+userSettings.wm)+".nix")
+      ../../system/style/stylix.nix
     ];
 
   services.logind.extraConfig = ''
