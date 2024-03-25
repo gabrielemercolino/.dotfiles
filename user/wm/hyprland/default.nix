@@ -115,6 +115,8 @@ env = XCURSOR_SIZE,24
 
 exec-once = ${pkgs.waybar}/bin/waybar
 
+exec = ${pkgs.swaybg}/bin/swaybg -m fill -i ${config.stylix.image}
+
 general {
     # See https://wiki.hyprland.org/Configuring/Variables/ for more
 
