@@ -43,7 +43,7 @@
       browser = "chrome";
       terminal = "kitty";
 
-      theme = "default";
+      theme = "catppuccin-mocha";
 
       # TODO: make it easier to use
       font = "JetBrainsMono Nerd Font"; # Selected font
