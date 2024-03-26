@@ -1,5 +1,8 @@
-{ pkgs, systemSettings, ... }:
+{ config, pkgs, systemSettings, ... }:
 
+let 
+  colors = config.lib.stylix.colors;
+in
 {
   # config from https://github.com/sameemul-haque/dotfiles
   programs.waybar = {
@@ -158,7 +161,7 @@
       }
 
       window#waybar {
-        background-color: #181825;
+        background-color: #${colors.base01};
         transition-property: background-color;
         transition-duration: 0.5s;
       }
@@ -178,24 +181,24 @@
         padding: 6px 18px;
         margin: 6px 3px;
         border-radius: 4px;
-        background-color: #1e1e2e;
-        color: #cdd6f4;
+        background-color: #${colors.base00};
+        color: #${colors.base05};
       }
 
       #workspaces button.active {
-        color: #1e1e2e;
-        background-color: #cdd6f4;
+        color: #${colors.base00};
+        background-color: #${colors.base05};
       }
 
       #workspaces button:hover {
         box-shadow: inherit;
         text-shadow: inherit;
-        color: #1e1e2e;
-        background-color: #cdd6f4;
+        color: #${colors.base00};
+        background-color: #${colors.base05};
       }
 
       #workspaces button.urgent {
-        background-color: #f38ba8;
+        background-color: #${colors.base08};
       }
 
       #memory,
@@ -211,8 +214,8 @@
         border-radius: 4px;
         margin: 6px 3px;
         padding: 6px 12px;
-        background-color: #1e1e2e;
-        color: #181825;
+        background-color: #${colors.base00};
+        color: #${colors.base01};
       }
 
       #custom-power {
@@ -230,17 +233,17 @@
 
       #memory,
       #cpu {
-        background-color: #fab387;
+        background-color: #${colors.base09};
       }
 
       #battery {
-        background-color: #f38ba8;
+        background-color: #${colors.base08};
       }
 
       @keyframes blink {
         to {
-          background-color: #f38ba8;
-          color: #181825;
+          background-color: #${colors.base08};
+          color: #${colors.base01};
         }
       }
 
@@ -248,7 +251,7 @@
       #battery.critical,
       #battery.urgent {
         background-color: #ff0048;
-        color: #181825;
+        color: #${colors.base01};
         animation-name: blink;
         animation-duration: 0.5s;
         animation-timing-function: linear;
@@ -257,42 +260,42 @@
       }
 
       #battery.charging {
-        background-color: #a6e3a1;
+        background-color: #${colors.base0B};
       }
 
       #backlight {
-        background-color: #fab387;
+        background-color: #${colors.base09};
       }
 
       #pulseaudio {
-        background-color: #f9e2af;
+        background-color: #${colors.base0A};
       }
 
       #network {
-        background-color: #94e2d5;
+        background-color: #${colors.base0C};
         padding-right: 17px;
       }
 
       #clock,
       #idle_inhibitor {
         font-family: JetBrainsMono Nerd Font;
-        background-color: #cba6f7;
+        background-color: #${colors.base0E};
       }
 
       #custom-power {
-        background-color: #f2cdcd;
+        background-color: #${colors.base0F};
       }
 
 
       tooltip {
         border-radius: 8px;
         padding: 15px;
-        background-color: #131822;
+        background-color: #${colors.base00};
       }
 
       tooltip label {
         padding: 5px;
-        background-color: #131822;
+        background-color: #${colors.base00};
       }
     '';
   };
