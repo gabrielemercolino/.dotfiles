@@ -46,8 +46,8 @@
       theme = "default";
 
       # TODO: make it easier to use
-      font = "Font Awesome"; # Selected font
-      fontPkg = pkgs.font-awesome; # Font package
+      font = "JetBrainsMono Nerd Font"; # Selected font
+      fontPkg = (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; }); # Font package
     };
   in {
     nixosConfigurations = {
