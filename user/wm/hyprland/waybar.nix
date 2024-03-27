@@ -102,8 +102,8 @@ in
           "format-ethernet" = "󰀂";
 	        "format-alt" = "󱛇";
           "format-disconnected" = "󰖪";
-	        "tooltip-format-wifi" = "{icon} {essid}\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}";
-          "tooltip-format-ethernet" = "󰀂  {ifname}\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}";
+	        "tooltip-format-wifi" = "{icon} {essid}\n {bandwidthDownBytes}   {bandwidthUpBytes}";
+          "tooltip-format-ethernet" = "󰀂  {ifname}\n {bandwidthDownBytes}   {bandwidthUpBytes}";
 	        "tooltip-format-disconnected" = "Disconnected";
 	        #"on-click": "~/.config/rofi/wifi/wifi.sh &",
           #"on-click-right": "~/.config/rofi/wifi/wifinew.sh &",
@@ -156,7 +156,7 @@ in
         border: none;
         border-radius: 0;
         min-height: 0;
-        font-family: Material Design Icons, JetBrainsMono Nerd Font;
+        font-family: JetBrainsMono Nerd Font;
         font-size: 13px;
       }
 
@@ -273,7 +273,7 @@ in
 
       #network {
         background-color: #${colors.base0C};
-        padding-right: 17px;
+        padding-right: 14px;
       }
 
       #clock,
