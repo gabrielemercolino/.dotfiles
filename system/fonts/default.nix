@@ -5,5 +5,6 @@
 		(nerdfonts.override { fonts = [ "Inconsolata" "DejaVuSansMono" "JetBrainsMono" "Meslo" ]; })
     font-awesome
     powerline
+    material-design-icons
 	];
 }
