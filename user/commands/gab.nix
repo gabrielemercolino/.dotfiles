@@ -40,11 +40,11 @@ let
       case $SPECIFICATION in
         
         "")
-        nix flake update
+        nix flake update ${systemSettings.dotfiles}
         ;;
 
         *)
-        nix flake lock --update-input $SPECIFICATION
+        nix flake lock ${systemSettings.dotfiles} --update-input $SPECIFICATION
         ;;
 
       esac
