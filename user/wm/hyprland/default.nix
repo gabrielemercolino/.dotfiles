@@ -62,8 +62,8 @@
       "$mainMod, M, exit, "
       "$mainMod, V, togglefloating, "
       
-      #"$mainMod, SPACE, exec, ${pkgs.rofi}/bin/rofi -show drun"
-      "$mainMod, SPACE, exec, ${pkgs.wofi}/bin/wofi --show drun"
+      "$mainMod, SPACE, exec, ${pkgs.rofi}/bin/rofi -show drun"
+      #"$mainMod, SPACE, exec, ${pkgs.wofi}/bin/wofi --show drun"
 
       "$mainMod, P, pseudo, # dwindle"
       "$mainMod, J, togglesplit,"
