@@ -44,7 +44,8 @@ let
         ;;
 
         *)
-        nix flake lock ${systemSettings.dotfiles} --update-input $SPECIFICATION
+        #nix flake lock ${systemSettings.dotfiles} --update-input $SPECIFICATION
+        exit 1
         ;;
 
       esac
