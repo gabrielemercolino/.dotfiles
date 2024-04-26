@@ -58,6 +58,25 @@ let
       touch flake.nix
       echo '${templateDevFlake}' > flake.nix
     }
+    
+    function cleanCase {
+      case $SPECIFICATION in
+      
+        "")
+        nix-collect-garbage
+        ;;
+
+        "d")
+        nix-collect-garbage -d
+        ;;
+
+        *)
+        echo invalid syntax
+        exit 1
+        ;;
+
+      esac
+    }
 
     case $OPERATION in
 
@@ -71,6 +90,10 @@ let
 
       dev)
       developCase
+      ;;
+
+      clean)
+      cleanCase
       ;;
 
       *)
