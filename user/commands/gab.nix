@@ -67,7 +67,7 @@ let
         ;;
 
         "d")
-        nix-collect-garbage -d
+        nix-collect-garbage -d 30d
         ;;
 
         *)
