@@ -5,6 +5,8 @@ let
   themePolarity = lib.removeSuffix "\n" (builtins.readFile (./. + "../../../themes"+("/"+userSettings.theme)+"/polarity.txt"));
   backgroundUrl = builtins.readFile (./. + "../../../themes"+("/"+userSettings.theme)+"/bgUrl.txt");
   backgroundSha256 = builtins.readFile (./. + "../../../themes/"+("/"+userSettings.theme)+"/bgSha256.txt");
+
+  myLightDMTheme = if themePolarity == "light" then "Adwaita" else "Adwaita-dark";
 in
 {
   imports = [ stylix.nixosModules.stylix ];
@@ -34,6 +36,12 @@ in
       name = "Noto Color Emoji";
       package = pkgs.noto-fonts-emoji-blob-bin;
     };
+  };
+
+  stylix.targets.lightdm.enable = true;
+  services.xserver.displayManager.lightdm = {
+      greeters.slick.enable = true;
+      greeters.slick.theme.name = myLightDMTheme;
   };
 
   stylix.targets.console.enable = true;
