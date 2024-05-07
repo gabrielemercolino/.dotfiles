@@ -55,8 +55,57 @@ let
     }
 
     function developCase {
-      touch flake.nix
-      echo '${templateDevFlake}' > flake.nix
+      if [ $(pwd) == "$HOME" ]; then
+        echo "You probably don't want to add a flake here"
+        exit 1
+      fi
+
+      if test -f ./flake.nix; then
+        echo flake.nix already exists. Do you want to keep it? [Y/n]
+        
+        read decision
+
+        case $decision in
+
+        "N" | "n")
+          rm ./flake.nix
+          touch flake.nix
+          echo '${templateDevFlake}' > flake.nix
+        ;;
+
+        *)
+        ;;
+
+        esac
+      else
+        touch flake.nix
+        echo '${templateDevFlake}' > flake.nix
+      fi
+
+      if test -f ./.envrc; then
+        echo .envrc already exists. Do you want to keep it? [Y/n]
+        
+        read decision
+
+        case $decision in
+
+        "N" | "n")
+          rm ./.envrc
+          echo "Please accept requirements if needed"
+          echo "use flake" >> .envrc
+          direnv allow
+        ;;
+
+        *)
+        ;;
+
+        esac
+
+      else
+        echo "Please accept requirements if needed"
+        echo "use flake" >> .envrc
+        direnv allow
+      fi
     }
     
     function cleanCase {
