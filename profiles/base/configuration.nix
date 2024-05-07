@@ -9,6 +9,7 @@
       ../../system/fonts
       (./. + "../../../system/wm"+("/"+userSettings.wm)+".nix")
       ../../system/style/stylix.nix
+      ../../system/apps/nix-direnv.nix
     ];
 
   services.logind.extraConfig = ''
