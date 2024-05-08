@@ -4,6 +4,7 @@
   imports = [
     ./pipewire.nix
     #./pulseaudio.nix
+    ./sddm.nix
   ];
 
 	environment.systemPackages = [ pkgs.wayland ];
@@ -21,14 +22,5 @@
       #  wayland = true;
       #};
     };
-
-    displayManager.sddm = {
-      enable = true;
-      wayland.enable = true;
-      enableHidpi = true;
-      theme = "chili";
-      package = pkgs.sddm;
-    };
   };
-
 }
