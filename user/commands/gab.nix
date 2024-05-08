@@ -116,7 +116,7 @@ let
         ;;
 
         "d")
-        nix-collect-garbage -d 30d
+        nix-collect-garbage --delete-older-than 30d
         ;;
 
         *)
