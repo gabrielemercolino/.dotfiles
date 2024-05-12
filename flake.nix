@@ -2,10 +2,19 @@
   description = "My flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "nixpkgs/nixos-23.11";
+    
+    home-manager-stable = {
+     url = "github:nix-community/home-manager/release-23.11";
+     inputs.nixpkgs.follows = "nixpkgs-stable";
+    };
 
+    home-manager-unstable = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+   
     nixvim.url = "github:gabrielemercolino/.nixvim";
 
     stylix.url = "github:danth/stylix";
@@ -14,14 +23,15 @@
   outputs = {
     self,
     nixpkgs,
-    home-manager,
+    nixpkgs-stable,
+    home-manager-stable,
+    home-manager-unstable,
     stylix,
     ...
   } @ inputs: let
     inherit (self) outputs;
     lib = nixpkgs.lib;
-    pkgs = nixpkgs.legacyPackages.${systemSettings.system};
-
+    
     systemSettings = rec {
       system = "x86_64-linux";
       hostName = "nixos";
@@ -49,6 +59,24 @@
       font = "JetBrainsMono Nerd Font"; # Selected font
       fontPkg = (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; }); # Font package
     };
+
+    pkgs = (if (systemSettings.profile == "work") 
+    then
+      import nixpkgs {system = systemSettings.system;}
+    else
+      import nixpkgs-stable { system = systemSettings.system;}
+    );
+
+    unstable-pkgs = import nixpkgs-stable {system = systemSettings.system;};
+    stable-pkgs = import nixpkgs {system = systemSettings.system;};
+    
+    home-manager = (if (systemSettings.profile == "work") 
+    then
+      inputs.home-manager-unstable
+    else
+      inputs.home-manager-stable
+    );
+
   in {
     nixosConfigurations = {
       system = lib.nixosSystem {
@@ -74,6 +102,8 @@
           inherit systemSettings;
           inherit inputs;
           inherit outputs;
+          inherit stable-pkgs;
+          inherit unstable-pkgs;
 
           inherit (inputs) stylix;
         };
