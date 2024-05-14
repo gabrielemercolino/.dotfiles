@@ -2,6 +2,7 @@
 
 {
 	home.packages = with pkgs; [
-		jetbrains.idea-community
+	  # bin = latest 🙄
+    jetbrains.idea-community-bin
 	];
 }
