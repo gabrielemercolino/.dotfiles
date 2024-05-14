@@ -2,17 +2,12 @@
   description = "My flake";
 
   inputs = {
+    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     nixpkgs.url = "nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "nixpkgs/nixos-23.11";
-    
-    home-manager-stable = {
-     url = "github:nix-community/home-manager/release-23.11";
-     inputs.nixpkgs.follows = "nixpkgs-stable";
-    };
 
-    home-manager-unstable = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
+    home-manager = {
+     url = "github:nix-community/home-manager";
+     inputs.nixpkgs.follows = "nixpkgs";
     };
    
     nixvim.url = "github:gabrielemercolino/.nixvim";
@@ -22,15 +17,13 @@
 
   outputs = {
     self,
+    nixpkgs-unstable,
     nixpkgs,
-    nixpkgs-stable,
-    home-manager-stable,
-    home-manager-unstable,
+    home-manager,
     stylix,
     ...
   } @ inputs: let
     inherit (self) outputs;
-    lib = nixpkgs.lib;
     
     systemSettings = rec {
       system = "x86_64-linux";
@@ -60,23 +53,10 @@
       fontPkg = (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; }); # Font package
     };
 
-    pkgs = (if (systemSettings.profile == "work") 
-    then
-      import nixpkgs {system = systemSettings.system;}
-    else
-      import nixpkgs-stable { system = systemSettings.system;}
-    );
-
-    unstable-pkgs = import nixpkgs-stable {system = systemSettings.system;};
-    stable-pkgs = import nixpkgs {system = systemSettings.system;};
+    lib = nixpkgs.lib;
+    pkgs = import nixpkgs {system = systemSettings.system;};
+    pkgs-unstable = import nixpkgs-unstable {system = systemSettings.system;};
     
-    home-manager = (if (systemSettings.profile == "work") 
-    then
-      inputs.home-manager-unstable
-    else
-      inputs.home-manager-stable
-    );
-
   in {
     nixosConfigurations = {
       system = lib.nixosSystem {
@@ -87,6 +67,7 @@
           inherit systemSettings;
           inherit inputs;
           inherit outputs;
+          inherit pkgs-unstable;
 
           inherit (inputs) stylix;
         };
@@ -102,8 +83,7 @@
           inherit systemSettings;
           inherit inputs;
           inherit outputs;
-          inherit stable-pkgs;
-          inherit unstable-pkgs;
+          inherit pkgs-unstable;
 
           inherit (inputs) stylix;
         };
