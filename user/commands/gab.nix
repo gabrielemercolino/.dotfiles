@@ -1,94 +1,96 @@
 { pkgs, userSettings, systemSettings, ... }:
 
 let
-  templateDevFlake = "${builtins.readFile ./templateDevFlake.nix}";
+  templateDevFlake = "${builtins.toPath ./templateDevFlake.nix}";
 
   gabScript = ''
-    set -e
+set -e
 
-    OPERATION=$1
-    SPECIFICATION=$2
+function nixos_update {
+  ${pkgs.nh}/bin/nh os switch ${systemSettings.dotfiles} -H system
+}
 
-    function nixos_update {
-      sudo nixos-rebuild switch --flake ${systemSettings.dotfiles}#system
-    }
+function homemanager_update {
+   ${pkgs.nh}/bin/nh home switch ${systemSettings.dotfiles} -c user
+}
 
-    function homemanager_update {
-      nix run home-manager/master --extra-experimental-features nix-command --extra-experimental-features flakes -- switch --flake ${systemSettings.dotfiles}#user
-    }
-
-    function syncCase {
-      case $SPECIFICATION in
-        
-        home)
-        homemanager_update
-        ;;
-
-        nix)
-        nixos_update
-        ;;
-
-        *)
-        nixos_update
-        homemanager_update
-        ;;
-
-      esac
-    }
-
-    function updateCase {
-      case $SPECIFICATION in
-        
-        "")
-        nix flake update ${systemSettings.dotfiles}
-        ;;
-
-        *)
-        #nix flake lock ${systemSettings.dotfiles} --update-input $SPECIFICATION
-        exit 1
-        ;;
-
-      esac
-
+case $1 in
+  sync)
+    if [[ "$#" = 1 ]]; then
       nixos_update
       homemanager_update
-    }
+    elif [[ $2 == "nix" ]]; then
+      nixos_update
+    elif [[ $2 == "home" ]]; then
+      homemanager_update
+    else
+      echo "Invalid syntax"
+      echo "Usage:"
+      echo "gab sync (nix | home)"
+      echo "    - Rebuilds the system and home-manager following flake configuration in $FLAKE"
+      echo "      If 'nix' is specified rebuilds only system, with 'home' only home-manager"
+    fi
+  ;;
+  
+  update)
+    if [[ "$#" -gt 1 ]]; then
+      echo "Invalid syntax"
+      echo "Usage:"
+      echo "gab update"
+      echo "    - Updates flake inputs and applies changes"
+      exit 1
+    fi
+    nix flake update $FLAKE
+    nixos_update
+    homemanager_update
+  ;;
 
-    function developCase {
-      if [ $(pwd) == "$HOME" ]; then
-        echo "You probably don't want to add a flake here"
-        exit 1
-      fi
+  dev)
+    # Prevents creating dev stuff in $HOME
+    if [ $(pwd) == "$HOME" ]; then
+      echo "Cannot create dev environment in HOME"
+      exit 1
+    fi
 
-      if test -f ./flake.nix; then
-        echo flake.nix already exists. Do you want to keep it? [Y/n]
-        
-        read decision
+    if [[ "$#" -gt 1 ]]; then
+      echo "Invalid syntax"
+      echo "Usage:"
+      echo "gab dev"
+      echo "    - prepares current directory for development providing a default flake.nix and .envrc files"
+      echo "      If already present asks if they are needed"
+      echo "      For security reasons if run in $HOME it does nothing"
+      exit 1
+    fi
 
-        case $decision in
+    # Check if flake.nix file already exists
+    if test -f ./flake.nix; then
+      echo "flake.nix already exists. Do you want to keep it? [Y/n]"
+      read decision
 
+      case $decision in
         "N" | "n")
           rm ./flake.nix
-          touch flake.nix
-          echo '${templateDevFlake}' > flake.nix
+          cp ${templateDevFlake} ./flake.nix
+        ;;
+
+        "" | "Y" | "y")
         ;;
 
         *)
+          echo "Invalid response. Aborting"
+          exit 1
         ;;
-
-        esac
-      else
-        touch flake.nix
-        echo '${templateDevFlake}' > flake.nix
+      esac
+    else
+      cp ${templateDevFlake} ./flake.nix
       fi
+    
+    # Check if envrc file already exists
+    if test -f ./.envrc; then
+      echo ".envrc already exists. Do you want to keep it? [Y/n]"
+      read decision
 
-      if test -f ./.envrc; then
-        echo .envrc already exists. Do you want to keep it? [Y/n]
-        
-        read decision
-
-        case $decision in
-
+      case $decision in
         "N" | "n")
           rm ./.envrc
           echo "Please accept requirements if needed"
@@ -96,60 +98,72 @@ let
           direnv allow
         ;;
 
-        *)
-        ;;
-
-        esac
-
-      else
-        echo "Please accept requirements if needed"
-        echo "use flake" >> .envrc
-        direnv allow
-      fi
-    }
-    
-    function cleanCase {
-      case $SPECIFICATION in
-      
-        "")
-        nix-collect-garbage
-        ;;
-
-        "d")
-        sudo nix-collect-garbage --delete-older-than 30d
+        "" | "Y" | "y")
         ;;
 
         *)
-        echo invalid syntax
-        exit 1
+          echo "Invalid response. Aborting"
+          exit 1
         ;;
 
       esac
-    }
+    else
+      echo "Please accept requirements if needed"
+      echo "use flake" >> .envrc
+      direnv allow
+    fi
+  ;;
 
-    case $OPERATION in
-
-      sync)
-      syncCase
+  clean)
+    case $2 in 
+      "d" | "-d")
+        sudo nix-collect-garbage --delete-older-than 30d
       ;;
-
-      update)
-      updateCase
+      
+      "")
+        nix-collect-garbage
       ;;
-
-      dev)
-      developCase
-      ;;
-
-      clean)
-      cleanCase
-      ;;
-
+      
       *)
-      exit 1
+        echo "invalid syntax"
+        echo "Usage: "
+        echo "gab clean (d | -d)"
+        echo "    - cleans garbage with nix-collect-garbage"
+        echo "      If optional param is provided deletes garbage including derivations older than 30d (requires sudo password)"
+        exit 1
       ;;
-
     esac
+  ;;
+  
+  *)
+    echo "Invalid syntax"
+    echo "Usage:"
+    echo "gab sync (nix | home)"
+    echo "    - Rebuilds the system and home-manager following flake configuration in ${systemSettings.dotfiles}"
+    echo "      If 'nix' is specified rebuilds only system, with 'home' only home-manager"
+      
+    echo ""
+      
+    echo "gab update"
+    echo "    - Updates flake inputs and applies changes"
+
+    echo ""
+
+    echo "gab dev"
+    echo "    - prepares current directory for development providing a default flake.nix and .envrc files"
+    echo "      If already present asks if they are needed"
+    echo "      For security reasons if run in $HOME it does nothing"
+      
+    echo ""
+
+    echo "gab clean (d | -d)"
+    echo "    - cleans garbage with nix-collect-garbage"
+    echo "      If optional param is provided deletes garbage including derivations older than 30d (requires sudo password)"
+
+    exit 1
+  ;;
+
+esac 
   '';
 in
 {
