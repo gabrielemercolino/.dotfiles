@@ -40,7 +40,7 @@ case $1 in
       echo "    - Updates flake inputs and applies changes"
       exit 1
     fi
-    nix flake update $FLAKE
+    nix flake update ${systemSettings.dotfiles}
     nixos_update
     homemanager_update
   ;;
