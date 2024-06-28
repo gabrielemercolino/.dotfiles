@@ -28,6 +28,7 @@
     systemSettings = rec {
       system = "x86_64-linux";
       hostName = "nixos";
+      shell = "nushell";
 
       dotfiles = "~/.dotfiles";
       profile = "work";

@@ -5,6 +5,7 @@
     [
       ../../system/hardware-configuration.nix
       ../../system/hardware/bootloader.nix
+      (./. + "../../../system/shell"+("/"+systemSettings.shell)+".nix")
       ../../system/hardware/opengl.nix
       ../../system/fonts
       (./. + "../../../system/wm"+("/"+userSettings.wm)+".nix")
@@ -71,11 +72,6 @@
 
   environment.systemPackages = with pkgs; [ git ];
   
-  # default shell: zsh
-  environment.shells = with pkgs; [zsh];
-  users.defaultUserShell = pkgs.zsh;
-  programs.zsh.enable = true;
-
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
