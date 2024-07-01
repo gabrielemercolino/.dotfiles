@@ -3,7 +3,7 @@
 let
   templateDevFlake = "${builtins.toPath ./templateDevFlake.nix}";
 
-  gabScript = ''
+  gabScript = /*bash*/ ''
 set -e
 
 function nixos_update {
@@ -168,6 +168,6 @@ esac
 in
 {
   home.packages = [
-    (pkgs.writeScriptBin "gab" gabScript)
+    (pkgs.writers.writeBashBin "gab" {} gabScript)
   ];
 }
