@@ -33,6 +33,8 @@
       color19 = "#" + lib.stylix.colors.base02;
       color20 = "#" + lib.stylix.colors.base04;
       color21 = "#" + lib.stylix.colors.base06;
+
+      confirm_os_window_close = 0;
 		};
 	};
 }
