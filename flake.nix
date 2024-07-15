@@ -2,22 +2,23 @@
   description = "My flake";
 
   inputs = {
-    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     nixpkgs.url = "nixpkgs/nixos-unstable";
 
     home-manager = {
-     url = "github:nix-community/home-manager";
-     inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
    
-    nixvim.url = "github:gabrielemercolino/.nixvim";
-
+    nixvim = {
+      url = "github:gabrielemercolino/.nixvim";
+      #inputs.nixpkgs.follows = "nixpkgs";
+    };
+    
     stylix.url = "github:danth/stylix";
   };
 
   outputs = {
     self,
-    nixpkgs-unstable,
     nixpkgs,
     home-manager,
     stylix,
@@ -56,7 +57,6 @@
 
     lib = nixpkgs.lib;
     pkgs = import nixpkgs {system = systemSettings.system;};
-    pkgs-unstable = import nixpkgs-unstable {system = systemSettings.system;};
     
   in {
     nixosConfigurations = {
@@ -68,7 +68,6 @@
           inherit systemSettings;
           inherit inputs;
           inherit outputs;
-          inherit pkgs-unstable;
 
           inherit (inputs) stylix;
         };
@@ -84,7 +83,6 @@
           inherit systemSettings;
           inherit inputs;
           inherit outputs;
-          inherit pkgs-unstable;
 
           inherit (inputs) stylix;
         };
