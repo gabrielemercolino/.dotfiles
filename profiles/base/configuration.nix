@@ -7,17 +7,14 @@
       ../../system/hardware/bootloader.nix
       (./. + "../../../system/shell"+("/"+systemSettings.shell)+".nix")
       ../../system/hardware/opengl.nix
+      ../../system/services
       ../../system/fonts
       (./. + "../../../system/wm"+("/"+userSettings.wm)+".nix")
       ../../system/style/stylix.nix
       ../../system/apps/nix-direnv.nix
     ];
 
-  services.logind.extraConfig = ''
-    # don’t shutdown when power button is short-pressed
-    HandlePowerKey=ignore
-  '';
-
+  
   networking.hostName = systemSettings.hostName; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -58,8 +55,6 @@
     packages = with pkgs; [];
   };
 
-  # Enable automatic login for the user.
-  services.getty.autologinUser = userSettings.userName;
 
   # Allow unfree packages
   nixpkgs.config = {
@@ -80,11 +75,7 @@
   #   enableSSHSupport = true;
   # };
 
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-
+  
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
