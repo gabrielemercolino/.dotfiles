@@ -90,7 +90,7 @@
 
       # apps
       "$mainMod, T, exec, ${pkgs.telegram-desktop}/bin/telegram-desktop"
-      "$mainMod, C, exec, ${pkgs.vscodium}/bin/codium"
+      #"$mainMod, C, exec, ${pkgs.vscodium}/bin/codium"
 
     ] ++ (
       # workspaces
