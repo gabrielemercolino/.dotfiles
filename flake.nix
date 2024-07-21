@@ -62,7 +62,20 @@
     nixosConfigurations = {
       system = lib.nixosSystem {
         system = systemSettings.system;
-        modules = [(./. + "/profiles" + ("/" + systemSettings.profile) + "/configuration.nix")];
+        modules = [ ./profiles/base/configuration.nix ];
+        specialArgs = {
+          inherit userSettings;
+          inherit systemSettings;
+          inherit inputs;
+          inherit outputs;
+
+          inherit (inputs) stylix;
+        };
+      };
+
+      mini-pc = lib.nixosSystem {
+        system = systemSettings.system;
+        modules = [ ./profiles/mini-pc/configuration.nix ];
         specialArgs = {
           inherit userSettings;
           inherit systemSettings;
@@ -77,7 +90,20 @@
     homeConfigurations = {
       user = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        modules = [(./. + "/profiles" + ("/" + systemSettings.profile) + "/home.nix")];
+        modules = [ ./profiles/base/home.nix ];
+        extraSpecialArgs = {
+          inherit userSettings;
+          inherit systemSettings;
+          inherit inputs;
+          inherit outputs;
+
+          inherit (inputs) stylix;
+        };
+      };
+
+      mini-pc = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules = [ ./profiles/mini-pc/home.nix ];
         extraSpecialArgs = {
           inherit userSettings;
           inherit systemSettings;
