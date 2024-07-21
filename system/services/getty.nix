@@ -1,6 +1,6 @@
 { userSettings, ... }:
 
 {
-# Enable automatic login for the user.
+  # Enable automatic login for the user.
   services.getty.autologinUser = userSettings.userName;
 }
