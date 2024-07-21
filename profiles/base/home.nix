@@ -9,6 +9,7 @@
 	(./. + ("../../../user/apps/terminal/"+userSettings.terminal)+".nix")
   ../../user/apps/git
   ../../user/apps/social
+  ../../user/apps/editors/nixvim.nix
   ../../user/style/stylix.nix
  ];  
 
@@ -60,7 +61,7 @@
   #  /etc/profiles/per-user/gabriele/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    EDITOR = "nvim";
   };
   
   # Let Home Manager install and manage itself.
