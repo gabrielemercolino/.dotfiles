@@ -29,7 +29,7 @@
     systemSettings = rec {
       system = "x86_64-linux";
       hostName = "nixos";
-      shell = "nushell";
+      shell = "zsh";
 
       dotfiles = "~/.dotfiles";
       profile = "work";
