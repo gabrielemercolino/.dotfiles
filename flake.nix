@@ -15,6 +15,11 @@
     };
     
     stylix.url = "github:danth/stylix";
+    
+    spicetify-nix = {
+      url = "github:Gerg-L/spicetify-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -22,6 +27,7 @@
     nixpkgs,
     home-manager,
     stylix,
+    spicetify-nix,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -32,7 +38,6 @@
       shell = "zsh";
 
       dotfiles = "~/.dotfiles";
-      profile = "work";
 
       keyLayout = "it";
 
@@ -85,6 +90,19 @@
           inherit (inputs) stylix;
         };
       };
+
+      chromebook = lib.nixosSystem {
+        system = systemSettings.system;
+        modules = [ ./profiles/chromebook/configuration.nix ];
+        specialArgs = {
+          inherit userSettings;
+          inherit systemSettings;
+          inherit inputs;
+          inherit outputs;
+
+          inherit (inputs) stylix;
+        };
+      };
     };
 
     homeConfigurations = {
@@ -109,10 +127,25 @@
           inherit systemSettings;
           inherit inputs;
           inherit outputs;
+          inherit spicetify-nix;
 
           inherit (inputs) stylix;
         };
       };
+
+      chromebook = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules = [ ./profiles/chromebook/home.nix ];
+        extraSpecialArgs = {
+          inherit userSettings;
+          inherit systemSettings;
+          inherit inputs;
+          inherit outputs;
+
+          inherit (inputs) stylix;
+        };
+      };
+
     };
   };
 }
