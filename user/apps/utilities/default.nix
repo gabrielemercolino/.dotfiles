@@ -3,6 +3,7 @@
 {
   imports = [
     ./gimp.nix
-    ./ranger.nix
+    #./ranger.nix
+    ./yazi.nix
   ];
 }
