@@ -3,7 +3,7 @@
 {
   imports = [
 	../../user/shell
-  ../../user/commands/gab.nix
+  ../../user/commands/gab
 	(./. + ("../../../user/wm/"+userSettings.wm))
 	(./. + ("../../../user/apps/browsers/"+userSettings.browser)+".nix")
 	(./. + ("../../../user/apps/terminal/"+userSettings.terminal)+".nix")
