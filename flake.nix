@@ -65,7 +65,7 @@
     
   in {
     nixosConfigurations = {
-      system = lib.nixosSystem {
+      base = lib.nixosSystem {
         system = systemSettings.system;
         modules = [ ./profiles/base/configuration.nix ];
         specialArgs = {
@@ -106,7 +106,7 @@
     };
 
     homeConfigurations = {
-      user = home-manager.lib.homeManagerConfiguration {
+      base = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [ ./profiles/base/home.nix ];
         extraSpecialArgs = {
