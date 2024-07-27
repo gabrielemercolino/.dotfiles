@@ -1,0 +1,42 @@
+name: gab
+help: Utility script for managing Nix
+version: 0.1.0
+
+commands:
+- name: sync
+  alias: s
+  help: Syncronizes the system based on the config
+
+  args:
+   - name: config
+     help: what config to use
+     required: true
+     allowed:
+        - base
+        - mini-pc
+        - chromebook
+   - name: filter
+     help: Filters what to sync between system and home-manager configurations
+     default: both
+     allowed:
+        - both
+        - system
+        - home
+ 
+  examples:
+  - gab sync mini-pc
+  - gab sync chromebook home
+  - gab sync base nix
+
+- name: clean
+  alias: c
+  help: Deletes unreachable store objects for nix (wrapper over nix-collect-garbage)
+
+  flags:
+  - long: --delete-old
+    short: -d
+    help: Deletes also generations older than 30 days
+
+  examples:
+  - gab clean
+  - gab clean -d
