@@ -2,7 +2,6 @@
   stdenv, 
   bashly, 
   installShellFiles, 
-  makeWrapper
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -10,11 +9,12 @@ stdenv.mkDerivation (finalAttrs: {
 
   src = ./.;
 
-  nativeBuildInputs = [ installShellFiles makeWrapper ];
+  nativeBuildInputs = [ installShellFiles ];
 
   buildInputs = [ bashly ];
 
   buildPhase = ''
+    bashly add completions
     bashly generate
     bashly add completions_script
   '';
