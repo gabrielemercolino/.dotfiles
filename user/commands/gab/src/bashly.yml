@@ -4,7 +4,6 @@ version: 0.1.0
 
 commands:
 - name: sync
-  alias: s
   help: Syncronizes the system based on the config
 
   args:
@@ -15,21 +14,14 @@ commands:
         - base
         - mini-pc
         - chromebook
-   - name: filter
-     help: Filters what to sync between system and home-manager configurations
-     default: both
-     allowed:
-        - both
-        - system
-        - home
- 
+  
   examples:
+  - gab sync base
   - gab sync mini-pc
-  - gab sync chromebook home
-  - gab sync base nix
+  - gab sync chromebook
+
 
 - name: clean
-  alias: c
   help: Deletes unreachable store objects for nix (wrapper over nix-collect-garbage)
 
   flags:
@@ -40,3 +32,7 @@ commands:
   examples:
   - gab clean
   - gab clean -d
+
+
+- name: completions
+  help: Loads completions in your shell
