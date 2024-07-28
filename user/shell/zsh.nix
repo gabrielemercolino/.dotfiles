@@ -20,6 +20,16 @@ in
     syntaxHighlighting.enable = true;
    
     autosuggestion.enable = true;
+
+    enableCompletion = true;
+    initExtra = ''
+      # needed to load gab cli completions
+      autoload -U bashcompinit && bashcompinit
+      touch /tmp/gab_completions
+      gab completions > /tmp/gab_completions
+      source /tmp/gab_completions
+      rm /tmp/gab_completions
+    '';
   };
 
   home.packages = [pkgs.eza];
