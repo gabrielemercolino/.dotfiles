@@ -124,7 +124,7 @@ in
             "headphone" = "";
             "default" = [ "" "" "" ];
           };
-          "on-click" = "pavucontrol";
+          "on-click" = "pwvucontrol";
         };
 
         battery = {
