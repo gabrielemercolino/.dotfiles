@@ -37,6 +37,12 @@
     xdg-desktop-portal
     xdg-desktop-portal-gtk
     xdg-desktop-portal-hyprland
+
+    # for screenshots
+    grim
+    slurp
+    wl-screenrec
+    ffmpeg
   ];
   
   wayland.windowManager.hyprland.settings = {
@@ -61,6 +67,7 @@
       "$mainMod, Q, killactive," 
       "$mainMod, M, exit, "
       "$mainMod, V, togglefloating, "
+      "$mainMod, F, fullscreen, "
       
       "$mainMod, SPACE, exec, ${pkgs.rofi-wayland}/bin/rofi -show drun"
       #"$mainMod, SPACE, exec, ${pkgs.wofi}/bin/wofi --show drun"
@@ -90,7 +97,9 @@
 
       # apps
       "$mainMod, T, exec, ${pkgs.telegram-desktop}/bin/telegram-desktop"
-      #"$mainMod, C, exec, ${pkgs.vscodium}/bin/codium"
+
+      # screenshot
+      "$mainMod CONTROL_L, S, exec, wl-copy < $(gab screenshot -a)"
 
     ] ++ (
       # workspaces
@@ -107,7 +116,59 @@
           ])
         10)
       );
+
+    general = {
+      gaps_in = 5;
+      gaps_out = 20;
+      border_size = 2;
+      "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
+      "col.inactive_border" = "rgba(595959aa)";
+
+      layout = "dwindle";
+
+      # Please see https://wiki.hyprland.org/Configuring/Tearing/ before you turn this on
+      allow_tearing = false;
     };
+    
+    decoration = {
+      # See https://wiki.hyprland.org/Configuring/Variables/ for more
+
+      rounding = 10;
+    
+      blur = {
+        enabled = true;
+        size = 3;
+        passes = 1;
+      }; 
+
+      drop_shadow = "yes";
+      shadow_range = 4;
+      shadow_render_power = 3;
+      "col.shadow" = "rgba(1a1a1aee)";
+    };
+  
+    dwindle = {
+      # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
+      pseudotile = "yes"; # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
+      preserve_split = "yes"; # you probably want this
+    };
+
+    master= {
+      # See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
+      #new_is_master = true
+      new_status = "master";
+    };
+
+    gestures = {
+      # See https://wiki.hyprland.org/Configuring/Variables/ for more
+      workspace_swipe = "on";
+    };
+
+    misc = {
+      # See https://wiki.hyprland.org/Configuring/Variables/ for more
+      force_default_wallpaper = 0; # Set to 0 to disable the anime mascot wallpapers
+    };
+  };
 
   wayland.windowManager.hyprland.extraConfig = ''
 # See https://wiki.hyprland.org/Configuring/Monitors/
@@ -119,38 +180,6 @@ env = XCURSOR_SIZE,24
 exec-once = ${pkgs.waybar}/bin/waybar
 
 exec = ${pkgs.swaybg}/bin/swaybg -m fill -i ${config.stylix.image}
-
-general {
-    # See https://wiki.hyprland.org/Configuring/Variables/ for more
-
-    gaps_in = 5
-    gaps_out = 20
-    border_size = 2
-    col.active_border = rgba(33ccffee) rgba(00ff99ee) 45deg
-    col.inactive_border = rgba(595959aa)
-
-    layout = dwindle
-
-    # Please see https://wiki.hyprland.org/Configuring/Tearing/ before you turn this on
-    allow_tearing = false
-}
-
-decoration {
-    # See https://wiki.hyprland.org/Configuring/Variables/ for more
-
-    rounding = 10
-    
-    blur {
-        enabled = true
-        size = 3
-        passes = 1
-    }
-
-    drop_shadow = yes
-    shadow_range = 4
-    shadow_render_power = 3
-    col.shadow = rgba(1a1a1aee)
-}
 
 animations {
     enabled = yes
@@ -165,18 +194,6 @@ animations {
     animation = borderangle, 1, 8, default
     animation = fade, 1, 7, default
     animation = workspaces, 1, 6, default
-}
-
-dwindle {
-    # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
-    pseudotile = yes # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
-    preserve_split = yes # you probably want this
-}
-
-master {
-    # See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
-    #new_is_master = true
-    new_status = master
 }
 
 # For all categories, see https://wiki.hyprland.org/Configuring/Variables/
@@ -195,21 +212,5 @@ input {
 
     sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
 }
-
-gestures {
-    # See https://wiki.hyprland.org/Configuring/Variables/ for more
-    workspace_swipe = on
-}
-
-misc {
-    # See https://wiki.hyprland.org/Configuring/Variables/ for more
-    force_default_wallpaper = 0 # Set to 0 to disable the anime mascot wallpapers
-}
-
-# Example windowrule v1
-# windowrule = float, ^(kitty)$
-# Example windowrule v2
-# windowrulev2 = float,class:^(kitty)$,title:^(kitty)$
-# See https://wiki.hyprland.org/Configuring/Window-Rules/ for more
     '';
 }
