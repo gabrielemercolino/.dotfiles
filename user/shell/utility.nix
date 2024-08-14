@@ -7,6 +7,6 @@
     neofetch
     htop
     btop
-    pavucontrol
+    pwvucontrol
   ];
 }
