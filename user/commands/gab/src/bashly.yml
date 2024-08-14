@@ -36,3 +36,16 @@ commands:
 
 - name: completions
   help: Loads completions in your shell
+
+
+- name: screenshot
+  help: Takes a screenshot. Also prints the filename afterwards
+
+  flags:
+  - long: --area
+    short: -a
+    help: Makes you select the area with the mouse
+
+  examples:
+  - gab screenshot
+  - gab screenshot -a

@@ -2,6 +2,8 @@
   stdenv, 
   bashly, 
   installShellFiles, 
+  slurp,
+  grim
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -11,7 +13,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   nativeBuildInputs = [ installShellFiles ];
 
-  buildInputs = [ bashly ];
+  buildInputs = [ bashly slurp grim ];
 
   buildPhase = ''
     bashly add completions
