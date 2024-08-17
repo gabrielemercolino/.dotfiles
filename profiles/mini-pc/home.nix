@@ -14,4 +14,7 @@
     # general utilities
     ../../user/apps/utilities
   ];
+
+  # for amd gpus
+  nixpkgs.config.rocmSupport = true;
 }
