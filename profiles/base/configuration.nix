@@ -11,6 +11,7 @@
       (./. + "../../../system/wm"+("/"+userSettings.wm)+".nix")
       ../../system/style/stylix.nix
       ../../system/apps/nix-direnv.nix
+      ../../system/apps/corectrl.nix
     ];
 
   
@@ -84,4 +85,7 @@
   system.stateVersion = "23.11";
 
   nix.settings.experimental-features = ["nix-command" "flakes" ];
+  
+  # optimise after every rebuild (not gc) 
+  nix.settings.auto-optimise-store = true;
 }
