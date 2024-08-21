@@ -49,3 +49,10 @@ commands:
   examples:
   - gab screenshot
   - gab screenshot -a
+
+
+- name: dev
+  help: Creates a flake.nix and a .envrc in the current dir
+
+  examples:
+  - gab dev
