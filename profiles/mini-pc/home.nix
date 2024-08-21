@@ -4,6 +4,9 @@
   imports = [
     ../base/home.nix
 
+    # gaming
+    ../../user/gaming/mangohud.nix
+
     # editors
     ../../user/apps/editors/jetbrains.nix
     ../../user/apps/editors/zed.nix
