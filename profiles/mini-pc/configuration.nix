@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -20,4 +20,6 @@
 
   # for amd gpus
   nixpkgs.config.rocmSupport = true;
+
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 }
