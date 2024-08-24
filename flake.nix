@@ -11,7 +11,7 @@
    
     nixvim = {
       url = "github:gabrielemercolino/.nixvim";
-      #inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     
     stylix.url = "github:danth/stylix";
@@ -19,6 +19,11 @@
     spicetify-nix = {
       url = "github:Gerg-L/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      follows = "nixpkgs";
     };
   };
 
@@ -52,8 +57,6 @@
       wm = "hyprland";
       browser = "chrome";
       terminal = "kitty";
-
-      theme = "catppuccin-mocha";
 
       # TODO: make it easier to use
       font = "JetBrainsMono Nerd Font"; # Selected font

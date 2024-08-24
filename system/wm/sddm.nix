@@ -1,4 +1,4 @@
-{ pkgs, userSettings, ... }:
+{ pkgs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
@@ -7,14 +7,14 @@
   ]; 
 
   services = {
-    displayManager.sddm = {
-      enable = true;
-      enableHidpi = true;
-      wayland.enable = true;
-      autoNumlock = true;
-      package = pkgs.sddm; 
-
-      theme = "${ import (./. + ("../../../themes/" + userSettings.theme + "/sddm-theme.nix")) { inherit pkgs; } }";
-    };    
+    displayManager = {
+      sddm = {
+        enable = true;
+        enableHidpi = true;
+        wayland.enable = true;
+        autoNumlock = true;
+        package = pkgs.sddm; 
+      };
+    };
   };
 }
