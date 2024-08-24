@@ -10,7 +10,7 @@
   ../../user/apps/git
   ../../user/apps/social
   ../../user/apps/editors/nixvim.nix
-  ../../user/style/stylix.nix
+  ../../user/style
  ];  
 
   nixpkgs.config = {

@@ -9,7 +9,7 @@
       ../../system/services
       ../../system/fonts
       (./. + "../../../system/wm"+("/"+userSettings.wm)+".nix")
-      ../../system/style/stylix.nix
+      ../../system/style
       ../../system/apps/nix-direnv.nix
       ../../system/apps/corectrl.nix
     ];
