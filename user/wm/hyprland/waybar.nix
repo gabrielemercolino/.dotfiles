@@ -228,7 +228,7 @@ in
         margin-left: 5px;
         font-size: 15px;
         border-radius: 8px 0px 0px 8px;
-        color: #1793d1;
+        color: #${colors.base0D};
       }
 
       #memory,
