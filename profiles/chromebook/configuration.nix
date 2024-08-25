@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -7,4 +7,6 @@
     # development
     ../../system/virtualization/docker.nix
   ];
+
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 }
