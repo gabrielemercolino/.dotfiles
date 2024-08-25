@@ -1,9 +1,8 @@
-{ config, pkgs, systemSettings, ... }:
+{ pkgs, systemSettings, ... }:
 
 {
   imports = [
     ./pipewire.nix
-    #./pulseaudio.nix
     ./sddm.nix
   ];
 
@@ -17,10 +16,6 @@
         layout = systemSettings.keyLayout;
       };
       enable = true;
-      #displayManager.gdm = {
-      #  enable = true;
-      #  wayland = true;
-      #};
     };
   };
 }
