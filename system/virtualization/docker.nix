@@ -1,4 +1,4 @@
-{ systemSettings, userSettings, ... }: 
+{ userSettings, ... }: 
 
 {
   virtualisation.docker.enable = true;
