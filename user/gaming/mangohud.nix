@@ -27,6 +27,7 @@
       gpu_core_clock = true;
       gpu_mem_clock = true;
       gpu_temp = true;
+      gpu_power = true;
     };
   };
 
