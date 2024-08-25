@@ -30,6 +30,7 @@ in
     stylix.base16Scheme = ../../themes + "/${cfg.theme}.yaml";
     stylix.image = cfg.background;
 
+    stylix.targets.mangohud.enable = false;
   };
 
 }
