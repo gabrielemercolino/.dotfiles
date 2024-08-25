@@ -1,4 +1,4 @@
-{ config, pkgs, userSettings, systemSettings, ... }:
+{ pkgs, userSettings, systemSettings, ... }:
 
 {
   imports =
@@ -8,7 +8,7 @@
       (./. + "../../../system/shell"+("/"+systemSettings.shell)+".nix")
       ../../system/services
       ../../system/fonts
-      (./. + "../../../system/wm"+("/"+userSettings.wm)+".nix")
+      (../../system/wm + ("/" + userSettings.wm))
       ../../system/style
       ../../system/apps/nix-direnv.nix
       ../../system/apps/corectrl.nix

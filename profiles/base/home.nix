@@ -1,10 +1,10 @@
-{ pkgs, userSettings, ... }:
+{ userSettings, ... }:
 
 {
   imports = [
 	../../user/shell
   ../../user/commands/gab
-	(./. + ("../../../user/wm/"+userSettings.wm))
+	(../../user/wm + ("/" + userSettings.wm))
 	(./. + ("../../../user/apps/browsers/"+userSettings.browser)+".nix")
 	(./. + ("../../../user/apps/terminal/"+userSettings.terminal)+".nix")
   ../../user/apps/git
@@ -30,9 +30,7 @@
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = with pkgs; [
-  	
-  ];
+  home.packages = [];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
