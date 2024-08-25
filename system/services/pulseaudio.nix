@@ -1,4 +1,4 @@
-{ config, pkgs, userSettings, ... }:
+{ userSettings, ... }:
 
 {
   hardware.pulseaudio.enable = true;
