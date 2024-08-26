@@ -570,9 +570,6 @@
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
         "nixvim": "nixvim",
-        "sops-nix": [
-          "nixpkgs"
-        ],
         "spicetify-nix": "spicetify-nix",
         "stylix": "stylix"
       }
