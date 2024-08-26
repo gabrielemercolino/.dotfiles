@@ -97,7 +97,7 @@ in
         };
 
         network = {
-          "format-wifi" = "{icon}";
+          "format-wifi" = " {icon} ";
           "format-icons" = ["󰤯" "󰤟" "󰤢" "󰤥" "󰤨"];
           "format-ethernet" = "󰀂";
 	        "format-alt" = "󱛇";
@@ -117,11 +117,11 @@ in
           "tooltip-format" = "Volume : {volume}%";
           "format" = "{icon}";
           "format-bluetooth" = "";
-          "format-muted" = "󰸈";
+          "format-muted" = "  ";
           "format-source" = "{volume}% ";
-          "format-source-muted" = " ";
+          "format-source-muted" = " ";
           "format-icons" = {
-            "headphone" = "";
+            "headphone" = " ";
             "default" = [ "" "" "" ];
           };
           "on-click" = "pwvucontrol";
