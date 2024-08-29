@@ -31,6 +31,10 @@ in
     stylix.image = cfg.background;
 
     stylix.targets.mangohud.enable = false;
+
+    # config.lib needed as 'normal' lib is from nix but config.lib is from home-manager
+    # and mkLiteral is present only in home-manager
+    programs.rofi.theme = lib.mkForce (import ./rofi-theme.nix { inherit config; } );
   };
 
 }
