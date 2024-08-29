@@ -1,9 +1,9 @@
-{...}:
+{ pkgs, ... }:
 
 {
   imports = [
     ./gimp.nix
-    #./ranger.nix
     ./yazi.nix
+    (import ./rofi.nix { inherit pkgs; wayland = true; })
   ];
 }
