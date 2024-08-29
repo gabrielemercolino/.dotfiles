@@ -75,8 +75,8 @@
       focus_follows_pointer = true;
       borderless_monocle = true;
       gapless_monocle = true;
-      focused_border_color = "#302D41";
-      normal_border_color = "#1e1e28";
+      #focused_border_color = "#302D41";
+      #normal_border_color = "#1e1e28";
     };
   }; 
 }
