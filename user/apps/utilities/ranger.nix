@@ -1,7 +1,0 @@
-{ ... }:
-
-{
-  programs.ranger = {
-    enable = true;
-  };
-}
