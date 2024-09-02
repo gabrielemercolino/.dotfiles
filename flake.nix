@@ -139,6 +139,7 @@
           inherit systemSettings;
           inherit inputs;
           inherit outputs;
+          inherit spicetify-nix;
 
           inherit (inputs) stylix;
         };
