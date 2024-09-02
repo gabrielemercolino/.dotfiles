@@ -1,22 +1,26 @@
 { config, pkgs, lib, ... }:
 
 let
-  defaultDestinationDir = "${config.home.homeDirectory}/Music";
+  defaultTrackDir = "${config.home.homeDirectory}/Music";
 
-  downloadSingleVideo = video:
+  downloadTrack = track:
     let
-      url = if builtins.isString video then video else video.url;
-      destinationDir = if builtins.isString video then defaultDestinationDir else video.destinationDir or defaultDestinationDir;
-      fileName = if builtins.isString video then "%(title)s" else video.fileName or "%(title)s";   
+      url = if builtins.isString track then track else track.url;
+      destinationDir = if builtins.isString track then defaultTrackDir else track.destinationDir or defaultTrackDir;
+      fileName = if builtins.isString track then "%(title)s" else track.fileName or "%(title)s";
     in
     ''
       mkdir -p ${destinationDir}
       cd ${destinationDir}
-      tempFileName=$(${pkgs.yt-dlp}/bin/yt-dlp --skip-download --get-filename -o "${fileName}" ${url})
-      [ -f "$tempFileName" ] || ${pkgs.yt-dlp}/bin/yt-dlp --extract-audio --audio-format m4a --embed-thumbnail -o "${fileName}.m4a" ${url}
+      tempFileName=$(${pkgs.yt-dlp}/bin/yt-dlp --skip-download --get-filename -o "${fileName}.m4a" ${url})
+      if [ -f "$tempFileName" ]; then 
+        echo "Track $tempFileName already present, skipping"
+      else
+        ${pkgs.yt-dlp}/bin/yt-dlp --extract-audio --audio-format m4a --embed-thumbnail --quiet --progress --progress-template "download-title:%(info.id)s-%(progress.eta)s" -o "${fileName}.m4a" ${url}
+      fi
     '';
 
-  downloadYoutubeVideos = videoList: builtins.concatStringsSep "\n" (map (video: downloadSingleVideo video) videoList);
+  downloadTracks = videoList: builtins.concatStringsSep "\n" (map (video: downloadTrack video) videoList);
 
   tracks = [
     {
@@ -31,7 +35,7 @@ let
 
 in
 {
-  home.activation.downloadYoutubeVideos = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    ${downloadYoutubeVideos tracks}
+  home.activation.downloadTracks = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    ${downloadTracks tracks}
   '';
 }
