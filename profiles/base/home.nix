@@ -2,16 +2,25 @@
 
 {
   imports = [
-	../../user/shell
-  ../../user/commands/gab
-	(../../user/wm + ("/" + userSettings.wm))
-	(./. + ("../../../user/apps/browsers/"+userSettings.browser)+".nix")
-	(./. + ("../../../user/apps/terminal/"+userSettings.terminal)+".nix")
-  ../../user/apps/git
-  ../../user/apps/social
-  ../../user/apps/editors/nixvim.nix
-  ../../user/style
- ];  
+	  ../../user/shell
+    ../../user/commands/gab
+
+	  (../../user/wm + ("/" + userSettings.wm))
+	  
+    (../../user/apps/browsers + ("/" + userSettings.browser)+".nix")
+	  (../../user/apps/terminal + ("/"+userSettings.terminal)+".nix")
+    ../../user/apps/git
+    ../../user/apps/social
+
+    # Base editor
+    ../../user/apps/editors/nixvim.nix
+
+
+    ../../user/style
+
+      # music
+    ../../user/apps/music/tracks.nix
+  ];  
 
   nixpkgs.config = {
     allowUnfree = true;
