@@ -9,5 +9,8 @@
 
     # utilities
     ../../user/apps/utilities
+
+    # music
+    ../../user/apps/music/spicetify.nix
   ];
 }
