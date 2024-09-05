@@ -22,7 +22,7 @@ in
     location =  mkLiteral "center";
     anchor =  mkLiteral "center";
     fullscreen = false;
-    width = mkLiteral "400px";
+    width = mkLiteral "500px";
     x-offset = mkLiteral "0px";
     y-offset = mkLiteral "0px";
 
