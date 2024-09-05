@@ -32,8 +32,7 @@
   } @ inputs: let
     inherit (self) outputs;
     
-    systemSettings = rec {
-      system = "x86_64-linux";
+    systemSettings = {
       hostName = "nixos";
       shell = "zsh";
 
@@ -45,26 +44,21 @@
       locale = "it_IT.UTF-8";
     };
 
-    userSettings = rec {
+    userSettings = {
       userName = "gabriele";
       name = "Gabriele";
 
       wm = "hyprland";
       browser = "chrome";
       terminal = "kitty";
-
-      # TODO: make it easier to use
-      font = "JetBrainsMono Nerd Font"; # Selected font
-      fontPkg = (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; }); # Font package
     };
 
     lib = nixpkgs.lib;
-    pkgs = import nixpkgs {system = systemSettings.system;};
-    
+
   in {
     nixosConfigurations = {
       base = lib.nixosSystem {
-        system = systemSettings.system;
+        system = "x86_64-linux";
         modules = [ ./profiles/base/configuration.nix ];
         specialArgs = {
           inherit userSettings;
@@ -77,7 +71,7 @@
       };
 
       mini-pc = lib.nixosSystem {
-        system = systemSettings.system;
+        system = "x86_64-linux";
         modules = [ ./profiles/mini-pc/configuration.nix ];
         specialArgs = {
           inherit userSettings;
@@ -90,7 +84,7 @@
       };
 
       chromebook = lib.nixosSystem {
-        system = systemSettings.system;
+        system = "x86_64-linux";
         modules = [ ./profiles/chromebook/configuration.nix ];
         specialArgs = {
           inherit userSettings;
@@ -105,7 +99,7 @@
 
     homeConfigurations = {
       base = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
+        pkgs = import nixpkgs {system = "x86_64-linux";};
         modules = [ ./profiles/base/home.nix ];
         extraSpecialArgs = {
           inherit userSettings;
@@ -118,7 +112,8 @@
       };
 
       mini-pc = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
+        pkgs = import nixpkgs {system = "x86_64-linux";};
+
         modules = [ ./profiles/mini-pc/home.nix ];
         extraSpecialArgs = {
           inherit userSettings;
@@ -132,7 +127,7 @@
       };
 
       chromebook = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
+        pkgs = import nixpkgs {system = "x86_64-linux";};
         modules = [ ./profiles/chromebook/home.nix ];
         extraSpecialArgs = {
           inherit userSettings;
