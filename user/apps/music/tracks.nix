@@ -8,15 +8,17 @@ let
       url = if builtins.isString track then track else track.url;
       destinationDir = if builtins.isString track then defaultTrackDir else track.destinationDir or defaultTrackDir;
       fileName = if builtins.isString track then "%(title)s" else track.fileName or "%(title)s";
+      format = if builtins.isString track then "m4a" else track.format or "m4a";
     in
     ''
       mkdir -p ${destinationDir}
       cd ${destinationDir}
-      tempFileName=$(${pkgs.yt-dlp}/bin/yt-dlp --skip-download --get-filename -o "${fileName}.m4a" ${url})
+      tempFileName=$(${pkgs.yt-dlp}/bin/yt-dlp --skip-download --get-filename -o "${fileName}.${format}" ${url})
       if [ -f "$tempFileName" ]; then 
-        echo "Track $tempFileName already present, skipping"
+        printf "\033[32;1mskipping $tempFileName \033[0m\n"
       else
-        ${pkgs.yt-dlp}/bin/yt-dlp --extract-audio --audio-format m4a --embed-thumbnail --quiet --progress --progress-template "download-title:%(info.id)s-%(progress.eta)s" -o "${fileName}.m4a" ${url}
+        printf "\033[33;1mdownloading $tempFileName \033[0m\n"
+        ${pkgs.yt-dlp}/bin/yt-dlp --extract-audio --audio-format ${format} --embed-thumbnail --quiet --progress --progress-template "download-title:%(info.id)s-%(progress.eta)s" -o "${fileName}.%(ext)s" ${url}
       fi
     '';
 
