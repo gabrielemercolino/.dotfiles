@@ -1,12 +1,14 @@
 delete_old=${args[--delete-old]}
 
-TIMESPAN="30d"
+TIMESPAN="7d"
+
+# sudo is for system
+# without sudo is for home-manager
 
 if [[ $delete_old ]]; then
-  # for system packages
-  sudo nix-collect-garbage --delete-older-than $TIMESPAN
-  # for home-manager
-  nix-collect-garbage --delete-older-than $TIMESPAN
+  sudo nix-collect-garbage -d
+  nix-collect-garbage -d
 else
-  nix-collect-garbage
+  sudo nix-collect-garbage --delete-older-than $TIMESPAN
+  nix-collect-garbage --delete-older-than $TIMESPAN
 fi

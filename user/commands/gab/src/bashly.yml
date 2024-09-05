@@ -22,12 +22,12 @@ commands:
 
 
 - name: clean
-  help: Deletes unreachable store objects for nix (wrapper over nix-collect-garbage)
+  help: Deletes unreachable store objects and generations older than 7 days (wrapper over nix-collect-garbage)
 
   flags:
-  - long: --delete-old
+  - long: --delete-old 
     short: -d
-    help: Deletes also generations older than 30 days
+    help: Deletes all old profiles
 
   examples:
   - gab clean
