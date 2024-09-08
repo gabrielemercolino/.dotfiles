@@ -1,4 +1,4 @@
-{lib, pkgs, systemSettings, userSettings, ... }:
+{lib, pkgs, systemSettings, ... }:
 
 let
   baseEnv = {
