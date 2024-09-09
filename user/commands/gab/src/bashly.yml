@@ -11,12 +11,10 @@ commands:
      help: what config to use
      required: true
      allowed:
-        - base
         - mini-pc
         - chromebook
   
   examples:
-  - gab sync base
   - gab sync mini-pc
   - gab sync chromebook
 
