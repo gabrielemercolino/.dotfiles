@@ -5,9 +5,7 @@
     ../base/configuration.nix
 
     # gaming
-    ../../system/gaming/steam.nix
-    ../../system/gaming/gamescope.nix
-    ../../system/gaming/gamemode.nix
+    ../../system/gaming
 
     # control
     ../../system/apps/lact.nix
@@ -21,4 +19,8 @@
   # for amd gpus
   boot.initrd.kernelModules = [ "amdgpu" ];
   nixpkgs.config.rocmSupport = true;
+
+  gab.gaming.steam = true;
+  gab.gaming.gamemode = true;
+  gab.gaming.gamescope = true;
 }
