@@ -60,19 +60,6 @@
 
   in {
     nixosConfigurations = {
-      base = lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [ ./profiles/base/configuration.nix ];
-        specialArgs = {
-          inherit userSettings;
-          inherit systemSettings;
-          inherit inputs;
-          inherit outputs;
-
-          inherit (inputs) stylix;
-        };
-      };
-
       mini-pc = lib.nixosSystem {
         system = "x86_64-linux";
         modules = [ ./profiles/mini-pc/configuration.nix ];
@@ -101,19 +88,6 @@
     };
 
     homeConfigurations = {
-      base = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs {system = "x86_64-linux";};
-        modules = [ ./profiles/base/home.nix ];
-        extraSpecialArgs = {
-          inherit userSettings;
-          inherit systemSettings;
-          inherit inputs;
-          inherit outputs;
-
-          inherit (inputs) stylix;
-        };
-      };
-
       mini-pc = home-manager.lib.homeManagerConfiguration {
         pkgs = import nixpkgs {system = "x86_64-linux";};
 
