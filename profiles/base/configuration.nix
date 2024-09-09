@@ -45,7 +45,7 @@
   };
 
   # Configure console keymap
-  console.keyMap = systemSettings.keyLayout;
+  console.keyMap = systemSettings.kb.layout;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${userSettings.userName} = {

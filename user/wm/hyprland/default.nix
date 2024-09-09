@@ -198,7 +198,7 @@ animations {
 
 # For all categories, see https://wiki.hyprland.org/Configuring/Variables/
 input {
-    kb_layout = ${systemSettings.keyLayout}
+    kb_layout = ${systemSettings.kb.layout}
     kb_variant =
     kb_model =
     kb_options =

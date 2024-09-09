@@ -38,7 +38,10 @@
 
       dotfiles = "~/.dotfiles";
 
-      keyLayout = "it";
+      kb = {
+        layout = "it";
+        variation = "";
+      };
 
       timeZone = "Europe/Rome";
       locale = "it_IT.UTF-8";

@@ -13,7 +13,7 @@
     xserver = {
       xkb = {
         variant = "";
-        layout = systemSettings.keyLayout;
+        layout = systemSettings.kb.layout;
       };
       enable = true;
     };
