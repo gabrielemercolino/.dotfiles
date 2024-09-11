@@ -50,6 +50,7 @@
     userSettings = {
       userName = "gabriele";
       name = "Gabriele";
+      email = "gmercolino2003@gmail.com";
 
       wm = "hyprland";
       browser = "chrome";
