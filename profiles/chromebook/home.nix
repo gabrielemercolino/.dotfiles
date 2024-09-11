@@ -5,12 +5,11 @@
     ../base/home.nix
 
     # editors
-    ../../user/apps/editors/jetbrains.nix
+    ../../user/apps/editors
 
     # utilities
     ../../user/apps/utilities
-
-    # music
-    ../../user/apps/music/spicetify.nix
   ];
+
+  gab.editors.intellij = true;
 }
