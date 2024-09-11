@@ -12,15 +12,10 @@
     ../../user/apps/git
     ../../user/apps/social
 
-    # Base editor
-    ../../user/apps/editors/nixvim.nix
-
+    ../../user/apps/editors
 
     ../../user/style
-
-      # music
-    ../../user/apps/music/tracks.nix
-  ];  
+  ];
 
   nixpkgs.config = {
     allowUnfree = true;
