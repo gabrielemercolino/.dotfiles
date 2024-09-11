@@ -1,5 +1,8 @@
 { config, pkgs, userSettings, systemSettings, ... }:
 
+let
+  restartWaybar = "pkill waybar || true && ${pkgs.waybar}/bin/waybar";
+in
 {
   imports = [
     ./waybar.nix
@@ -76,7 +79,7 @@
       "$mainMod, J, togglesplit,"
       
       # reload waybar
-      "$mainMod, W, exec, pkill .waybar-wrapped && ${pkgs.waybar}/bin/waybar"
+      "$mainMod, W, exec, ${restartWaybar}"
 
       # Override power-off and reboot commands
       "$mainMod SHIFT, R, exec, systemctl reboot"
@@ -177,8 +180,7 @@ monitor=,highres,auto,1
 # Some default env vars.
 env = XCURSOR_SIZE,24
 
-exec-once = ${pkgs.waybar}/bin/waybar
-
+exec-once = ${restartWaybar}
 exec = ${pkgs.swaybg}/bin/swaybg -m fill -i ${config.stylix.image}
 
 animations {
