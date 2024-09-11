@@ -13,13 +13,13 @@ in
         sha256 = "sha256-e1RBd5gTBonG39gYmxCvJuf+qZOiuxeZ9LTjhPQB9vk=";
       };
       type = lib.types.path;
-      description = lib.mcDoc "The image to use for background";
+      description = "The image to use for background";
     };
 
     theme = lib.mkOption {
       default = "catppuccin-mocha";
       type = lib.types.str;
-      description = lib.mcDoc "The theme to use";
+      description = "The theme to use";
     };
   };
 
