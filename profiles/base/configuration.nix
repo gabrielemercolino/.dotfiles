@@ -4,7 +4,6 @@
   imports =
     [
       ../../system/hardware-configuration.nix
-      ../../system/hardware
       (./. + "../../../system/shell"+("/"+systemSettings.shell)+".nix")
       ../../system/services
       ../../system/fonts
@@ -13,7 +12,9 @@
       ../../system/apps/nix-direnv.nix
       ../../system/apps/corectrl.nix
     ];
-
+  
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
   
   networking.hostName = systemSettings.hostName; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -52,7 +53,7 @@
     isNormalUser = true;
     description = userSettings.name;
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [];
+    packages = [];
   };
 
 
@@ -60,27 +61,10 @@
   nixpkgs.config = {
     allowUnfree = true;
     allowUnfreePredicate = (_ : true);
-    permittedInsecurePackages = [
-      #"openssl-1.1.1w"  # for sublime
-    ];
+    permittedInsecurePackages = [];
   };
 
-  environment.systemPackages = with pkgs; [ git ];
-  
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  environment.systemPackages = [ pkgs.git ];
 
   system.stateVersion = "23.11";
 
