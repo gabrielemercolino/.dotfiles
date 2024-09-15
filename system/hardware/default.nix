@@ -14,7 +14,7 @@ in
   config = {
     assertions = [
       {
-        assertion = cfg.pipewire && cfg.pulseaudio;
+        assertion = !(cfg.pipewire && cfg.pulseaudio);
         message = "Error: cannot activate both pipewire and pulseaudio";
       }
     ];
@@ -23,7 +23,8 @@ in
     hardware.graphics = {
       enable = true;
       enable32Bit = true;
-      extraPackages = lib.optionals cfg.amdvlk [ pkgs.amdvlk ];
+      extraPackages = [ pkgs.libvdpau-va-gl ] # for hardware acceleration
+                      ++ lib.optionals cfg.amdvlk [ pkgs.amdvlk ];
       extraPackages32 = lib.optionals cfg.amdvlk [ pkgs.driversi686Linux.amdvlk ];
     };
 
