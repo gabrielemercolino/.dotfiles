@@ -1,10 +1,11 @@
-{ pkgs, ... }:
+{ pkgs, userSettings, ... }:
 
 {
   imports = [
     ../base/configuration.nix
 
-    # gaming
+    ../../system/hardware
+
     ../../system/gaming
 
     # control
@@ -15,6 +16,10 @@
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  
+  gab.hardware.bluetooth = true;
+  gab.hardware.pipewire = true;
+  gab.hardware.amdvlk = true;
 
   # for amd gpus
   boot.initrd.kernelModules = [ "amdgpu" ];
@@ -23,4 +28,12 @@
   gab.gaming.steam = true;
   gab.gaming.gamemode = true;
   gab.gaming.gamescope = true;
+
+  # Some games are installed in the G: partition
+  boot.supportedFilesystems = [ "ntfs" ];
+  fileSystems."/home/gabriele/Games/Steam" = { 
+    device = "/dev/disk/by-label/G";
+    fsType = "ntfs-3g";
+    options = [ "rw" "uid=${userSettings.userName}" "nofail"];
+  };
 }
