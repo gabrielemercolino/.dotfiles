@@ -1,4 +1,4 @@
-{ pkgs, systemSettings, ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -8,13 +8,5 @@
 	environment.systemPackages = [ pkgs.wayland ];
 
   # Configure xwayland
-  services = {
-    xserver = {
-      xkb = {
-        variant = "";
-        layout = systemSettings.kb.layout;
-      };
-      enable = true;
-    };
-  };
+  services.xserver.enable = true;
 }
