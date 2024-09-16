@@ -20,6 +20,9 @@
   gab.hardware.bluetooth = true;
   gab.hardware.pipewire = true;
   gab.hardware.amdvlk = true;
+  gab.hardware.i18n.locale = "it_IT.UTF-8";
+  gab.hardware.keyboard.layout = "it";
+  gab.hardware.time.automatic = true;
 
   # for amd gpus
   boot.initrd.kernelModules = [ "amdgpu" ];

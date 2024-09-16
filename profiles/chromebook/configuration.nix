@@ -14,6 +14,9 @@
   
   gab.hardware.bluetooth = true;
   gab.hardware.pipewire = true;
+  gab.hardware.i18n.locale = "it_IT.UTF-8";
+  gab.hardware.keyboard.layout = "it";
+  gab.hardware.time.timeZone = "Europe/Rome";
 
   # I'm not building hyprland on a Pentium 💀
   nix.settings = {
