@@ -26,8 +26,6 @@
     self,
     nixpkgs,
     home-manager,
-    stylix,
-    spicetify-nix,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -38,13 +36,14 @@
 
       dotfiles = "~/.dotfiles";
 
+      # TODO: remove
       kb = {
         layout = "it";
         variation = "";
       };
 
+      ## TODO: remove
       timeZone = "Europe/Rome";
-      locale = "it_IT.UTF-8";
     };
 
     userSettings = {
@@ -69,8 +68,6 @@
           inherit systemSettings;
           inherit inputs;
           inherit outputs;
-
-          inherit (inputs) stylix;
         };
       };
 
@@ -82,8 +79,6 @@
           inherit systemSettings;
           inherit inputs;
           inherit outputs;
-
-          inherit (inputs) stylix;
         };
       };
     };
@@ -98,9 +93,6 @@
           inherit systemSettings;
           inherit inputs;
           inherit outputs;
-          inherit spicetify-nix;
-
-          inherit (inputs) stylix;
         };
       };
 
@@ -112,9 +104,6 @@
           inherit systemSettings;
           inherit inputs;
           inherit outputs;
-          inherit spicetify-nix;
-
-          inherit (inputs) stylix;
         };
       };
 
