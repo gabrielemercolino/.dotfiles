@@ -1,10 +1,10 @@
-{ lib, config, stylix, pkgs, ... }:
+{ lib, config, inputs, pkgs, ... }:
 
 let
   cfg = config.gab.style;
 in
 {
-  imports = [ stylix.homeManagerModules.stylix ];  
+  imports = [ inputs.stylix.homeManagerModules.stylix ];  
   
   options.gab.style = {
     background = lib.mkOption {
