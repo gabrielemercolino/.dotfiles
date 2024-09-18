@@ -1,4 +1,4 @@
-{ config, lib, pkgs, systemSettings, userSettings, ... }:
+{ config, lib, pkgs, userSettings, ... }:
 
 let
   cfg = config.gab.gaming;
@@ -21,6 +21,9 @@ in
   };
 
   config = {
+    # needed to make the renice setting work 
+    users.users.${userSettings.userName}.extraGroups = lib.optionals cfg.gamemode [ "gamemode" ];
+
     programs.steam = {
       enable = cfg.steam;
       extraCompatPackages = [ pkgs.proton-ge-bin ];
@@ -36,13 +39,11 @@ in
         };
       };
     };
-    # neeed to make the renice setting work 
-    users.users.${userSettings.userName}.extraGroups = [ "gamemode" ];
-
+    
     programs.gamescope = {
       enable = cfg.gamescope;
       env = {
-        "XKB_DEFAULT_LAYOUT" = "${systemSettings.kb.layout}"; # IMPORTANT: gamescope uses american keyboard layout by default
+        "XKB_DEFAULT_LAYOUT" = config.services.xserver.xkb.layout; # IMPORTANT: gamescope uses american keyboard layout by default
 
         "-W" = "1980";  # window width
         "-H" = "1080";  # window height
