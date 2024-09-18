@@ -31,7 +31,5 @@ nix run home-manager/master --extra-experimental-features nix-command --extra-ex
 
 ## Credits
 
-| Config   | Link |
-| :------: | :----: |
-| Base     |[librephoenix](https://github.com/librephoenix/nixos-config)
-| Waybar   |[sameeul-haque](https://github.com/sameemul-haque/dotfiles)
+- [librephoenix](https://github.com/librephoenix/nixos-config)
+- [sameeul-haque](https://github.com/sameemul-haque/dotfiles)
