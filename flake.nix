@@ -41,9 +41,6 @@
         layout = "it";
         variation = "";
       };
-
-      ## TODO: remove
-      timeZone = "Europe/Rome";
     };
 
     userSettings = {
