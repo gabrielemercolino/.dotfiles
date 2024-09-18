@@ -9,8 +9,6 @@
       ../../system/fonts
       (../../system/wm + ("/" + userSettings.wm))
       ../../system/style
-      ../../system/apps/nix-direnv.nix
-      ../../system/apps/corectrl.nix
     ];
   
   boot.loader.systemd-boot.enable = true;

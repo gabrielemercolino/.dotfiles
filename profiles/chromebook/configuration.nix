@@ -5,9 +5,7 @@
     ../base/configuration.nix
     
     ../../system/hardware
-
-    # development
-    ../../system/virtualization/docker.nix
+    ../../system/apps
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -17,6 +15,9 @@
   gab.hardware.i18n.locale = "it_IT.UTF-8";
   gab.hardware.keyboard.layout = "it";
   gab.hardware.time.timeZone = "Europe/Rome";
+
+  gab.apps.dev.direnv = true;
+  gab.apps.dev.docker = true;
 
   # I'm not building hyprland on a Pentium 💀
   nix.settings = {
