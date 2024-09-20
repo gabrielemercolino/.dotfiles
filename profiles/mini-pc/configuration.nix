@@ -3,13 +3,16 @@
 {
   imports = [
     ../base/configuration.nix
-
-    ../../system/hardware
-    ../../system/apps
-    ../../system/gaming
+    ../../gab/nixos
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  # use zsh
+  users.defaultUserShell  = pkgs.zsh;
+  programs.zsh.enable     = true;
+
+  gab.login.sddm = true;
   
   gab.hardware.bluetooth  = true;
   gab.hardware.pipewire   = true;
@@ -18,6 +21,8 @@
   gab.hardware.keyboard.layout  = "it";
   gab.hardware.time.timeZone    = "Europe/Rome";
 
+  gab.apps.security.ssh     = true;
+  gab.apps.services.dbus    = true;
   gab.apps.control.corectrl = true;
   gab.apps.control.lact     = true;
   gab.apps.dev.direnv       = true;
