@@ -32,7 +32,6 @@
     
     systemSettings = {
       hostName = "nixos";
-      shell = "zsh";
 
       dotfiles = "~/.dotfiles";
 
@@ -55,55 +54,26 @@
 
     lib = nixpkgs.lib;
 
+    createNixosProfile = name: system: lib.nixosSystem {
+      inherit system;
+      modules = [ ./profiles/${name}/configuration.nix ];
+      specialArgs = { inherit userSettings systemSettings inputs outputs;};
+    };
+
+    createHomeProfile = name: system: home-manager.lib.homeManagerConfiguration { 
+      pkgs = import nixpkgs { inherit system; };
+      modules = [ ./profiles/${name}/home.nix ];
+      extraSpecialArgs = { inherit userSettings systemSettings inputs outputs; };
+    };
   in {
     nixosConfigurations = {
-      mini-pc = lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [ ./profiles/mini-pc/configuration.nix ];
-        specialArgs = {
-          inherit userSettings;
-          inherit systemSettings;
-          inherit inputs;
-          inherit outputs;
-        };
-      };
-
-      chromebook = lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [ ./profiles/chromebook/configuration.nix ];
-        specialArgs = {
-          inherit userSettings;
-          inherit systemSettings;
-          inherit inputs;
-          inherit outputs;
-        };
-      };
+      mini-pc     = createNixosProfile "mini-pc"     "x86_64-linux";
+      chromebook  = createNixosProfile "chromebook"  "x86_64-linux";
     };
 
     homeConfigurations = {
-      mini-pc = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs {system = "x86_64-linux";};
-
-        modules = [ ./profiles/mini-pc/home.nix ];
-        extraSpecialArgs = {
-          inherit userSettings;
-          inherit systemSettings;
-          inherit inputs;
-          inherit outputs;
-        };
-      };
-
-      chromebook = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs {system = "x86_64-linux";};
-        modules = [ ./profiles/chromebook/home.nix ];
-        extraSpecialArgs = {
-          inherit userSettings;
-          inherit systemSettings;
-          inherit inputs;
-          inherit outputs;
-        };
-      };
-
+      mini-pc     = createHomeProfile "mini-pc"     "x86_64-linux";
+      chromebook  = createHomeProfile "chromebook"  "x86_64-linux";
     };
   };
 }
