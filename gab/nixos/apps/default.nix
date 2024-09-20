@@ -56,6 +56,20 @@ in
         dbus = false;
       };
     };
+
+    wm = lib.mkOption {
+      type = with lib.types; submodule {
+        options = {
+          bspwm     = lib.mkEnableOption "bspwm";
+          hyprland  = lib.mkEnableOption "hyprland";
+        };
+
+        default = {
+          bspwm     = false;
+          hyprland  = false;
+        };
+      };
+    };
   };
 
   config = {
@@ -89,10 +103,20 @@ in
 
     # services related stuff
     services.dbus = {
-      enable = cfg.services.dbus;
-      packages = [ pkgs.dconf ];
+      enable    = cfg.services.dbus;
+      packages  = [ pkgs.dconf ];
     };
     programs.dconf.enable = cfg.services.dbus;
 
+    # wm related stuff
+    services.xserver.windowManager.bspwm = {
+      enable  = cfg.wm.bspwm;
+      package = pkgs.bspwm; 
+    };
+    programs.hyprland = {
+      enable          = cfg.wm.hyprland;
+      xwayland.enable = true;
+      portalPackage   = pkgs.xdg-desktop-portal-hyprland;
+    };
   };
 }
