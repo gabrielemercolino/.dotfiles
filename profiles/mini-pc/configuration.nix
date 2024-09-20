@@ -21,6 +21,7 @@
   gab.hardware.keyboard.layout  = "it";
   gab.hardware.time.timeZone    = "Europe/Rome";
 
+  gab.apps.wm.hyprland      = true;
   gab.apps.security.ssh     = true;
   gab.apps.services.dbus    = true;
   gab.apps.control.corectrl = true;
