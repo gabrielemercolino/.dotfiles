@@ -63,11 +63,11 @@ in
           bspwm     = lib.mkEnableOption "bspwm";
           hyprland  = lib.mkEnableOption "hyprland";
         };
+      };
 
-        default = {
-          bspwm     = false;
-          hyprland  = false;
-        };
+      default = {
+        bspwm     = false;
+        hyprland  = false;
       };
     };
   };
