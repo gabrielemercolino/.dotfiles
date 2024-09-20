@@ -32,6 +32,30 @@ in
         docker = false;
       };
     };
+
+    security = lib.mkOption {
+      type = with lib.types; submodule {
+        options = {
+          ssh = lib.mkEnableOption "ssh";
+        };
+      };
+
+      default = {
+        ssh = false;
+      };
+    };
+
+    services = lib.mkOption {
+      type = with lib.types; submodule {
+        options = {
+          dbus = lib.mkEnableOption "dbus";
+        };
+      };
+
+      default = {
+        dbus = false;
+      };
+    };
   };
 
   config = {
@@ -59,6 +83,16 @@ in
     # dev related stuff
     programs.direnv.enable = cfg.dev.direnv;
     virtualisation.docker.enable = cfg.dev.docker;
+
+    # security related stuff
+    services.openssh.enable = cfg.security.ssh;
+
+    # services related stuff
+    services.dbus = {
+      enable = cfg.services.dbus;
+      packages = [ pkgs.dconf ];
+    };
+    programs.dconf.enable = cfg.services.dbus;
 
   };
 }
