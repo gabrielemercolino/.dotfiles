@@ -3,21 +3,26 @@
 {
   imports = [
     ../base/configuration.nix
-    
-    ../../system/hardware
-    ../../system/apps
+    ../../gab
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  
-  gab.hardware.bluetooth = true;
-  gab.hardware.pipewire = true;
-  gab.hardware.i18n.locale = "it_IT.UTF-8";
-  gab.hardware.keyboard.layout = "it";
-  gab.hardware.time.timeZone = "Europe/Rome";
 
-  gab.apps.dev.direnv = true;
-  gab.apps.dev.docker = true;
+  # use zsh
+  users.defaultUserShell = [ pkgs.zsh ];
+
+  gab.login.sddm = true;
+
+  gab.hardware.bluetooth        = true;
+  gab.hardware.pipewire         = true;
+  gab.hardware.i18n.locale      = "it_IT.UTF-8";
+  gab.hardware.keyboard.layout  = "it";
+  gab.hardware.time.timeZone    = "Europe/Rome";
+
+  gab.apps.security.ssh   = true;
+  gab.apps.services.dbus  = true;
+  gab.apps.dev.direnv     = true;
+  gab.apps.dev.docker     = true;
 
   # I'm not building hyprland on a Pentium 💀
   nix.settings = {
