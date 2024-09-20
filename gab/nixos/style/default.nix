@@ -18,7 +18,7 @@ in
 
     theme = lib.mkOption {
       default = "catppuccin-mocha";
-      type = lib.types.str;
+      type = lib.types.enum [ "catppuccin-mocha" "uwunicorn" ];
       description = lib.mcDoc "The theme to use";
     };
   };
@@ -27,7 +27,7 @@ in
     stylix.enable = true;
     stylix.autoEnable = true;
 
-    stylix.base16Scheme = ../../themes + "/${cfg.theme}.yaml";
+    stylix.base16Scheme = ../../../themes + "/${cfg.theme}.yaml";
     stylix.image = cfg.background;
 
     services.displayManager.sddm.theme = lib.mkForce "${ import ./sddm-theme.nix { inherit pkgs; background  = cfg.background;} }";  

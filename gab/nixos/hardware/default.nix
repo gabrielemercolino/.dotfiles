@@ -120,6 +120,7 @@ in
 
     ## bluetooth
     hardware.bluetooth.enable = cfg.bluetooth;
+    services.blueman.enable = lib.mkDefault true; # provide bluetooth control with blueman by default
 
     ### pipewire
     security.rtkit.enable = true;  # rtkit is optional but recommended

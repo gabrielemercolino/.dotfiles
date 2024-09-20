@@ -8,14 +8,14 @@ in
     control = lib.mkOption {
       type = with lib.types; submodule {
         options = {
-          corectrl = lib.mkEnableOption "corectrl";
-          lact = lib.mkEnableOption "lact";
+          corectrl  = lib.mkEnableOption "corectrl";
+          lact      = lib.mkEnableOption "lact";
         };
       };
 
       default = {
-        corectrl = false;
-        lact = false;
+        corectrl  = false;
+        lact      = false;
       };
     }; 
 
@@ -49,10 +49,10 @@ in
 
     ## lact needs its daemon to properly work
     systemd.services.lact = {
-      enable = cfg.control.lact;
+      enable      = cfg.control.lact;
       description = "AMDGPU Control Daemon";
-      after = ["multi-user.target"];
-      wantedBy = ["multi-user.target"];
+      after       = ["multi-user.target"];
+      wantedBy    = ["multi-user.target"];
       serviceConfig.ExecStart = "${pkgs.lact}/bin/lact daemon";
     };
 
