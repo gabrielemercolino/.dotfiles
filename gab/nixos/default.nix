@@ -4,6 +4,7 @@ _:{
     ./fonts
     ./gaming
     ./hardware
+    ./login
     ./style
   ];
 }
