@@ -62,18 +62,6 @@ in
 
       description = "Options for setting time and time zone, including automatic time zone detection.";
     };
-
-    networking = lib.mkOption {
-      type = with lib.types; submodule {
-        options = {
-          hostName = lib.mkOption {
-            default = "nixos";
-            type = str;
-          };
-        };
-      };
-      default = { hostName = "nixos"; };
-    };
   };
 
   config = {
@@ -150,7 +138,7 @@ in
     time.hardwareClockInLocalTime = lib.mkDefault true; # needed for dual boot with windows but if not dual booting it doesn't hurt
 
     ## networking related settings
-    networking.hostName = lib.mkDefault cfg.networking.hostName;
+    networking.hostName = lib.mkDefault "nixos";
     networking.networkmanager.enable = lib.mkDefault true; # provide by default network access with networkmanager
   };
 }
