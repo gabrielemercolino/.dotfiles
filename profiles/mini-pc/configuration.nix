@@ -44,4 +44,6 @@
     fsType = "ntfs-3g";
     options = [ "rw" "uid=${userSettings.userName}" "nofail"];
   };
+
+  services.xserver.excludePackages = [ pkgs.xterm ];
 }
