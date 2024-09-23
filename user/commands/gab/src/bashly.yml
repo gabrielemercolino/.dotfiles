@@ -1,10 +1,10 @@
 name: gab
 help: Utility script for managing Nix
-version: 0.1.0
+version: 1.2
 
 commands:
 - name: sync
-  help: Syncronizes the system based on the config
+  help: Synchronizes the system based on the config
 
   args:
    - name: config
