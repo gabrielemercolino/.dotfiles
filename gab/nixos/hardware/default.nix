@@ -1,5 +1,7 @@
 { config, lib, pkgs, userSettings, ... }:
 
+with lib.types;
+
 let
   cfg = config.gab.hardware;
 in
@@ -10,57 +12,38 @@ in
     pipewire   = lib.mkEnableOption "pipewire";
     pulseaudio = lib.mkEnableOption "pulseaudio";
 
-    keyboard = lib.mkOption {
-      type = with lib.types; submodule {
-        options = {
-          layout = lib.mkOption {
-            default = null;
-            type = nullOr str;
-            description = "Keyboard layout";
-            example = "de";
-          };
-          variant = lib.mkOption {
-            default = "";
-            type = str;
-            description = "Keyboard variant";
-            example = "nodeadkeys";
-          };
-        };
+    keyboard = {
+      layout = lib.mkOption {
+        default = null;
+        type    = nullOr str;
+        description = "Keyboard layout";
+        example = "de";
+      };
+      variant = lib.mkOption {
+        default = "";
+        type    = str;
+        description = "Keyboard variant";
+        example = "nodeadkeys";
       };
     };
 
-    i18n = lib.mkOption {
-      type = with lib.types; submodule {
-        options = {
-          locale = lib.mkOption {
-            default = "en_US.UTF-8";
-            type = str;
-            description = "The default locale for the system";
-            example = "it_IT.UTF-8";
-          };
-        };
+    i18n = {
+      locale = lib.mkOption {
+        default = "en_US.UTF-8";
+        type = str;
+        description = "The default locale for the system";
+        example = "it_IT.UTF-8";
       };
     };
 
-    time = lib.mkOption {
-      type = with lib.types; submodule {
-        options = {
-          automatic = lib.mkOption {
-            default = false;
-            type = bool;
-            description = "Whether to automatically set the time zone based on current location.";
-            example = true;
-          };
-          timeZone = lib.mkOption {
-            default = null;
-            type = nullOr str;
-            description = "The time zone (e.g., 'Europe/Rome').";
-            example = "Europe/Rome";
-          };
-        };
+    time = {
+      automatic = lib.mkEnableOption "automatic time zone detection";
+      timeZone = lib.mkOption {
+        default = null;
+        type = nullOr str;
+        description = "The time zone";
+        example = "Europe/Rome";
       };
-
-      description = "Options for setting time and time zone, including automatic time zone detection.";
     };
   };
 
@@ -108,13 +91,13 @@ in
     };
 
     ### pulseaudio
-    hardware.pulseaudio.enable = cfg.pulseaudio;
+    hardware.pulseaudio.enable       = cfg.pulseaudio;
     hardware.pulseaudio.support32Bit = cfg.pulseaudio;
 
     ## keyboard related settings
     console.keyMap = cfg.keyboard.layout;
     services.xserver.xkb = {
-      layout = cfg.keyboard.layout;
+      layout  = cfg.keyboard.layout;
       variant = cfg.keyboard.variant;
     };
 

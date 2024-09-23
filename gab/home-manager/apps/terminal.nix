@@ -4,6 +4,12 @@ let
   cfg = config.gab.apps.terminal;
 in
 {
+  options.gab.apps.terminal = {
+    alacritty = lib.mkEnableOption "alacritty";
+    kitty     = lib.mkEnableOption "kitty";
+    warp      = lib.mkEnableOption "warp";
+  };
+
   config = {
     home.packages = lib.optionals cfg.warp [ pkgs.warp-terminal ];
 

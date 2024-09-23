@@ -5,56 +5,36 @@ let
 in
 {
   options.gab.apps = {
-    control = lib.mkOption {
-      type = with lib.types; submodule {
-        options = {
-          corectrl  = lib.mkEnableOption "corectrl";
-          lact      = lib.mkEnableOption "lact";
-        };
-      };
-    }; 
-
-    dev = lib.mkOption {
-      type = with lib.types; submodule {
-        options = {
-          direnv = lib.mkEnableOption "nix-direnv";
-          docker = lib.mkEnableOption "docker";
-        };
-      };
+    control = {
+      corectrl = lib.mkEnableOption "corectrl";
+      lact     = lib.mkEnableOption "lact";  
     };
 
-    security = lib.mkOption {
-      type = with lib.types; submodule {
-        options = {
-          ssh = lib.mkEnableOption "ssh";
-        };
-      };
+    dev = {
+      direnv = lib.mkEnableOption "direnv";
+      docker = lib.mkEnableOption "docker";
     };
 
-    services = lib.mkOption {
-      type = with lib.types; submodule {
-        options = {
-          dbus = lib.mkEnableOption "dbus";
-        };
-      };
+    security = {
+      ssh = lib.mkEnableOption "ssh";
     };
-
-    wm = lib.mkOption {
-      type = with lib.types; submodule {
-        options = {
-          bspwm     = lib.mkEnableOption "bspwm";
-          hyprland  = lib.mkEnableOption "hyprland";
-        };
-      };
+    
+    services = {
+      dbus = lib.mkEnableOption "dbus";
+    };
+    
+    wm = {
+      bspwm    = lib.mkEnableOption "bspwm";
+      hyprland = lib.mkEnableOption "hyprland";
     };
   };
 
   config = {
     users.users.${userSettings.userName}.extraGroups = lib.optionals cfg.control.corectrl [ "corectrl" ]
-                                                       ++ lib.optionals cfg.dev.docker [ "docker" ];
+                                                       ++ lib.optionals cfg.dev.docker    [ "docker" ];
 
     environment.systemPackages = lib.optionals cfg.control.corectrl [ pkgs.lm_sensors ] 
-                                 ++ lib.optionals cfg.control.lact [ pkgs.lact ];
+                                 ++ lib.optionals cfg.control.lact  [ pkgs.lact ];
 
     # Control related stuff
     programs.corectrl = {

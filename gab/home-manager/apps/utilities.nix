@@ -4,6 +4,14 @@ let
   cfg = config.gab.apps.utilities;
 in
 {
+  options.gab.apps.utilities = {
+    yazi = lib.mkEnableOption "yazi";
+    gimp = lib.mkEnableOption "gimp";
+  
+    rofi         = lib.mkEnableOption "rofi";
+    rofi-wayland = lib.mkEnableOption "rofy for wayland";
+  };
+
   config = {
     assertions = [
       {
