@@ -1,10 +1,7 @@
 file_name=~/Pictures/screenshot_$(date +%Y-%m-%d-%T).png
 area=${args[--area]}
 
-# ensure the target directory exists
-if [ ! -d "$HOME/Pictures" ]; then
-  mkdir $HOME/Pictures
-fi
+mkdir -p $HOME/Pictures
 
 if [ $area ]; then
   # slurp to capture area
