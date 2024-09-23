@@ -90,10 +90,13 @@
               { url = "https://www.youtube.com/watch?v=Jrg9KxGNeJY"; }
               { url = "https://www.youtube.com/watch?v=Jrg9KxGNeJY"; path = "${config.home.homeDirectory}/some/other/dir"; fileName = "Definitely not Bury the Light"; format = "mp3"; }
             ];
+
+            default = [];
           };
           spotify = lib.mkEnableOption "spotify (with spicetify)";
         };
       };
+      default = {};
     };
 
     utilities = lib.mkOption {
