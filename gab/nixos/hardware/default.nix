@@ -5,10 +5,11 @@ let
 in
 {
   options.gab.hardware = {
-    amdvlk = lib.mkEnableOption "amdvlk drivers";
-    bluetooth = lib.mkEnableOption "bluetooth";
-    pipewire = lib.mkEnableOption "pipewire";
+    amdvlk     = lib.mkEnableOption "amdvlk drivers";
+    bluetooth  = lib.mkEnableOption "bluetooth";
+    pipewire   = lib.mkEnableOption "pipewire";
     pulseaudio = lib.mkEnableOption "pulseaudio";
+
     keyboard = lib.mkOption {
       type = with lib.types; submodule {
         options = {
@@ -26,12 +27,8 @@ in
           };
         };
       };
-
-      default = {
-        layout = null;
-        variant = "";
-      };
     };
+
     i18n = lib.mkOption {
       type = with lib.types; submodule {
         options = {
@@ -43,11 +40,8 @@ in
           };
         };
       };
-
-      default = {
-        locale = "en_US.UTF-8";
-      };
     };
+
     time = lib.mkOption {
       type = with lib.types; submodule {
         options = {
@@ -66,27 +60,19 @@ in
         };
       };
 
-      default = {
-        automatic = false;
-        timeZone = null;
-      };
-
       description = "Options for setting time and time zone, including automatic time zone detection.";
     };
-    networking = lib.mkOption {  
+
+    networking = lib.mkOption {
       type = with lib.types; submodule {
         options = {
           hostName = lib.mkOption {
             default = "nixos";
             type = str;
-            description = "The host name";
           };
         };
       };
-
-      default = { 
-        hostName = "nixos";
-      };
+      default = { hostName = "nixos"; };
     };
   };
 
@@ -164,7 +150,7 @@ in
     time.hardwareClockInLocalTime = lib.mkDefault true; # needed for dual boot with windows but if not dual booting it doesn't hurt
 
     ## networking related settings
-    networking.hostName = cfg.networking.hostName;
+    networking.hostName = lib.mkDefault cfg.networking.hostName;
     networking.networkmanager.enable = lib.mkDefault true; # provide by default network access with networkmanager
   };
 }
