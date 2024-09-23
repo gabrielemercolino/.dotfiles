@@ -12,11 +12,6 @@ in
           lact      = lib.mkEnableOption "lact";
         };
       };
-
-      default = {
-        corectrl  = false;
-        lact      = false;
-      };
     }; 
 
     dev = lib.mkOption {
@@ -26,11 +21,6 @@ in
           docker = lib.mkEnableOption "docker";
         };
       };
-
-      default = {
-        direnv = false;
-        docker = false;
-      };
     };
 
     security = lib.mkOption {
@@ -38,10 +28,6 @@ in
         options = {
           ssh = lib.mkEnableOption "ssh";
         };
-      };
-
-      default = {
-        ssh = false;
       };
     };
 
@@ -51,10 +37,6 @@ in
           dbus = lib.mkEnableOption "dbus";
         };
       };
-
-      default = {
-        dbus = false;
-      };
     };
 
     wm = lib.mkOption {
@@ -63,11 +45,6 @@ in
           bspwm     = lib.mkEnableOption "bspwm";
           hyprland  = lib.mkEnableOption "hyprland";
         };
-      };
-
-      default = {
-        bspwm     = false;
-        hyprland  = false;
       };
     };
   };
