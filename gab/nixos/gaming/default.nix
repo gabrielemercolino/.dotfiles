@@ -6,18 +6,9 @@ in
 {
 
   options.gab.gaming = {
-    steam = lib.mkEnableOption {
-      default = true;
-      description = "Whether to enable steam";
-    };
-    gamemode = lib.mkEnableOption {
-      default = true;
-      description = "Whether to enable gamemode";
-    };
-    gamescope = lib.mkEnableOption {
-      default = true;
-      description = "Whether to enable gamescope";
-    };
+    steam = lib.mkEnableOption "steam"; 
+    gamemode = lib.mkEnableOption "gamemode";
+    gamescope = lib.mkEnableOption "gamescope";
   };
 
   config = {
