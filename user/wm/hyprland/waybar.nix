@@ -125,7 +125,7 @@ in
             "headphone" = " ";
             "default" = [ "" "" "" ];
           };
-          "on-click" = "pwvucontrol";
+          "on-click" = "${pkgs.pwvucontrol}/bin/pwvucontrol";
         };
 
         battery = {
