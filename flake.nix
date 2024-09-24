@@ -64,7 +64,7 @@
    
     nixvim = {
       url = "github:gabrielemercolino/.nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
+      #inputs.nixpkgs.follows = "nixpkgs";
     };
     
     stylix.url = "github:danth/stylix";
