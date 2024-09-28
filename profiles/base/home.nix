@@ -2,7 +2,9 @@
 
 {
   imports = [
-	  (../../user/wm + ("/" + userSettings.wm))
+    # just import the config, enables actually control the installation
+	  ../../user/wm/hyprland 
+    ../../user/wm/bspwm
   ];
 
   nixpkgs.config = {
