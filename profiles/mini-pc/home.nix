@@ -20,9 +20,9 @@
   ########################
   #         APPS         #
   ########################
-  gab.apps.utilities.rofi-wayland = true;
-  gab.apps.utilities.gimp = true;
-  gab.apps.utilities.yazi = true;
+  gab.apps.rofi-wayland = true;
+  gab.apps.gimp = true;
+  gab.apps.yazi = true;
 
   gab.apps.control.blueman-applet = true;
 
@@ -65,6 +65,8 @@
       url = "https://youtu.be/qKn2lPyAyqQ";
       fileName = "Bury the light - rock";
     }
-  ]; 
+  ];
+
+  gab.wm.hyprland = true;
 
 }

@@ -7,6 +7,9 @@
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  # for amd gpus
+  boot.initrd.kernelModules   = [ "amdgpu" ];
+  nixpkgs.config.rocmSupport  = true;
 
   # use zsh
   users.defaultUserShell  = pkgs.zsh;
@@ -21,7 +24,6 @@
   gab.hardware.keyboard.layout  = "it";
   gab.hardware.time.timeZone    = "Europe/Rome";
 
-  gab.apps.wm.hyprland      = true;
   gab.apps.security.ssh     = true;
   gab.apps.services.dbus    = true;
   gab.apps.control.corectrl = true;
@@ -29,9 +31,7 @@
   gab.apps.dev.direnv       = true;
   gab.apps.dev.docker       = true;
 
-  # for amd gpus
-  boot.initrd.kernelModules   = [ "amdgpu" ];
-  nixpkgs.config.rocmSupport  = true;
+  gab.wm.hyprland      = true;
 
   gab.gaming.steam      = true;
   gab.gaming.gamemode   = true;
