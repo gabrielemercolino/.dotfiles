@@ -1,26 +1,14 @@
-{ config, lib, pkgs, inputs, systemSettings, ... }:
+{ config, lib, pkgs, systemSettings, ... }:
 
 {
   imports = [
-    inputs.hyprland-nix.homeManagerModules.default    
     ./waybar.nix
   ];
-
-  wayland.windowManager.hyprland = {
-    enable = true;
-    package = pkgs.hyprland;
-    reloadConfig = true;
-    systemdIntegration = true;
-    recommendedEnvironment = true;
-    xwayland.enable = true;
-  };
 
   home.packages = with pkgs; [
     wev
     wlr-randr
     wl-clipboard
-    # for screenshots
-    wl-screenrec
   ];
 
   wayland.windowManager.hyprland.keyBinds = let
@@ -92,6 +80,7 @@
       };
     };
     screenshot = "file_name=~/Pictures/screenshot_$(date +%Y-%m-%d-%T).png && ${pkgs.grim}/bin/grim -g \"$(${pkgs.slurp}/bin/slurp)\" $file_name && wl-copy < $file_name";
+    screenrec  = "pkill wl-screenrec || ${pkgs.wl-screenrec}/bin/wl-screenrec --audio";
   in 
     lib.mkMerge [
       groups.powerControl
@@ -110,6 +99,7 @@
       }
       {
         bind."SUPER CONTROL_L, S" = "exec, ${screenshot}";
+        bind."SUPER_SHIFT, S"     = "exec, ${screenrec}";
       }
     ];
   
@@ -145,7 +135,7 @@
 
     input = {
       kb_layout  = systemSettings.kb.layout;
-      #kb_variant = systemSettings.kb.variant ? "";
+      kb_variant = systemSettings.kb.variant;
       follow_mouse = 1;
       touchpad.natural_scroll = "no";
     };
