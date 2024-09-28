@@ -8,7 +8,7 @@
 
 stdenv.mkDerivation (finalAttrs: rec{
   name = "gab";
-  version = "1.2";
+  version = "1.3";
   src = ./.;
 
   nativeBuildInputs = [ installShellFiles ];
