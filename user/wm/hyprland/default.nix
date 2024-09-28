@@ -91,6 +91,7 @@
         bind."SUPER_SHIFT, 9" = "movetoworkspace, 9";
       };
     };
+    screenshot = "file_name=~/Pictures/screenshot_$(date +%Y-%m-%d-%T).png && ${pkgs.grim}/bin/grim -g \"$(${pkgs.slurp}/bin/slurp)\" $file_name && wl-copy < $file_name";
   in 
     lib.mkMerge [
       groups.powerControl
@@ -108,7 +109,7 @@
         bind."SUPER, M" = "exit";
       }
       {
-        bind."SUPER CONTROL_L, S" = "exec, wl-copy < $(gab screenshot -a)";
+        bind."SUPER CONTROL_L, S" = "exec, ${screenshot}";
       }
     ];
   
