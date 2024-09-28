@@ -24,6 +24,7 @@
   gab.apps.control.blueman-applet = true;
 
   gab.apps.browsers.chrome = true;
+  gab.apps.browsers.zen    = true;
 
   gab.apps.socials.telegram = true;
 
