@@ -13,12 +13,6 @@
       hostName = "nixos";
 
       dotfiles = "~/.dotfiles";
-
-      # TODO: remove
-      kb = {
-        layout = "it";
-        variation = "";
-      };
     };
 
     userSettings = {
@@ -62,17 +56,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
    
-    nixvim = {
-      url = "github:gabrielemercolino/.nixvim";
-      #inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixvim.url = "github:gabrielemercolino/.nixvim";
     
     stylix.url = "github:danth/stylix";
     
-    spicetify-nix = {
-      url = "github:Gerg-L/spicetify-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    spicetify-nix.url = "github:Gerg-L/spicetify-nix";
 
     hyprland-nix.url = "github:hyprland-community/hyprland-nix";
   };
