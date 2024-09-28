@@ -4,5 +4,6 @@ _:{
     ./gaming
     ./shells
     ./style
+    ./wm
   ];
 }
