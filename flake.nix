@@ -13,6 +13,11 @@
       hostName = "nixos";
 
       dotfiles = "~/.dotfiles";
+
+      kb = {
+        layout = "it";
+        variant = "";
+      };
     };
 
     userSettings = {
