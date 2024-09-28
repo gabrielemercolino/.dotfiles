@@ -7,6 +7,6 @@ _:{
     ./music.nix
     ./socials.nix
     ./terminal.nix
-    ./utilities.nix
+    ./uncategorized.nix
   ];
 }

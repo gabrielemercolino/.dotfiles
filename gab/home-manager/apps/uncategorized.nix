@@ -1,10 +1,10 @@
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.gab.apps.utilities;
+  cfg = config.gab.apps;
 in
 {
-  options.gab.apps.utilities = {
+  options.gab.apps = {
     yazi = lib.mkEnableOption "yazi";
     gimp = lib.mkEnableOption "gimp";
   
