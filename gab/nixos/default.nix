@@ -6,5 +6,6 @@ _:{
     ./hardware
     ./login
     ./style
+    ./wm
   ];
 }

@@ -22,11 +22,6 @@ in
     services = {
       dbus = lib.mkEnableOption "dbus";
     };
-    
-    wm = {
-      bspwm    = lib.mkEnableOption "bspwm";
-      hyprland = lib.mkEnableOption "hyprland";
-    };
   };
 
   config = {
@@ -64,16 +59,5 @@ in
       packages  = [ pkgs.dconf ];
     };
     programs.dconf.enable = cfg.services.dbus;
-
-    # wm related stuff
-    services.xserver.windowManager.bspwm = {
-      enable  = cfg.wm.bspwm;
-      package = pkgs.bspwm; 
-    };
-    programs.hyprland = {
-      enable          = cfg.wm.hyprland;
-      xwayland.enable = true;
-      portalPackage   = pkgs.xdg-desktop-portal-hyprland;
-    };
   };
 }
