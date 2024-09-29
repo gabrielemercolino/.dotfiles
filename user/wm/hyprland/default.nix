@@ -80,7 +80,7 @@
       };
     };
     screenshot = "file_name=~/Pictures/screenshot_$(date +%Y-%m-%d-%T).png && ${pkgs.grim}/bin/grim -g \"$(${pkgs.slurp}/bin/slurp)\" $file_name && wl-copy < $file_name";
-    screenrec  = "pkill wl-screenrec || ${pkgs.wl-screenrec}/bin/wl-screenrec --audio";
+    screenrec  = "pkill wl-screenrec || ${pkgs.wl-screenrec}/bin/wl-screenrec --audio -b \"1 MB\"";
   in 
     lib.mkMerge [
       groups.powerControl
