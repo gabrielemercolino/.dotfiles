@@ -1,10 +1,10 @@
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.gab.apps.socials;
+  cfg = config.gab.apps;
 in
 {
-  options.gab.apps.socials = {
+  options.gab.apps = {
     telegram = lib.mkEnableOption "telegram desktop";
     discord  = lib.mkEnableOption "discord";
   };

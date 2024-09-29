@@ -1,10 +1,10 @@
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.gab.apps.browsers;
+  cfg = config.gab.apps;
 in
 {
-  options.gab.apps.browsers = {
+  options.gab.apps = {
     chrome  = lib.mkEnableOption "google chrome";
     firefox = lib.mkEnableOption "firefox";
     zen     = lib.mkEnableOption "zen browser";

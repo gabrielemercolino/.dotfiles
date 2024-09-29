@@ -3,10 +3,10 @@
 with lib.types;
 
 let
-  cfg = config.gab.apps.dev;
+  cfg = config.gab.apps;
 in
 {
-  options.gab.apps.dev = {
+  options.gab.apps = {
     git = {
       enable    = lib.mkEnableOption "git";
       userName  = lib.mkOption { type = nullOr str; default = null; };

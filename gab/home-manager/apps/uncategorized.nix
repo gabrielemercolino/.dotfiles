@@ -5,8 +5,9 @@ let
 in
 {
   options.gab.apps = {
-    yazi = lib.mkEnableOption "yazi";
-    gimp = lib.mkEnableOption "gimp";
+    yazi     = lib.mkEnableOption "yazi";
+    gimp     = lib.mkEnableOption "gimp";
+    obsidian = lib.mkEnableOption "obsidian";
   
     rofi         = lib.mkEnableOption "rofi";
     rofi-wayland = lib.mkEnableOption "rofy for wayland";
@@ -20,7 +21,9 @@ in
       }
     ];
 
-    home.packages = lib.optionals cfg.gimp [ pkgs.gimp ];
+    home.packages = lib.optionals cfg.gimp     [ pkgs.gimp ]
+                    ++ 
+                    lib.optionals cfg.obsidian [ pkgs.obsidian ];
 
     programs.yazi.enable = cfg.yazi;
 

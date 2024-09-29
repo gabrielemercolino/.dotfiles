@@ -1,10 +1,10 @@
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.gab.apps.terminal;
+  cfg = config.gab.apps;
 in
 {
-  options.gab.apps.terminal = {
+  options.gab.apps = {
     alacritty = lib.mkEnableOption "alacritty";
     kitty     = lib.mkEnableOption "kitty";
     warp      = lib.mkEnableOption "warp";

@@ -1,10 +1,10 @@
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.gab.apps.control;
+  cfg = config.gab.apps;
 in
 {
-  options.gab.apps.control = {
+  options.gab.apps = {
     blueman-applet = lib.mkEnableOption "blueman applet";
   };
 

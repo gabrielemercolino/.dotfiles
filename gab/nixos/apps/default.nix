@@ -5,41 +5,34 @@ let
 in
 {
   options.gab.apps = {
-    control = {
-      corectrl = lib.mkEnableOption "corectrl";
-      lact     = lib.mkEnableOption "lact";  
-    };
+    corectrl = lib.mkEnableOption "corectrl";
+    lact     = lib.mkEnableOption "lact";  
 
-    dev = {
-      direnv = lib.mkEnableOption "direnv";
-      docker = lib.mkEnableOption "docker";
-    };
+    direnv = lib.mkEnableOption "direnv";
+    docker = lib.mkEnableOption "docker";
 
-    security = {
-      ssh = lib.mkEnableOption "ssh";
-    };
-    
-    services = {
-      dbus = lib.mkEnableOption "dbus";
-    };
+    ssh  = lib.mkEnableOption "ssh";
+    dbus = lib.mkEnableOption "dbus";
   };
 
   config = {
-    users.users.${userSettings.userName}.extraGroups = lib.optionals cfg.control.corectrl [ "corectrl" ]
-                                                       ++ lib.optionals cfg.dev.docker    [ "docker" ];
+    users.users.${userSettings.userName}.extraGroups = lib.optionals cfg.corectrl [ "corectrl" ]
+                                                       ++ 
+                                                       lib.optionals cfg.docker   [ "docker" ];
 
-    environment.systemPackages = lib.optionals cfg.control.corectrl [ pkgs.lm_sensors ] 
-                                 ++ lib.optionals cfg.control.lact  [ pkgs.lact ];
+    environment.systemPackages = lib.optionals cfg.corectrl [ pkgs.lm_sensors ] 
+                                 ++ 
+                                 lib.optionals cfg.lact     [ pkgs.lact ];
 
     # Control related stuff
     programs.corectrl = {
-      enable = cfg.control.corectrl;
+      enable = cfg.corectrl;
       gpuOverclock.enable = true;
     };
 
     ## lact needs its daemon to properly work
     systemd.services.lact = {
-      enable      = cfg.control.lact;
+      enable      = cfg.lact;
       description = "AMDGPU Control Daemon";
       after       = ["multi-user.target"];
       wantedBy    = ["multi-user.target"];
@@ -47,17 +40,17 @@ in
     };
 
     # dev related stuff
-    programs.direnv.enable = cfg.dev.direnv;
-    virtualisation.docker.enable = cfg.dev.docker;
+    programs.direnv.enable       = cfg.direnv;
+    virtualisation.docker.enable = cfg.docker;
 
     # security related stuff
-    services.openssh.enable = cfg.security.ssh;
+    services.openssh.enable = cfg.ssh;
 
     # services related stuff
     services.dbus = {
-      enable    = cfg.services.dbus;
+      enable    = cfg.dbus;
       packages  = [ pkgs.dconf ];
     };
-    programs.dconf.enable = cfg.services.dbus;
+    programs.dconf.enable = cfg.dbus;
   };
 }
