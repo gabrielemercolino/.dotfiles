@@ -17,56 +17,36 @@
   };
   gab.shell.zsh = true;
 
-  ########################
-  #         APPS         #
-  ########################
-  gab.apps.rofi-wayland = true;
-  gab.apps.gimp = true;
-  gab.apps.yazi = true;
+  gab.apps = {
+    rofi-wayland = true;
+    blueman-applet = true; 
 
-  gab.apps.control.blueman-applet = true;
+    gimp     = true;
+    yazi     = true;
+    chrome   = true;
+    telegram = true;
+    discord  = true;
+    kitty    = true;
+    obsidian = true;
 
-  gab.apps.browsers.chrome = true;
+    nvim           = true;
+    idea-community = true;
+    zed-editor     = true;
 
-  gab.apps.socials.telegram = true;
-  gab.apps.socials.discord  = true;
-  
-  gab.apps.terminal.kitty  = true;
+    git = {
+      enable    = true;
+      userName  = userSettings.name;
+      userEmail = userSettings.email;
+    };
 
-  gab.apps.dev.git = {
-    enable    = true;
-    userName  = userSettings.name;
-    userEmail = userSettings.email;
+    music.spotify = true;
+    music.tracks  = [
+      { url = "https://youtu.be/Jrg9KxGNeJY?si=9_DfB4VwSDHVVBL8"; fileName = "Bury the light"; }
+      { url = "https://youtu.be/qKn2lPyAyqQ";                     fileName = "Bury the light - rock"; }
+    ];
   };
 
-  ########################
-  #        GAMING        #
-  ########################
   gab.gaming.mangohud = true;
 
-  ########################
-  #        EDITORS       #
-  ########################
-  gab.apps.editors.nvim            = true;
-  gab.apps.editors.idea-community  = true;
-  gab.apps.editors.zed-editor      = true;
-
-  ########################
-  #         MUSIC        #
-  ########################
-  gab.apps.music.spotify = true;
-
-  gab.apps.music.tracks = [
-    {
-      url = "https://youtu.be/Jrg9KxGNeJY?si=9_DfB4VwSDHVVBL8";
-      fileName = "Bury the light";
-    }
-    {
-      url = "https://youtu.be/qKn2lPyAyqQ";
-      fileName = "Bury the light - rock";
-    }
-  ];
-
   gab.wm.hyprland = true;
-
 }

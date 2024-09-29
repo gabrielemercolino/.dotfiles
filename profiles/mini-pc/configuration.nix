@@ -8,34 +8,43 @@
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
   # for amd gpus
-  boot.initrd.kernelModules   = [ "amdgpu" ];
-  nixpkgs.config.rocmSupport  = true;
+  boot.initrd.kernelModules  = [ "amdgpu" ];
+  nixpkgs.config.rocmSupport = true;
 
   # use zsh
-  users.defaultUserShell  = pkgs.zsh;
-  programs.zsh.enable     = true;
+  users.defaultUserShell = pkgs.zsh;
+  programs.zsh.enable    = true;
 
   gab.login.sddm = true;
   
-  gab.hardware.bluetooth  = true;
-  gab.hardware.pipewire   = true;
-  #gab.hardware.amdvlk    = true;
-  gab.hardware.i18n.locale      = "it_IT.UTF-8";
-  gab.hardware.keyboard.layout  = "it";
-  gab.hardware.time.timeZone    = "Europe/Rome";
+  gab.hardware = {
+    bluetooth = true;
+    pipewire  = true;
+    amdvlk    = false;
 
-  gab.apps.security.ssh     = true;
-  gab.apps.services.dbus    = true;
-  gab.apps.control.corectrl = true;
-  gab.apps.control.lact     = true;
-  gab.apps.dev.direnv       = true;
-  gab.apps.dev.docker       = true;
+    i18n.locale     = "it_IT.UTF-8";
+    keyboard.layout = "it";
+    time.timeZone   = "Europe/Rome";
+  };
+
+  gab.apps = {
+    ssh  = true;
+    dbus = true;
+
+    corectrl = true;
+    lact     = true;
+
+    direnv = true;
+    docker = true;
+  };
+
+  gab.gaming = {
+    steam     = true;
+    gamemode  = true;
+    gamescope = true;
+  };
 
   gab.wm.hyprland      = true;
-
-  gab.gaming.steam      = true;
-  gab.gaming.gamemode   = true;
-  gab.gaming.gamescope  = true;
 
   # Some games are installed in the G: partition
   boot.supportedFilesystems = [ "ntfs" ];
