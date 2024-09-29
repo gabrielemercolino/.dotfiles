@@ -71,7 +71,9 @@ in
       enable = true;
       enable32Bit = true;
       extraPackages = [ pkgs.libvdpau-va-gl ] # for hardware acceleration
-                      ++ lib.optionals cfg.amdvlk [ pkgs.amdvlk ];
+                      ++ 
+                      lib.optionals cfg.amdvlk [ pkgs.amdvlk ];
+
       extraPackages32 = lib.optionals cfg.amdvlk [ pkgs.driversi686Linux.amdvlk ];
     };
 

@@ -9,17 +9,17 @@ in
   options.gab.style = {
     background = lib.mkOption {
       default = pkgs.fetchurl {
-        url = "https://github.com/Gingeh/wallpapers/blob/main/os/nix-black-4k.png?raw=true";
+        url    = "https://github.com/Gingeh/wallpapers/blob/main/os/nix-black-4k.png?raw=true";
         sha256 = "sha256-e1RBd5gTBonG39gYmxCvJuf+qZOiuxeZ9LTjhPQB9vk=";
       };
       type = lib.types.path;
-      description = lib.mcDoc "The image to use for background";
+      description = "The image to use for background";
     };
 
     theme = lib.mkOption {
       default = "catppuccin-mocha";
-      type = lib.types.enum [ "catppuccin-mocha" "uwunicorn" ];
-      description = lib.mcDoc "The theme to use";
+      type    = lib.types.enum [ "catppuccin-mocha" "uwunicorn" ];
+      description = "The theme to use";
     };
   };
 
