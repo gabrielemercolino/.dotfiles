@@ -7,10 +7,10 @@ let
 in
 {
   options.gab.hardware = {
-    amdvlk     = lib.mkEnableOption "amdvlk drivers";
-    bluetooth  = lib.mkEnableOption "bluetooth";
-    pipewire   = lib.mkEnableOption "pipewire";
-    pulseaudio = lib.mkEnableOption "pulseaudio";
+    amdvlk.enable     = lib.mkEnableOption "amdvlk drivers";
+    bluetooth.enable  = lib.mkEnableOption "bluetooth";
+    pipewire.enable   = lib.mkEnableOption "pipewire";
+    pulseaudio.enable = lib.mkEnableOption "pulseaudio";
 
     keyboard = {
       layout = lib.mkOption {
@@ -50,7 +50,7 @@ in
   config = {
     assertions = [
       {
-        assertion = !(cfg.pipewire && cfg.pulseaudio);
+        assertion = !(cfg.pipewire.enable && cfg.pulseaudio.enable);
         message = "Error: cannot activate both pipewire and pulseaudio";
       }
       {
@@ -72,19 +72,19 @@ in
       enable32Bit = true;
       extraPackages = [ pkgs.libvdpau-va-gl ] # for hardware acceleration
                       ++ 
-                      lib.optionals cfg.amdvlk [ pkgs.amdvlk ];
+                      lib.optionals cfg.amdvlk.enable [ pkgs.amdvlk ];
 
-      extraPackages32 = lib.optionals cfg.amdvlk [ pkgs.driversi686Linux.amdvlk ];
+      extraPackages32 = lib.optionals cfg.amdvlk.enable [ pkgs.driversi686Linux.amdvlk ];
     };
 
     ## bluetooth
-    hardware.bluetooth.enable = cfg.bluetooth;
+    hardware.bluetooth.enable = cfg.bluetooth.enable;
     services.blueman.enable = lib.mkDefault true; # provide bluetooth control with blueman by default
 
     ### pipewire
-    security.rtkit.enable = true;  # rtkit is optional but recommended
+    security.rtkit.enable = cfg.pipewire.enable;  # rtkit is optional but recommended
     services.pipewire = {
-      enable              = true;
+      enable              = cfg.pipewire.enable;
       alsa.enable         = true;
       alsa.support32Bit   = true;
       pulse.enable        = true;
@@ -93,8 +93,8 @@ in
     };
 
     ### pulseaudio
-    hardware.pulseaudio.enable       = cfg.pulseaudio;
-    hardware.pulseaudio.support32Bit = cfg.pulseaudio;
+    hardware.pulseaudio.enable       = cfg.pulseaudio.enable;
+    hardware.pulseaudio.support32Bit = cfg.pulseaudio.enable;
 
     ## keyboard related settings
     console.keyMap = cfg.keyboard.layout;

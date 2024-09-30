@@ -5,18 +5,18 @@ let
 in
 {
   options.gab.wm = {
-    bspwm    = lib.mkEnableOption "bspwm";
-    hyprland = lib.mkEnableOption "hyprland";
+    bspwm.enable    = lib.mkEnableOption "bspwm";
+    hyprland.enable = lib.mkEnableOption "hyprland";
   };
 
   config = {
     services.xserver.windowManager.bspwm = {
-      enable  = cfg.bspwm;
+      enable  = cfg.bspwm.enable;
       package = pkgs.bspwm; 
     };
 
     programs.hyprland = {
-      enable          = cfg.hyprland;
+      enable          = cfg.hyprland.enable;
       xwayland.enable = true;
       portalPackage   = pkgs.xdg-desktop-portal-hyprland;
     };

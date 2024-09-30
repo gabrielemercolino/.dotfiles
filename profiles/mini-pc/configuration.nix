@@ -17,12 +17,12 @@
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable    = true;
 
-  gab.login.sddm = true;
+  gab.login.sddm.enable = true;
   
   gab.hardware = {
-    bluetooth = true;
-    pipewire  = true;
-    amdvlk    = false;
+    bluetooth.enable = true;
+    pipewire.enable  = true;
+    amdvlk.enable    = false;
 
     i18n.locale     = "it_IT.UTF-8";
     keyboard.layout = "it";
@@ -30,23 +30,23 @@
   };
 
   gab.apps = {
-    ssh  = true;
-    dbus = true;
+    ssh.enable  = true;
+    dbus.enable = true;
 
-    corectrl = true;
-    lact     = true;
+    corectrl.enable = true;
+    lact.enable     = true;
 
-    direnv = true;
-    docker = true;
+    direnv.enable = true;
+    docker.enable = true;
   };
 
   gab.gaming = {
-    steam     = true;
-    gamemode  = true;
-    gamescope = true;
+    steam.enable     = true;
+    gamemode.enable  = true;
+    gamescope.enable = true;
   };
 
-  gab.wm.hyprland = true;
+  gab.wm.hyprland.enable = true;
 
   # Some games are installed in the G: partition
   boot.supportedFilesystems = [ "ntfs" ];

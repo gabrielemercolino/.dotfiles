@@ -6,22 +6,22 @@ in
 {
 
   options.gab.gaming = {
-    steam = lib.mkEnableOption "steam"; 
-    gamemode = lib.mkEnableOption "gamemode";
-    gamescope = lib.mkEnableOption "gamescope";
+    steam.enable     = lib.mkEnableOption "steam"; 
+    gamemode.enable  = lib.mkEnableOption "gamemode";
+    gamescope.enable = lib.mkEnableOption "gamescope";
   };
 
   config = {
     # needed to make the renice setting work 
-    users.users.${userSettings.userName}.extraGroups = lib.optionals cfg.gamemode [ "gamemode" ];
+    users.users.${userSettings.userName}.extraGroups = lib.optionals cfg.gamemode.enable [ "gamemode" ];
 
     programs.steam = {
-      enable = cfg.steam;
+      enable = cfg.steam.enable;
       extraCompatPackages = [ pkgs.proton-ge-bin ];
     };
 
     programs.gamemode = {
-      enable = cfg.gamemode;
+      enable = cfg.gamemode.enable;
       enableRenice = true;
       settings = {
         general = {
@@ -32,7 +32,7 @@ in
     };
     
     programs.gamescope = {
-      enable = cfg.gamescope;
+      enable = cfg.gamescope.enable;
       env = {
         "XKB_DEFAULT_LAYOUT" = config.services.xserver.xkb.layout; # IMPORTANT: gamescope uses american keyboard layout by default
 

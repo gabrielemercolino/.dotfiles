@@ -5,14 +5,14 @@ let
 in
 {
   options.gab.login = {
-    sddm = lib.mkEnableOption "sddm";
+    sddm.enable = lib.mkEnableOption "sddm";
   };
 
   config = {
-    environment.systemPackages = lib.optionals cfg.sddm [ pkgs.libsForQt5.qt5.qtquickcontrols2 pkgs.libsForQt5.qt5.qtgraphicaleffects ];
+    environment.systemPackages = lib.optionals cfg.sddm.enable [ pkgs.libsForQt5.qt5.qtquickcontrols2 pkgs.libsForQt5.qt5.qtgraphicaleffects ];
     services.displayManager = {
       sddm = {
-        enable         = cfg.sddm;
+        enable         = cfg.sddm.enable;
         enableHidpi    = true;
         wayland.enable = true;
         autoNumlock    = true;
