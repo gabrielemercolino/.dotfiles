@@ -2,6 +2,8 @@
 
 {
   imports = [
+    ./hardware-configuration.nix
+
     ../base/configuration.nix
     ../../gab/nixos
   ];
