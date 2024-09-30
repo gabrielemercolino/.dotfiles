@@ -5,12 +5,12 @@ let
 in
 {
   options.gab.apps = {
-    blueman-applet = lib.mkEnableOption "blueman applet";
+    blueman-applet.enable = lib.mkEnableOption "blueman applet";
   };
 
   config = {
-    home.packages = lib.optionals cfg.blueman-applet [ pkgs.blueman ];
+    home.packages = lib.optionals cfg.blueman-applet.enable [ pkgs.blueman ];
     
-    services.blueman-applet.enable = cfg.blueman-applet;
+    services.blueman-applet.enable = cfg.blueman-applet.enable;
   };
 }

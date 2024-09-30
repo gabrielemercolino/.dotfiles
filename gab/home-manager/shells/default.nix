@@ -9,14 +9,14 @@ in
       type = lib.types.attrsOf lib.types.str;
       example = { l = "ls"; };
     };
-    bash    = lib.mkEnableOption "bash";
-    zsh     = lib.mkEnableOption "zsh";
-    nushell = lib.mkEnableOption "nushell";
+    bash.enable    = lib.mkEnableOption "bash";
+    zsh.enable     = lib.mkEnableOption "zsh";
+    nushell.enable = lib.mkEnableOption "nushell";
   };
 
   config = {
     programs.zsh = {
-      enable = cfg.zsh;
+      enable = cfg.zsh.enable;
       shellAliases = cfg.aliases;
       oh-my-zsh = {
         enable = true;
@@ -28,7 +28,7 @@ in
     };
 
     programs.nushell = {
-      enable = cfg.nushell;
+      enable = cfg.nushell.enable;
       shellAliases = cfg.aliases;
       extraConfig = ''
         $env.config = {
@@ -50,14 +50,14 @@ in
     };
 
     programs.carapace = {
-      enable = cfg.nushell;
+      enable = cfg.nushell.enable;
       enableNushellIntegration = true;
     };
 
-    programs.starship.enable = cfg.nushell;
+    programs.starship.enable = cfg.nushell.enable;
 
     programs.bash = {
-      enable = cfg.bash;
+      enable = cfg.bash.enable;
       shellAliases = cfg.aliases;
     };
 

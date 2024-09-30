@@ -15,41 +15,41 @@
     ll = "${pkgs.eza}/bin/eza -l --icons";
     la = "${pkgs.eza}/bin/eza -la --icons";
   };
-  gab.shell.zsh = true;
+  gab.shell.zsh.enable = true;
 
   gab.apps = {
-    rofi-wayland   = true;
-    blueman-applet = true; 
-    kitty    = true;
+    rofi = { enable = true; wayland = true; };
+    blueman-applet.enable = true; 
+    kitty.enable = true;
 
-    gimp     = true;
-    yazi     = true;
-    obsidian = true;
+    gimp.enable     = true;
+    yazi.enable     = true;
+    obsidian.enable = true;
 
-    chrome = true;
-    zen    = true;
+    chrome.enable = true;
+    zen = { enable = true; specific = true; };
 
-    telegram = true;
-    discord  = true;
+    telegram.enable = true;
+    discord.enable  = true;
     
-    nvim           = true;
-    idea-community = true;
-    zed-editor     = true;
+    nvim.enable           = true;
+    idea-community.enable = true;
+    zed-editor.enable     = true;
 
-    git = {
-      enable    = true;
-      userName  = userSettings.name;
-      userEmail = userSettings.email;
-    };
-
-    music.spotify = true;
+    music.spotify.enable = true;
     music.tracks  = [
       { url = "https://youtu.be/Jrg9KxGNeJY?si=9_DfB4VwSDHVVBL8"; fileName = "Bury the light"; }
       { url = "https://youtu.be/qKn2lPyAyqQ";                     fileName = "Bury the light - rock"; }
     ];
   };
 
-  gab.gaming.mangohud = true;
+  programs.git = {
+    enable    = true;
+    userName  = userSettings.name;
+    userEmail = userSettings.email;
+  };
 
-  gab.wm.hyprland = true;
+  gab.gaming.mangohud.enable = true;
+
+  gab.wm.hyprland.enable = true;
 }

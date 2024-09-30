@@ -7,13 +7,13 @@ in
   imports = [ inputs.hyprland-nix.homeManagerModules.default ];
 
   options.gab.wm = {
-    hyprland = lib.mkEnableOption "hyprland";
-    bspwm    = lib.mkEnableOption "bspwm";
+    hyprland.enable = lib.mkEnableOption "hyprland";
+    bspwm.enable    = lib.mkEnableOption "bspwm";
   };
 
   config = {
     wayland.windowManager.hyprland = {
-      enable  = cfg.hyprland;
+      enable  = cfg.hyprland.enable;
       package = pkgs.hyprland;
 
       reloadConfig           = true;
@@ -22,7 +22,7 @@ in
       xwayland.enable        = true;
     };
 
-    xsession.windowManager.bspwm.enable = cfg.bspwm;
+    xsession.windowManager.bspwm.enable = cfg.bspwm.enable;
   };
   
 }

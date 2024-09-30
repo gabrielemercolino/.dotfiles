@@ -60,7 +60,7 @@ in
       default = [];
     };
 
-    spotify = lib.mkEnableOption "spotify (with spicetify)";
+    spotify.enable = lib.mkEnableOption "spotify (with spicetify)";
   };
 
   config = {
@@ -69,7 +69,7 @@ in
     '';
 
     programs.spicetify = {
-      enable = cfg.spotify;
+      enable = cfg.spotify.enable;
 
       enabledExtensions = with spicePkgs.extensions; [
         adblock

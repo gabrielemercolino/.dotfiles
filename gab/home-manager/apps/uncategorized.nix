@@ -5,31 +5,26 @@ let
 in
 {
   options.gab.apps = {
-    yazi     = lib.mkEnableOption "yazi";
-    gimp     = lib.mkEnableOption "gimp";
-    obsidian = lib.mkEnableOption "obsidian";
+    yazi.enable     = lib.mkEnableOption "yazi";
+    gimp.enable     = lib.mkEnableOption "gimp";
+    obsidian.enable = lib.mkEnableOption "obsidian";
   
-    rofi         = lib.mkEnableOption "rofi";
-    rofi-wayland = lib.mkEnableOption "rofy for wayland";
+    rofi = {
+      enable  = lib.mkEnableOption "rofi";
+      wayland = lib.mkEnableOption "rofy for wayland";
+    };
   };
 
   config = {
-    assertions = [
-      {
-        assertion = !( cfg.rofi && cfg.rofi-wayland );
-        message   = "Error: cannot install both rofi and rofi-wayland";
-      }
-    ];
-
-    home.packages = lib.optionals cfg.gimp     [ pkgs.gimp ]
+    home.packages = lib.optionals cfg.gimp.enable     [ pkgs.gimp ]
                     ++ 
-                    lib.optionals cfg.obsidian [ pkgs.obsidian ];
+                    lib.optionals cfg.obsidian.enable [ pkgs.obsidian ];
 
-    programs.yazi.enable = cfg.yazi;
+    programs.yazi.enable = cfg.yazi.enable;
 
     programs.rofi = {
-      enable = cfg.rofi || cfg.rofi-wayland;
-      package = if cfg.rofi-wayland then pkgs.rofi-wayland else pkgs.rofi;
+      enable = cfg.rofi.enable;
+      package = if cfg.rofi.wayland then pkgs.rofi-wayland else pkgs.rofi;
       extraConfig = {
         modi = "drun";
         show-icons = true;

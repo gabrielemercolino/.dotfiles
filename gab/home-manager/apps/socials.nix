@@ -5,12 +5,13 @@ let
 in
 {
   options.gab.apps = {
-    telegram = lib.mkEnableOption "telegram desktop";
-    discord  = lib.mkEnableOption "discord";
+    telegram.enable = lib.mkEnableOption "telegram desktop";
+    discord.enable  = lib.mkEnableOption "discord";
   };
   
   config = {
-    home.packages = lib.optionals cfg.telegram   [ pkgs.telegram-desktop ]
-                    ++ lib.optionals cfg.discord [ pkgs.discord ];
+    home.packages = lib.optionals cfg.telegram.enable [ pkgs.telegram-desktop ]
+                    ++ 
+                    lib.optionals cfg.discord.enable  [ pkgs.discord ];
   };
 }

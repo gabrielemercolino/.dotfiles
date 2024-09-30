@@ -4,9 +4,13 @@ let
   cfg = config.gab.gaming;
 in
 {
+  options.gab.gaming = {
+    mangohud.enable = lib.mkEnableOption "mangohud";
+  };
+
   config = {
     programs.mangohud = {
-      enable = true;
+      enable = cfg.mangohud.enable;
       settings = {
         hud_compact = true;
         
@@ -35,7 +39,7 @@ in
       };
     };
 
-    home.sessionVariables = lib.mkIf cfg.mangohud {
+    home.sessionVariables = lib.mkIf cfg.mangohud.enable {
       # forces the use of the config file as if used by gamescope it is not loaded
       "MANGOHUD_CONFIGFILE" = "$HOME/.config/MangoHud/MangoHud.conf";
     };

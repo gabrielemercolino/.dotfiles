@@ -23,6 +23,7 @@ in
     };
   };
 
+  # fix: even if target is forced to false I need to re-add this otherwise it won't work
   options.wayland.windowManager.hyprland = {
     settings = lib.mkOption { default = {}; };
   };

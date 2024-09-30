@@ -5,7 +5,7 @@ let
   
   src = fetchurl {
     url = "https://github.com/zen-browser/desktop/releases/download/${version}/zen-${if specific then "specific" else "generic"}.AppImage";
-    hash = "sha256-1Rho9F0gJUoTWcn5OTVfAJtgeyIhUU0n+pBdVP9n3iU=";
+    hash = if specific then "sha256-+SLYm1JQOpjF6N1QP+wTfBZKI7sr7xnvH3fADFJaPyY=" else "sha256-1Rho9F0gJUoTWcn5OTVfAJtgeyIhUU0n+pBdVP9n3iU=";
   };
 
   appimageContents = appimageTools.extract { inherit name version src; };

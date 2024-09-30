@@ -1,13 +1,5 @@
-{ lib, ... }:
-
-# Only definitions here
-
-{
+_:{
   imports = [
     ./mangohud.nix
   ];
-
-  options.gab.gaming = {
-    mangohud = lib.mkEnableOption "mangohud";
-  };
 }
