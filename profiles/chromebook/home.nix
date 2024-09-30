@@ -14,31 +14,27 @@
   };
   gab.shell.zsh = true;
 
-  ########################
-  #         APPS         #
-  ########################
-  gab.apps.utilities.rofi-wayland = true;
-  gab.apps.utilities.gimp = true;
-  gab.apps.utilities.yazi = true;
+  gab.apps = {
+    rofi-wayland = true;
+    blueman-applet = true; 
 
-  gab.apps.control.blueman-applet = true;
+    gimp     = true;
+    yazi     = true;
+    chrome   = true;
+    zen      = true;
+    telegram = true;
+    kitty    = true;
+    obsidian = true;
 
-  gab.apps.browsers.chrome = true;
-  gab.apps.browsers.zen    = true;
+    nvim           = true;
+    idea-community = true;
 
-  gab.apps.socials.telegram = true;
-
-  gab.apps.terminal.kitty  = true;
-
-  gab.apps.dev.git = {
-    enable    = true;
-    userName  = userSettings.name;
-    userEmail = userSettings.email;
+    git = {
+      enable    = true;
+      userName  = userSettings.name;
+      userEmail = userSettings.email;
+    };
   };
 
-  ########################
-  #        EDITORS       #
-  ########################
-  gab.apps.editors.nvim            = true;
-  gab.apps.editors.idea-community  = true;
+  gab.wm.hyprland = true;
 }

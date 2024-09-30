@@ -14,19 +14,26 @@
 
   gab.login.sddm = true;
 
-  gab.hardware.bluetooth        = true;
-  gab.hardware.pipewire         = true;
-  gab.hardware.i18n.locale      = "it_IT.UTF-8";
-  gab.hardware.keyboard.layout  = "it";
-  gab.hardware.time.timeZone    = "Europe/Rome";
+  gab.hardware = {
+    bluetooth = true;
+    pipewire  = true;
 
-  gab.apps.wm.hyprland      = true;
-  gab.apps.security.ssh     = true;
-  gab.apps.services.dbus    = true;
-  gab.apps.control.corectrl = true;
-  #gab.apps.control.lact     = true;
-  gab.apps.dev.direnv       = true;
-  gab.apps.dev.docker       = true;
+    i18n.locale     = "it_IT.UTF-8";
+    keyboard.layout = "it";
+    time.timeZone   = "Europe/Rome";
+  };
+
+  gab.apps = {
+    ssh  = true;
+    dbus = true;
+
+    corectrl = true;
+
+    direnv = true;
+    docker = true;
+  };
+
+  gab.wm.hyprland = true;
 
   services.logind.extraConfig = ''
     # don’t shutdown when power button is short-pressed
