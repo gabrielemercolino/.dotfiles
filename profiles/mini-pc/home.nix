@@ -18,17 +18,20 @@
   gab.shell.zsh = true;
 
   gab.apps = {
-    rofi-wayland = true;
+    rofi-wayland   = true;
     blueman-applet = true; 
+    kitty    = true;
 
     gimp     = true;
     yazi     = true;
-    chrome   = true;
-    telegram = true;
-    discord  = true;
-    kitty    = true;
     obsidian = true;
 
+    chrome = true;
+    zen    = true;
+
+    telegram = true;
+    discord  = true;
+    
     nvim           = true;
     idea-community = true;
     zed-editor     = true;
