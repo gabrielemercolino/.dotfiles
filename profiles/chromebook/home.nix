@@ -12,29 +12,31 @@
     ll = "${pkgs.eza}/bin/eza -l --icons";
     la = "${pkgs.eza}/bin/eza -la --icons";
   };
-  gab.shell.zsh = true;
+  gab.shell.zsh.enable = true;
 
   gab.apps = {
-    rofi-wayland = true;
-    blueman-applet = true; 
+    rofi = { enable = true; wayland = true; };
+    blueman-applet.enable = true; 
+    kitty.enable = true; 
 
-    gimp     = true;
-    yazi     = true;
-    chrome   = true;
-    zen      = true;
-    telegram = true;
-    kitty    = true;
-    obsidian = true;
+    gimp.enable     = true;
+    yazi.enable     = true;
+    obsidian.enable = true;
 
-    nvim           = true;
-    idea-community = true;
+    chrome.enable = true;
+    zen = { enable = true; specific = false; };
 
-    git = {
-      enable    = true;
-      userName  = userSettings.name;
-      userEmail = userSettings.email;
-    };
+    telegram.enable = true;
+
+    nvim.enable           = true;
+    idea-community.enable = true;
   };
 
-  gab.wm.hyprland = true;
+  programs.git = {
+    enable    = true;
+    userName  = userSettings.name;
+    userEmail = userSettings.email;
+  };
+
+  gab.wm.hyprland.enable = true;
 }

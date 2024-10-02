@@ -17,8 +17,8 @@
   gab.login.sddm = true;
 
   gab.hardware = {
-    bluetooth = true;
-    pipewire  = true;
+    bluetooth.enable = true;
+    pipewire.enable  = true;
 
     i18n.locale     = "it_IT.UTF-8";
     keyboard.layout = "it";
@@ -26,16 +26,16 @@
   };
 
   gab.apps = {
-    ssh  = true;
-    dbus = true;
+    ssh.enable  = true;
+    dbus.enable = true;
 
-    corectrl = true;
+    ccorectrl.enable = true;
 
-    direnv = true;
-    docker = true;
+    direnv.enable = true;
+    docker.enable = true;
   };
 
-  gab.wm.hyprland = true;
+  gab.wm.hyprland.enable = true;
 
   services.logind.extraConfig = ''
     # don’t shutdown when power button is short-pressed
