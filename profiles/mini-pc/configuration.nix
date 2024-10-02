@@ -44,6 +44,7 @@
     steam.enable     = true;
     gamemode.enable  = true;
     gamescope.enable = true;
+    suyu.enable      = true;
   };
 
   gab.wm.hyprland.enable = true;
