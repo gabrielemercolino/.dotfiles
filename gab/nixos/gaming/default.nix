@@ -9,9 +9,12 @@ in
     steam.enable     = lib.mkEnableOption "steam"; 
     gamemode.enable  = lib.mkEnableOption "gamemode";
     gamescope.enable = lib.mkEnableOption "gamescope";
+    suyu.enable      = lib.mkEnableOption "suyu";
   };
 
   config = {
+    environment.systemPackages = lib.optionals cfg.suyu.enable [ (pkgs.callPackage ./custom-derivations/suyu.nix {} ) ];
+
     # needed to make the renice setting work 
     users.users.${userSettings.userName}.extraGroups = lib.optionals cfg.gamemode.enable [ "gamemode" ];
 
