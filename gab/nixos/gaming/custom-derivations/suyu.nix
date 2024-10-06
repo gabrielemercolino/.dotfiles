@@ -17,6 +17,6 @@ appimageTools.wrapType2 {
   extraInstallCommands = ''
     install -m 444 -D ${appimageContents}/dev.suyu_emu.suyu.desktop $out/share/applications/dev.suyu_emu.suyu.desktop
     install -m 444 -D ${appimageContents}/dev.suyu_emu.suyu.svg \
-      $out/share/icons/hicolor/128x128/apps/dev.suyu_emu.suyu
+      $out/share/icons/hicolor/128x128/apps/dev.suyu_emu.suyu.svg
   '';
 }
