@@ -20,9 +20,10 @@
   gab.login.sddm.enable = true;
   
   gab.hardware = {
-    bluetooth.enable = true;
-    pipewire.enable  = true;
-    amdvlk.enable    = false;
+    bluetooth.enable  = true;
+    pipewire.enable   = false;
+    pulseaudio.enable = true;
+    amdvlk.enable     = false;
 
     i18n.locale     = "it_IT.UTF-8";
     keyboard.layout = "it";
