@@ -1,11 +1,15 @@
 { appimageTools, fetchurl, specific ? false }:
 let
   name    = "zen";
-  version = "1.0.1-a.6";
+  version = "1.0.1-a.7";
+
+  kind = if specific then "specific" else "generic"; 
+  specificHash = "sha256-Za8p4lp5S+XzeW0nYMlrX7ahdwwuyNDwDtvL/uYwUqc=";
+  genericHash  = "sha256-sl9z32PirO5wyQRn4XG9s9p9w8xFbgwmnLUmTMNfJwQ=";
   
   src = fetchurl {
-    url = "https://github.com/zen-browser/desktop/releases/download/${version}/zen-${if specific then "specific" else "generic"}.AppImage";
-    hash = if specific then "sha256-+SLYm1JQOpjF6N1QP+wTfBZKI7sr7xnvH3fADFJaPyY=" else "sha256-1Rho9F0gJUoTWcn5OTVfAJtgeyIhUU0n+pBdVP9n3iU=";
+    url = "https://github.com/zen-browser/desktop/releases/download/${version}/zen-${kind}.AppImage";
+    hash = if specific then specificHash else genericHash;
   };
 
   appimageContents = appimageTools.extract { inherit name version src; };
