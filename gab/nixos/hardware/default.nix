@@ -70,31 +70,32 @@ in
     hardware.graphics = {
       enable = true;
       enable32Bit = true;
-      extraPackages = [ pkgs.libvdpau-va-gl ] # for hardware acceleration
-                      ++ 
-                      lib.optionals cfg.amdvlk.enable [ pkgs.amdvlk ];
 
+      extraPackages   = lib.optionals cfg.amdvlk.enable [ pkgs.amdvlk ];
       extraPackages32 = lib.optionals cfg.amdvlk.enable [ pkgs.driversi686Linux.amdvlk ];
     };
 
     ## bluetooth
     hardware.bluetooth.enable = cfg.bluetooth.enable;
-    services.blueman.enable = lib.mkDefault true; # provide bluetooth control with blueman by default
+    services.blueman.enable   = cfg.bluetooth.enable; # provide bluetooth control with blueman by default
 
     ### pipewire
-    security.rtkit.enable = cfg.pipewire.enable;  # rtkit is optional but recommended
+    security.rtkit.enable = lib.mkDefault cfg.pipewire.enable;  # rtkit is optional but recommended
     services.pipewire = {
       enable              = cfg.pipewire.enable;
-      alsa.enable         = true;
-      alsa.support32Bit   = true;
-      pulse.enable        = true;
-      jack.enable         = true;
-      wireplumber.enable  = true;
+      alsa.enable         = cfg.pipewire.enable;
+      alsa.support32Bit   = cfg.pipewire.enable;
+      pulse.enable        = cfg.pipewire.enable;
+      jack.enable         = cfg.pipewire.enable;
+      wireplumber.enable  = cfg.pipewire.enable;
     };
 
     ### pulseaudio
-    hardware.pulseaudio.enable       = cfg.pulseaudio.enable;
-    hardware.pulseaudio.support32Bit = cfg.pulseaudio.enable;
+    hardware.pulseaudio =  {
+      enable       = cfg.pulseaudio.enable;
+      support32Bit = cfg.pulseaudio.enable;
+      package      = pkgs.pulseaudioFull;
+    };
 
     ## keyboard related settings
     console.keyMap = cfg.keyboard.layout;
