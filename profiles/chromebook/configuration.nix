@@ -14,7 +14,7 @@
   users.defaultUserShell  = pkgs.zsh;
   programs.zsh.enable     = true;
 
-  gab.login.sddm = true;
+  gab.login.sddm.enable = true;
 
   gab.hardware = {
     bluetooth.enable = true;
@@ -29,7 +29,7 @@
     ssh.enable  = true;
     dbus.enable = true;
 
-    ccorectrl.enable = true;
+    corectrl.enable = true;
 
     direnv.enable = true;
     docker.enable = true;
