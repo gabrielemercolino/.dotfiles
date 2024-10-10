@@ -10,7 +10,8 @@
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
   # for amd gpus
-  boot.initrd.kernelModules  = [ "amdgpu" ];
+  hardware.amdgpu.initrd.enable = true;
+  hardware.graphics.extraPackages = [ pkgs.libva ];
   nixpkgs.config.rocmSupport = true;
 
   # use zsh
