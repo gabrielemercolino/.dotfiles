@@ -109,7 +109,7 @@
     ];
 
     exec = [
-      "pkill waybar || true && ${pkgs.waybar}/bin/waybar"
+      "$(pkill waybar || true) && ${pkgs.waybar}/bin/waybar"
       "${pkgs.swaybg}/bin/swaybg -m fill -i ${config.stylix.image}"
     ];
 
