@@ -1,11 +1,11 @@
 { appimageTools, fetchurl, specific ? false }:
 let
   name    = "zen";
-  version = "1.0.1-a.10";
+  version = "1.0.1-a.12";
 
   kind = if specific then "specific" else "generic"; 
-  specificHash = "sha256-pZfYZ0cfQUV8mcLKJKnVaRhyCPKVs/y84+tIWUdQnww=";
-  genericHash  = "sha256-rvMDVDXEpsZk1CDMhS8b8QiM2hTYFMmkKt/uEk76Xrc=";
+  specificHash = "sha256-iBKbOgLQp1+gB80uOk53jlxqtygf/P6x2BfmDghHDPQ=";
+  genericHash  = "sha256-Y43816E558lr/fCNVvCyRhDPPeYUiCKNgaMN4IRgRMo=";
   
   src = fetchurl {
     url = "https://github.com/zen-browser/desktop/releases/download/${version}/zen-${kind}.AppImage";
