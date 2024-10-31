@@ -16,47 +16,51 @@
 
   # use zsh
   users.defaultUserShell = pkgs.zsh;
-  programs.zsh.enable    = true;
+  programs.zsh.enable = true;
 
   gab.login.sddm.enable = true;
-  
-  gab.hardware = {
-    bluetooth.enable  = true;
-    pipewire.enable   = false;
-    pulseaudio.enable = true;
-    amdvlk.enable     = false;
 
-    i18n.locale     = "it_IT.UTF-8";
+  gab.hardware = {
+    bluetooth.enable = true;
+    pipewire.enable = false;
+    pulseaudio.enable = true;
+    amdvlk.enable = false;
+
+    i18n.locale = "it_IT.UTF-8";
     keyboard.layout = "it";
-    time.timeZone   = "Europe/Rome";
+    time.timeZone = "Europe/Rome";
   };
 
   gab.apps = {
-    ssh.enable  = true;
+    ssh.enable = true;
     dbus.enable = true;
 
     corectrl.enable = true;
-    lact.enable     = true;
+    lact.enable = true;
 
     direnv.enable = true;
     docker.enable = true;
   };
 
   gab.gaming = {
-    steam.enable     = true;
-    gamemode.enable  = true;
+    steam.enable = true;
+    gamemode.enable = true;
     gamescope.enable = true;
-    suyu.enable      = true;
+    suyu.enable = true;
   };
 
   gab.wm.hyprland.enable = true;
 
   # Some games are installed in the G: partition
   boot.supportedFilesystems = [ "ntfs" ];
-  fileSystems."/home/gabriele/Games/Steam" = { 
+  fileSystems."/home/gabriele/Games/Steam" = {
     device = "/dev/disk/by-label/G";
     fsType = "ntfs-3g";
-    options = [ "rw" "uid=${userSettings.userName}" "nofail"];
+    options = [
+      "rw"
+      "uid=${userSettings.userName}"
+      "nofail"
+    ];
   };
 
   services.xserver.excludePackages = [ pkgs.xterm ];
