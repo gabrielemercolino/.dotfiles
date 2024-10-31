@@ -95,7 +95,9 @@ in
       enable       = cfg.pulseaudio.enable;
       support32Bit = cfg.pulseaudio.enable;
       package      = pkgs.pulseaudioFull;
+      extraConfig = "load-module module-combine-sink";
     };
+    nixpkgs.config.pulseaudio = cfg.pulseaudio.enable;
 
     ## keyboard related settings
     console.keyMap = cfg.keyboard.layout;
