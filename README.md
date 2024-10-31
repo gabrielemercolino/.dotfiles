@@ -23,14 +23,13 @@ Or manually, after cloning and cd into it
 # cp /etc/nixos/hardware-configuration.nix ./system/hardware-configuration.nix
 sudo nixos-generate-config --show-hardware-config > ./system/hardware-configuration.nix
 
-sudo nixos-rebuild switch --flake .#system
+# you need to check what profiles exist
+sudo nixos-rebuild switch --flake .#mini-pc
 
-nix run home-manager/master --extra-experimental-features nix-command --extra-experimental-features flakes -- switch --flake .#user
+nix run home-manager/master --extra-experimental-features nix-command --extra-experimental-features flakes -- switch --flake .#mini-pc
 ```
 
 ## Credits
 
-| Config   | Link |
-| :------: | :----: |
-| Base     |[librephoenix](https://github.com/librephoenix/nixos-config)
-| Waybar   |[sameeul-haque](https://github.com/sameemul-haque/dotfiles)
+- [librephoenix](https://github.com/librephoenix/nixos-config)
+- [sameeul-haque](https://github.com/sameemul-haque/dotfiles)

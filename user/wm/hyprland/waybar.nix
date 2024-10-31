@@ -1,7 +1,8 @@
-{ config, pkgs, systemSettings, ... }:
+{ config, pkgs, ... }:
 
 let 
   colors = config.lib.stylix.colors;
+  timezone = (pkgs.runCommand "timezone" { } ''echo $(timedatectl show --property=Timezone --value) > $out'');
 in
 {
   # config from https://github.com/sameemul-haque/dotfiles
@@ -92,7 +93,7 @@ in
         clock = {
           "interval" = 1;
           "format" = "  {:%H:%M %p}";
-          "timezone" = "${systemSettings.timeZone}";
+          "timezone" = "${timezone}";
           "tooltip-format" = ''<tt>{calendar}</tt>'';
         };
 
@@ -124,7 +125,7 @@ in
             "headphone" = " ";
             "default" = [ "" "" "" ];
           };
-          "on-click" = "pwvucontrol";
+          "on-click" = "${pkgs.pavucontrol}/bin/pavucontrol";
         };
 
         battery = {

@@ -1,14 +1,14 @@
 { 
   stdenv, 
-  bashly, 
   installShellFiles, 
+  bashly,
+  grim,
   slurp,
-  grim
 }:
 
-stdenv.mkDerivation (finalAttrs: {
+stdenv.mkDerivation (finalAttrs: rec{
   name = "gab";
-
+  version = "1.3.1";
   src = ./.;
 
   nativeBuildInputs = [ installShellFiles ];
@@ -23,7 +23,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   installPhase = ''
     mkdir -p $out/bin
-    cp gab $out/bin/gab
+    cp gab $out/bin/${name}
   '';
 
   postInstall = ''

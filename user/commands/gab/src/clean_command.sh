@@ -6,9 +6,9 @@ TIMESPAN="7d"
 # without sudo is for home-manager
 
 if [[ $delete_old ]]; then
-  sudo nix-collect-garbage -d
-  nix-collect-garbage -d
+  sudo nix-collect-garbage --quiet -d
+  nix-collect-garbage --quiet -d
 else
-  sudo nix-collect-garbage --delete-older-than $TIMESPAN
-  nix-collect-garbage --delete-older-than $TIMESPAN
+  sudo nix-collect-garbage --quiet --delete-older-than $TIMESPAN
+  nix-collect-garbage --quiet --delete-older-than $TIMESPAN
 fi

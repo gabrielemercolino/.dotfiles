@@ -1,16 +1,16 @@
-{ config, pkgs, userSettings, ... }:
+{ config, pkgs, ... }:
 
 {
   services.sxhkd = {
-    enable = true;
+    enable = config.xsession.windowManager.bspwm.enable;
     keybindings = {
-      "super + Return" = "${userSettings.terminal}";
-      "super + q" = "bspc node -k";
-      "super + m" = "bspc quit";
+      "super + Return"    = "${pkgs.kitty}/bin/kitty";
+      "super + q"         = "bspc node -k";
+      "super + m"         = "bspc quit";
       "super + shift + m" = "bspc wm -r && pkill -USR1 -x sxhkd";
       
       # apps
-      "super + space" = "${pkgs.rofi}/bin/rofi -show drun";
+      "super + space"     = "${pkgs.rofi}/bin/rofi -show drun";
       "super + shift + h" = "${pkgs.kitty}/bin/kitty ${pkgs.btop}/bin/btop";
 
       # navigation
@@ -25,7 +25,7 @@
   };
 
   services.picom = {
-    enable = true;
+    enable = config.xsession.windowManager.bspwm.enable;
     vSync = true;
     settings = {
       experimental-backends = true; 
@@ -34,7 +34,7 @@
   };
 
   services.polybar = {
-    enable = true;
+    enable = config.xsession.windowManager.bspwm.enable;
     script = ''
       pkill polybar
 
@@ -42,7 +42,7 @@
     '';
     settings = {
       "bar/main" = {
-        width = "100%";
+        width  = "100%";
         height = "24pt";
         radius = 6;
 
@@ -50,7 +50,7 @@
       };
 
       "module/cpu" = {
-        type = "internal/cpu";
+        type     = "internal/cpu";
         interval = 1;
         warn-percentage = 95;
       };
@@ -58,7 +58,6 @@
   };
 
   xsession.windowManager.bspwm = { 
-    enable = true;
     startupPrograms = [ 
       "pgrep -x sxhkd > /dev/null || sxhkd" 
       
@@ -70,11 +69,11 @@
     settings = {
       # window information
       border_width = 3;
-      window_gap = 14;
+      window_gap   = 14;
       pointer_follows_monitor = true;
-      focus_follows_pointer = true;
-      borderless_monocle = true;
-      gapless_monocle = true;
+      focus_follows_pointer   = true;
+      borderless_monocle      = true;
+      gapless_monocle         = true;
       #focused_border_color = "#302D41";
       #normal_border_color = "#1e1e28";
     };

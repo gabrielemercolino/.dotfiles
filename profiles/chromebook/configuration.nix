@@ -2,17 +2,45 @@
 
 {
   imports = [
-    ../base/configuration.nix
+    ./hardware-configuration.nix
 
-    # development
-    ../../system/virtualization/docker.nix
+    ../base/configuration.nix
+    ../../gab/nixos
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  # I'm not building hyprland on a Pentium 💀
-  nix.settings = {
-    substituters = ["https://hyprland.cachix.org"];
-    trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+  # use zsh
+  users.defaultUserShell  = pkgs.zsh;
+  programs.zsh.enable     = true;
+
+  gab.login.sddm.enable = true;
+
+  gab.hardware = {
+    bluetooth.enable = true;
+    pipewire.enable  = true;
+
+    i18n.locale     = "it_IT.UTF-8";
+    keyboard.layout = "it";
+    time.timeZone   = "Europe/Rome";
   };
+
+  gab.apps = {
+    ssh.enable  = true;
+    dbus.enable = true;
+
+    corectrl.enable = true;
+
+    direnv.enable = true;
+    docker.enable = true;
+  };
+
+  gab.wm.hyprland.enable = true;
+
+  services.logind.extraConfig = ''
+    # don’t shutdown when power button is short-pressed
+    HandlePowerKey=ignore
+  '';
+
+  services.xserver.excludePackages = [ pkgs.xterm ];
 }

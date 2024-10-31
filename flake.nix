@@ -1,5 +1,57 @@
 {
   description = "My flake";
+  
+  outputs = {
+    self,
+    nixpkgs,
+    home-manager,
+    ...
+  } @ inputs: let
+    inherit (self) outputs;
+    
+    systemSettings = {
+      hostName = "nixos";
+
+      dotfiles = "~/.dotfiles";
+
+      kb = {
+        layout = "it";
+        variant = "";
+      };
+    };
+
+    userSettings = {
+      userName = "gabriele";
+      name = "Gabriele";
+      email = "gmercolino2003@gmail.com";
+
+      wm = "hyprland";
+    };
+
+    lib = nixpkgs.lib;
+
+    createNixosProfile = name: system: lib.nixosSystem {
+      inherit system;
+      modules = [ ./profiles/${name}/configuration.nix ];
+      specialArgs = { inherit userSettings systemSettings inputs outputs;};
+    };
+
+    createHomeProfile = name: system: home-manager.lib.homeManagerConfiguration { 
+      pkgs = import nixpkgs { inherit system; };
+      modules = [ ./profiles/${name}/home.nix ];
+      extraSpecialArgs = { inherit userSettings systemSettings inputs outputs; };
+    };
+  in {
+    nixosConfigurations = {
+      mini-pc     = createNixosProfile "mini-pc"     "x86_64-linux";
+      chromebook  = createNixosProfile "chromebook"  "x86_64-linux";
+    };
+
+    homeConfigurations = {
+      mini-pc     = createHomeProfile "mini-pc"     "x86_64-linux";
+      chromebook  = createHomeProfile "chromebook"  "x86_64-linux";
+    };
+  };
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
@@ -9,137 +61,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
    
-    nixvim = {
-      url = "github:gabrielemercolino/.nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixvim.url = "github:gabrielemercolino/.nixvim";
     
     stylix.url = "github:danth/stylix";
     
-    spicetify-nix = {
-      url = "github:Gerg-L/spicetify-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-  };
+    spicetify-nix.url = "github:Gerg-L/spicetify-nix";
 
-  outputs = {
-    self,
-    nixpkgs,
-    home-manager,
-    stylix,
-    spicetify-nix,
-    ...
-  } @ inputs: let
-    inherit (self) outputs;
-    
-    systemSettings = {
-      hostName = "nixos";
-      shell = "zsh";
-
-      dotfiles = "~/.dotfiles";
-
-      keyLayout = "it";
-
-      timeZone = "Europe/Rome";
-      locale = "it_IT.UTF-8";
-    };
-
-    userSettings = {
-      userName = "gabriele";
-      name = "Gabriele";
-
-      wm = "hyprland";
-      browser = "chrome";
-      terminal = "kitty";
-    };
-
-    lib = nixpkgs.lib;
-
-  in {
-    nixosConfigurations = {
-      base = lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [ ./profiles/base/configuration.nix ];
-        specialArgs = {
-          inherit userSettings;
-          inherit systemSettings;
-          inherit inputs;
-          inherit outputs;
-
-          inherit (inputs) stylix;
-        };
-      };
-
-      mini-pc = lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [ ./profiles/mini-pc/configuration.nix ];
-        specialArgs = {
-          inherit userSettings;
-          inherit systemSettings;
-          inherit inputs;
-          inherit outputs;
-
-          inherit (inputs) stylix;
-        };
-      };
-
-      chromebook = lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [ ./profiles/chromebook/configuration.nix ];
-        specialArgs = {
-          inherit userSettings;
-          inherit systemSettings;
-          inherit inputs;
-          inherit outputs;
-
-          inherit (inputs) stylix;
-        };
-      };
-    };
-
-    homeConfigurations = {
-      base = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs {system = "x86_64-linux";};
-        modules = [ ./profiles/base/home.nix ];
-        extraSpecialArgs = {
-          inherit userSettings;
-          inherit systemSettings;
-          inherit inputs;
-          inherit outputs;
-
-          inherit (inputs) stylix;
-        };
-      };
-
-      mini-pc = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs {system = "x86_64-linux";};
-
-        modules = [ ./profiles/mini-pc/home.nix ];
-        extraSpecialArgs = {
-          inherit userSettings;
-          inherit systemSettings;
-          inherit inputs;
-          inherit outputs;
-          inherit spicetify-nix;
-
-          inherit (inputs) stylix;
-        };
-      };
-
-      chromebook = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs {system = "x86_64-linux";};
-        modules = [ ./profiles/chromebook/home.nix ];
-        extraSpecialArgs = {
-          inherit userSettings;
-          inherit systemSettings;
-          inherit inputs;
-          inherit outputs;
-          inherit spicetify-nix;
-
-          inherit (inputs) stylix;
-        };
-      };
-
-    };
+    hyprland-nix.url = "github:hyprland-community/hyprland-nix";
   };
 }

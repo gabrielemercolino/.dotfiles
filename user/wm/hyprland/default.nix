@@ -1,216 +1,199 @@
-{ config, pkgs, userSettings, systemSettings, ... }:
+{ config, lib, pkgs, systemSettings, ... }:
 
 {
   imports = [
     ./waybar.nix
   ];
 
-  wayland.windowManager.hyprland = {
-    # Whether to enable Hyprland wayland compositor
-    enable = true;
-    # The hyprland package to use
-    package = pkgs.hyprland;
-    # Whether to enable XWayland
-    xwayland.enable = true;		
-
-    # Optional
-    # Whether to enable hyprland-session.target on hyprland startup
-    systemd.enable = true;
-    # Whether to enable patching wlroots for better Nvidia support
-    #enableNvidiaPatches = true;
-  };
-
   home.packages = with pkgs; [
-    hyprland-protocols
-
-    wtype
     wev
     wlr-randr
     wl-clipboard
-
-    libva-utils
-
-    libsForQt5.qt5.qtwayland
-    qt6.qtwayland
-
-    xdg-utils
-    xdg-desktop-portal
-    xdg-desktop-portal-gtk
-    xdg-desktop-portal-hyprland
-
-    # for screenshots
-    grim
-    slurp
-    wl-screenrec
-    ffmpeg
   ];
+
+  wayland.windowManager.hyprland.keyBinds = let
+    MOUSE_L = "mouse:272";
+    MOUSE_R = "mouse:273";
+    # collection of keybinds grouped by functionality
+    groups = {
+      launchApps = {
+        bind."SUPER, RETURN"  = "exec, ${pkgs.kitty}/bin/kitty";
+        bind."SUPER, T"       = "exec, ${pkgs.telegram-desktop}/bin/telegram-desktop";
+        bind."SUPER_SHIFT, H" = "exec, ${pkgs.kitty}/bin/kitty ${pkgs.btop}/bin/btop";
+        bind."SUPER, SPACE"   = "exec, ${pkgs.rofi-wayland}/bin/rofi -show drun";
+      };
+      windowToggles = {
+        bind."SUPER, V" = "togglefloating";
+        bind."SUPER, F" = "fullscreen";
+        bind."SUPER, P" = "pseudo";
+        bind."SUPER, J" = "togglesplit";
+      };
+      mouseWindowControl = {
+        bindm."SUPER, ${MOUSE_L}" = "movewindow";
+        bindm."SUPER, ${MOUSE_R}" = "resizewindow";
+      };
+      audioControl = {
+        binde.", XF86AudioRaiseVolume" = "exec, ${pkgs.pamixer}/bin/pamixer -i 5";
+        binde.", XF86AudioLowerVolume" = "exec, ${pkgs.pamixer}/bin/pamixer -d 5";
+        bind.", XF86AudioMute"         = "exec, ${pkgs.pamixer}/bin/pamixer -t";
+      };
+      brightnessControl = {
+        binde.", XF86MonBrightnessUp"   = "exec, ${pkgs.brightnessctl}/bin/brightnessctl set +5%";
+        binde.", XF86MonBrightnessDown" = "exec, ${pkgs.brightnessctl}/bin/brightnessctl set 5%-";
+      };
+      powerControl = {
+        bind."SUPER_SHIFT, R" = "exec, systemctl reboot";
+        bind."SUPER_SHIFT, P" = "exec, systemctl poweroff";
+      };
+      waybar = {
+        bind."SUPER, W" = "exec, pkill waybar || true && ${pkgs.waybar}/bin/waybar";
+      };
+      moveFocus = {
+        bind."SUPER, left"  = "movefocus, l";
+        bind."SUPER, right" = "movefocus, r";
+        bind."SUPER, up"    = "movefocus, u";
+        bind."SUPER, down"  = "movefocus, d";
+      };
+      changeWorkspace = {
+        bind."SUPER, 0" = "workspace, 0";
+        bind."SUPER, 1" = "workspace, 1";
+        bind."SUPER, 2" = "workspace, 2";
+        bind."SUPER, 3" = "workspace, 3";
+        bind."SUPER, 4" = "workspace, 4";
+        bind."SUPER, 5" = "workspace, 5";
+        bind."SUPER, 6" = "workspace, 6";
+        bind."SUPER, 7" = "workspace, 7";
+        bind."SUPER, 8" = "workspace, 8";
+        bind."SUPER, 9" = "workspace, 9";
+      };
+      moveToWorkspace = {
+        bind."SUPER_SHIFT, 0" = "movetoworkspace, 0";
+        bind."SUPER_SHIFT, 1" = "movetoworkspace, 1";
+        bind."SUPER_SHIFT, 2" = "movetoworkspace, 2";
+        bind."SUPER_SHIFT, 3" = "movetoworkspace, 3";
+        bind."SUPER_SHIFT, 4" = "movetoworkspace, 4";
+        bind."SUPER_SHIFT, 5" = "movetoworkspace, 5";
+        bind."SUPER_SHIFT, 6" = "movetoworkspace, 6";
+        bind."SUPER_SHIFT, 7" = "movetoworkspace, 7";
+        bind."SUPER_SHIFT, 8" = "movetoworkspace, 8";
+        bind."SUPER_SHIFT, 9" = "movetoworkspace, 9";
+      };
+    };
+    screenshot = "file_name=~/Pictures/screenshot_$(date +%Y-%m-%d-%T).png && ${pkgs.grim}/bin/grim -g \"$(${pkgs.slurp}/bin/slurp)\" $file_name && wl-copy < $file_name";
+    screenrec  = "pkill wl-screenrec || ${pkgs.wl-screenrec}/bin/wl-screenrec --audio -b \"1 MB\"";
+  in 
+    lib.mkMerge [
+      groups.powerControl
+      groups.launchApps
+      groups.audioControl
+      groups.brightnessControl
+      groups.mouseWindowControl
+      groups.windowToggles
+      groups.waybar
+      groups.moveFocus
+      groups.changeWorkspace
+      groups.moveToWorkspace
+      {
+        bind."SUPER, Q" = "killactive";
+        bind."SUPER, M" = "exit";
+      }
+      {
+        bind."SUPER CONTROL_L, S" = "exec, ${screenshot}";
+        bind."SUPER_SHIFT, S"     = "exec, ${screenrec}";
+      }
+    ];
   
-  wayland.windowManager.hyprland.settings = {
-    "$mainMod" = "SUPER";
-    "$terminal" = userSettings.terminal;
-    bindm = [
-      # Move/resize windows with mainMod + LMB/RMB and dragging
-      "$mainMod, mouse:272, movewindow"
-      "$mainMod, mouse:273, resizewindow"
+  wayland.windowManager.hyprland.config = {
+    monitor = [
+      ", highres, auto, 1"
     ];
-    binde = [
-      # Brightness control
-      ", XF86MonBrightnessUp, exec, ${pkgs.brightnessctl}/bin/brightnessctl set +5%"
-      ", XF86MonBrightnessDown, exec, ${pkgs.brightnessctl}/bin/brightnessctl set 5%-"
-      
-      # Volume control
-      ", XF86AudioRaiseVolume, exec, ${pkgs.pamixer}/bin/pamixer -i 5"
-      ", XF86AudioLowerVolume, exec, ${pkgs.pamixer}/bin/pamixer -d 5"
+
+    exec = [
+      "$(pkill waybar || true) && ${pkgs.waybar}/bin/waybar"
+      "${pkgs.swaybg}/bin/swaybg -m fill -i ${config.stylix.image}"
     ];
-    bind = [
-      "$mainMod, RETURN, exec, $terminal"
-      "$mainMod, Q, killactive," 
-      "$mainMod, M, exit, "
-      "$mainMod, V, togglefloating, "
-      "$mainMod, F, fullscreen, "
-      
-      "$mainMod, SPACE, exec, ${pkgs.rofi-wayland}/bin/rofi -show drun"
-      #"$mainMod, SPACE, exec, ${pkgs.wofi}/bin/wofi --show drun"
-
-      "$mainMod, P, pseudo, # dwindle"
-      "$mainMod, J, togglesplit,"
-      
-      # reload waybar
-      "$mainMod, W, exec, pkill .waybar-wrapped && ${pkgs.waybar}/bin/waybar"
-
-      # Override power-off and reboot commands
-      "$mainMod SHIFT, R, exec, systemctl reboot"
-      "$mainMod SHIFT, P, exec, systemctl poweroff"
-      ", XF86PowerOff, exec, "
-     
-      # system stats
-      "$mainMod SHIFT, H, exec, ${pkgs.kitty}/bin/kitty ${pkgs.btop}/bin/btop"
-    
-      # Audio control
-      ", XF86AudioMute, exec, ${pkgs.pamixer}/bin/pamixer -t"
-
-      # Move focus with mainMod + arrow keys
-      "$mainMod, left, movefocus, l"
-      "$mainMod, right, movefocus, r"
-      "$mainMod, up, movefocus, u"
-      "$mainMod, down, movefocus, d"
-
-      # apps
-      "$mainMod, T, exec, ${pkgs.telegram-desktop}/bin/telegram-desktop"
-
-      # screenshot
-      "$mainMod CONTROL_L, S, exec, wl-copy < $(gab screenshot -a)"
-
-    ] ++ (
-      # workspaces
-      # binds $mod + [shift +] {1..10} to [move to] workspace {1..10}
-      builtins.concatLists (builtins.genList (
-        x: let
-          ws = let
-            c = (x + 1) / 10;
-          in
-            builtins.toString (x + 1 - (c * 10));
-        in [
-          "$mainMod, ${ws}, workspace, ${toString (x + 1)}"
-          "$mainMod SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}"
-          ])
-        10)
-      );
 
     general = {
       gaps_in = 5;
       gaps_out = 20;
       border_size = 2;
-      #"col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
-      #"col.inactive_border" = "rgba(595959aa)";
-
       layout = "dwindle";
-
-      # Please see https://wiki.hyprland.org/Configuring/Tearing/ before you turn this on
       allow_tearing = false;
     };
     
     decoration = {
-      # See https://wiki.hyprland.org/Configuring/Variables/ for more
-
       rounding = 10;
-    
       blur = {
         enabled = true;
         size = 3;
         passes = 1;
       }; 
-
       drop_shadow = "yes";
       shadow_range = 4;
       shadow_render_power = 3;
-      #"col.shadow" = "rgba(1a1a1aee)";
+    };
+
+    input = {
+      kb_layout  = systemSettings.kb.layout;
+      kb_variant = systemSettings.kb.variant;
+      follow_mouse = 1;
+      touchpad.natural_scroll = "no";
     };
   
     dwindle = {
-      # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
-      pseudotile = "yes"; # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
+      pseudotile     = "yes"; # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section
       preserve_split = "yes"; # you probably want this
     };
 
     master= {
-      # See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
-      #new_is_master = true
       new_status = "master";
     };
 
     gestures = {
-      # See https://wiki.hyprland.org/Configuring/Variables/ for more
       workspace_swipe = "on";
     };
 
     misc = {
-      # See https://wiki.hyprland.org/Configuring/Variables/ for more
       force_default_wallpaper = 0; # Set to 0 to disable the anime mascot wallpapers
     };
   };
 
-  wayland.windowManager.hyprland.extraConfig = ''
-# See https://wiki.hyprland.org/Configuring/Monitors/
-monitor=,highres,auto,1
-
-# Some default env vars.
-env = XCURSOR_SIZE,24
-
-exec-once = ${pkgs.waybar}/bin/waybar
-
-exec = ${pkgs.swaybg}/bin/swaybg -m fill -i ${config.stylix.image}
-
-animations {
-    enabled = yes
-
-    # Some default animations, see https://wiki.hyprland.org/Configuring/Animations/ for more
-
-    bezier = myBezier, 0.05, 0.9, 0.1, 1.05
-
-    animation = windows, 1, 7, myBezier
-    animation = windowsOut, 1, 7, default, popin 80%
-    animation = border, 1, 10, default
-    animation = borderangle, 1, 8, default
-    animation = fade, 1, 7, default
-    animation = workspaces, 1, 6, default
-}
-
-# For all categories, see https://wiki.hyprland.org/Configuring/Variables/
-input {
-    kb_layout = ${systemSettings.keyLayout}
-    kb_variant =
-    kb_model =
-    kb_options =
-    kb_rules =
-
-    follow_mouse = 1
-
-    touchpad {
-        natural_scroll = no
-    }
-
-    sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
-}
-    '';
+  wayland.windowManager.hyprland.animations.animation = {
+    windowsIn = {
+      enable   = true;
+      duration = 100;
+      curve    = "easeOutCirc";
+      style    = "popin 60%";
+    };
+    fadeIn = {
+      enable   = true;
+      duration = 200;
+      curve    = "easeOutCirc";
+    };
+    # window destruction
+    windowsOut = {
+      enable   = true;
+      duration = 200;
+      curve    = "easeOutCirc";
+      style    = "popin 60%";
+    };
+    fadeOut = {
+      enable   = true;
+      duration = 200;
+      curve    = "easeOutCirc";
+    };
+    # window movement
+    windowsMove = {
+      enable   = true;
+      duration = 200;
+      curve    = "easeInOutCubic";
+      style    = "popin";
+    };
+    workspaces = {
+      enable   = true;
+      duration = 200;
+      curve    = "easeOutCirc";
+      style    = "slide";
+    };
+  };
 }
