@@ -63,5 +63,8 @@
 
   gab.gaming.mangohud.enable = true;
 
-  gab.wm.hyprland.enable = true;
+  gab.wm.hyprland = {
+    enable = true;
+    monitors = [ "HDMI-A-1, 1920x1080@100, auto, 1" ];
+  };
 }
