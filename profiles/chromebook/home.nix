@@ -15,28 +15,37 @@
   gab.shell.zsh.enable = true;
 
   gab.apps = {
-    rofi = { enable = true; wayland = true; };
-    blueman-applet.enable = true; 
-    kitty.enable = true; 
+    rofi = {
+      enable = true;
+      wayland = true;
+    };
+    blueman-applet.enable = true;
+    kitty.enable = true;
 
-    gimp.enable     = true;
-    yazi.enable     = true;
+    gimp.enable = true;
+    yazi.enable = true;
     obsidian.enable = true;
 
     chrome.enable = true;
-    zen = { enable = true; specific = false; };
+    zen = {
+      enable = true;
+      specific = false;
+    };
 
     telegram.enable = true;
 
-    nvim.enable           = true;
+    nvim.enable = true;
     idea-community.enable = true;
   };
 
   programs.git = {
-    enable    = true;
-    userName  = userSettings.name;
+    enable = true;
+    userName = userSettings.name;
     userEmail = userSettings.email;
   };
 
-  gab.wm.hyprland.enable = true;
+  gab.wm.hyprland = {
+    enable = true;
+    monitors = [ "eDP-1, 1920x1080@60, auto, 1.25" ];
+  };
 }
