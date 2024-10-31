@@ -11,22 +11,23 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # use zsh
-  users.defaultUserShell  = pkgs.zsh;
-  programs.zsh.enable     = true;
+  users.defaultUserShell = pkgs.zsh;
+  programs.zsh.enable = true;
 
   gab.login.sddm.enable = true;
 
   gab.hardware = {
     bluetooth.enable = true;
-    pipewire.enable  = true;
+    pipewire.enable = false;
+    pulseaudio.enable = true;
 
-    i18n.locale     = "it_IT.UTF-8";
+    i18n.locale = "it_IT.UTF-8";
     keyboard.layout = "it";
-    time.timeZone   = "Europe/Rome";
+    time.timeZone = "Europe/Rome";
   };
 
   gab.apps = {
-    ssh.enable  = true;
+    ssh.enable = true;
     dbus.enable = true;
 
     corectrl.enable = true;
