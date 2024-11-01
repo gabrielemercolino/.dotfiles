@@ -1,26 +1,38 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.gab.apps;
 in
 {
   options.gab.apps = {
-    yazi.enable     = lib.mkEnableOption "yazi";
-    gimp.enable     = lib.mkEnableOption "gimp";
+    yazi.enable = lib.mkEnableOption "yazi";
+    gimp.enable = lib.mkEnableOption "gimp";
     obsidian.enable = lib.mkEnableOption "obsidian";
-  
+
     rofi = {
-      enable  = lib.mkEnableOption "rofi";
+      enable = lib.mkEnableOption "rofi";
       wayland = lib.mkEnableOption "rofy for wayland";
     };
   };
 
   config = {
-    home.packages = lib.optionals cfg.gimp.enable     [ pkgs.gimp ]
-                    ++ 
-                    lib.optionals cfg.obsidian.enable [ pkgs.obsidian ];
+    home.packages =
+      lib.optionals cfg.gimp.enable [ pkgs.gimp ]
+      ++ lib.optionals cfg.obsidian.enable [ pkgs.obsidian ];
 
-    programs.yazi.enable = cfg.yazi.enable;
+    programs.yazi = {
+      enable = cfg.yazi.enable;
+      settings = {
+        manager = {
+          show_hidden = true;
+        };
+      };
+    };
 
     programs.rofi = {
       enable = cfg.rofi.enable;
