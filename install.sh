@@ -3,8 +3,8 @@
 sudo nixos-generate-config --show-hardware-config > ./system/hardware-configuration.nix
 
 echo "Please select which profile to install:"
-echo "  - 1: mini-pc"
-echo "  - 2: chromebook"
+echo "  - mini-pc"
+echo "  - chromebook"
 echo ""
 
 read -p "input: " profile
