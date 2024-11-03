@@ -1,8 +1,10 @@
 { config, pkgs, ... }:
 
-let 
+let
   colors = config.lib.stylix.colors;
-  timezone = (pkgs.runCommand "timezone" { } ''echo $(timedatectl show --property=Timezone --value) > $out'');
+  timezone = (
+    pkgs.runCommand "timezone" { } ''echo $(timedatectl show --property=Timezone --value) > $out''
+  );
 in
 {
   # config from https://github.com/sameemul-haque/dotfiles
@@ -20,10 +22,10 @@ in
           "custom/os"
           "hyprland/workspaces"
         ];
-        modules-center = [ 
-          "clock" 
+        modules-center = [
+          "clock"
         ];
-        modules-right = [ 
+        modules-right = [
           "tray"
           "cpu"
           "memory"
@@ -32,14 +34,14 @@ in
           "battery"
           "idle_inhibitor"
           "custom/power"
-          ];
+        ];
 
         "custom/os" = {
           "format" = "   ";
           "tooltip" = false;
           "on-click" = "${pkgs.rofi-wayland}/bin/rofi -show drun";
         };
-        
+
         "hyprland/workspaces" = {
           "format" = "{icon}";
           "format-icons" = {
@@ -58,11 +60,11 @@ in
           };
           "on-click" = "activate";
           "persistent-workspaces" = {
-            "1" = [];
-            "2" = [];
-            "3" = [];
-            "4" = [];
-            "5" = [];
+            "1" = [ ];
+            "2" = [ ];
+            "3" = [ ];
+            "4" = [ ];
+            "5" = [ ];
           };
         };
 
@@ -79,7 +81,7 @@ in
           "format" = "󰍛 {}%";
           "max-length" = 10;
         };
-        
+
         cpu = {
           "interval" = 5;
           "format" = " {usage}%";
@@ -99,17 +101,23 @@ in
 
         network = {
           "format-wifi" = " {icon} ";
-          "format-icons" = ["󰤯" "󰤟" "󰤢" "󰤥" "󰤨"];
+          "format-icons" = [
+            "󰤯"
+            "󰤟"
+            "󰤢"
+            "󰤥"
+            "󰤨"
+          ];
           "format-ethernet" = "󰀂";
-	        "format-alt" = "󱛇";
+          "format-alt" = "󱛇";
           "format-disconnected" = "󰖪";
-	        "tooltip-format-wifi" = "{icon} {essid}\n {bandwidthDownBytes}   {bandwidthUpBytes}";
+          "tooltip-format-wifi" = "{icon} {essid}\n {bandwidthDownBytes}   {bandwidthUpBytes}";
           "tooltip-format-ethernet" = "󰀂  {ifname}\n {bandwidthDownBytes}   {bandwidthUpBytes}";
-	        "tooltip-format-disconnected" = "Disconnected";
-	        #"on-click": "~/.config/rofi/wifi/wifi.sh &",
+          "tooltip-format-disconnected" = "Disconnected";
+          #"on-click": "~/.config/rofi/wifi/wifi.sh &",
           #"on-click-right": "~/.config/rofi/wifi/wifinew.sh &",
-	        "interval" = 5;
-	        "nospacing" = 1;
+          "interval" = 5;
+          "nospacing" = 1;
         };
 
         pulseaudio = {
@@ -123,7 +131,11 @@ in
           "format-source-muted" = " ";
           "format-icons" = {
             "headphone" = " ";
-            "default" = [ "" "" "" ];
+            "default" = [
+              ""
+              ""
+              ""
+            ];
           };
           "on-click" = "${pkgs.pavucontrol}/bin/pavucontrol";
         };
@@ -136,18 +148,39 @@ in
           };
           "format" = "{capacity}% {icon}";
           "format-icons" = {
-            "charging" = [ "󰢜" "󰂆" "󰂇" "󰂈" "󰢝" "󰂉" "󰢞" "󰂊" "󰂋" "󰂅" ];
-            "default" = [ "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
+            "charging" = [
+              "󰢜"
+              "󰂆"
+              "󰂇"
+              "󰂈"
+              "󰢝"
+              "󰂉"
+              "󰢞"
+              "󰂊"
+              "󰂋"
+              "󰂅"
+            ];
+            "default" = [
+              "󰁺"
+              "󰁻"
+              "󰁼"
+              "󰁽"
+              "󰁾"
+              "󰁿"
+              "󰂀"
+              "󰂁"
+              "󰂂"
+              "󰁹"
+            ];
           };
           "format-full" = "Charged ";
           "tooltip" = false;
         };
 
-                
         "custom/power" = {
           "format" = "󰤆";
           "tooltip" = false;
-          # "on-click" = "~/.config/rofi/powermenu/type-2/powermenu.sh &";
+          "on-click" = "${pkgs.swaylock-effects}/bin/swaylock";
         };
       };
     };
@@ -166,7 +199,7 @@ in
         transition-property: background-color;
         transition-duration: 0.5s;
       }
-      
+
       window#waybar.hidden {
         opacity: 0.5;
       }
