@@ -13,6 +13,7 @@ in
     yazi.enable = lib.mkEnableOption "yazi";
     gimp.enable = lib.mkEnableOption "gimp";
     obsidian.enable = lib.mkEnableOption "obsidian";
+    swaylock.enable = lib.mkEnableOption "swaylock";
 
     rofi = {
       enable = lib.mkEnableOption "rofi";
@@ -32,6 +33,11 @@ in
           show_hidden = true;
         };
       };
+    };
+
+    programs.swaylock = {
+      enable = cfg.swaylock.enable;
+      package = pkgs.swaylock-effects;
     };
 
     programs.rofi = {
