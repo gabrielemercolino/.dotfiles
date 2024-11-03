@@ -10,6 +10,11 @@
   # for amd gpus
   nixpkgs.config.rocmSupport = true;
 
+  gab.wm.hyprland = {
+    enable = true;
+    monitors = [ "HDMI-A-1, 1920x1080@100, auto, 1" ];
+  };
+
   gab.shell.aliases = {
     ls = "${pkgs.eza}/bin/eza --icons";
     ll = "${pkgs.eza}/bin/eza -l --icons";
@@ -28,6 +33,7 @@
     gimp.enable = true;
     yazi.enable = true;
     obsidian.enable = true;
+    swaylock.enable = true;
 
     chrome.enable = true;
     zen = {
@@ -62,9 +68,4 @@
   };
 
   gab.gaming.mangohud.enable = true;
-
-  gab.wm.hyprland = {
-    enable = true;
-    monitors = [ "HDMI-A-1, 1920x1080@100, auto, 1" ];
-  };
 }
