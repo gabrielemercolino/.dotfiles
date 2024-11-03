@@ -1,11 +1,17 @@
-{ config, lib, inputs, pkgs, ... }:
+{
+  config,
+  lib,
+  inputs,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.gab.style;
 in
 {
-  imports = [ inputs.stylix.homeManagerModules.stylix ];  
-  
+  imports = [ inputs.stylix.homeManagerModules.stylix ];
+
   options.gab.style = {
     background = lib.mkOption {
       default = pkgs.fetchurl {
@@ -18,14 +24,17 @@ in
 
     theme = lib.mkOption {
       default = "catppuccin-mocha";
-      type = lib.types.enum [ "catppuccin-mocha" "uwunicorn" ];
+      type = lib.types.enum [
+        "catppuccin-mocha"
+        "uwunicorn"
+      ];
       description = "The theme to use";
     };
   };
 
   # fix: even if target is forced to false I need to re-add this otherwise it won't work
   options.wayland.windowManager.hyprland = {
-    settings = lib.mkOption { default = {}; };
+    settings = lib.mkOption { default = { }; };
   };
 
   config = {
@@ -39,6 +48,12 @@ in
     stylix.targets.hyprland.enable = lib.mkForce false; # hyprland-nix is not compatible
 
     programs.rofi.theme = lib.mkForce (import ./rofi-theme.nix { inherit config; });
+    programs.swaylock.settings = {
+      effect-blur = "7x5";
+      effect-vignette = "0.7:0.7";
+      indicator = true;
+      clock = true;
+    };
   };
 
 }
