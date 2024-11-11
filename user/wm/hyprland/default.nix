@@ -15,6 +15,8 @@
     wev
     wlr-randr
     wl-clipboard
+
+    hyprpanel
   ];
 
   wayland.windowManager.hyprland.keyBinds =
@@ -52,8 +54,9 @@
           bind."SUPER_SHIFT, R" = "exec, systemctl reboot";
           bind."SUPER_SHIFT, P" = "exec, systemctl poweroff";
         };
-        waybar = {
-          bind."SUPER, W" = "exec, pkill waybar || true && ${pkgs.waybar}/bin/waybar";
+        bar = {
+          #bind."SUPER, W" = "exec, pkill waybar || true && ${pkgs.waybar}/bin/waybar";
+          bind."SUPER, W" = "exec, pkill ags || true && ${pkgs.hyprpanel}/bin/hyprpanel";
         };
         moveFocus = {
           bind."SUPER, left" = "movefocus, l";
@@ -96,7 +99,7 @@
       groups.brightnessControl
       groups.mouseWindowControl
       groups.windowToggles
-      groups.waybar
+      groups.bar
       groups.moveFocus
       groups.changeWorkspace
       groups.moveToWorkspace
@@ -111,8 +114,11 @@
     ];
 
   wayland.windowManager.hyprland.config = {
+    exec_once = [
+      "${pkgs.hyprpanel}/bin/hyprpanel"
+    ];
     exec = [
-      "$(pkill waybar || true) && ${pkgs.waybar}/bin/waybar"
+      #"$(pkill waybar || true) && ${pkgs.waybar}/bin/waybar"
       "${pkgs.swaybg}/bin/swaybg -m fill -i ${config.stylix.image}"
     ];
 
