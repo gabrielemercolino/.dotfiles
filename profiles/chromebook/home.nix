@@ -25,6 +25,7 @@
     gimp.enable = true;
     yazi.enable = true;
     obsidian.enable = true;
+    swaylock.enable = true;
 
     chrome.enable = true;
     zen = {
