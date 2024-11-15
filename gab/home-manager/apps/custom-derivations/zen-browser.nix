@@ -5,11 +5,11 @@
 }:
 let
   name = "zen";
-  version = "1.0.1-a.16";
+  version = "1.0.1-a.19";
 
   kind = if specific then "specific" else "generic";
-  specificHash = "sha256-3+GLBryfIxkDz8tNNZpAnI+XiwJmVsaqo/rSjbWn1OQ=";
-  genericHash = "sha256-uTc2R/VLXzrFjYK2F0G7m0+Ma3SulJRqhIgIcL2VjZk=";
+  specificHash = "sha256-qAPZ4VyVmeZLRfL0kPHF75zyrSUFHKQUSUcpYKs3jk8=";
+  genericHash = "sha256-fubz5D1rKjapKbrIQ5yYuBnqn4ppvbJNgLh2Gmgl/hM=";
 
   src = fetchurl {
     url = "https://github.com/zen-browser/desktop/releases/download/${version}/zen-${kind}.AppImage";
