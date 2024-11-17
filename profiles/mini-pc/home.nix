@@ -35,7 +35,7 @@
     obsidian.enable = true;
     swaylock.enable = true;
 
-    chrome.enable = true;
+    chrome.enable = false;
     zen = {
       enable = true;
       specific = true;
