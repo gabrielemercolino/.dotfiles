@@ -80,7 +80,7 @@
     };
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs.url = "nixpkgs/release-24.11";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -93,7 +93,10 @@
 
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
 
-    hyprland-nix.url = "github:hyprland-community/hyprland-nix";
+    hyprland-nix = {
+      url = "github:hyprland-community/hyprland-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
   };
 }
