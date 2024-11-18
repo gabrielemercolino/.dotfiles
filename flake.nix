@@ -54,19 +54,7 @@
             inherit system;
             overlays = [
               inputs.hyprpanel.overlay
-              (final: prev: {
-                bun =
-                  if name == "chromebook" then
-                    prev.bun.overrideAttrs (oldAttrs: {
-                      passthru.sources."x86_64-linux" = final.fetchurl {
-                        url = "https://github.com/oven-sh/bun/releases/download/bun-v${oldAttrs.version}/bun-linux-x64-baseline.zip";
-                        hash = "";
-                      };
-                    })
-                  else
-                    prev.bun;
-              })
-            ];
+            ] ++ lib.optionals (name == "chromebook") [ (import ./overlays/bun-baseline.nix) ];
           };
           modules = [ ./profiles/${name}/home.nix ];
           extraSpecialArgs = {
