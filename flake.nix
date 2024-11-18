@@ -54,7 +54,7 @@
             inherit system;
             overlays = [
               inputs.hyprpanel.overlay
-            ] ++ lib.optionals (name == "chromebook") [ (import ./overlays/bun-baseline.nix) ];
+            ];
           };
           modules = [ ./profiles/${name}/home.nix ];
           extraSpecialArgs = {
