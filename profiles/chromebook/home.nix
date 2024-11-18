@@ -1,6 +1,24 @@
-{ pkgs, userSettings, ... }:
-
 {
+  pkgs,
+  userSettings,
+  lib,
+  ...
+}:
+
+let
+  hyprpanelNar = ../../nar-cache/hyprpanel.nar;
+  hyprpanelStorePath = "/nix/store/g3xsrgwsfnyc1x8xk9cqpn8f1cq4mk55-hyprpanel";
+in
+{
+  home.activation.importNar = lib.hm.dag.entryBefore [ "writeBoundary" ] ''
+    if ! nix store verify-path ${hyprpanelStorePath}; then
+        echo "Importing ${hyprpanelNar} into the Nix store..."
+        nix store import < ${hyprpanelNar}
+    else
+        echo "Package ${hyprpanelStorePath} already exists in the store."
+    fi
+  '';
+
   imports = [
     ../base/home.nix
     ../../gab/home-manager
