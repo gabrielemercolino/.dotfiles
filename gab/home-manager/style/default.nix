@@ -46,6 +46,7 @@ in
 
     stylix.targets.mangohud.enable = false;
     stylix.targets.hyprland.enable = lib.mkForce false; # hyprland-nix is not compatible
+    stylix.targets.vscode.enable = false;
 
     programs.rofi.theme = lib.mkForce (import ./rofi-theme.nix { inherit config; });
     programs.swaylock.settings = {
