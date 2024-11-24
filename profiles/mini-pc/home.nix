@@ -34,6 +34,7 @@
     yazi.enable = true;
     obsidian.enable = true;
     swaylock.enable = true;
+    aseprite.enable = true;
 
     chrome.enable = false;
     zen = {
@@ -47,6 +48,12 @@
     nvim.enable = true;
     idea-community.enable = true;
     zed-editor.enable = true;
+    vscode = {
+      enable = true;
+      extensions = with pkgs.vscode-extensions; [
+        bbenoist.nix
+      ];
+    };
 
     music.spotify.enable = true;
     music.tracks = [
