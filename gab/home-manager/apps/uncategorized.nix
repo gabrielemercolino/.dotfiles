@@ -14,6 +14,7 @@ in
     gimp.enable = lib.mkEnableOption "gimp";
     obsidian.enable = lib.mkEnableOption "obsidian";
     swaylock.enable = lib.mkEnableOption "swaylock";
+    aseprite.enable = lib.mkEnableOption "aseprite";
 
     rofi = {
       enable = lib.mkEnableOption "rofi";
@@ -24,7 +25,8 @@ in
   config = {
     home.packages =
       lib.optionals cfg.gimp.enable [ pkgs.gimp ]
-      ++ lib.optionals cfg.obsidian.enable [ pkgs.obsidian ];
+      ++ lib.optionals cfg.obsidian.enable [ pkgs.obsidian ]
+      ++ lib.optionals cfg.aseprite.enable [ pkgs.aseprite ];
 
     programs.yazi = {
       enable = cfg.yazi.enable;
