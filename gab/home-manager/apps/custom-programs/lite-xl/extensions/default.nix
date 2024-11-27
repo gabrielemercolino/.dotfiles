@@ -17,6 +17,25 @@ let
         ln -s $src/* $out/share/${name}
       '';
     };
+
+  mkSingleScriptExtension =
+    {
+      name,
+      src,
+      targetDir,
+    }:
+    stdenv.mkDerivation rec {
+      inherit name src;
+
+      passthru.targetDir = targetDir;
+
+      phases = [ "installPhase" ];
+
+      installPhase = ''
+        mkdir -p $out/share/${name}
+        ln -s $src $out/share/${name}/init.lua
+      '';
+    };
 in
 {
   lsp = mkExtension {
@@ -39,6 +58,15 @@ in
       sha256 = "sha256-NTQTEt2QiexQbx1CKYF+hGZxtqAFdNrwdl+TznGlUfU=";
     };
     targetDir = "lite-xl/libraries/widget";
+  };
+
+  autoinsert = mkSingleScriptExtension {
+    name = "autoinsert";
+    src = pkgs.fetchurl {
+      url = "https://raw.githubusercontent.com/lite-xl/lite-xl-plugins/refs/heads/master/plugins/autoinsert.lua";
+      sha256 = "sha256-qbWsR0L3Fb3pVVe9BQ40NffUpiY7IXXxJ6J1nF//WBk=";
+    };
+    targetDir = "lite-xl/plugins/autoinsert";
   };
 
 }
