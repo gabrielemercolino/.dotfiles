@@ -52,7 +52,7 @@ in
     enable = lib.mkEnableOption "lite-xl";
     extensions = lib.mkOption {
       type = with lib.types; listOf package;
-      default = [];
+      default = [ ];
       example = with config.gab.lite-xl-extensions; [
         lsp
         widgets
@@ -61,7 +61,7 @@ in
     };
     lsp = lib.mkOption {
       type = with lib.types; listOf package;
-      default = [];
+      default = [ ];
       example = with config.gab.lite-xl-lsp; [ rust_analyzer ];
       description = "The lsp servers to add";
     };
