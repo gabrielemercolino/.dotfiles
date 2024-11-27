@@ -1,4 +1,4 @@
-{ pkgs, userSettings, ... }:
+{ config, pkgs, userSettings, ... }:
 
 {
   imports = [
@@ -40,6 +40,14 @@
     zen = {
       enable = true;
       specific = true;
+    };
+    lite-xl = {
+      enable = true;
+      extensions = with config.gab.lite-xl-extensions; [
+        lsp
+        widgets
+      ];
+      lsp = with config.gab.lite-xl-lsp; [ rust_analyzer nil ];
     };
 
     telegram.enable = true;
