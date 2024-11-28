@@ -54,6 +54,7 @@
             inherit system;
             overlays = [
               inputs.hyprpanel.overlay
+              inputs.lite-xl.overlay
             ];
           };
           modules = [ ./profiles/${name}/home.nix ];
@@ -98,5 +99,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
+
+    lite-xl.url = "github:gabrielemercolino/lite-xl-flake";
   };
 }
