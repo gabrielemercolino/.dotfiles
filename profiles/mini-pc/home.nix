@@ -1,10 +1,16 @@
-{ config, pkgs, userSettings, ... }:
+{
+  pkgs,
+  userSettings,
+  inputs,
+  ...
+}:
 
 {
   imports = [
     ../base/home.nix
     ../../gab/home-manager
     ../../user/commands/gab
+    inputs.lite-xl.homeManagerModules.default
   ];
 
   # for amd gpus
@@ -41,14 +47,6 @@
       enable = true;
       specific = true;
     };
-    lite-xl = {
-      enable = true;
-      extensions = with config.gab.lite-xl-extensions; [
-        lsp
-        widgets
-      ];
-      lsp = with config.gab.lite-xl-lsp; [ rust_analyzer nil ];
-    };
 
     telegram.enable = true;
     discord.enable = true;
@@ -56,12 +54,6 @@
     nvim.enable = true;
     idea-community.enable = true;
     zed-editor.enable = true;
-    vscode = {
-      enable = true;
-      extensions = with pkgs.vscode-extensions; [
-        bbenoist.nix
-      ];
-    };
 
     music.spotify.enable = true;
     music.tracks = [
@@ -80,6 +72,18 @@
     enable = true;
     userName = userSettings.name;
     userEmail = userSettings.email;
+  };
+
+  programs.lite-xl = {
+    enable = true;
+    extensions = with pkgs.lite-xl-extensions; [
+      lsp
+      widgets
+    ];
+    lspServers = with pkgs.lite-xl-lsp; [
+      rust_analyzer
+      nil
+    ];
   };
 
   gab.gaming.mangohud.enable = true;
