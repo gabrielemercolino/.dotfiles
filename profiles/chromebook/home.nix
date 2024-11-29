@@ -1,10 +1,16 @@
-{ pkgs, userSettings, ... }:
+{
+  pkgs,
+  userSettings,
+  inputs,
+  ...
+}:
 
 {
   imports = [
     ../base/home.nix
     ../../gab/home-manager
     ../../user/commands/gab
+    inputs.lite-xl.homeManagerModules.default
   ];
 
   gab.wm.hyprland = {
@@ -47,5 +53,21 @@
     enable = true;
     userName = userSettings.name;
     userEmail = userSettings.email;
+  };
+
+  programs.lite-xl = {
+    enable = true;
+    plugins = with pkgs.lite-xl-plugins; [
+      lsp
+      widgets
+      colorpreview
+      console
+      gitstatus
+      gitdiff_highlight
+    ];
+    lspServers = with pkgs.lite-xl-lsp; [
+      rust_analyzer
+      nil
+    ];
   };
 }
