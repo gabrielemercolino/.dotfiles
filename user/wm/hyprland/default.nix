@@ -15,8 +15,6 @@
     wev
     wlr-randr
     wl-clipboard
-
-    #    hyprpanel
   ];
 
   wayland.windowManager.hyprland.keyBinds =
@@ -116,9 +114,9 @@
   wayland.windowManager.hyprland.config = {
     exec_once = [
       "${pkgs.hyprpanel}/bin/hyprpanel"
+      #"${pkgs.waybar}/bin/waybar"
     ];
     exec = [
-      #"$(pkill waybar || true) && ${pkgs.waybar}/bin/waybar"
       "${pkgs.swaybg}/bin/swaybg -m fill -i ${config.stylix.image}"
     ];
 
