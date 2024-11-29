@@ -76,9 +76,13 @@
 
   programs.lite-xl = {
     enable = true;
-    extensions = with pkgs.lite-xl-extensions; [
+    plugins = with pkgs.lite-xl-plugins; [
       lsp
       widgets
+      colorpreview
+      console
+      gitstatus
+      gitdiff_highlight
     ];
     lspServers = with pkgs.lite-xl-lsp; [
       rust_analyzer
