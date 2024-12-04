@@ -101,5 +101,6 @@
     hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
 
     lite-xl.url = "github:gabrielemercolino/lite-xl-flake";
+    #lite-xl.url = "path:/home/gabriele/programmazione/nix/lite-xl-flake";
   };
 }
