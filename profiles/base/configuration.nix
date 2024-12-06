@@ -26,7 +26,7 @@
   # whether using x11 or wayland in the end it's better to have it
   services.xserver.enable = true;
 
-  system.stateVersion = "23.11";
+  system.stateVersion = "24.11";
 
   nix.settings.experimental-features = [
     "nix-command"
