@@ -90,7 +90,7 @@
 
     nixvim.url = "github:gabrielemercolino/.nixvim";
 
-    stylix.url = "github:danth/stylix";
+    stylix.url = "github:danth/stylix/release-24.11";
 
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
 
