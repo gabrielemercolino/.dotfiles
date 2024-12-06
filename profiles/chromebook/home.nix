@@ -14,8 +14,12 @@
   ];
 
   gab.wm.hyprland = {
-    enable = true;
+    enable = false;
     monitors = [ "eDP-1, 1920x1080@60, auto, 1.25" ];
+  };
+
+  gab.wm.bspwm = {
+    enable = true;
   };
 
   gab.shell.aliases = {
@@ -28,7 +32,7 @@
   gab.apps = {
     rofi = {
       enable = true;
-      wayland = true;
+      wayland = false;
     };
     blueman-applet.enable = true;
     kitty.enable = true;

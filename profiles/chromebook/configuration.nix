@@ -8,7 +8,7 @@
     ../../gab/nixos
   ];
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  #boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # use zsh
   users.defaultUserShell = pkgs.zsh;
@@ -36,7 +36,7 @@
     docker.enable = true;
   };
 
-  gab.wm.hyprland.enable = true;
+  gab.wm.bspwm.enable = true;
 
   services.logind.extraConfig = ''
     # don’t shutdown when power button is short-pressed
