@@ -42,7 +42,6 @@
     swaylock.enable = true;
     aseprite.enable = true;
 
-    chrome.enable = false;
     zen = {
       enable = true;
       specific = true;
@@ -53,7 +52,6 @@
 
     nvim.enable = true;
     idea-community.enable = true;
-    zed-editor.enable = true;
 
     music.spotify.enable = true;
     music.tracks = [
