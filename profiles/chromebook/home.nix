@@ -54,20 +54,4 @@
     userName = userSettings.name;
     userEmail = userSettings.email;
   };
-
-  programs.lite-xl = {
-    enable = true;
-    plugins = with pkgs.lite-xl-plugins; [
-      lsp
-      widgets
-      colorpreview
-      console
-      gitstatus
-      gitdiff_highlight
-    ];
-    lspServers = with pkgs.lite-xl-lsp; [
-      rust_analyzer
-      nil
-    ];
-  };
 }
