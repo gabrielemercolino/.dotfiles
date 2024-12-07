@@ -1,6 +1,6 @@
 # Dotfiles
 
-These are my dotfiles for NisOS
+These are my dotfiles for NixOS
 
 ## Installation
 
@@ -10,7 +10,7 @@ Also, if you decide to clone the repo in a different location as `~/.dotfiles` y
 
 ```sh
 nix-shell -p git    # ensure you have git
-cd 
+cd
 git clone git@github.com:gabrielemercolino/.dotfiles.git
 cd .dotfiles/
 ./install.sh
