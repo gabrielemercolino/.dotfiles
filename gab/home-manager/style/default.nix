@@ -2,7 +2,6 @@
   config,
   lib,
   inputs,
-  pkgs,
   ...
 }:
 
@@ -14,10 +13,7 @@ in
 
   options.gab.style = {
     background = lib.mkOption {
-      default = pkgs.fetchurl {
-        url = "https://github.com/Gingeh/wallpapers/blob/main/os/nix-black-4k.png?raw=true";
-        sha256 = "sha256-e1RBd5gTBonG39gYmxCvJuf+qZOiuxeZ9LTjhPQB9vk=";
-      };
+      default = ./wallpaper.png;
       type = lib.types.path;
       description = "The image to use for background";
     };
