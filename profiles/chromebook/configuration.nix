@@ -44,4 +44,5 @@
   '';
 
   services.xserver.excludePackages = [ pkgs.xterm ];
+  services.xserver.dpi = builtins.floor (96 * 1.25);
 }
