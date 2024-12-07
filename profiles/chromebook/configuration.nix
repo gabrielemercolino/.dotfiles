@@ -18,7 +18,7 @@
 
   gab.hardware = {
     bluetooth.enable = true;
-    pipewire.enable = false;
+    #pipewire.enable = true;
     pulseaudio.enable = true;
 
     i18n.locale = "it_IT.UTF-8";
