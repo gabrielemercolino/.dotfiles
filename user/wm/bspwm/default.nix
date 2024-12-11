@@ -54,6 +54,7 @@
         groups.windowToggles
         groups.audioControl
         groups.brightnessControl
+        groups.powerControl
         groups.bar
         groups.changeWorkspace
         groups.moveToWorkspace
