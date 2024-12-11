@@ -1,29 +1,72 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
+  imports = [
+    ./eww
+  ];
+
   services.sxhkd = {
     enable = config.xsession.windowManager.bspwm.enable;
-    keybindings = {
-      "super + Return" = "${pkgs.kitty}/bin/kitty";
-      "super + q" = "bspc node -k";
-      "super + m" = "bspc quit";
-      "super + shift + m" = "bspc wm -r && pkill -USR1 -x sxhkd";
-
-      "super + shift + {p,r}" = "systemctl {poweroff, reboot}";
-
-      # apps
-      "super + space" = "${pkgs.rofi}/bin/rofi -show drun";
-      "super + shift + h" = "${pkgs.kitty}/bin/kitty ${pkgs.btop}/bin/btop";
-
-      # navigation
-      "super + {1-5}" = "bspc desktop -f '^{1-5}'";
-
-      # move to workspace (and go to that workspace)
-      "super + shift + {1-5}" = "bspc node -d '^{1-5}' && bspc desktop -f '^{1-5}'";
-
-      # window managment
-      "super + {shift + v,v,f}" = "bspc node -t {tiled,floating,fullscreen}";
-    };
+    keybindings =
+      let
+        groups = {
+          launchApps = {
+            "super + Return" = "${pkgs.kitty}/bin/kitty";
+            "super + t" = "${pkgs.telegram-desktop}/bin/telegram-desktop";
+            "super + space" = "${pkgs.rofi}/bin/rofi -show drun";
+            "super + shift + h" = "${pkgs.kitty}/bin/kitty ${pkgs.btop}/bin/btop";
+          };
+          windowToggles = {
+            "super + {shift + v,v,f}" = "bspc node -t {tiled,floating,fullscreen}";
+          };
+          audioControl = {
+            "XF86AudioRaiseVolume" = "${pkgs.pamixer}/bin/pamixer -i 5";
+            "XF86AudioLowerVolume" = "${pkgs.pamixer}/bin/pamixer -d 5";
+            "XF86AudioMute" = "${pkgs.pamixer}/bin/pamixer -t";
+          };
+          brightnessControl = {
+            "XF86MonBrightnessUp" = "${pkgs.brightnessctl}/bin/brightnessctl set +5%";
+            "XF86MonBrightnessDown" = "${pkgs.brightnessctl}/bin/brightnessctl set 5%-";
+          };
+          powerControl = {
+            "super + shift + {p,r}" = "systemctl {poweroff, reboot}";
+          };
+          bar = {
+            "super + w" = "pkill eww && eww open bar";
+          };
+          changeWorkspace = {
+            "super + {1-5}" = "bspc desktop -f '^{1-5}'";
+          };
+          moveToWorkspace = {
+            "super + shift + {1-5}" = "bspc node -d '^{1-5}' && bspc desktop -f '^{1-5}'";
+          };
+        };
+        screenRecord = (pkgs.callPackage ../../commands/screen-record { });
+        screenShot = (pkgs.callPackage ../../commands/screen-shot { });
+      in
+      lib.mkMerge [
+        groups.launchApps
+        groups.windowToggles
+        groups.audioControl
+        groups.brightnessControl
+        groups.bar
+        groups.changeWorkspace
+        groups.moveToWorkspace
+        {
+          "super + shift + s" = "${screenRecord}/bin/screen-record";
+          "super + ctrl + s" = "${screenShot}/bin/screen-shot";
+        }
+        {
+          "super + q" = "bspc node -k";
+          "super + m" = "bspc quit";
+          "super + shift + m" = "bspc wm -r && pkill -USR1 -x sxhkd";
+        }
+      ];
   };
 
   services.picom = {
@@ -31,28 +74,9 @@
     vSync = true;
     settings = {
       experimental-backends = true;
+      corner-radius = 16;
     };
-    backend = "xr_glx_hybrid";
-  };
-
-  services.polybar = {
-    enable = config.xsession.windowManager.bspwm.enable;
-    script = '''';
-    settings = {
-      "bar/main" = {
-        width = "100%";
-        height = "24pt";
-        radius = 6;
-
-        modules-left = "cpu ram";
-      };
-
-      "module/cpu" = {
-        type = "internal/cpu";
-        interval = 1;
-        warn-percentage = 95;
-      };
-    };
+    backend = "glx";
   };
 
   xsession.windowManager.bspwm = {
@@ -63,7 +87,8 @@
       "pkill picom && picom -b"
       "${pkgs.nitrogen}/bin/nitrogen --set-auto ${config.stylix.image}"
 
-      "polybar main 2>&1 | tee -a /tmp/polybar_main.log & disown"
+      "xrdb -merge <<< \"Xft.dpi: 120\""
+      "sleep 1 && eww open bar"
     ];
 
     settings = {
