@@ -1,0 +1,77 @@
+;; variables
+(defpoll clock_hour :interval "5s" "date +\%I")
+(defpoll clock_minute :interval "5s" "date +\%M")
+(defpoll clock_date :interval "1h" "date '+%d/%m'")
+
+(defpoll volume :interval "2s" "pamixer --get-volume")
+(defpoll microphone :interval "2s" "pamixer --source $(pactl get-default-source) --get-volume")
+
+(defpoll memory :interval "10s" "bash scripts/getram.sh")
+
+(defpoll battery :interval "10s" "cat /sys/class/power_supply/BAT0/capacity")
+(defpoll battery_status :interval "10s" "cat /sys/class/power_supply/BAT0/status")
+
+(deflisten workspace "bash scripts/getworkspaces.sh")
+
+
+;; widgets
+(defwidget workspaces []
+  (literal :content workspace)
+)
+
+(defwidget bat []
+  (box :class "bat_module" :vexpand "false" :hexpand "false"
+    (circular-progress :value battery :class "batbar" :thickness 4
+      (button
+        :class "iconbat"
+        :limit-width 2
+        :tooltip "battery on ${battery}%"
+        :show_truncated false
+        ;:onclick "$HOME/.config/eww/bar/scripts/pop system"
+        :wrap false
+        ""
+      )
+    )
+  )
+)
+
+(defwidget mem []
+	(box :class "mem_module" :vexpand "false" :hexpand "false"
+    (circular-progress :value memory :class "membar" :thickness 4
+      (button
+        :class "iconmem"
+        :limit-width 2
+        :tooltip "using ${memory}% ram"
+        ;:onclick "$HOME/.config/eww/bar/scripts/pop system"
+        :show_truncated false
+        :wrap false
+        ""
+      )
+    )
+  )
+)
+
+
+;; macro widgets
+(defwidget bar_1 []
+  (box :class "bar_class" :orientation "h"
+    (workspaces)
+    (right)
+  )
+)
+
+(defwidget right []
+	(box :orientation "h" :space-evenly false :halign "end" :class "left_modules"
+    (mem)
+    (bat)
+  )
+)
+
+;; bars
+(defwindow bar
+  :geometry (geometry :x "0%" :y "9px" :width "98%" :height "30px" :anchor "top center")
+  :stacking "fg"
+  :windowtype "dock"
+  :reserve (struts :side "top" :distance "4%")
+  (bar_1)
+)
