@@ -107,7 +107,7 @@
       }
       {
         bind."SUPER CONTROL_L, S" = "exec, ${screenShot}/bin/screen-shot";
-        bind."SUPER_SHIFT, S" = "exec, ${screenRecord}/bin/screen-rec";
+        bind."SUPER_SHIFT, S" = "exec, ${screenRecord}/bin/screen-record";
       }
     ];
 
