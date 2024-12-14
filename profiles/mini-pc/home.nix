@@ -21,6 +21,10 @@
     monitors = [ "HDMI-A-1, 1920x1080@100, auto, 1" ];
   };
 
+  gab.wm.bspwm = {
+    enable = true;
+  };
+
   gab.shell.aliases = {
     ls = "${pkgs.eza}/bin/eza --icons";
     ll = "${pkgs.eza}/bin/eza -l --icons";

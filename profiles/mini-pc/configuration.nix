@@ -50,6 +50,7 @@
   };
 
   gab.wm.hyprland.enable = true;
+  gab.wm.bspwm.enable = true;
 
   # Some games are installed in the G: partition
   boot.supportedFilesystems = [ "ntfs" ];
