@@ -46,12 +46,13 @@ writeShellApplication {
 
       mkdir -p "$HOME/Videos/"
       file_name="$HOME/Videos/screenrecord_$(date +%Y-%m-%d-%T).mp4"
+      default_sink="$(pactl get-default-sink).monitor"
 
       if is_wayland_session; then
-        wl-screenrec --audio -b "1 MB"
+        # shellcheck disable=SC2086
+        wl-screenrec --audio --audio-device $default_sink -b "1 MB" -f $file_name
       else
-        capture_size=$(xrandr | grep '\*' | awk '{print $1}')
-        default_sink="$(pactl get-default-sink).monitor"
+        capture_size=$(xrandr | grep '\*' | awk '{print $1}')  
         video_options="-c:v libx264 -b:v 1M -preset medium"
         audio_options="-c:a aac -b:a 192k"
 
