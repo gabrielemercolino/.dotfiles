@@ -43,6 +43,18 @@
     HandlePowerKey=ignore
   '';
 
-  services.xserver.excludePackages = [ pkgs.xterm ];
-  services.xserver.dpi = builtins.floor (96 * 1.25);
+  services.xserver = {
+    excludePackages = [ pkgs.xterm ];
+    #dpi = builtins.floor (96 * 1.25);
+    config = {
+      Monitor = {
+        "eDP-1" = {
+          Identifier = "eDP-1";
+          Option = {
+            "DPI" = "120 x 120"; # 120 = 96 * 1.25
+          };
+        };
+      };
+    };
+  };
 }
