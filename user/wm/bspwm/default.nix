@@ -87,8 +87,6 @@
       "bspc monitor -d 1 2 3 4 5"
       "pkill picom && picom -b"
       "${pkgs.nitrogen}/bin/nitrogen --set-auto ${config.stylix.image}"
-
-      "xrdb -merge <<< \"Xft.dpi: 120\""
       "sleep 1 && eww open bar"
     ];
 
