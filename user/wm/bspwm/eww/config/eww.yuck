@@ -1,33 +1,56 @@
 ;; variables
-(defpoll clock_hour :interval "5s" "date +\%I")
-(defpoll clock_minute :interval "5s" "date +\%M")
-(defpoll clock_date :interval "1h" "date '+%d/%m'")
-
-(defpoll volume :interval "2s" "pamixer --get-volume")
+(defpoll volume     :interval "2s" "pamixer --get-volume")
 (defpoll microphone :interval "2s" "pamixer --source $(pactl get-default-source) --get-volume")
 
 (defpoll memory :interval "10s" "bash scripts/getram.sh")
 
-(defpoll battery :interval "10s" "cat /sys/class/power_supply/BAT0/capacity")
+(defvar  has_battery    true)
+(defpoll battery        :interval "10s" "cat /sys/class/power_supply/BAT0/capacity")
 (defpoll battery_status :interval "10s" "cat /sys/class/power_supply/BAT0/status")
 
 (deflisten workspace "bash scripts/getworkspaces.sh")
 
+(defvar  wifi_hover false)
+(defpoll COL_WLAN   :interval "15s" "bash scripts/wifi.sh --COL")
+(defpoll ESSID_WLAN :interval "15s" "bash scripts/wifi.sh --ESSID")
+(defpoll WLAN_ICON  :interval "15s" "bash scripts/wifi.sh --ICON")
+
+(defvar time_hover false)
+(defpoll clock_hour   :interval "5s" "date +\%I")
+(defpoll clock_minute :interval "5s" "date +\%M")
+(defpoll clock_date   :interval "1h" "date '+%d/%m'")
 
 ;; widgets
 (defwidget workspaces []
   (literal :content workspace)
 )
 
+(defwidget sep []
+  (box :class "sep" :vexpand "false" :hexpand "false"
+    (label :text "|")
+  )
+)
+
+(defwidget wifi []
+  (eventbox :onhover "eww update wifi_hover=true" :onhoverlost "eww update wifi_hover=false"
+		(box :vexpand "false" :hexpand "false" :space-evenly "false"
+			(button :class "module-wifi" :onclick "" :wrap "false" :limit-width 12 :style "color: ${COL_WLAN};" WLAN_ICON)
+	    (revealer :transition "slideright" :reveal wifi_hover :duration "350ms"
+	      (label :class "module_essid" :text ESSID_WLAN :orientation "h")
+      )
+    )
+  )
+)
+
 (defwidget bat []
-  (box :class "bat_module" :vexpand "false" :hexpand "false"
+  (box :class "bat_module" :visible has_battery :vexpand "false" :hexpand "false"
     (circular-progress :value battery :class "batbar" :thickness 4
       (button
         :class "iconbat"
         :limit-width 2
         :tooltip "battery on ${battery}%"
         :show_truncated false
-        ;:onclick "$HOME/.config/eww/bar/scripts/pop system"
+        :onclick "bash scripts/pop system"
         :wrap false
         ""
       )
@@ -42,10 +65,23 @@
         :class "iconmem"
         :limit-width 2
         :tooltip "using ${memory}% ram"
-        ;:onclick "$HOME/.config/eww/bar/scripts/pop system"
+        :onclick "#bash scripts/pop system"
         :show_truncated false
         :wrap false
         ""
+      )
+    )
+  )
+)
+
+(defwidget time []
+  (eventbox :onhover "eww update time_hover=true" :onhoverlost "eww update time_hover=false"
+    (box :class "module" :space-evenly "false" :orientation "h" :spacing "3"
+      (label :text clock_hour :class "clock_hour" )
+      (label :text ":" :class "clock_sep" )
+      (label :text clock_minute :class "clock_minute")
+	    (revealer :transition "slideleft" :reveal time_hover :duration "350ms"
+        (button :class "clock_date" :onclick "#bash scripts/pop calendar" clock_date)
       )
     )
   )
@@ -62,8 +98,12 @@
 
 (defwidget right []
 	(box :orientation "h" :space-evenly false :halign "end" :class "left_modules"
-    (mem)
+    (wifi)
+    (sep)
     (bat)
+    (mem)
+    (sep)
+    (time)
   )
 )
 
