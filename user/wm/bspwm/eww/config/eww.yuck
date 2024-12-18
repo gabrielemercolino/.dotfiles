@@ -1,6 +1,10 @@
 ;; variables
-(defpoll volume     :interval "2s" "pamixer --get-volume")
-(defpoll microphone :interval "2s" "pamixer --source $(pactl get-default-source) --get-volume")
+(defvar  brightness_hover   false)
+(defpoll brightness_percent :interval "2s" "bash scripts/getbrightness.sh")
+
+(defvar  volume_hover false)
+(defpoll volume       :interval "1s" "pamixer --get-volume")
+(defpoll microphone   :interval "1s" "pamixer --source $(pactl get-default-source) --get-volume")
 
 (defpoll memory :interval "10s" "bash scripts/getram.sh")
 
@@ -16,7 +20,7 @@
 (defpoll WLAN_ICON  :interval "15s" "bash scripts/wifi.sh --ICON")
 
 (defvar time_hover false)
-(defpoll clock_hour   :interval "5s" "date +\%I")
+(defpoll clock_hour   :interval "5s" "date +\%H")
 (defpoll clock_minute :interval "5s" "date +\%M")
 (defpoll clock_date   :interval "1h" "date '+%d/%m'")
 
@@ -31,10 +35,48 @@
   )
 )
 
+(defwidget brightness []
+  (eventbox :onhover "eww update brightness_hover=true" :onhoverlost "eww update brightness_hover=false"
+    (box :class "module-2" :space-evenly "false" :orientation "h" :spacing "3"
+      (label :text " " :class "brightness_icon")
+	    (revealer :transition "slideleft" :reveal brightness_hover :duration "350ms"
+	      (scale
+          :class "brightness_bar"
+			    :value brightness_percent
+			    :orientation "h"
+			    :tooltip "${brightness_percent}%"
+			    :max 100
+			    :min 0
+			    :onchange "brightnessctl set {}%"
+        )
+      )
+    )
+  )
+)
+
+(defwidget audio []
+  (eventbox :onhover "eww update volume_hover=true" :onhoverlost "eww update volume_hover=false"
+    (box :class "module-2" :space-evenly "false" :orientation "h" :spacing "3"
+	    (button :onclick "#bash scripts/pop audio" :class "volume_icon" "")
+	    (revealer :transition "slideright" :reveal volume_hover :duration "350ms"
+	      (scale
+          :class "volume_bar"
+			    :value volume
+			    :orientation "h"
+			    :tooltip "${volume}"
+			    :max 100
+			    :min 0
+			    :onchange "pamixer --set-volume {}"
+        )
+      )
+    )
+  )
+)
+
 (defwidget wifi []
   (eventbox :onhover "eww update wifi_hover=true" :onhoverlost "eww update wifi_hover=false"
 		(box :vexpand "false" :hexpand "false" :space-evenly "false"
-			(button :class "module-wifi" :onclick "" :wrap "false" :limit-width 12 :style "color: ${COL_WLAN};" WLAN_ICON)
+			(button :class "module-wifi" :onclick "" :style "color: ${COL_WLAN};" WLAN_ICON)
 	    (revealer :transition "slideright" :reveal wifi_hover :duration "350ms"
 	      (label :class "module_essid" :text ESSID_WLAN :orientation "h")
       )
@@ -47,11 +89,8 @@
     (circular-progress :value battery :class "batbar" :thickness 4
       (button
         :class "iconbat"
-        :limit-width 2
         :tooltip "battery on ${battery}%"
-        :show_truncated false
-        :onclick "bash scripts/pop system"
-        :wrap false
+        :onclick "#bash scripts/pop system"
         ""
       )
     )
@@ -63,11 +102,8 @@
     (circular-progress :value memory :class "membar" :thickness 4
       (button
         :class "iconmem"
-        :limit-width 2
         :tooltip "using ${memory}% ram"
         :onclick "#bash scripts/pop system"
-        :show_truncated false
-        :wrap false
         ""
       )
     )
@@ -91,14 +127,23 @@
 ;; macro widgets
 (defwidget bar_1 []
   (box :class "bar_class" :orientation "h"
-    (workspaces)
+    (left)
     (right)
   )
 )
 
+(defwidget left []
+	(box :orientation "h" :space-evenly false :halign "start" :class "left_modules"
+    (workspaces)
+  )
+)
+
 (defwidget right []
-	(box :orientation "h" :space-evenly false :halign "end" :class "left_modules"
+	(box :orientation "h" :space-evenly false :halign "end" :class "right_modules"
     (wifi)
+    (sep)
+    (brightness)
+    (audio)
     (sep)
     (bat)
     (mem)
