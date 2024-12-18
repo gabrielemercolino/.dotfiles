@@ -52,8 +52,8 @@ writeShellApplication {
         # shellcheck disable=SC2086
         wl-screenrec --audio --audio-device $default_sink -b "1 MB" -f $file_name
       else
-        capture_size=$(xrandr | grep '\*' | awk '{print $1}')  
-        video_options="-c:v libx264 -b:v 1M -preset medium"
+        capture_size=$(xrandr | grep '\*' | awk '{print $1}')
+        video_options="-c:v libx264 -b:v 1M -preset medium -profile:v high -pix_fmt yuv420p" #profile and pix_fmt for compatibility
         audio_options="-c:a aac -b:a 192k"
 
         # shellcheck disable=SC2086
