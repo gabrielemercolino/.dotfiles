@@ -1,43 +1,106 @@
 * {
-  all: unset; // Unsets everything so you can style everything from scratch
-}
-
-// Global Styles
-.bar {
-  background-color: #3a3a3a;
-  color: #b0b4bc;
-  padding: 10px;
-}
-
-// Styles on classes (see eww.yuck for more information)
-
-.sidestuff slider {
   all: unset;
-  color: #ffd5cd;
 }
 
-.metric scale trough highlight {
+.bar-class {
+  background-color: #0f0f17;
+  border-radius: 16px;
+}
+
+.module {
+  margin: 0px 0px 0px 0px;
+  border-radius: 10px 16px 0px 10px;
+}
+
+scale trough {
   all: unset;
-  background-color: #D35D6E;
-  color: #000000;
+  background-color: #22242b;
+  box-shadow: 0 2px 3px 2px #06060b;
+  border-radius: 16px;
+  min-height: 10px;
+  min-width: 70px;
+  margin: 0px 10px 0px 0px;
+}
+
+
+tooltip.background {
+  background-color: #0f0f17;
+  font-size: 18;
+  border-radius: 10px;
+  color: #bfc9db;
+}
+
+tooltip label {
+  margin: 6px;
+}
+
+.workspaces {
+  font-size: 32px;
+  font-weight: bold;
+  margin: 5px 0px 0px 20px;
+}
+
+.workspaces button {
+  padding: 0px 5px;
+}
+
+.sep {
+  color: #3e424f;
+  font-weight: bold;
+  font-size: 22px;
+  margin: 0px 8px 0px 8px;
+}
+
+.brightness_bar trough highlight {
+  background-image: linear-gradient(to right, #e4c9af 30%, #f2cdcd 50%, #e0b089 100% *50);
+  border-radius: 10px;
+}
+.volume_bar trough highlight {
+  background-image: linear-gradient(to right, #afcee0 30%, #a1bdce 50%, #77a5bf 100% *50);
   border-radius: 10px;
 }
 
-.metric scale trough {
-  all: unset;
-  background-color: #4e4e4e;
-  border-radius: 50px;
-  min-height: 3px;
-  min-width: 50px;
-  margin-left: 10px;
-  margin-right: 20px;
+.volume_icon {
+  font-size: 22;
+  color: #a1bdce;
+  margin: 0px 10px 0px 10px;
 }
 
-.label-ram {
-  font-size: large;
+.module_essid {
+  font-size: 18;
+  color: #a1bdce;
+  margin: 0px 10px 0px 0px;
 }
 
-.workspaces button:hover {
-  color: #D35D6E;
+.module-wifi {
+  font-size: 22;
+  color: #a1bdce;
+  border-radius: 100%;
+  margin: 0px 15px 0px 0px;
 }
 
+.clock_sep {
+  font-size: 16;
+  color: #bfc9db;
+}
+
+.clock_hour, .clock_minute {
+  font-size: 23;
+}
+
+.clock_minute {
+  margin: 0px 20px 0px 3px;
+  color: #bfc9db;
+}
+
+.clock_hour {
+  color: #bfc9db;
+  font-weight: bold;
+  margin: 0px 5px 0px 0px;
+}
+
+.clock_date {
+  font-size: 18;
+  margin: 0px 20px 0px -1px;
+  color: #d7beda;
+}
