@@ -13,11 +13,11 @@ xprop -spy -root _NET_CURRENT_DESKTOP | while read -r line; do
       if [ "$i" -eq "$current_workspace" ]; then
         bar+='(button :onclick "wmctrl -s $i" :class "w'
         bar+="$((i+1))"
-        bar+='" "")'
+        bar+='" "")'
       else
         bar+='(button :onclick "wmctrl -s $i" :class "w'
         bar+="$((i+1))"
-        bar+='" "")'
+        bar+='" "")'
       fi
     done
 
