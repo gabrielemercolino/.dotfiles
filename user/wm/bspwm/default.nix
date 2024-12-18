@@ -65,7 +65,7 @@
         {
           "super + q" = "bspc node -k";
           "super + m" = "bspc quit";
-          "super + shift + m" = "bspc wm -r && pkill -USR1 -x sxhkd";
+          "super + shift + m" = "bspc wm -r";
         }
       ];
   };
@@ -82,12 +82,15 @@
 
   xsession.windowManager.bspwm = {
     startupPrograms = [
-      "pgrep -x sxhkd > /dev/null || sxhkd"
+      "pkill -x sxhkd; sxhkd"
 
       "bspc monitor -d 1 2 3 4 5"
-      "pkill picom && picom -b"
+
+      "pkill picom; picom -b"
+
       "${pkgs.nitrogen}/bin/nitrogen --set-auto ${config.stylix.image}"
-      "sleep 1 && eww open bar"
+
+      "pkill eww; eww open bar"
     ];
 
     settings = {
