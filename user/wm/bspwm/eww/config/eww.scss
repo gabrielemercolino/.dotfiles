@@ -1,9 +1,20 @@
+$red: #f38ba8;
+$peach: #fab387;
+$yellow: #f9e2af;
+$green: #a6e3a1;
+$teal: #94e2d5;
+$blue: #89b4fa;
+$lavender: #b4befe;
+$text: #cdd6f4;
+$base: #1e1e2e;
+$mantle: #181825;
+
 * {
   all: unset;
 }
 
-.bar-class {
-  background-color: #0f0f17;
+.bar_class {
+  background-color: $base;
   border-radius: 16px;
 }
 
@@ -27,11 +38,11 @@ tooltip.background {
   background-color: #0f0f17;
   font-size: 18;
   border-radius: 10px;
-  color: #bfc9db;
 }
 
 tooltip label {
   margin: 6px;
+  color: $text;
 }
 
 .workspaces {
@@ -79,6 +90,49 @@ tooltip label {
   margin: 0px 15px 0px 0px;
 }
 
+.mem_module, .bat_module {
+  background-color: transparent;
+	border-radius: 16px;
+}
+
+.mem_module {
+  margin: 0px 10px 0px 3px;
+}
+
+.bat_module {
+  margin: 0px 10px 0px 10px;
+}
+
+.mem_bar, .bat_bar {
+  border-radius: 10px;
+  background-color: #38384d;
+}
+
+.mem_bar {
+  color: #e0b089;
+}
+
+.bat_bar {
+  color: #afbea2;
+}
+
+.mem_icon, .bat_icon {
+  font-size: 15;
+  margin: 10px;
+}
+
+.mem_icon, .bat_icon {
+  color: inherit;
+}
+
+.battery_low {
+  color: $red;
+}
+
+.charging {
+  color: $yellow;
+}
+
 .clock_sep {
   font-size: 16;
   color: #bfc9db;
@@ -86,15 +140,14 @@ tooltip label {
 
 .clock_hour, .clock_minute {
   font-size: 23;
+  color: #bfc9db;
 }
 
 .clock_minute {
   margin: 0px 20px 0px 3px;
-  color: #bfc9db;
 }
 
 .clock_hour {
-  color: #bfc9db;
   font-weight: bold;
   margin: 0px 5px 0px 0px;
 }
