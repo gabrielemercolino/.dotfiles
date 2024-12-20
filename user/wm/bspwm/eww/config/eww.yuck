@@ -84,7 +84,6 @@
 (defwidget bat []
   (box
     :class "bat_module"
-    :visible {battery.has_battery}
     :vexpand "false"
     :hexpand "false"
     (circular-progress
