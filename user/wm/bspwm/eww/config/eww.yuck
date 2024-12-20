@@ -1,16 +1,13 @@
 ;; variables
 (defvar  brightness_hover   false)
-(defpoll brightness_percent :interval "2s" "bash scripts/getbrightness.sh")
+(defpoll brightness_percent :interval "1s" "bash scripts/getbrightness.sh")
 
-(defvar  volume_hover false)
-(defpoll volume       :interval "1s" "pamixer --get-volume")
-(defpoll microphone   :interval "1s" "pamixer --source $(pactl get-default-source) --get-volume")
+(defvar     volume_hover false)
+(deflisten  volume       "bash scripts/getvolume.sh")
 
-(defpoll memory :interval "10s" "bash scripts/getram.sh")
+(defpoll memory :interval "5s" "bash scripts/getram.sh")
 
-(defvar  has_battery    true)
-(defpoll battery        :interval "10s" "cat /sys/class/power_supply/BAT0/capacity")
-(defpoll battery_status :interval "10s" "cat /sys/class/power_supply/BAT0/status")
+(defpoll battery  :interval "5s" "bash scripts/getbattery.sh")
 
 (deflisten workspace "bash scripts/getworkspaces.sh")
 
@@ -19,7 +16,7 @@
 (defpoll ESSID_WLAN :interval "15s" "bash scripts/wifi.sh --ESSID")
 (defpoll WLAN_ICON  :interval "15s" "bash scripts/wifi.sh --ICON")
 
-(defvar time_hover false)
+(defvar  time_hover   false)
 (defpoll clock_hour   :interval "5s" "date +\%H")
 (defpoll clock_minute :interval "5s" "date +\%M")
 (defpoll clock_date   :interval "1h" "date '+%d/%m'")
@@ -45,7 +42,7 @@
 			    :value brightness_percent
 			    :orientation "h"
 			    :tooltip "${brightness_percent}%"
-			    :max 100
+			    :max 101
 			    :min 0
 			    :onchange "brightnessctl set {}%"
         )
@@ -61,10 +58,10 @@
 	    (revealer :transition "slideright" :reveal volume_hover :duration "350ms"
 	      (scale
           :class "volume_bar"
-			    :value volume
+			    :value {volume.muted? 0 : volume.volume}
 			    :orientation "h"
-			    :tooltip "${volume}"
-			    :max 100
+			    :tooltip "${volume.muted? 'muted' : volume.volume}"
+			    :max 101
 			    :min 0
 			    :onchange "pamixer --set-volume {}"
         )
@@ -85,13 +82,20 @@
 )
 
 (defwidget bat []
-  (box :class "bat_module" :visible has_battery :vexpand "false" :hexpand "false"
-    (circular-progress :value battery :class "batbar" :thickness 4
+  (box
+    :class "bat_module"
+    :visible {battery.has_battery}
+    :vexpand "false"
+    :hexpand "false"
+    (circular-progress
+      :value {battery.value}
+      :class "bat_bar ${(battery.value <= 20)? 'battery_low': ''} ${battery.charging ? ' charging' : ''}"
+      :thickness 4
       (button
-        :class "iconbat"
-        :tooltip "battery on ${battery}%"
+        :class "bat_icon"
+        :tooltip {battery.tooltip}
         :onclick "#bash scripts/pop system"
-        ""
+        ""
       )
     )
   )
@@ -99,12 +103,12 @@
 
 (defwidget mem []
 	(box :class "mem_module" :vexpand "false" :hexpand "false"
-    (circular-progress :value memory :class "membar" :thickness 4
+    (circular-progress :value memory :class "mem_bar" :thickness 4
       (button
-        :class "iconmem"
+        :class "mem_icon"
         :tooltip "using ${memory}% ram"
         :onclick "#bash scripts/pop system"
-        ""
+        ""
       )
     )
   )
