@@ -43,7 +43,7 @@
             "super + {1-5}" = "bspc desktop -f '^{1-5}'";
           };
           moveToWorkspace = {
-            "super + shift + {1-5}" = "bspc node -d '^{1-5}' && bspc desktop -f '^{1-5}'";
+            "super + shift + {1-5}" = "bspc node -d '^{1-5}'";
           };
         };
         screenRecord = (pkgs.callPackage ../../commands/screen-record { });
