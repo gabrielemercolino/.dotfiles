@@ -83,11 +83,15 @@ tooltip label {
   margin: 0px 10px 0px 0px;
 }
 
-.module-wifi {
+.module-connection {
   font-size: 22;
   color: #a1bdce;
   border-radius: 100%;
   margin: 0px 15px 0px 0px;
+}
+
+.offline {
+  color: #575268;
 }
 
 .mem_module, .bat_module {
