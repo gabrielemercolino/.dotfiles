@@ -11,10 +11,8 @@
 
 (deflisten workspace "bash scripts/getworkspaces.sh")
 
-(defvar  wifi_hover false)
-(defpoll COL_WLAN   :interval "15s" "bash scripts/wifi.sh --COL")
-(defpoll ESSID_WLAN :interval "15s" "bash scripts/wifi.sh --ESSID")
-(defpoll WLAN_ICON  :interval "15s" "bash scripts/wifi.sh --ICON")
+(defvar  connection_hover false)
+(defpoll connection_info  :interval "5s" "bash scripts/getconnection.sh")
 
 (defvar  time_hover   false)
 (defpoll clock_hour   :interval "5s" "date +\%H")
@@ -74,12 +72,15 @@
   )
 )
 
-(defwidget wifi []
-  (eventbox :onhover "eww update wifi_hover=true" :onhoverlost "eww update wifi_hover=false"
+(defwidget connection []
+  (eventbox :onhover "eww update connection_hover=true" :onhoverlost "eww update connection_hover=false"
 		(box :vexpand "false" :hexpand "false" :space-evenly "false"
-			(button :class "module-wifi" :onclick "" :style "color: ${COL_WLAN};" WLAN_ICON)
-	    (revealer :transition "slideright" :reveal wifi_hover :duration "350ms"
-	      (label :class "module_essid" :text ESSID_WLAN :orientation "h")
+      (button
+        :class "module-connection ${connection_info.connected? '' : ' offline'}"
+        :onclick ""
+        {connection_info.connected? (connection_info.wired? '' : '󰖩') : '󰖪'})
+	    (revealer :transition "slideright" :reveal connection_hover :duration "350ms"
+	      (label :class "module_essid" :text {connection_info.name} :orientation "h")
       )
     )
   )
@@ -147,7 +148,7 @@
 
 (defwidget right []
 	(box :orientation "h" :space-evenly false :halign "end" :class "right_modules"
-    (wifi)
+    (connection)
     (sep)
     (brightness)
     (audio)
