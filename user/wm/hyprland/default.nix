@@ -53,8 +53,7 @@
           bind."SUPER_SHIFT, P" = "exec, systemctl poweroff";
         };
         bar = {
-          #bind."SUPER, W" = "exec, pkill waybar || true && ${pkgs.waybar}/bin/waybar";
-          bind."SUPER, W" = "exec, pkill ags || true && ${pkgs.hyprpanel}/bin/hyprpanel";
+          bind."SUPER, W" = "exec, pkill waybar; ${pkgs.waybar}/bin/waybar";
         };
         moveFocus = {
           bind."SUPER, left" = "movefocus, l";
@@ -113,8 +112,7 @@
 
   wayland.windowManager.hyprland.config = {
     exec_once = [
-      "${pkgs.hyprpanel}/bin/hyprpanel"
-      #"${pkgs.waybar}/bin/waybar"
+      "${pkgs.waybar}/bin/waybar"
     ];
     exec = [
       "${pkgs.swaybg}/bin/swaybg -m fill -i ${config.stylix.image}"
