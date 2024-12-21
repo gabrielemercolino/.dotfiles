@@ -30,23 +30,36 @@ writeShellApplication {
 
       lock="/tmp/screenrecord.lock"
 
+      mkdir -p "$HOME/Videos/"
+      file_name="$HOME/Videos/screenrecord_$(date +%Y-%m-%d-%T).mp4"
+      default_sink="$(pactl get-default-sink).monitor"
+
       if [ -f $lock ]; then
         rm "$lock"
-        
+
         if is_wayland_session; then 
           pkill wl-screenrec 
         else 
           pkill ffmpeg
+
+          # as audio and video are captured separately, at the start they are not in sync
+          # by testing I found out that audio seems to start after video, so I need to find
+          # the difference and cut the initial part from the video
+          video_duration=$(ffprobe -i /tmp/screen-record.mp4 -show_entries format=duration -v quiet -of csv="p=0")
+          audio_duration=$(ffprobe -i /tmp/screen-record.aac -show_entries format=duration -v quiet -of csv="p=0")
+          duration_diff=$(awk "BEGIN {print $video_duration - $audio_duration}")
+
+          # shellcheck disable=SC2086
+          ffmpeg -ss $duration_diff -i /tmp/screen-record.mp4 -i /tmp/screen-record.aac -c:v copy -c:a copy -shortest $file_name
+
+          rm /tmp/screen-record.mp4
+          rm /tmp/screen-record.aac
         fi
 
         exit 0
       else
         touch "$lock"
       fi
-
-      mkdir -p "$HOME/Videos/"
-      file_name="$HOME/Videos/screenrecord_$(date +%Y-%m-%d-%T).mp4"
-      default_sink="$(pactl get-default-sink).monitor"
 
       if is_wayland_session; then
         # shellcheck disable=SC2086
@@ -57,10 +70,9 @@ writeShellApplication {
         audio_options="-c:a aac -b:a 192k"
 
         # shellcheck disable=SC2086
-        ffmpeg -f x11grab -video_size $capture_size -i :0.0 \
-          -f pulse -i $default_sink  \
-          $video_options $audio_options \
-          $file_name
+        ffmpeg -f x11grab -video_size $capture_size -i :0.0 $video_options /tmp/screen-record.mp4 &
+        # shellcheck disable=SC2086
+        ffmpeg -f pulse -i $default_sink $audio_options /tmp/screen-record.aac &
       fi
 
     '';
