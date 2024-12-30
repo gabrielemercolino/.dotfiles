@@ -1,19 +1,20 @@
-{ 
-  stdenv, 
-  installShellFiles, 
+{
+  stdenv,
+  installShellFiles,
   bashly,
-  grim,
-  slurp,
 }:
 
-stdenv.mkDerivation (finalAttrs: rec{
+stdenv.mkDerivation (finalAttrs: rec {
   name = "gab";
-  version = "1.3.1";
+  version = "1.3.2";
   src = ./.;
 
-  nativeBuildInputs = [ installShellFiles ];
+  nativeBuildInputs = [
+    installShellFiles
+    bashly
+  ];
 
-  buildInputs = [ bashly slurp grim ];
+  buildInputs = [ ];
 
   buildPhase = ''
     bashly add completions
