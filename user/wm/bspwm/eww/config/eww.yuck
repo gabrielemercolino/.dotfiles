@@ -5,6 +5,8 @@
 (defvar    volume_hover false)
 (deflisten volume       "bash scripts/getvolume.sh")
 
+(defpoll cpu :interval "5s" "bash scripts/getcpustats.sh")
+
 (defpoll memory :interval "5s" "bash scripts/getram.sh")
 
 (defpoll battery :interval "5s" "bash scripts/getbattery.sh")
@@ -86,18 +88,15 @@
   )
 )
 
-(defwidget bat []
-  (box
-    :class "bat_module"
-    :vexpand "false"
-    :hexpand "false"
+(defwidget cpu []
+	(box :class "cpu_module" :vexpand "false" :hexpand "false"
     (circular-progress
-      :value {battery.value}
-      :class "bat_bar ${(battery.value <= 20)? 'battery_low': ''} ${battery.charging ? ' charging' : ''}"
+      :value {cpu[0].usage}
+      :class "cpu_bar"
       :thickness 4
       (button
-        :class "bat_icon"
-        :tooltip {battery.tooltip}
+        :class "cpu_icon ${(cpu[0].usage >= 90? 'cpu_usage_high' : '')}"
+        :tooltip "cpu at ${cpu[0].usage}%"
         :onclick "#bash scripts/pop system"
         ""
       )
@@ -111,6 +110,25 @@
       (button
         :class "mem_icon"
         :tooltip "using ${memory}% ram"
+        :onclick "#bash scripts/pop system"
+        ""
+      )
+    )
+  )
+)
+
+(defwidget bat []
+  (box
+    :class "bat_module"
+    :vexpand "false"
+    :hexpand "false"
+    (circular-progress
+      :value {battery.value}
+      :class "bat_bar ${(battery.value <= 20)? 'battery_low': ''} ${battery.charging ? ' charging' : ''}"
+      :thickness 4
+      (button
+        :class "bat_icon"
+        :tooltip {battery.tooltip}
         :onclick "#bash scripts/pop system"
         ""
       )
@@ -153,8 +171,9 @@
     (brightness)
     (audio)
     (sep)
-    (bat)
+    (cpu)
     (mem)
+    (bat)
     (sep)
     (time)
   )
