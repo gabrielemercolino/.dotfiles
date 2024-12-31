@@ -41,6 +41,7 @@ writeShellApplication {
           pkill wl-screenrec 
         else 
           pkill ffmpeg
+          sleep 1 # some time is needed for ffmpeg to gracefully close the video
 
           #add fake audio for now (silence)
           # shellcheck disable=SC2086
