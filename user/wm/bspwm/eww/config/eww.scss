@@ -94,38 +94,36 @@ tooltip label {
   color: #575268;
 }
 
-.mem_module, .bat_module {
+.cpu_module, .mem_module, .bat_module {
   background-color: transparent;
 	border-radius: 16px;
+  margin: 0px 5px;
 }
 
-.mem_module {
-  margin: 0px 10px 0px 3px;
-}
-
-.bat_module {
-  margin: 0px 10px 0px 10px;
-}
-
-.mem_bar, .bat_bar {
+.cpu_bar, .mem_bar, .bat_bar {
   border-radius: 10px;
   background-color: #38384d;
 }
 
+.cpu_bar {
+  color: $blue;
+}
+
+.cpu_usage_high {
+  color: $red;
+};
+
 .mem_bar {
-  color: #e0b089;
+  color: $peach;
 }
 
 .bat_bar {
-  color: #afbea2;
+  color: $green;
 }
 
-.mem_icon, .bat_icon {
+.cpu_icon, .mem_icon, .bat_icon {
   font-size: 15;
   margin: 10px;
-}
-
-.mem_icon, .bat_icon {
   color: inherit;
 }
 
