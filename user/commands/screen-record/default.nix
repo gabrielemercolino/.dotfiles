@@ -42,18 +42,11 @@ writeShellApplication {
         else 
           pkill ffmpeg
 
-          # as audio and video are captured separately, at the start they are not in sync
-          # by testing I found out that audio seems to start after video, so I need to find
-          # the difference and cut the initial part from the video
-          video_duration=$(ffprobe -i /tmp/screen-record.mp4 -show_entries format=duration -v quiet -of csv="p=0")
-          audio_duration=$(ffprobe -i /tmp/screen-record.aac -show_entries format=duration -v quiet -of csv="p=0")
-          duration_diff=$(awk "BEGIN {print $video_duration - $audio_duration}")
-
+          #add fake audio for now (silence)
           # shellcheck disable=SC2086
-          ffmpeg -ss $duration_diff -i /tmp/screen-record.mp4 -i /tmp/screen-record.aac -c:v copy -c:a copy -shortest $file_name
+          ffmpeg -i /tmp/screen-record.mp4 -f lavfi -i anullsrc=channel_layout=stereo:sample_rate=44100 -shortest $file_name
 
           rm /tmp/screen-record.mp4
-          rm /tmp/screen-record.aac
         fi
 
         exit 0
@@ -67,12 +60,10 @@ writeShellApplication {
       else
         capture_size=$(xrandr | grep '\*' | awk '{print $1}')
         video_options="-c:v libx264 -b:v 1M -preset medium -profile:v high -pix_fmt yuv420p" #profile and pix_fmt for compatibility
-        audio_options="-c:a aac -b:a 192k"
+        #audio_options="-c:a aac -b:a 192k"
 
         # shellcheck disable=SC2086
-        ffmpeg -f x11grab -video_size $capture_size -i :0.0 $video_options /tmp/screen-record.mp4 &
-        # shellcheck disable=SC2086
-        ffmpeg -f pulse -i $default_sink $audio_options /tmp/screen-record.aac &
+        ffmpeg -f x11grab -video_size $capture_size -i :0.0 $video_options /tmp/screen-record.mp4
       fi
 
     '';
