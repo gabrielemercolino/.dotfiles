@@ -42,10 +42,7 @@
     obsidian.enable = true;
     swaylock.enable = true;
 
-    zen = {
-      enable = true;
-      specific = false;
-    };
+    zen.enable = true;
 
     telegram.enable = true;
 

@@ -46,10 +46,7 @@
     swaylock.enable = true;
     aseprite.enable = true;
 
-    zen = {
-      enable = true;
-      specific = true;
-    };
+    zen.enable = true;
 
     telegram.enable = true;
     discord.enable = true;
