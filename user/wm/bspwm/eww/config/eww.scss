@@ -109,10 +109,6 @@ tooltip label {
   color: $blue;
 }
 
-.cpu_usage_high {
-  color: $red;
-};
-
 .mem_bar {
   color: $peach;
 }
@@ -125,6 +121,10 @@ tooltip label {
   font-size: 15;
   margin: 10px;
   color: inherit;
+}
+
+.cpu_usage_high {
+  color: $red;
 }
 
 .battery_low {
