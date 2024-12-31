@@ -92,10 +92,10 @@
 	(box :class "cpu_module" :vexpand "false" :hexpand "false"
     (circular-progress
       :value {cpu[0].usage}
-      :class "cpu_bar"
+      :class "cpu_bar ${(cpu[0].usage >= 90? 'cpu_usage_high' : '')}"
       :thickness 4
       (button
-        :class "cpu_icon ${(cpu[0].usage >= 90? 'cpu_usage_high' : '')}"
+        :class "cpu_icon"
         :tooltip "cpu at ${cpu[0].usage}%"
         :onclick "#bash scripts/pop system"
         ""
