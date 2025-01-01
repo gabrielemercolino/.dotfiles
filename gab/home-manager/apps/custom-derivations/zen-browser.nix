@@ -5,7 +5,7 @@
 }:
 let
   name = "zen";
-  version = "1.0.2-b.4";
+  version = "1.0.2-b.5";
 
   getUrl =
     system:
@@ -16,12 +16,17 @@ let
     else
       throw "Unsupported architecture: ${system}";
 
+  /*
+    snippet
+    nix-prefetch-url https://github.com/zen-browser/desktop/releases/download/$version/zen-aarch64.AppImage
+    nix hash convert --hash-algo sha256 $hash
+  */
   getHash =
     system:
     if system == "x86_64-linux" then
-      "sha256-lHqNAfr0nDR8pV3egKzNXn5DJn9W0vJqiV1WJLG+U34="
+      "sha256-faJzPHtjE3Q+9WpPm1Lip4f7RJQrhWdTU+MFaCXy2Xg="
     else if system == "aarch64-linux" then
-      "sha256-jU0/kXZz8nR67MtCM1wez6ShqGEarUqZEb47OOH3seo="
+      "sha256-mKr+6CGG/KgHBylOxZBEmRdJv+rEfICtf1i164dKJIw="
     else
       throw "Unsupported architecture: ${system}";
 
