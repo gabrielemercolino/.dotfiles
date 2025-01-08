@@ -52,17 +52,5 @@
   gab.wm.hyprland.enable = true;
   gab.wm.bspwm.enable = true;
 
-  # Some games are installed in the G: partition
-  boot.supportedFilesystems = [ "ntfs" ];
-  fileSystems."/home/gabriele/Games/Steam" = {
-    device = "/dev/disk/by-label/G";
-    fsType = "ntfs-3g";
-    options = [
-      "rw"
-      "uid=${userSettings.userName}"
-      "nofail"
-    ];
-  };
-
   services.xserver.excludePackages = [ pkgs.xterm ];
 }
