@@ -1,83 +1,78 @@
 {
   description = "My flake";
 
-  outputs =
-    {
-      self,
-      nixpkgs,
-      home-manager,
-      ...
-    }@inputs:
-    let
-      inherit (self) outputs;
+  outputs = {
+    self,
+    nixpkgs,
+    home-manager,
+    ...
+  } @ inputs: let
+    inherit (self) outputs;
 
-      systemSettings = {
-        hostName = "nixos";
+    systemSettings = {
+      hostName = "nixos";
 
-        dotfiles = "~/.dotfiles";
+      dotfiles = "~/.dotfiles";
 
-        kb = {
-          layout = "it";
-          variant = "";
-        };
-      };
-
-      userSettings = {
-        userName = "gabriele";
-        name = "Gabriele";
-        email = "gmercolino2003@gmail.com";
-
-        wm = "hyprland";
-      };
-
-      lib = nixpkgs.lib;
-
-      createNixosProfile =
-        name: system:
-        lib.nixosSystem {
-          inherit system;
-          modules = [ ./profiles/${name}/configuration.nix ];
-          specialArgs = {
-            inherit
-              userSettings
-              systemSettings
-              inputs
-              outputs
-              ;
-          };
-        };
-
-      createHomeProfile =
-        name: system:
-        home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs {
-            inherit system;
-            overlays = [
-              inputs.lite-xl.overlay
-            ];
-          };
-          modules = [ ./profiles/${name}/home.nix ];
-          extraSpecialArgs = {
-            inherit
-              userSettings
-              systemSettings
-              inputs
-              outputs
-              ;
-          };
-        };
-    in
-    {
-      nixosConfigurations = {
-        mini-pc = createNixosProfile "mini-pc" "x86_64-linux";
-        chromebook = createNixosProfile "chromebook" "x86_64-linux";
-      };
-
-      homeConfigurations = {
-        mini-pc = createHomeProfile "mini-pc" "x86_64-linux";
-        chromebook = createHomeProfile "chromebook" "x86_64-linux";
+      kb = {
+        layout = "it";
+        variant = "";
       };
     };
+
+    userSettings = {
+      userName = "gabriele";
+      name = "Gabriele";
+      email = "gmercolino2003@gmail.com";
+
+      wm = "hyprland";
+    };
+
+    inherit (nixpkgs) lib;
+
+    createNixosProfile = name: system:
+      lib.nixosSystem {
+        inherit system;
+        modules = [./profiles/${name}/configuration.nix];
+        specialArgs = {
+          inherit
+            userSettings
+            systemSettings
+            inputs
+            outputs
+            ;
+        };
+      };
+
+    createHomeProfile = name: system:
+      home-manager.lib.homeManagerConfiguration {
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [
+            inputs.lite-xl.overlay
+          ];
+        };
+        modules = [./profiles/${name}/home.nix];
+        extraSpecialArgs = {
+          inherit
+            userSettings
+            systemSettings
+            inputs
+            outputs
+            ;
+        };
+      };
+  in {
+    nixosConfigurations = {
+      mini-pc = createNixosProfile "mini-pc" "x86_64-linux";
+      chromebook = createNixosProfile "chromebook" "x86_64-linux";
+    };
+
+    homeConfigurations = {
+      mini-pc = createHomeProfile "mini-pc" "x86_64-linux";
+      chromebook = createHomeProfile "chromebook" "x86_64-linux";
+    };
+  };
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-24.11";
@@ -88,6 +83,7 @@
     };
 
     nixvim.url = "github:gabrielemercolino/.nixvim";
+    nvf.url = "github:gabrielemercolino/.nvf";
 
     stylix.url = "github:danth/stylix/release-24.11";
 
