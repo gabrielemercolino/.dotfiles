@@ -1,6 +1,8 @@
-{ pkgs, userSettings, ... }:
-
 {
+  pkgs,
+  userSettings,
+  ...
+}: {
   imports = [
     ./hardware-configuration.nix
 
@@ -11,7 +13,7 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
   # for amd gpus
   hardware.amdgpu.initrd.enable = true;
-  hardware.graphics.extraPackages = [ pkgs.libva ];
+  hardware.graphics.extraPackages = [pkgs.libva];
   nixpkgs.config.rocmSupport = true;
 
   # use zsh
@@ -52,5 +54,5 @@
   gab.wm.hyprland.enable = true;
   gab.wm.bspwm.enable = true;
 
-  services.xserver.excludePackages = [ pkgs.xterm ];
+  services.xserver.excludePackages = [pkgs.xterm];
 }
