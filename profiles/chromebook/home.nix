@@ -3,9 +3,7 @@
   userSettings,
   inputs,
   ...
-}:
-
-{
+}: {
   imports = [
     ../base/home.nix
     ../../gab/home-manager
@@ -15,7 +13,7 @@
 
   gab.wm.hyprland = {
     enable = false;
-    monitors = [ "eDP-1, 1920x1080@60, auto, 1.25" ];
+    monitors = ["eDP-1, 1920x1080@60, auto, 1.25"];
   };
 
   gab.wm.bspwm = {
@@ -46,7 +44,7 @@
 
     telegram.enable = true;
 
-    nvim.enable = true;
+    nvf.enable = true;
     idea-community.enable = true;
   };
 
