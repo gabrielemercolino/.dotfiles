@@ -2,13 +2,10 @@
   description = "My flake";
 
   outputs = {
-    self,
     nixpkgs,
     home-manager,
     ...
   } @ inputs: let
-    inherit (self) outputs;
-
     systemSettings = {
       hostName = "nixos";
 
@@ -24,8 +21,6 @@
       userName = "gabriele";
       name = "Gabriele";
       email = "gmercolino2003@gmail.com";
-
-      wm = "hyprland";
     };
 
     inherit (nixpkgs) lib;
@@ -39,7 +34,6 @@
             userSettings
             systemSettings
             inputs
-            outputs
             ;
         };
       };
@@ -58,7 +52,6 @@
             userSettings
             systemSettings
             inputs
-            outputs
             ;
         };
       };
@@ -75,17 +68,17 @@
   };
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-24.11";
+    nixpkgs.url = "nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nixvim.url = "github:gabrielemercolino/.nixvim";
     nvf.url = "github:gabrielemercolino/.nvf";
 
-    stylix.url = "github:danth/stylix/release-24.11";
+    stylix.url = "github:danth/stylix";
 
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
 
