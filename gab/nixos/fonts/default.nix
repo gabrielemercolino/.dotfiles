@@ -1,16 +1,10 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   fonts = {
     packages = with pkgs; [
-      (nerdfonts.override {
-        fonts = [
-          "Inconsolata"
-          "DejaVuSansMono"
-          "JetBrainsMono"
-          "Meslo"
-        ];
-      })
+      nerd-fonts.inconsolata
+      nerd-fonts.dejavu-sans-mono
+      nerd-fonts.jetbrains-mono
+      #nerd-fonts.meslo
       font-awesome
       material-design-icons
     ];
