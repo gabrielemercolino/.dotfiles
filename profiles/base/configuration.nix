@@ -1,6 +1,8 @@
-{ lib, userSettings, ... }:
-
 {
+  lib,
+  userSettings,
+  ...
+}: {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -8,19 +10,19 @@
   users.users.${userSettings.userName} = {
     isNormalUser = true;
     description = userSettings.name;
-    extraGroups = [ "wheel" ];
-    packages = [ ];
+    extraGroups = ["wheel"];
+    packages = [];
   };
 
   services.getty.autologinUser = lib.mkDefault userSettings.userName;
   # to enable swaylock with any compositor other than sway this is needed
-  security.pam.services.swaylock = lib.mkDefault { };
+  security.pam.services.swaylock = lib.mkDefault {};
 
   # Allow unfree packages
   nixpkgs.config = {
     allowUnfree = true;
-    allowUnfreePredicate = (_: true);
-    permittedInsecurePackages = [ ];
+    allowUnfreePredicate = _: true;
+    permittedInsecurePackages = [];
   };
 
   # whether using x11 or wayland in the end it's better to have it
@@ -33,6 +35,6 @@
     "flakes"
   ];
 
-  # optimise after every rebuild (not gc) 
+  # optimise after every rebuild (not gc)
   nix.settings.auto-optimise-store = true;
 }
