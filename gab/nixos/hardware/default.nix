@@ -5,13 +5,9 @@
   userSettings,
   ...
 }:
-
-with lib.types;
-
-let
+with lib.types; let
   cfg = config.gab.hardware;
-in
-{
+in {
   options.gab.hardware = {
     amdvlk.enable = lib.mkEnableOption "amdvlk drivers";
     bluetooth.enable = lib.mkEnableOption "bluetooth";
@@ -82,13 +78,13 @@ in
       enable = true;
       enable32Bit = true;
 
-      extraPackages = lib.optionals cfg.amdvlk.enable [ pkgs.amdvlk ];
-      extraPackages32 = lib.optionals cfg.amdvlk.enable [ pkgs.driversi686Linux.amdvlk ];
+      extraPackages = lib.optionals cfg.amdvlk.enable [pkgs.amdvlk];
+      extraPackages32 = lib.optionals cfg.amdvlk.enable [pkgs.driversi686Linux.amdvlk];
     };
 
     ## bluetooth
     hardware.bluetooth.enable = cfg.bluetooth.enable;
-    services.blueman.enable = cfg.bluetooth.enable; # provide bluetooth control with blueman by default
+    services.blueman.enable = lib.mkDefault cfg.bluetooth.enable; # provide bluetooth control with blueman by default
 
     ### pipewire
     security.rtkit.enable = lib.mkDefault cfg.pipewire.enable; # rtkit is optional but recommended
@@ -102,13 +98,12 @@ in
     };
 
     ### pulseaudio
-    hardware.pulseaudio = {
+    services.pulseaudio = {
       enable = cfg.pulseaudio.enable;
       support32Bit = true;
       package = pkgs.pulseaudioFull;
       extraConfig = "load-module module-combine-sink";
     };
-    nixpkgs.config.pulseaudio = cfg.pulseaudio.enable;
 
     ## keyboard related settings
     console.keyMap = cfg.keyboard.layout;
