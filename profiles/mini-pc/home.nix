@@ -12,7 +12,7 @@
   ];
 
   # for amd gpus
-  #nixpkgs.config.rocmSupport = true;
+  nixpkgs.config.rocmSupport = true;
 
   gab.wm.hyprland = {
     enable = true;
