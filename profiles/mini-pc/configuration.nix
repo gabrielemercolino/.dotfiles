@@ -1,8 +1,4 @@
-{
-  pkgs,
-  userSettings,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ./hardware-configuration.nix
 
