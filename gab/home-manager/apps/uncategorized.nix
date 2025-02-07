@@ -3,18 +3,16 @@
   lib,
   pkgs,
   ...
-}:
-
-let
+}: let
   cfg = config.gab.apps;
-in
-{
+in {
   options.gab.apps = {
     yazi.enable = lib.mkEnableOption "yazi";
     gimp.enable = lib.mkEnableOption "gimp";
     obsidian.enable = lib.mkEnableOption "obsidian";
     swaylock.enable = lib.mkEnableOption "swaylock";
     aseprite.enable = lib.mkEnableOption "aseprite";
+    tiled.enable = lib.mkEnableOption "tiled";
 
     rofi = {
       enable = lib.mkEnableOption "rofi";
@@ -24,9 +22,10 @@ in
 
   config = {
     home.packages =
-      lib.optionals cfg.gimp.enable [ pkgs.gimp ]
-      ++ lib.optionals cfg.obsidian.enable [ pkgs.obsidian ]
-      ++ lib.optionals cfg.aseprite.enable [ pkgs.aseprite ];
+      lib.optionals cfg.gimp.enable [pkgs.gimp]
+      ++ lib.optionals cfg.obsidian.enable [pkgs.obsidian]
+      ++ lib.optionals cfg.aseprite.enable [pkgs.aseprite]
+      ++ lib.optionals cfg.tiled.enable [pkgs.tiled];
 
     programs.yazi = {
       enable = cfg.yazi.enable;
@@ -44,7 +43,10 @@ in
 
     programs.rofi = {
       enable = cfg.rofi.enable;
-      package = if cfg.rofi.wayland then pkgs.rofi-wayland else pkgs.rofi;
+      package =
+        if cfg.rofi.wayland
+        then pkgs.rofi-wayland
+        else pkgs.rofi;
       extraConfig = {
         modi = "drun";
         show-icons = true;
