@@ -4,7 +4,7 @@
   stdenv,
 }: let
   pname = "zen";
-  version = "1.0.2-b.5";
+  version = "1.7.3b";
 
   getUrl = system:
     if system == "x86_64-linux"
@@ -20,9 +20,9 @@
   */
   getHash = system:
     if system == "x86_64-linux"
-    then "sha256-faJzPHtjE3Q+9WpPm1Lip4f7RJQrhWdTU+MFaCXy2Xg="
+    then "sha256-YiW6rvOSv0QShmZ82/zVIlsjLKB6ZG6I97VWMbqewiU="
     else if system == "aarch64-linux"
-    then "sha256-mKr+6CGG/KgHBylOxZBEmRdJv+rEfICtf1i164dKJIw="
+    then "sha256-/KAPuKtHujLVWHQFLil8u/JnqN7F4e4mMM1dj9ZT84I="
     else throw "Unsupported architecture: ${system}";
 
   src = fetchurl {
