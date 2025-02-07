@@ -43,6 +43,7 @@
     obsidian.enable = true;
     swaylock.enable = true;
     aseprite.enable = true;
+    tiled.enable = true;
 
     zen.enable = true;
 
