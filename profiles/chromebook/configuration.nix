@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   imports = [
     ./hardware-configuration.nix
 
@@ -31,6 +29,7 @@
     dbus.enable = true;
 
     corectrl.enable = true;
+    bashmount.enable = true;
 
     direnv.enable = true;
     docker.enable = true;
@@ -43,6 +42,6 @@
     HandlePowerKey=ignore
   '';
 
-  services.xserver.excludePackages = [ pkgs.xterm ];
+  services.xserver.excludePackages = [pkgs.xterm];
   services.xserver.displayManager.sessionCommands = "xrdb -merge <<< \"Xft.dpi: 120\"";
 }

@@ -35,6 +35,7 @@
 
     corectrl.enable = true;
     lact.enable = true;
+    bashmount.enable = true;
 
     direnv.enable = true;
     docker.enable = true;
