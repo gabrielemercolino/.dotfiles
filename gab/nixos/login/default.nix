@@ -3,12 +3,9 @@
   lib,
   pkgs,
   ...
-}:
-
-let
+}: let
   cfg = config.gab.login;
-in
-{
+in {
   options.gab.login = {
     sddm.enable = lib.mkEnableOption "sddm";
   };
@@ -25,9 +22,8 @@ in
         enableHidpi = true;
         wayland.enable = true;
         autoNumlock = true;
-        package = pkgs.sddm;
+        package = pkgs.libsForQt5.sddm;
       };
     };
-
   };
 }
