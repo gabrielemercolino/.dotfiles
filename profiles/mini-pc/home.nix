@@ -85,6 +85,7 @@
     lspServers = with pkgs.lite-xl-lsp; [
       rust_analyzer
       nil
+      elixir-ls
     ];
   };
 
