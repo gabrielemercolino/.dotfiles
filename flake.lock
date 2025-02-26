@@ -831,14 +831,17 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1740474853,
-        "narHash": "sha256-SjjybAQDO7HRPWqL6wOHy0y97y0ofPOqVOTawtlNWYc=",
-        "path": "/home/gabriele/programmazione/nix/lite-xl-flake",
-        "type": "path"
+        "lastModified": 1740475108,
+        "narHash": "sha256-2gEQeA6HuyjzmEXmNfs9zadPZPldBaHfEXwewlhZ4rE=",
+        "owner": "gabrielemercolino",
+        "repo": "lite-xl-flake",
+        "rev": "77ad93766e6ddc4fcc387e196fa1924a25b41cf0",
+        "type": "github"
       },
       "original": {
-        "path": "/home/gabriele/programmazione/nix/lite-xl-flake",
-        "type": "path"
+        "owner": "gabrielemercolino",
+        "repo": "lite-xl-flake",
+        "type": "github"
       }
     },
     "mnw": {
