@@ -81,6 +81,7 @@
       console
       gitstatus
       gitdiff_highlight
+      lintplus
     ];
     lspServers = with pkgs.lite-xl-lsp; [
       rust_analyzer
