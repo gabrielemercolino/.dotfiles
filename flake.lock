@@ -831,11 +831,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1740608605,
-        "narHash": "sha256-6ZvA2sAYszF0Lxwe3C6obMhvlqWpgiUmjGykJl54yx8=",
+        "lastModified": 1740683660,
+        "narHash": "sha256-Tyxw3LMRZglglvcIUt/14TBwYT/Snq23k3tYo8PU6GE=",
         "owner": "gabrielemercolino",
         "repo": "lite-xl-flake",
-        "rev": "6a7ee66164aec0d428eb5f70ff280022b8cb3248",
+        "rev": "2b77214a66b9b56ac9c3f9ec4bfd3500fc8ff675",
         "type": "github"
       },
       "original": {
