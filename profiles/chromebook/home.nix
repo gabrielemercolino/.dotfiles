@@ -48,6 +48,24 @@
     idea-community.enable = true;
   };
 
+  programs.lite-xl = {
+    enable = true;
+    plugins = with pkgs.lite-xl-plugins; [
+      lsp
+      widgets
+      colorpreview
+      console
+      gitstatus
+      gitdiff_highlight
+      lintplus
+      bracketmatch
+    ];
+    lspServers = with pkgs.lite-xl-lsp; [
+      nil
+      elixir-ls
+    ];
+  };
+
   programs.git = {
     enable = true;
     userName = userSettings.name;
