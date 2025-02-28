@@ -19,7 +19,7 @@
 (defvar  time_hover   false)
 (defpoll clock_hour   :interval "5s" "date +\%H")
 (defpoll clock_minute :interval "5s" "date +\%M")
-(defpoll clock_date   :interval "1h" "date '+%d/%m'")
+(defpoll clock_date   :interval "5s" "date '+%d/%m'")
 
 ;; widgets
 (defwidget workspaces []
