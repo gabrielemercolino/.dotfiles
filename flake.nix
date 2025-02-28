@@ -104,7 +104,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    lite-xl.url = "github:gabrielemercolino/lite-xl-flake";
-    #lite-xl.url = "path:/home/gabriele/programmazione/nix/lite-xl-flake";
+    lite-xl = {
+      url = "github:gabrielemercolino/lite-xl-flake";
+      #url = "path:/home/gabriele/programmazione/nix/lite-xl-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 }
