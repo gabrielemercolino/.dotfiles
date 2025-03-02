@@ -17,7 +17,7 @@ in {
 
   config = {
     environment.systemPackages =
-      lib.optionals cfg.suyu.enable [(pkgs.callPackage ./custom-derivations/suyu.nix {})]
+      lib.optionals cfg.suyu.enable [pkgs.suyu]
       ++ lib.optionals cfg.rpcs3.enable [pkgs.rpcs3];
 
     # needed to make the renice setting work
