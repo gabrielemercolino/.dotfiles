@@ -90,9 +90,8 @@
     ];
   };
 
-  gab.gaming.mangohud.enable = true;
-
-  home.packages = [
-    pkgs.geforcenow-electron
-  ];
+  gab.gaming = {
+    mangohud.enable = true;
+    geforce.enable = true;
+  };
 }
