@@ -44,20 +44,6 @@
           inherit system;
           overlays = [
             inputs.lite-xl.overlay
-            (final: _prev: {
-              geforcenow-electron = final.gfn-electron.overrideAttrs (_oldAttrs: rec {
-                pname = "geforcenow-electron";
-                postFixup = ''
-                  makeWrapper $out/dist/.electron-wrapped $out/bin/geforcenow-electron \
-                    --add-flags "$out/dist/geforcenow-electron" \
-                    --add-flags "--no-sandbox --disable-gpu-sandbox"
-
-                  substituteInPlace $out/share/applications/com.github.hmlendea.geforcenow-electron.desktop \
-                    --replace-fail "/opt/geforcenow-electron/geforcenow-electron" "${pname}" \
-                    --replace-fail "Icon=nvidia" "Icon=geforcenow-electron"
-                '';
-              });
-            })
           ];
         };
         modules = [./profiles/${name}/home.nix];
