@@ -2,13 +2,11 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
-}:
-
-let
+}: let
   cfg = config.gab.apps;
-in
-{
+in {
   options.gab.apps = {
     chrome.enable = lib.mkEnableOption "google chrome";
     firefox.enable = lib.mkEnableOption "firefox";
@@ -17,10 +15,8 @@ in
 
   config = {
     home.packages =
-      lib.optionals cfg.chrome.enable [ pkgs.google-chrome ]
-      ++ lib.optionals cfg.firefox.enable [ pkgs.firefox ]
-      ++ lib.optionals cfg.zen.enable [
-        (pkgs.callPackage ./custom-derivations/zen-browser.nix { })
-      ];
+      lib.optionals cfg.chrome.enable [pkgs.google-chrome]
+      ++ lib.optionals cfg.firefox.enable [pkgs.firefox]
+      ++ lib.optionals cfg.zen.enable [inputs.zen-browser.packages.${pkgs.system}.default];
   };
 }
