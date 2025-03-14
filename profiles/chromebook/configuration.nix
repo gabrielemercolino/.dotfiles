@@ -35,6 +35,9 @@
     docker.enable = true;
   };
 
+  # to run visual paradigm
+  gab.gaming.steam.enable = true;
+
   gab.wm.bspwm.enable = true;
 
   services.logind.extraConfig = ''
