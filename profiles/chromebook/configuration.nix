@@ -16,8 +16,8 @@
 
   gab.hardware = {
     bluetooth.enable = true;
-    #pipewire.enable = true;
-    pulseaudio.enable = true;
+    pipewire.enable = true;
+    #pulseaudio.enable = true;
 
     i18n.locale = "it_IT.UTF-8";
     keyboard.layout = "it";
@@ -38,7 +38,8 @@
   # to run visual paradigm
   gab.gaming.steam.enable = true;
 
-  gab.wm.bspwm.enable = true;
+  gab.wm.hyprland.enable = true;
+  gab.wm.bspwm.enable = false;
 
   services.logind.extraConfig = ''
     # don’t shutdown when power button is short-pressed

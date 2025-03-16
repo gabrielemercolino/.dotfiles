@@ -12,12 +12,12 @@
   ];
 
   gab.wm.hyprland = {
-    enable = false;
+    enable = true;
     monitors = ["eDP-1, 1920x1080@60, auto, 1.25"];
   };
 
   gab.wm.bspwm = {
-    enable = true;
+    enable = false;
   };
 
   gab.shell.aliases = {
