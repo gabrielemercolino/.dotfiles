@@ -8,44 +8,46 @@
 
   #boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  # use zsh
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
+  gab = {
+    login.sddm.enable = true;
 
-  gab.login.sddm.enable = true;
+    hardware = {
+      bluetooth.enable = true;
+      pipewire.enable = true;
+      #pulseaudio.enable = true;
 
-  gab.hardware = {
-    bluetooth.enable = true;
-    pipewire.enable = true;
-    #pulseaudio.enable = true;
+      i18n.locale = "it_IT.UTF-8";
+      keyboard.layout = "it";
+      time.timeZone = "Europe/Rome";
+    };
 
-    i18n.locale = "it_IT.UTF-8";
-    keyboard.layout = "it";
-    time.timeZone = "Europe/Rome";
+    apps = {
+      ssh.enable = true;
+      dbus.enable = true;
+
+      corectrl.enable = true;
+      bashmount.enable = true;
+
+      direnv.enable = true;
+      docker.enable = true;
+    };
+
+    # to run visual paradigm
+    gaming.steam.enable = true;
+
+    wm.hyprland.enable = true;
+    wm.bspwm.enable = false;
   };
-
-  gab.apps = {
-    ssh.enable = true;
-    dbus.enable = true;
-
-    corectrl.enable = true;
-    bashmount.enable = true;
-
-    direnv.enable = true;
-    docker.enable = true;
-  };
-
-  # to run visual paradigm
-  gab.gaming.steam.enable = true;
-
-  gab.wm.hyprland.enable = true;
-  gab.wm.bspwm.enable = false;
 
   services.logind.extraConfig = ''
     # don’t shutdown when power button is short-pressed
     HandlePowerKey=ignore
   '';
 
-  services.xserver.excludePackages = [pkgs.xterm];
-  services.xserver.displayManager.sessionCommands = "xrdb -merge <<< \"Xft.dpi: 120\"";
+  services.xserver = {
+    excludePackages = [pkgs.xterm];
+    displayManager.sessionCommands = "xrdb -merge <<< \"Xft.dpi: 120\"";
+  };
 }
