@@ -1,12 +1,12 @@
-{ config, pkgs, ... }:
-
-let
-  colors = config.lib.stylix.colors;
-  timezone = (
-    pkgs.runCommand "timezone" { } ''echo $(timedatectl show --property=Timezone --value) > $out''
-  );
-in
 {
+  config,
+  pkgs,
+  ...
+}: let
+  inherit (config.lib.stylix) colors;
+  timezone =
+    pkgs.runCommand "timezone" {} ''echo $(timedatectl show --property=Timezone --value) > $out'';
+in {
   # config from https://github.com/sameemul-haque/dotfiles
   programs.waybar = {
     enable = true;
@@ -60,11 +60,11 @@ in
           };
           "on-click" = "activate";
           "persistent-workspaces" = {
-            "1" = [ ];
-            "2" = [ ];
-            "3" = [ ];
-            "4" = [ ];
-            "5" = [ ];
+            "1" = [];
+            "2" = [];
+            "3" = [];
+            "4" = [];
+            "5" = [];
           };
         };
 
@@ -94,13 +94,13 @@ in
 
         clock = {
           "interval" = 1;
-          "format" = "  {:%H:%M %p}";
+          "format" = "  {:%H:%M }";
           "timezone" = "${timezone}";
           "tooltip-format" = ''<tt>{calendar}</tt>'';
         };
 
         network = {
-          "format-wifi" = " {icon} ";
+          "format-wifi" = "{icon}";
           "format-icons" = [
             "󰤯"
             "󰤟"
@@ -206,7 +206,7 @@ in
 
       #workspaces {
         background-color: transparent;
-      } 
+      }
 
       #workspaces button {
         all: initial; /* Remove GTK theme values (waybar #1351) */
@@ -333,5 +333,4 @@ in
       }
     '';
   };
-
 }
