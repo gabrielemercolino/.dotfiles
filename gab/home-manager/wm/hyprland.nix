@@ -4,18 +4,16 @@
   inputs,
   pkgs,
   ...
-}:
-let
+}: let
   cfg = config.gab.wm.hyprland;
-in
-{
-  imports = [ inputs.hyprland-nix.homeManagerModules.default ];
+in {
+  imports = [inputs.hyprland-nix.homeManagerModules.default];
 
   options.gab.wm.hyprland = {
     enable = lib.mkEnableOption "hyprland";
     monitors = lib.mkOption {
       type = with lib.types; listOf str;
-      default = [ ];
+      default = [];
     };
   };
 
@@ -30,7 +28,7 @@ in
       xwayland.enable = true;
 
       config = {
-        monitor = cfg.monitors ++ [ ", preferred, auto, 1" ]; # add the default config
+        monitor = cfg.monitors ++ [", preferred, auto, 1"]; # add the default config
       };
     };
   };
