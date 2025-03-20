@@ -94,7 +94,7 @@ in {
 
         clock = {
           "interval" = 1;
-          "format" = "  {:%H:%M }";
+          "format" = "  {:%H:%M}";
           "timezone" = "${timezone}";
           "tooltip-format" = ''<tt>{calendar}</tt>'';
         };
