@@ -13,7 +13,13 @@ in {
     swaylock.enable = lib.mkEnableOption "swaylock";
     aseprite.enable = lib.mkEnableOption "aseprite";
     tiled.enable = lib.mkEnableOption "tiled";
-
+    resilio = {
+      enable = lib.mkEnableOption "resilio sync";
+      port = lib.mkOption {
+        type = lib.types.int;
+        default = 8888;
+      };
+    };
     rofi = {
       enable = lib.mkEnableOption "rofi";
       wayland = lib.mkEnableOption "rofy for wayland";
@@ -25,7 +31,8 @@ in {
       lib.optionals cfg.gimp.enable [pkgs.gimp]
       ++ lib.optionals cfg.obsidian.enable [pkgs.obsidian]
       ++ lib.optionals cfg.aseprite.enable [pkgs.aseprite]
-      ++ lib.optionals cfg.tiled.enable [pkgs.tiled];
+      ++ lib.optionals cfg.tiled.enable [pkgs.tiled]
+      ++ lib.optionals cfg.resilio.enable [pkgs.resilio-sync];
 
     programs.yazi = {
       enable = cfg.yazi.enable;
@@ -59,6 +66,20 @@ in {
         display-clipboard = "";
         drun-display-format = "{name}";
         window-format = "{t}";
+      };
+    };
+
+    systemd.user.services.resilio-sync = {
+      Unit = {
+        Description = "Resilio Sync User Service";
+        After = ["network.target"];
+      };
+      Service = {
+        ExecStart = "${pkgs.resilio-sync}/bin/rslsync --nodaemon --webui.listen 127.0.0.1:${builtins.toString cfg.resilio.port}";
+        Restart = "always";
+      };
+      Install = {
+        WantedBy = ["default.target"];
       };
     };
   };
