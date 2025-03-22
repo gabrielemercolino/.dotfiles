@@ -68,6 +68,8 @@
           fileName = "Bury the light - rock";
         }
       ];
+
+      resilio.enable = true;
     };
 
     gaming = {
