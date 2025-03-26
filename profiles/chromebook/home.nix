@@ -50,6 +50,8 @@
 
       nvf.enable = true;
       idea-community.enable = true;
+
+      resilio.enable = true;
     };
   };
 
