@@ -70,33 +70,37 @@ in {
       };
     };
 
-    home.file.".config/resilio-sync/sync.conf".text = ''
-      {
-        "device_name": "${systemSettings.hostName}",
-        "listening_port": 0,
-        "storage_path": "/home/${config.home.username}/.config/resilio-sync",
-        "webui": {
-          "listen": "127.0.0.1:${builtins.toString cfg.resilio.port}"
+    home.file = lib.mkIf cfg.resilio.enable {
+      ".config/resilio-sync/sync.conf".text = ''
+        {
+          "device_name": "${systemSettings.hostName}",
+          "listening_port": 0,
+          "storage_path": "/home/${config.home.username}/.config/resilio-sync",
+          "webui": {
+            "listen": "127.0.0.1:${builtins.toString cfg.resilio.port}"
+          }
         }
-      }
-    '';
-
-    systemd.user.services.resilio-sync = let
-      start = pkgs.writeShellScriptBin "start-resilio-sync" ''
-        cp ~/.config/resilio-sync /tmp/resilio_sync.conf
-        ${pkgs.resilio-sync}/bin/rslsync --nodaemon --config /tmp/resilio_sync.conf
       '';
-    in {
-      Unit = {
-        Description = "Resilio Sync User Service";
-        After = ["network.target"];
-      };
-      Service = {
-        ExecStart = "${start}/bin/start-resilio-sync";
-        Restart = "always";
-      };
-      Install = {
-        WantedBy = ["default.target"];
+    };
+
+    systemd.user.services = lib.mkIf cfg.resilio.enable {
+      resilio-sync = let
+        start = pkgs.writeShellScriptBin "start-resilio-sync" ''
+          cp ~/.config/resilio-sync /tmp/resilio_sync.conf
+          ${pkgs.resilio-sync}/bin/rslsync --nodaemon --config /tmp/resilio_sync.conf
+        '';
+      in {
+        Unit = {
+          Description = "Resilio Sync User Service";
+          After = ["network.target"];
+        };
+        Service = {
+          ExecStart = "${start}/bin/start-resilio-sync";
+          Restart = "always";
+        };
+        Install = {
+          WantedBy = ["default.target"];
+        };
       };
     };
   };
