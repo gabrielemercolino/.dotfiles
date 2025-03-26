@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  systemSettings,
   ...
 }: let
   cfg = config.gab.apps;
@@ -69,13 +70,29 @@ in {
       };
     };
 
-    systemd.user.services.resilio-sync = {
+    home.file.".config/resilio-sync/sync.conf".text = ''
+      {
+        "device_name": "${systemSettings.hostName}",
+        "listening_port": 0,
+        "storage_path": "/home/${config.home.username}/.config/resilio-sync",
+        "webui": {
+          "listen": "127.0.0.1:${builtins.toString cfg.resilio.port}"
+        }
+      }
+    '';
+
+    systemd.user.services.resilio-sync = let
+      start = pkgs.writeShellScriptBin "start-resilio-sync" ''
+        cp ~/.config/resilio-sync /tmp/resilio_sync.conf
+        ${pkgs.resilio-sync}/bin/rslsync --nodaemon --config /tmp/resilio_sync.conf
+      '';
+    in {
       Unit = {
         Description = "Resilio Sync User Service";
         After = ["network.target"];
       };
       Service = {
-        ExecStart = "${pkgs.resilio-sync}/bin/rslsync --nodaemon --webui.listen 127.0.0.1:${builtins.toString cfg.resilio.port}";
+        ExecStart = "${start}/bin/start-resilio-sync";
         Restart = "always";
       };
       Install = {
