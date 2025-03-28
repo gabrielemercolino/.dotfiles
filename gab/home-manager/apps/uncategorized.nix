@@ -86,7 +86,7 @@ in {
     systemd.user.services = lib.mkIf cfg.resilio.enable {
       resilio-sync = let
         start = pkgs.writeShellScriptBin "start-resilio-sync" ''
-          cp ~/.config/resilio-sync /tmp/resilio_sync.conf
+          cp ~/.config/resilio-sync/sync.conf /tmp/resilio_sync.conf
           ${pkgs.resilio-sync}/bin/rslsync --nodaemon --config /tmp/resilio_sync.conf
         '';
       in {
