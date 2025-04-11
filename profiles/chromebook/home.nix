@@ -14,7 +14,7 @@
     wm = {
       hyprland = {
         enable = true;
-        monitors = ["eDP-1, 1920x1080@60, auto, 1.25"];
+        monitors = ["eDP-1, 1920x1080@60, auto, 1"];
       };
 
       bspwm = {
@@ -52,6 +52,13 @@
       idea-community.enable = true;
 
       resilio.enable = true;
+    };
+
+    style.fonts.sizes = {
+      applications = 14;
+      desktop = 12;
+      popups = 12;
+      terminal = 14;
     };
   };
 
