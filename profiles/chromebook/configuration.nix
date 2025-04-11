@@ -32,6 +32,7 @@
 
       direnv.enable = true;
       docker.enable = true;
+      wireshark.enable = true;
     };
 
     # to run visual paradigm
