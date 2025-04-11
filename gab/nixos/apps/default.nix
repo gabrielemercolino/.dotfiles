@@ -15,12 +15,14 @@ in {
     ssh.enable = lib.mkEnableOption "ssh";
     dbus.enable = lib.mkEnableOption "dbus";
     bashmount.enable = lib.mkEnableOption "bashmount (with udisk2)";
+    wireshark.enable = lib.mkEnableOption "wireshark";
   };
 
   config = {
     users.users.${userSettings.userName}.extraGroups =
       lib.optionals cfg.corectrl.enable ["corectrl"]
-      ++ lib.optionals cfg.docker.enable ["docker"];
+      ++ lib.optionals cfg.docker.enable ["docker"]
+      ++ lib.optionals cfg.wireshark.enable ["wireshark"];
 
     environment.systemPackages =
       lib.optionals cfg.corectrl.enable [pkgs.lm_sensors]
@@ -58,5 +60,12 @@ in {
 
     # needed for bashmount
     services.udisks2.enable = cfg.bashmount.enable;
+
+    programs.wireshark = {
+      enable = cfg.wireshark.enable;
+      package = pkgs.wireshark;
+      dumpcap.enable = true;
+      usbmon.enable = true;
+    };
   };
 }
