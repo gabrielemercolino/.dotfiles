@@ -42,9 +42,7 @@
       home-manager.lib.homeManagerConfiguration {
         pkgs = import nixpkgs {
           inherit system;
-          overlays = [
-            inputs.lite-xl.overlay
-          ];
+          overlays = [];
         };
         modules = [./profiles/${name}/home.nix];
         extraSpecialArgs = {
@@ -84,12 +82,6 @@
 
     hyprland-nix = {
       url = "github:hyprland-community/hyprland-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    lite-xl = {
-      url = "github:gabrielemercolino/lite-xl-flake";
-      #url = "path:/home/gabriele/programmazione/nix/lite-xl-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

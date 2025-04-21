@@ -1,14 +1,12 @@
 {
   pkgs,
   userSettings,
-  inputs,
   ...
 }: {
   imports = [
     ../base/home.nix
     ../../gab/home-manager
     ../../user/commands/gab
-    inputs.lite-xl.homeManagerModules.default
   ];
   gab = {
     wm = {
@@ -60,24 +58,6 @@
       popups = 12;
       terminal = 14;
     };
-  };
-
-  programs.lite-xl = {
-    enable = true;
-    plugins = with pkgs.lite-xl-plugins; [
-      lsp
-      widgets
-      colorpreview
-      console
-      gitstatus
-      gitdiff_highlight
-      lintplus
-      bracketmatch
-    ];
-    lspServers = with pkgs.lite-xl-lsp; [
-      nil
-      elixir-ls
-    ];
   };
 
   programs.git = {
