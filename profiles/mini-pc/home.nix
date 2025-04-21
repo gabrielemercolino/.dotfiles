@@ -1,14 +1,12 @@
 {
   pkgs,
   userSettings,
-  inputs,
   ...
 }: {
   imports = [
     ../base/home.nix
     ../../gab/home-manager
     ../../user/commands/gab
-    inputs.lite-xl.homeManagerModules.default
   ];
 
   # for amd gpus
@@ -82,23 +80,5 @@
     enable = true;
     userName = userSettings.name;
     userEmail = userSettings.email;
-  };
-
-  programs.lite-xl = {
-    enable = true;
-    plugins = with pkgs.lite-xl-plugins; [
-      lsp
-      widgets
-      colorpreview
-      console
-      gitstatus
-      gitdiff_highlight
-      lintplus
-    ];
-    lspServers = with pkgs.lite-xl-lsp; [
-      rust_analyzer
-      nil
-      elixir-ls
-    ];
   };
 }
