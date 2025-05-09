@@ -15,7 +15,7 @@
     wm = {
       hyprland = {
         enable = true;
-        monitors = ["HDMI-A-1, 1920x1080@100, auto, 1"];
+        monitors = ["HDMI-A-1, 1920x1080@100, auto, 1" "DP-1, 1920x1080@100, auto, 1"];
       };
 
       bspwm = {
