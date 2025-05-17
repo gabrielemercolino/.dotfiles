@@ -45,7 +45,6 @@
     steam.enable = true;
     gamemode.enable = true;
     gamescope.enable = true;
-    suyu.enable = true;
     #rpcs3.enable = true;
   };
 
