@@ -6,7 +6,7 @@
 }: let
   cfg = config.gab.style;
 in {
-  imports = [inputs.stylix.homeManagerModules.stylix];
+  imports = [inputs.stylix.homeModules.stylix];
 
   options.gab.style = {
     background = lib.mkOption {
