@@ -46,6 +46,7 @@
     gamemode.enable = true;
     gamescope.enable = true;
     rpcs3.enable = true;
+    suyu.enable = true;
   };
 
   gab.wm.hyprland.enable = true;
