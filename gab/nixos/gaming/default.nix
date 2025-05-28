@@ -12,11 +12,13 @@ in {
     gamemode.enable = lib.mkEnableOption "gamemode";
     gamescope.enable = lib.mkEnableOption "gamescope";
     rpcs3.enable = lib.mkEnableOption "rpcs3";
+    suyu.enable = lib.mkEnableOption "suyu";
   };
 
   config = {
     environment.systemPackages =
-      lib.optionals cfg.rpcs3.enable [pkgs.rpcs3];
+      lib.optionals cfg.suyu.enable [(pkgs.callPackage ./custom-derivations/suyu.nix {})]
+      ++ lib.optionals cfg.rpcs3.enable [pkgs.rpcs3];
 
     # needed to make the renice setting work
     users.users.${userSettings.userName}.extraGroups = lib.optionals cfg.gamemode.enable ["gamemode"];
