@@ -30,10 +30,7 @@ in {
       ++ lib.optionals cfg.bashmount.enable [pkgs.bashmount];
 
     # Control related stuff
-    programs.corectrl = {
-      enable = cfg.corectrl.enable;
-      gpuOverclock.enable = true;
-    };
+    programs.corectrl.enable = cfg.corectrl.enable;
 
     ## lact needs its daemon to properly work
     systemd.services.lact = {
