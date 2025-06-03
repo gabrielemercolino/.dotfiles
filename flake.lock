@@ -1405,11 +1405,11 @@
         "pre-commit-hooks": "pre-commit-hooks_3"
       },
       "locked": {
-        "lastModified": 1748636294,
-        "narHash": "sha256-7boSUsm/XXmQnLIfpr6VMp0vUeVKeVylaBnIl86dqws=",
+        "lastModified": 1748942388,
+        "narHash": "sha256-TCiUejIcy168ZIVDTM1dR9ZY1BbcNIupyS66CrdnHDw=",
         "owner": "gabrielemercolino",
         "repo": ".nvf",
-        "rev": "99b6da8ca87a673dd2ec82ab4c9842a4f77b7e86",
+        "rev": "9f95d7b702bb840fe533ac6d086c51c354cafe14",
         "type": "github"
       },
       "original": {
