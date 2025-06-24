@@ -12,7 +12,7 @@
     wm = {
       hyprland = {
         enable = true;
-        monitors = ["eDP-1, 1920x1080@60, auto, 1"];
+        monitors = ["eDP-1, 1920x1080@60, auto, 1" "DP-2, 1920x1080@60, auto, 1, mirror, eDP-1"];
       };
 
       bspwm = {
