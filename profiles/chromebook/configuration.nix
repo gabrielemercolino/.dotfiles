@@ -8,8 +8,13 @@
 
   #boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  hardware = {
+    graphics.extraPackages = with pkgs; [intel-media-driver];
+  };
+
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
+
   gab = {
     login.sddm.enable = true;
 
