@@ -2,6 +2,7 @@
   writeShellApplication,
   ffmpeg_6-full,
   wl-screenrec,
+  jq,
 }:
 writeShellApplication {
   name = "screen-record";
@@ -9,6 +10,7 @@ writeShellApplication {
   runtimeInputs = [
     ffmpeg_6-full
     wl-screenrec
+    jq
   ];
 
   text =
@@ -54,7 +56,13 @@ writeShellApplication {
 
       function record_wayland() {
         file_name="$HOME/Videos/screenrecord_$(date +%Y-%m-%d-%T).mp4"
-        default_sink="$(pactl get-default-sink).monitor"
+        default_sink="$(pw-dump | jq -r '
+                        .[]
+                        | select(.type == "PipeWire:Interface:Metadata")
+                        | .metadata[]
+                        | select(.key == "default.audio.sink")
+                        | .value.name
+                        ').monitor"
 
         #shellcheck disable=SC2086
         wl-screenrec --audio --audio-device $default_sink -b "1 MB" -f $file_name &
