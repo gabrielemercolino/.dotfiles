@@ -50,7 +50,7 @@
       gamemode.enable = true;
       gamescope.enable = true;
       rpcs3.enable = true;
-      suyu.enable = true;
+      #suyu.enable = true;
     };
 
     wm.hyprland.enable = true;
