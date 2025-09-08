@@ -58,4 +58,6 @@
   };
 
   services.xserver.excludePackages = [pkgs.xterm];
+
+  environment.systemPackages = [pkgs.lsfg-vk-ui];
 }
