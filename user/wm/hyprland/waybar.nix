@@ -39,7 +39,7 @@ in {
         "custom/os" = {
           "format" = "   ";
           "tooltip" = false;
-          "on-click" = "${pkgs.rofi-wayland}/bin/rofi -show drun";
+          "on-click" = "${pkgs.rofi}/bin/rofi -show drun";
         };
 
         "hyprland/workspaces" = {

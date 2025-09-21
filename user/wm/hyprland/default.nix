@@ -25,7 +25,7 @@
             "SUPER, RETURN" = "exec, ${pkgs.kitty}/bin/kitty";
             "SUPER, T" = "exec, ${pkgs.telegram-desktop}/bin/Telegram";
             "SUPER_SHIFT, H" = "exec, ${pkgs.kitty}/bin/kitty ${pkgs.btop}/bin/btop";
-            "SUPER, SPACE" = "exec, ${pkgs.rofi-wayland}/bin/rofi -show drun";
+            "SUPER, SPACE" = "exec, ${pkgs.rofi}/bin/rofi -show drun";
           };
         };
         windowToggles = {
