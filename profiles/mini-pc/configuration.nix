@@ -15,10 +15,6 @@
   };
   nixpkgs.config.rocmSupport = true;
 
-  # use zsh
-  users.defaultUserShell = pkgs.zsh;
-  programs.zsh.enable = true;
-
   gab = {
     login.sddm.enable = true;
 

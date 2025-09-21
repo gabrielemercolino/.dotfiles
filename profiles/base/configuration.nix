@@ -1,6 +1,7 @@
 {
   lib,
   userSettings,
+  pkgs,
   ...
 }: {
   boot.loader.systemd-boot.enable = true;
@@ -27,6 +28,10 @@
 
   # whether using x11 or wayland in the end it's better to have it
   services.xserver.enable = true;
+
+  # use zsh
+  users.defaultUserShell = pkgs.zsh;
+  programs.zsh.enable = true;
 
   system.stateVersion = "24.11";
 
