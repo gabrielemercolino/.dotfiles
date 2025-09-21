@@ -35,38 +35,37 @@ in {
       ++ lib.optionals cfg.tiled.enable [pkgs.tiled]
       ++ lib.optionals cfg.resilio.enable [pkgs.resilio-sync];
 
-    programs.yazi = {
-      enable = cfg.yazi.enable;
-      settings = {
-        manager = {
-          show_hidden = true;
+    programs = {
+      yazi = {
+        inherit (cfg.yazi) enable;
+        settings = {
+          manager = {
+            show_hidden = true;
+          };
         };
       };
-    };
 
-    programs.swaylock = {
-      enable = cfg.swaylock.enable;
-      package = pkgs.swaylock-effects;
-    };
+      swaylock = {
+        inherit (cfg.swaylock) enable;
+        package = pkgs.swaylock-effects;
+      };
 
-    programs.rofi = {
-      enable = cfg.rofi.enable;
-      package =
-        if cfg.rofi.wayland
-        then pkgs.rofi-wayland
-        else pkgs.rofi;
-      extraConfig = {
-        modi = "drun";
-        show-icons = true;
-        icon-theme = "WhiteSur";
-        display-drun = "";
-        display-run = "";
-        display-filebrowser = "";
-        display-window = "";
-        display-emoji = "󰞅";
-        display-clipboard = "";
-        drun-display-format = "{name}";
-        window-format = "{t}";
+      rofi = {
+        inherit (cfg.rofi) enable;
+        package = pkgs.rofi;
+        extraConfig = {
+          modi = "drun";
+          show-icons = true;
+          icon-theme = "WhiteSur";
+          display-drun = "";
+          display-run = "";
+          display-filebrowser = "";
+          display-window = "";
+          display-emoji = "󰞅";
+          display-clipboard = "";
+          drun-display-format = "{name}";
+          window-format = "{t}";
+        };
       };
     };
 
