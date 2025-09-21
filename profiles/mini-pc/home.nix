@@ -5,7 +5,6 @@
 }: {
   imports = [
     ../base/home.nix
-    ../../gab/home-manager
     ../../user/commands/gab
   ];
 
@@ -23,13 +22,15 @@
       };
     };
     shell = {
-      zsh.enable = true;
-
       aliases = {
         ls = "${pkgs.eza}/bin/eza --icons";
         ll = "${pkgs.eza}/bin/eza -l --icons";
         la = "${pkgs.eza}/bin/eza -la --icons";
+
+        cd = "z"; # from zoxide
       };
+
+      commands.z.enable = true;
     };
 
     apps = {
