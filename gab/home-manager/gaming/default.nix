@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
+{config, ...}: let
   cfg = config.gab.gaming;
 in {
   imports = [
@@ -11,10 +6,8 @@ in {
   ];
 
   options.gab.gaming = {
-    geforce.enable = lib.mkEnableOption "geforce-now";
   };
 
   config = {
-    home.packages = lib.optionals cfg.geforce.enable [pkgs.gfn-electron];
   };
 }

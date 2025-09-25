@@ -73,7 +73,6 @@
 
     gaming = {
       mangohud.enable = true;
-      geforce.enable = true;
     };
   };
 
