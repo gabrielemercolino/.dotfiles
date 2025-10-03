@@ -6,6 +6,14 @@
   ...
 }: let
   cfg = config.gab.style;
+
+  sddm-theme = inputs.silentSDDM.packages.${pkgs.system}.default.overrideAttrs (prev: {
+    installPhase = ''
+      ${prev.installPhase}
+      cp ${./wallpaper.png} $out/share/sddm/themes/silent/backgrounds/default.jpg
+      cp ${./wallpaper.png} $out/share/sddm/themes/silent/backgrounds/smoky.jpg
+    '';
+  });
 in {
   imports = [inputs.stylix.nixosModules.stylix];
 
@@ -46,6 +54,8 @@ in {
   };
 
   config = {
+    environment.systemPackages = [sddm-theme];
+
     stylix = {
       enable = true;
       autoEnable = true;
@@ -61,9 +71,16 @@ in {
       };
     };
 
-    services.displayManager.sddm.theme = lib.mkForce "${import ./sddm-theme.nix {
-      inherit pkgs;
-      inherit (cfg) background;
-    }}";
+    services.displayManager.sddm = {
+      theme = sddm-theme.pname;
+      extraPackages = sddm-theme.propagatedBuildInputs;
+      settings = {
+        # required for styling the virtual keyboard
+        General = {
+          GreeterEnvironment = "QML2_IMPORT_PATH=${sddm-theme}/share/sddm/themes/${sddm-theme.pname}/components/,QT_IM_MODULE=qtvirtualkeyboard";
+          InputMethod = "qtvirtualkeyboard";
+        };
+      };
+    };
   };
 }
