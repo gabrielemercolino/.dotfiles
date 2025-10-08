@@ -1,28 +1,40 @@
 flake_init () {
-  echo '
-  {
-    description = "template dev flake";
-    inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    inputs.flake-utils.url = "github:numtide/flake-utils";
+  local unfree_config=""
+  
+  if [[ $unfree_enabled ]]; then
+    unfree_config="config.allowUnfree = true;"
+  fi
 
-    outputs = { nixpkgs, flake-utils, ... }:
-      flake-utils.lib.eachDefaultSystem (system:
-        let
-          pkgs = import nixpkgs {inherit system;};
-        in
-        {
-          devShells.default = pkgs.mkShell {
-            nativeBuildInputs = with pkgs; [];
-            buildInputs = with pkgs; [];
-            shellHook = "clear && echo \"Welcome!\" | ${pkgs.cowsay}/bin/cowsay | ${pkgs.lolcat}/bin/lolcat";
-          };
-        }
-      );
-  }' > flake.nix
+  cat > flake.nix << EOF
+{
+  description = "template dev flake";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+  inputs.flake-utils.url = "github:numtide/flake-utils";
+
+  outputs = { nixpkgs, flake-utils, ... }:
+    flake-utils.lib.eachDefaultSystem (system:
+      let
+        pkgs = import nixpkgs {
+          inherit system;$unfree_config
+        };
+      in
+      {
+        devShells.default = pkgs.mkShell {
+          nativeBuildInputs = with pkgs; [];
+          buildInputs = with pkgs; [];
+          shellHook = "";
+        };
+      }
+    );
 }
-
+EOF
+}
 envrc_init () {
-  echo 'use flake' > .envrc
+  if [[ $unfree_enabled ]]; then
+    echo 'use flake . --impure' > .envrc
+  else
+    echo 'use flake' > .envrc
+  fi
 }
 
 # check if in $HOME
@@ -30,6 +42,8 @@ if [ $PWD == $HOME ]; then
   echo 'Cannot create dev shell in HOME'
   exit 1
 fi
+
+unfree_enabled="${args[--unfree]}"
 
 # check if flake.nix exists
 if [ -f "flake.nix" ]; then
@@ -63,7 +77,7 @@ if [ -f ".envrc" ]; then
     ;;
     "y"|"Y") 
       echo 'Overriding .envrc'
-      flake_init
+      envrc_init
     ;;
     *) 
       echo 'Invalid input, not overriding'
