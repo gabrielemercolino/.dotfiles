@@ -18,7 +18,7 @@
       };
 
       bspwm = {
-        enable = true;
+        enable = false;
       };
     };
     shell = {
