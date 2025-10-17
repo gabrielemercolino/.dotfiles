@@ -18,13 +18,14 @@
     keyBinds = let
       MOUSE_L = "mouse:272";
       MOUSE_R = "mouse:273";
+      terminal = "${pkgs.ghostty}/bin/ghostty";
       # collection of keybinds grouped by functionality
       groups = {
         launchApps = {
           bind = {
-            "SUPER, RETURN" = "exec, ${pkgs.kitty}/bin/kitty";
+            "SUPER, RETURN" = "exec, ${terminal}";
             "SUPER, T" = "exec, ${pkgs.telegram-desktop}/bin/Telegram";
-            "SUPER_SHIFT, H" = "exec, ${pkgs.kitty}/bin/kitty ${pkgs.btop}/bin/btop";
+            "SUPER_SHIFT, H" = "exec, ${terminal} -e ${pkgs.btop}/bin/btop";
             "SUPER, SPACE" = "exec, ${pkgs.rofi}/bin/rofi -show drun";
           };
         };
