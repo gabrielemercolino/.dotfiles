@@ -3,52 +3,50 @@
   pkgs,
   lib,
   ...
-}:
-
-{
+}: {
   imports = [
     ./eww
   ];
 
   services.sxhkd = {
     enable = config.xsession.windowManager.bspwm.enable;
-    keybindings =
-      let
-        groups = {
-          launchApps = {
-            "super + Return" = "${pkgs.kitty}/bin/kitty";
-            "super + t" = "${pkgs.telegram-desktop}/bin/telegram-desktop";
-            "super + space" = "${pkgs.rofi}/bin/rofi -show drun";
-            "super + shift + h" = "${pkgs.kitty}/bin/kitty ${pkgs.btop}/bin/btop";
-          };
-          windowToggles = {
-            "super + {shift + v,v,f}" = "bspc node -t {tiled,floating,fullscreen}";
-          };
-          audioControl = {
-            "XF86AudioRaiseVolume" = "${pkgs.pamixer}/bin/pamixer -i 5";
-            "XF86AudioLowerVolume" = "${pkgs.pamixer}/bin/pamixer -d 5";
-            "XF86AudioMute" = "${pkgs.pamixer}/bin/pamixer -t";
-          };
-          brightnessControl = {
-            "XF86MonBrightnessUp" = "${pkgs.brightnessctl}/bin/brightnessctl set +5%";
-            "XF86MonBrightnessDown" = "${pkgs.brightnessctl}/bin/brightnessctl set 5%-";
-          };
-          powerControl = {
-            "super + shift + {p,r}" = "systemctl {poweroff, reboot}";
-          };
-          bar = {
-            "super + w" = "pkill eww && eww open bar";
-          };
-          changeWorkspace = {
-            "super + {1-5}" = "bspc desktop -f '^{1-5}'";
-          };
-          moveToWorkspace = {
-            "super + shift + {1-5}" = "bspc node -d '^{1-5}'";
-          };
+    keybindings = let
+      terminal = "${pkgs.ghostty}/bin/ghostty";
+      groups = {
+        launchApps = {
+          "super + Return" = "${terminal}";
+          "super + t" = "${pkgs.telegram-desktop}/bin/telegram-desktop";
+          "super + space" = "${pkgs.rofi}/bin/rofi -show drun";
+          "super + shift + h" = "${terminal} -e ${pkgs.btop}/bin/btop";
         };
-        screenRecord = (pkgs.callPackage ../../commands/screen-record { });
-        screenShot = (pkgs.callPackage ../../commands/screen-shot { });
-      in
+        windowToggles = {
+          "super + {shift + v,v,f}" = "bspc node -t {tiled,floating,fullscreen}";
+        };
+        audioControl = {
+          "XF86AudioRaiseVolume" = "${pkgs.pamixer}/bin/pamixer -i 5";
+          "XF86AudioLowerVolume" = "${pkgs.pamixer}/bin/pamixer -d 5";
+          "XF86AudioMute" = "${pkgs.pamixer}/bin/pamixer -t";
+        };
+        brightnessControl = {
+          "XF86MonBrightnessUp" = "${pkgs.brightnessctl}/bin/brightnessctl set +5%";
+          "XF86MonBrightnessDown" = "${pkgs.brightnessctl}/bin/brightnessctl set 5%-";
+        };
+        powerControl = {
+          "super + shift + {p,r}" = "systemctl {poweroff, reboot}";
+        };
+        bar = {
+          "super + w" = "pkill eww && eww open bar";
+        };
+        changeWorkspace = {
+          "super + {1-5}" = "bspc desktop -f '^{1-5}'";
+        };
+        moveToWorkspace = {
+          "super + shift + {1-5}" = "bspc node -d '^{1-5}'";
+        };
+      };
+      screenRecord = pkgs.callPackage ../../commands/screen-record {};
+      screenShot = pkgs.callPackage ../../commands/screen-shot {};
+    in
       lib.mkMerge [
         groups.launchApps
         groups.windowToggles
