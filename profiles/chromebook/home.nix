@@ -36,7 +36,8 @@
         wayland = false;
       };
       blueman-applet.enable = true;
-      kitty.enable = true;
+      kitty.enable = false;
+      ghostty.enable = true;
 
       gimp.enable = true;
       yazi.enable = true;
