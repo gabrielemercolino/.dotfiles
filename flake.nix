@@ -81,7 +81,7 @@
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
 
     hyprland-nix = {
-      url = "github:hyprland-community/hyprland-nix";
+      url = "github:hyprland-community/hyprnix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

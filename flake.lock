@@ -691,13 +691,13 @@
         "lastModified": 1759328258,
         "narHash": "sha256-das+vqECDwhUnZddT0wiApEigAlFv+qTXzmEBYpDBj0=",
         "owner": "hyprland-community",
-        "repo": "hyprland-nix",
+        "repo": "hyprnix",
         "rev": "118de583a1d26372618e3864afcfc6ce34079dd6",
         "type": "github"
       },
       "original": {
         "owner": "hyprland-community",
-        "repo": "hyprland-nix",
+        "repo": "hyprnix",
         "type": "github"
       }
     },
