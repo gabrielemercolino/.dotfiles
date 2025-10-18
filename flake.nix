@@ -30,11 +30,7 @@
         inherit system;
         modules = [./profiles/${name}/configuration.nix];
         specialArgs = {
-          inherit
-            userSettings
-            systemSettings
-            inputs
-            ;
+          inherit userSettings systemSettings inputs;
         };
       };
 
@@ -46,11 +42,7 @@
         };
         modules = [./profiles/${name}/home.nix];
         extraSpecialArgs = {
-          inherit
-            userSettings
-            systemSettings
-            inputs
-            ;
+          inherit userSettings systemSettings inputs;
         };
       };
   in {
