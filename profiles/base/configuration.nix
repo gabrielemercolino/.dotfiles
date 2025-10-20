@@ -38,6 +38,7 @@
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
+    "pipe-operators"
   ];
 
   # optimise after every rebuild (not gc)
