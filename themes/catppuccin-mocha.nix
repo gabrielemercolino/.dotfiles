@@ -2,7 +2,7 @@
   system = "base16";
   name = "Catppuccin Mocha";
   author = "https://github.com/catppuccin/catppuccin";
-  variant = "dark";
+  polarity = "dark";
   palette = {
     base00 = "1e1e2e"; # base
     base01 = "181825"; # mantle
