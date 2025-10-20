@@ -2,25 +2,32 @@
   config,
   lib,
   inputs,
+  pkgs,
   ...
 }: let
   cfg = config.gab.style;
+  theme = import ../../../themes/${config.gab.style.theme}.nix;
+  background' = theme.bgLink or null;
+  background =
+    if background' != null
+    then
+      pkgs.fetchurl {
+        url = theme.bgLink;
+        hash = theme.bgHash;
+      }
+    else ./wallpaper.png;
 in {
   imports = [inputs.stylix.homeModules.stylix];
 
   options.gab.style = {
-    background = lib.mkOption {
-      default = ./wallpaper.png;
-      type = lib.types.path;
-      description = "The image to use for background";
-    };
-
     theme = lib.mkOption {
       default = "catppuccin-mocha";
-      type = lib.types.enum [
-        "catppuccin-mocha"
-        "uwunicorn"
-      ];
+      type = lib.types.enum (
+        builtins.readDir ../../../themes
+        |> builtins.attrNames
+        |> builtins.filter (name: lib.strings.hasSuffix ".nix" name)
+        |> map (lib.removeSuffix ".nix")
+      );
       description = "The theme to use";
     };
 
@@ -56,6 +63,7 @@ in {
     stylix = {
       enable = true;
       autoEnable = true;
+      inherit (theme) polarity;
 
       fonts.sizes = {
         inherit (cfg.fonts.sizes) applications;
@@ -64,8 +72,8 @@ in {
         inherit (cfg.fonts.sizes) terminal;
       };
 
-      base16Scheme = ../../../themes/${cfg.theme}.yaml;
-      image = cfg.background;
+      base16Scheme = theme;
+      image = background;
       targets = {
         mangohud.enable = false;
         hyprland.enable = lib.mkForce false; # hyprland-nix is not compatible
