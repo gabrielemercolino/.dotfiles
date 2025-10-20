@@ -64,7 +64,9 @@
 
   programs.git = {
     enable = true;
-    userName = userSettings.name;
-    userEmail = userSettings.email;
+    settings.user = {
+      inherit (userSettings) name;
+      inherit (userSettings) email;
+    };
   };
 }
