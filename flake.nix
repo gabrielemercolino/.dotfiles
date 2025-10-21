@@ -80,7 +80,7 @@
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
 
     silentSDDM = {
-      url = "github:uiriansan/SilentSDDM";
+      url = "github:gabrielemercolino/SilentSDDM";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
