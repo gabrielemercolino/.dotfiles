@@ -16,13 +16,27 @@
         hash = theme.bgHash;
       }
     else ./wallpaper.png;
-  sddm-theme = inputs.silentSDDM.packages.${pkgs.system}.default.overrideAttrs (prev: {
-    installPhase = ''
-      ${prev.installPhase}
-      cp ${background} $out/share/sddm/themes/silent/backgrounds/default.jpg
-      cp ${background} $out/share/sddm/themes/silent/backgrounds/smoky.jpg
-    '';
-  });
+
+  background-derivation = pkgs.runCommand "bg.jpg" {} ''
+    cp ${background} $out
+  '';
+
+  sddm-theme = inputs.silentSDDM.packages.${pkgs.system}.default.override {
+    extraBackgrounds = [background-derivation];
+    theme-overrides = {
+      "LoginScreen" = {
+        blur = 32;
+        background = "${background-derivation.name}";
+      };
+      "LoginScreen.MenuArea.Keyboard" = {
+        display = false;
+      };
+      "LockScreen" = {
+        blur = 0;
+        background = "${background-derivation.name}";
+      };
+    };
+  };
 in {
   imports = [inputs.stylix.nixosModules.stylix];
 
@@ -80,13 +94,6 @@ in {
     services.displayManager.sddm = {
       theme = sddm-theme.pname;
       extraPackages = sddm-theme.propagatedBuildInputs;
-      settings = {
-        # required for styling the virtual keyboard
-        General = {
-          GreeterEnvironment = "QML2_IMPORT_PATH=${sddm-theme}/share/sddm/themes/${sddm-theme.pname}/components/,QT_IM_MODULE=qtvirtualkeyboard";
-          InputMethod = "qtvirtualkeyboard";
-        };
-      };
     };
   };
 }
