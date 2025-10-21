@@ -7,6 +7,7 @@
 }: {
   imports = [
     ./waybar.nix
+    ./ashell.nix
   ];
 
   home.packages = with pkgs; [
