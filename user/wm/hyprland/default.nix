@@ -14,7 +14,10 @@
     wlr-randr
     wl-clipboard
   ];
-  wayland.windowManager.hyprland = {
+
+  wayland.windowManager.hyprland = let
+    bar = pkgs.waybar;
+  in {
     keyBinds = let
       MOUSE_L = "mouse:272";
       MOUSE_R = "mouse:273";
@@ -57,7 +60,7 @@
           bind."SUPER_SHIFT, P" = "exec, systemctl poweroff";
         };
         bar = {
-          bind."SUPER, W" = "exec, pkill waybar; ${pkgs.waybar}/bin/waybar";
+          bind."SUPER, W" = "exec, pkill ${bar.pname}; ${lib.getExe bar}";
         };
         moveFocus = {
           bind = {
@@ -128,7 +131,7 @@
 
     config = {
       exec_once = [
-        "${pkgs.waybar}/bin/waybar"
+        "${lib.getExe bar}"
       ];
       exec = [
         "${pkgs.swaybg}/bin/swaybg -m fill -i ${config.stylix.image}"
