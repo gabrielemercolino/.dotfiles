@@ -80,7 +80,7 @@ in {
       autoEnable = true;
       inherit (theme) polarity;
 
-      base16Scheme = theme;
+      base16Scheme = theme.palette;
       image = background;
 
       fonts.sizes = {
