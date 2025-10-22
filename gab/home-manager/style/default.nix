@@ -72,7 +72,7 @@ in {
         inherit (cfg.fonts.sizes) terminal;
       };
 
-      base16Scheme = theme;
+      base16Scheme = theme.palette;
       image = background;
       targets = {
         mangohud.enable = false;
@@ -81,12 +81,18 @@ in {
       };
     };
 
-    programs.rofi.theme = lib.mkForce (import ./rofi-theme.nix {inherit config;});
-    programs.swaylock.settings = {
-      effect-blur = "7x5";
-      effect-vignette = "0.7:0.7";
-      indicator = true;
-      clock = true;
+    programs = {
+      rofi.theme = lib.mkForce (import ./rofi-theme.nix {inherit config;});
+      swaylock.settings = {
+        effect-blur = "7x5";
+        effect-vignette = "0.7:0.7";
+        indicator = true;
+        clock = true;
+      };
+      btop.settings = {
+        color_theme = "TTY";
+        force_tty = true;
+      };
     };
   };
 }
