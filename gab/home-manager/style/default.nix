@@ -8,6 +8,7 @@
   cfg = config.gab.style;
   theme = import ../../../themes/${config.gab.style.theme}.nix {inherit pkgs;};
   background = theme.background or ./wallpaper.png;
+  fonts = theme.fonts or config.stylix.fonts;
 in {
   imports = [inputs.stylix.homeModules.stylix];
 
@@ -57,12 +58,16 @@ in {
       autoEnable = true;
       inherit (theme) polarity;
 
-      fonts.sizes = {
-        inherit (cfg.fonts.sizes) applications;
-        inherit (cfg.fonts.sizes) desktop;
-        inherit (cfg.fonts.sizes) popups;
-        inherit (cfg.fonts.sizes) terminal;
-      };
+      fonts =
+        fonts
+        // {
+          sizes = {
+            inherit (cfg.fonts.sizes) applications;
+            inherit (cfg.fonts.sizes) desktop;
+            inherit (cfg.fonts.sizes) popups;
+            inherit (cfg.fonts.sizes) terminal;
+          };
+        };
 
       base16Scheme = theme.palette;
       image = background;

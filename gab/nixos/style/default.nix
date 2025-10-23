@@ -8,6 +8,7 @@
   cfg = config.gab.style;
   theme = import ../../../themes/${config.gab.style.theme}.nix {inherit pkgs;};
   background = theme.background or ./wallpaper.png;
+  fonts = theme.fonts or config.stylix.fonts;
 
   background-derivation = pkgs.runCommand "bg.jpg" {} ''
     cp ${background} $out
@@ -75,12 +76,16 @@ in {
       base16Scheme = theme.palette;
       image = background;
 
-      fonts.sizes = {
-        inherit (cfg.fonts.sizes) applications;
-        inherit (cfg.fonts.sizes) desktop;
-        inherit (cfg.fonts.sizes) popups;
-        inherit (cfg.fonts.sizes) terminal;
-      };
+      fonts =
+        fonts
+        // {
+          sizes = {
+            inherit (cfg.fonts.sizes) applications;
+            inherit (cfg.fonts.sizes) desktop;
+            inherit (cfg.fonts.sizes) popups;
+            inherit (cfg.fonts.sizes) terminal;
+          };
+        };
     };
 
     services.displayManager.sddm = {
