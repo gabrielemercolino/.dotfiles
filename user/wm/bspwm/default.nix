@@ -9,27 +9,27 @@
   ];
 
   services.sxhkd = {
-    enable = config.xsession.windowManager.bspwm.enable;
+    inherit (config.xsession.windowManager.bspwm) enable;
     keybindings = let
-      terminal = "${pkgs.ghostty}/bin/ghostty";
+      terminal = "${lib.getExe pkgs.alacritty}";
       groups = {
         launchApps = {
           "super + Return" = "${terminal}";
-          "super + t" = "${pkgs.telegram-desktop}/bin/telegram-desktop";
-          "super + space" = "${pkgs.rofi}/bin/rofi -show drun";
-          "super + shift + h" = "${terminal} -e ${pkgs.btop}/bin/btop";
+          "super + t" = "${lib.getExe pkgs.telegram-desktop}";
+          "super + space" = "${lib.getExe pkgs.rofi} -show drun";
+          "super + shift + h" = "${terminal} -e ${lib.getExe pkgs.btop}";
         };
         windowToggles = {
           "super + {shift + v,v,f}" = "bspc node -t {tiled,floating,fullscreen}";
         };
         audioControl = {
-          "XF86AudioRaiseVolume" = "${pkgs.pamixer}/bin/pamixer -i 5";
-          "XF86AudioLowerVolume" = "${pkgs.pamixer}/bin/pamixer -d 5";
-          "XF86AudioMute" = "${pkgs.pamixer}/bin/pamixer -t";
+          "XF86AudioRaiseVolume" = "${lib.getExe pkgs.pamixer} -i 5";
+          "XF86AudioLowerVolume" = "${lib.getExe pkgs.pamixer} -d 5";
+          "XF86AudioMute" = "${lib.getExe pkgs.pamixer} -t";
         };
         brightnessControl = {
-          "XF86MonBrightnessUp" = "${pkgs.brightnessctl}/bin/brightnessctl set +5%";
-          "XF86MonBrightnessDown" = "${pkgs.brightnessctl}/bin/brightnessctl set 5%-";
+          "XF86MonBrightnessUp" = "${lib.getExe pkgs.brightnessctl} set +5%";
+          "XF86MonBrightnessDown" = "${lib.getExe pkgs.brightnessctl} set 5%-";
         };
         powerControl = {
           "super + shift + {p,r}" = "systemctl {poweroff, reboot}";
@@ -57,8 +57,8 @@
         groups.changeWorkspace
         groups.moveToWorkspace
         {
-          "super + shift + s" = "${screenRecord}/bin/screen-record";
-          "super + ctrl + s" = "${screenShot}/bin/screen-shot";
+          "super + shift + s" = "${lib.getExe screenRecord}";
+          "super + ctrl + s" = "${lib.getExe screenShot}";
         }
         {
           "super + q" = "bspc node -k";
@@ -86,7 +86,7 @@
 
       "pkill picom; picom -b"
 
-      "${pkgs.nitrogen}/bin/nitrogen --set-auto ${config.stylix.image}"
+      "${lib.getExe pkgs.nitrogen} --set-auto ${config.stylix.image}"
 
       "pkill eww; eww open bar"
     ];

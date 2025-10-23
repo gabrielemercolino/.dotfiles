@@ -22,15 +22,15 @@
     keyBinds = let
       MOUSE_L = "mouse:272";
       MOUSE_R = "mouse:273";
-      terminal = "${pkgs.ghostty}/bin/ghostty";
+      terminal = "${lib.getExe pkgs.ghostty}";
       # collection of keybinds grouped by functionality
       groups = {
         launchApps = {
           bind = {
             "SUPER, RETURN" = "exec, ${terminal}";
-            "SUPER, T" = "exec, ${pkgs.telegram-desktop}/bin/Telegram";
-            "SUPER_SHIFT, H" = "exec, ${terminal} -e ${pkgs.btop}/bin/btop";
-            "SUPER, SPACE" = "exec, ${pkgs.rofi}/bin/rofi -show drun";
+            "SUPER, T" = "exec, ${lib.getExe pkgs.telegram-desktop}";
+            "SUPER_SHIFT, H" = "exec, ${terminal} -e ${lib.getExe pkgs.btop}";
+            "SUPER, SPACE" = "exec, ${lib.getExe pkgs.rofi} -show drun";
           };
         };
         windowToggles = {
@@ -48,13 +48,13 @@
           };
         };
         audioControl = {
-          binde.", XF86AudioRaiseVolume" = "exec, ${pkgs.pamixer}/bin/pamixer -i 5";
-          binde.", XF86AudioLowerVolume" = "exec, ${pkgs.pamixer}/bin/pamixer -d 5";
-          bind.", XF86AudioMute" = "exec, ${pkgs.pamixer}/bin/pamixer -t";
+          binde.", XF86AudioRaiseVolume" = "exec, ${lib.getExe pkgs.pamixer} -i 5";
+          binde.", XF86AudioLowerVolume" = "exec, ${lib.getExe pkgs.pamixer} -d 5";
+          bind.", XF86AudioMute" = "exec, ${lib.getExe pkgs.pamixer} -t";
         };
         brightnessControl = {
-          binde.", XF86MonBrightnessUp" = "exec, ${pkgs.brightnessctl}/bin/brightnessctl set +5%";
-          binde.", XF86MonBrightnessDown" = "exec, ${pkgs.brightnessctl}/bin/brightnessctl set 5%-";
+          binde.", XF86MonBrightnessUp" = "exec, ${lib.getExe pkgs.brightnessctl} set +5%";
+          binde.", XF86MonBrightnessDown" = "exec, ${lib.getExe pkgs.brightnessctl} set 5%-";
         };
         powerControl = {
           bind."SUPER_SHIFT, R" = "exec, systemctl reboot";
@@ -119,8 +119,8 @@
           bind."SUPER, M" = "exit";
         }
         {
-          bind."SUPER CONTROL_L, S" = "exec, ${screenShot}/bin/screen-shot";
-          bind."SUPER_SHIFT, S" = "exec, ${screenRecord}/bin/screen-record";
+          bind."SUPER CONTROL_L, S" = "exec, ${lib.getExe screenShot}";
+          bind."SUPER_SHIFT, S" = "exec, ${lib.getExe screenRecord}";
         }
       ];
 
@@ -135,7 +135,7 @@
         "${lib.getExe bar}"
       ];
       exec = [
-        "${pkgs.swaybg}/bin/swaybg -m fill -i ${config.stylix.image}"
+        "${lib.getExe pkgs.swaybg} -m fill -i ${config.stylix.image}"
       ];
 
       general = {
