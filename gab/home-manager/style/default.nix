@@ -9,6 +9,7 @@
   theme = import ../../../themes/${config.gab.style.theme}.nix {inherit pkgs;};
   background = theme.background or ./wallpaper.png;
   fonts = theme.fonts or {};
+  opacity = theme.opacity or 1.0;
 in {
   imports = [inputs.stylix.homeModules.stylix];
 
@@ -89,6 +90,17 @@ in {
       btop.settings = {
         color_theme = "TTY";
         force_tty = true;
+        theme_background = false;
+      };
+      ghostty.settings = {
+        background-opacity = opacity;
+      };
+      alacritty = {
+        settings.window = lib.mkForce {
+          decorations = "None";
+          inherit opacity;
+          blur = false;
+        };
       };
     };
   };
