@@ -54,11 +54,14 @@
       resilio.enable = true;
     };
 
-    style.fonts.sizes = {
-      applications = 14;
-      desktop = 12;
-      popups = 12;
-      terminal = 14;
+    style = {
+      theme = "catppuccin-mocha";
+      fonts.sizes = {
+        applications = 14;
+        desktop = 12;
+        popups = 12;
+        terminal = 14;
+      };
     };
   };
 
