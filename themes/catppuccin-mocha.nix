@@ -1,4 +1,4 @@
-{
+_: {
   system = "base16";
   name = "Catppuccin Mocha";
   author = "https://github.com/catppuccin/catppuccin";

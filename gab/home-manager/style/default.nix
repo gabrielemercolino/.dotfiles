@@ -6,16 +6,8 @@
   ...
 }: let
   cfg = config.gab.style;
-  theme = import ../../../themes/${config.gab.style.theme}.nix;
-  background' = theme.bgLink or null;
-  background =
-    if background' != null
-    then
-      pkgs.fetchurl {
-        url = theme.bgLink;
-        hash = theme.bgHash;
-      }
-    else ./wallpaper.png;
+  theme = import ../../../themes/${config.gab.style.theme}.nix {inherit pkgs;};
+  background = theme.background or ./wallpaper.png;
 in {
   imports = [inputs.stylix.homeModules.stylix];
 
