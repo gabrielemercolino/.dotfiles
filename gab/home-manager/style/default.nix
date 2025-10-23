@@ -8,7 +8,7 @@
   cfg = config.gab.style;
   theme = import ../../../themes/${config.gab.style.theme}.nix {inherit pkgs;};
   background = theme.background or ./wallpaper.png;
-  fonts = theme.fonts or config.stylix.fonts;
+  fonts = theme.fonts or {};
 in {
   imports = [inputs.stylix.homeModules.stylix];
 
