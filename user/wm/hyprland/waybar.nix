@@ -4,6 +4,7 @@
   ...
 }: let
   inherit (config.lib.stylix) colors;
+  inherit (config.stylix) fonts;
   timezone =
     pkgs.runCommand "timezone" {} ''echo $(timedatectl show --property=Timezone --value) > $out'';
 in {
@@ -138,7 +139,7 @@ in {
         border: none;
         border-radius: 0;
         min-height: 0;
-        font-family: JetBrainsMono Nerd Font;
+        font-family: ${fonts.monospace.name}, JetBrainsMono Nerd Font;
         font-size: 13px;
       }
 
@@ -240,7 +241,6 @@ in {
       }
 
       #clock {
-        font-family: JetBrainsMono Nerd Font;
         color: #${colors.base0E};
       }
 
