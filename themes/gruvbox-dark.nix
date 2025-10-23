@@ -5,8 +5,8 @@
   polarity = "dark";
 
   background = pkgs.fetchurl {
-    url = "https://raw.githubusercontent.com/ChapST1/gruvbox-wallpapers-web/master/wallpapers/minimalistic/10.png";
-    hash = "sha256-Qt5WnB6YIMSgo8gen2UP4MLrXAYqy29nS5h3U/rfPOQ=";
+    url = "https://raw.githubusercontent.com/ChapST1/gruvbox-wallpapers-web/master/wallpapers/minimalistic/18.png";
+    hash = "sha256-wDJxF4amPaYiwEl80K9ff5dlHoab2rDjbjHAQS1s6sk=";
   };
 
   palette = {
