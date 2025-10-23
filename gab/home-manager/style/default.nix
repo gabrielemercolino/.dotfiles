@@ -89,17 +89,16 @@ in {
       };
       btop.settings = {
         color_theme = "TTY";
-        force_tty = true;
         theme_background = false;
       };
       ghostty.settings = {
         background-opacity = opacity;
       };
-      alacritty = {
-        settings.window = lib.mkForce {
-          decorations = "None";
-          inherit opacity;
-          blur = false;
+      alacritty.settings = {
+        window = {
+          decorations = lib.mkForce "None";
+          opacity = lib.mkForce opacity;
+          blur = lib.mkForce false;
         };
       };
     };
