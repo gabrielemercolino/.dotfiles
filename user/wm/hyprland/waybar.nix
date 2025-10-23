@@ -7,7 +7,6 @@
   timezone =
     pkgs.runCommand "timezone" {} ''echo $(timedatectl show --property=Timezone --value) > $out'';
 in {
-  # config from https://github.com/sameemul-haque/dotfiles
   programs.waybar = {
     enable = true;
 
@@ -15,11 +14,8 @@ in {
       mainBar = {
         layer = "top";
         position = "top";
-        height = 34;
-        spacing = 0;
 
         modules-left = [
-          "custom/os"
           "hyprland/workspaces"
         ];
         modules-center = [
@@ -29,18 +25,11 @@ in {
           "tray"
           "cpu"
           "memory"
-          "network"
           "pulseaudio"
+          "network"
           "battery"
-          "idle_inhibitor"
           "custom/power"
         ];
-
-        "custom/os" = {
-          "format" = "   ";
-          "tooltip" = false;
-          "on-click" = "${pkgs.rofi}/bin/rofi -show drun";
-        };
 
         "hyprland/workspaces" = {
           "format" = "{icon}";
@@ -68,30 +57,6 @@ in {
           };
         };
 
-        "idle_inhibitor" = {
-          format = "{icon}";
-          format-icons = {
-            activated = "󰅶";
-            deactivated = "󰾪";
-          };
-        };
-
-        memory = {
-          "interval" = 5;
-          "format" = "󰍛 {}%";
-          "max-length" = 10;
-        };
-
-        cpu = {
-          "interval" = 5;
-          "format" = " {usage}%";
-          "max-length" = 10;
-        };
-
-        tray = {
-          "spacing" = 10;
-        };
-
         clock = {
           "interval" = 1;
           "format" = "  {:%H:%M}";
@@ -99,45 +64,50 @@ in {
           "tooltip-format" = ''<tt>{calendar}</tt>'';
         };
 
+        tray = {
+          "spacing" = 10;
+        };
+
+        cpu = {
+          "interval" = 5;
+          "format" = " {icon}";
+          "format-icons" = ["╸    " "━╸   " "━━╸  " "━━━╸ " "━━━━╸" "━━━━━"];
+        };
+
+        memory = {
+          "interval" = 5;
+          "format" = " {icon}";
+          "format-icons" = ["╸    " "━╸   " "━━╸  " "━━━╸ " "━━━━╸" "━━━━━"];
+        };
+
+        pulseaudio = {
+          "tooltip-format" = "Volume : {volume}%";
+          "format" = "{icon}";
+          "format-muted" = "       ";
+          "format-icons" = {
+            "default" = [
+              "     "
+              " ╸   "
+              " ━╸  "
+              " ━━╸ "
+              " ━━━╸"
+              " ━━━━"
+            ];
+          };
+          "on-click" = "${pkgs.pavucontrol}/bin/pavucontrol";
+        };
+
         network = {
           "format-wifi" = "{icon}";
-          "format-icons" = [
-            "󰤯"
-            "󰤟"
-            "󰤢"
-            "󰤥"
-            "󰤨"
-          ];
+          "format-icons" = ["󰤯" "󰤟" "󰤢" "󰤥" "󰤨"];
           "format-ethernet" = "󰀂";
           "format-alt" = "󱛇";
           "format-disconnected" = "󰖪";
           "tooltip-format-wifi" = "{icon} {essid}\n {bandwidthDownBytes}   {bandwidthUpBytes}";
           "tooltip-format-ethernet" = "󰀂  {ifname}\n {bandwidthDownBytes}   {bandwidthUpBytes}";
           "tooltip-format-disconnected" = "Disconnected";
-          #"on-click": "~/.config/rofi/wifi/wifi.sh &",
-          #"on-click-right": "~/.config/rofi/wifi/wifinew.sh &",
           "interval" = 5;
           "nospacing" = 1;
-        };
-
-        pulseaudio = {
-          "scroll-step" = 1;
-          "nospacing" = 1;
-          "tooltip-format" = "Volume : {volume}%";
-          "format" = "{icon}";
-          "format-bluetooth" = "";
-          "format-muted" = "  ";
-          "format-source" = "{volume}% ";
-          "format-source-muted" = " ";
-          "format-icons" = {
-            "headphone" = " ";
-            "default" = [
-              ""
-              ""
-              ""
-            ];
-          };
-          "on-click" = "${pkgs.pavucontrol}/bin/pavucontrol";
         };
 
         battery = {
@@ -148,30 +118,8 @@ in {
           };
           "format" = "{capacity}% {icon}";
           "format-icons" = {
-            "charging" = [
-              "󰢜"
-              "󰂆"
-              "󰂇"
-              "󰂈"
-              "󰢝"
-              "󰂉"
-              "󰢞"
-              "󰂊"
-              "󰂋"
-              "󰂅"
-            ];
-            "default" = [
-              "󰁺"
-              "󰁻"
-              "󰁼"
-              "󰁽"
-              "󰁾"
-              "󰁿"
-              "󰂀"
-              "󰂁"
-              "󰂂"
-              "󰁹"
-            ];
+            "charging" = ["󰢜" "󰂆" "󰂇" "󰂈" "󰢝" "󰂉" "󰢞" "󰂊" "󰂋" "󰂅"];
+            "default" = ["󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹"];
           };
           "format-full" = "Charged ";
           "tooltip" = false;
@@ -195,9 +143,7 @@ in {
       }
 
       window#waybar {
-        background-color: #${colors.base01};
-        transition-property: background-color;
-        transition-duration: 0.5s;
+        background-color: transparent;
       }
 
       window#waybar.hidden {
@@ -209,25 +155,24 @@ in {
       }
 
       #workspaces button {
-        all: initial; /* Remove GTK theme values (waybar #1351) */
         min-width: 0; /* Fix weird spacing in materia (waybar #450) */
         box-shadow: inset 0 -3px transparent; /* Use box-shadow instead of border so the text isn't offset */
-        padding: 6px 18px;
+        padding: 6px 16px;
         margin: 6px 3px;
         border-radius: 4px;
-        background-color: #${colors.base00};
+        background-color: #${colors.base01};
         color: #${colors.base05};
       }
 
       #workspaces button.active {
-        color: #${colors.base00};
+        color: #${colors.base01};
         background-color: #${colors.base05};
       }
 
       #workspaces button:hover {
         box-shadow: inherit;
         text-shadow: inherit;
-        color: #${colors.base00};
+        color: #${colors.base01};
         background-color: #${colors.base05};
       }
 
@@ -248,44 +193,36 @@ in {
         border-radius: 4px;
         margin: 6px 3px;
         padding: 6px 12px;
-        background-color: #${colors.base00};
-        color: #${colors.base01};
+        background-color: #${colors.base01};
       }
 
       #custom-power {
         margin-right: 6px;
       }
 
-      #custom-os {
-        padding-right: 7px;
-        padding-left: 7px;
-        margin-left: 5px;
-        font-size: 15px;
-        border-radius: 8px 0px 0px 8px;
-        color: #${colors.base0D};
-      }
-
       #memory,
       #cpu {
-        background-color: #${colors.base09};
+        color: #${colors.base09};
+      }
+
+      #pulseaudio {
+        color: #${colors.base0A};
       }
 
       #battery {
-        background-color: #${colors.base08};
+        color: #${colors.base0C};
       }
 
       @keyframes blink {
         to {
-          background-color: #${colors.base08};
-          color: #${colors.base01};
+          color: #${colors.base0F};
         }
       }
 
       #battery.warning,
       #battery.critical,
       #battery.urgent {
-        background-color: #ff0048;
-        color: #${colors.base01};
+        color: #${colors.base08};
         animation-name: blink;
         animation-duration: 0.5s;
         animation-timing-function: linear;
@@ -294,42 +231,27 @@ in {
       }
 
       #battery.charging {
-        background-color: #${colors.base0B};
-      }
-
-      #backlight {
-        background-color: #${colors.base09};
-      }
-
-      #pulseaudio {
-        background-color: #${colors.base0A};
+        color: #${colors.base0B};
       }
 
       #network {
-        background-color: #${colors.base0C};
+        color: #${colors.base0C};
         padding-right: 14px;
       }
 
-      #clock,
-      #idle_inhibitor {
+      #clock {
         font-family: JetBrainsMono Nerd Font;
-        background-color: #${colors.base0E};
+        color: #${colors.base0E};
       }
 
       #custom-power {
-        background-color: #${colors.base0F};
+        color: #${colors.base0F};
       }
-
 
       tooltip {
         border-radius: 8px;
         padding: 15px;
-        background-color: #${colors.base00};
-      }
-
-      tooltip label {
-        padding: 5px;
-        background-color: #${colors.base00};
+        background-color: #${colors.base01};
       }
     '';
   };
