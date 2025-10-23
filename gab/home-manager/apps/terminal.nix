@@ -10,18 +10,23 @@ in {
     kitty.enable = lib.mkEnableOption "kitty";
     warp.enable = lib.mkEnableOption "warp";
     ghostty.enable = lib.mkEnableOption "ghostty";
+    alacritty.enable = lib.mkEnableOption "alacritty";
   };
 
   config = {
     home.packages = lib.optionals cfg.warp.enable [pkgs.warp-terminal];
 
-    programs.kitty = {
-      inherit (cfg.kitty) enable;
-      settings = {
-        confirm_os_window_close = 0;
-      };
-    };
+    programs = {
+      alacritty.enable = cfg.alacritty.enable;
 
-    programs.ghostty.enable = cfg.ghostty.enable;
+      kitty = {
+        inherit (cfg.kitty) enable;
+        settings = {
+          confirm_os_window_close = 0;
+        };
+      };
+
+      ghostty.enable = cfg.ghostty.enable;
+    };
   };
 }
