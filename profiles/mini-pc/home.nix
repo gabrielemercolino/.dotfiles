@@ -44,7 +44,7 @@
         wayland = true;
       };
       blueman-applet.enable = true;
-      alacritty.enable = true;
+      ghostty.enable = true;
 
       gimp.enable = true;
       yazi.enable = true;
