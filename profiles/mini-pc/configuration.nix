@@ -41,6 +41,10 @@
       docker.enable = true;
     };
 
+    style = {
+      theme = "syntwave-soft";
+    };
+
     gaming = {
       steam.enable = true;
       gamemode.enable = true;

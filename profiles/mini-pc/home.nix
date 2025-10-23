@@ -21,6 +21,7 @@
         enable = false;
       };
     };
+
     shell = {
       aliases = {
         ls = "${pkgs.eza}/bin/eza --icons";
@@ -33,14 +34,17 @@
       commands.z.enable = true;
     };
 
+    style = {
+      theme = "syntwave-soft";
+    };
+
     apps = {
       rofi = {
         enable = true;
         wayland = true;
       };
       blueman-applet.enable = true;
-      kitty.enable = false;
-      ghostty.enable = true;
+      alacritty.enable = true;
 
       gimp.enable = true;
       yazi.enable = true;
