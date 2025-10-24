@@ -55,7 +55,7 @@
     };
 
     style = {
-      theme = "catppuccin-mocha";
+      theme = "tokyo-night";
       fonts.sizes = {
         applications = 14;
         desktop = 12;
