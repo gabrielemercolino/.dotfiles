@@ -101,6 +101,10 @@ in {
           blur = lib.mkForce false;
         };
       };
+      nvf.settings.vim = {
+        theme.name = lib.mkForce "base16";
+        statusline.lualine.theme = lib.mkForce "base16";
+      };
     };
   };
 }
