@@ -4,6 +4,8 @@
   author = "https://github.com/enkia/tokyo-night-vscode-theme";
   polarity = "dark";
 
+  opacity = 0.7;
+
   background = pkgs.fetchurl {
     url = "https://raw.githubusercontent.com/ChapST1/gruvbox-wallpapers-web/master/wallpapers/mix/17.jpg";
     hash = "sha256-p5Mo1xA4jBZh6PPP0HK2YsuEBkP/gA27YDvxtuUrPHE=";
