@@ -39,10 +39,7 @@
     };
 
     apps = {
-      rofi = {
-        enable = true;
-        wayland = true;
-      };
+      rofi.enable = true;
       blueman-applet.enable = true;
       ghostty.enable = true;
 

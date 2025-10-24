@@ -31,10 +31,7 @@
       commands.z.enable = true;
     };
     apps = {
-      rofi = {
-        enable = true;
-        wayland = false;
-      };
+      rofi.enable = true;
       blueman-applet.enable = true;
       kitty.enable = false;
       ghostty.enable = true;
