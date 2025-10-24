@@ -21,10 +21,7 @@ in {
         default = 8888;
       };
     };
-    rofi = {
-      enable = lib.mkEnableOption "rofi";
-      wayland = lib.mkEnableOption "rofy for wayland";
-    };
+    rofi.enable = lib.mkEnableOption "rofi";
   };
 
   config = {
@@ -57,14 +54,8 @@ in {
           modi = "drun";
           show-icons = true;
           icon-theme = "WhiteSur";
-          display-drun = "";
-          display-run = "";
-          display-filebrowser = "";
-          display-window = "";
-          display-emoji = "󰞅";
-          display-clipboard = "";
+          display-drun = "run";
           drun-display-format = "{name}";
-          window-format = "{t}";
         };
       };
     };
