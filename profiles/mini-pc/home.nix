@@ -41,7 +41,7 @@
     apps = {
       rofi.enable = true;
       blueman-applet.enable = true;
-      ghostty.enable = true;
+      kitty.enable = true;
 
       gimp.enable = true;
       yazi.enable = true;

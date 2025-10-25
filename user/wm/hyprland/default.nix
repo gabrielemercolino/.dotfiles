@@ -7,7 +7,6 @@
 }: {
   imports = [
     ./waybar.nix
-    ./ashell.nix
   ];
 
   home.packages = with pkgs; [
@@ -22,7 +21,7 @@
     keyBinds = let
       MOUSE_L = "mouse:272";
       MOUSE_R = "mouse:273";
-      terminal = "${lib.getExe pkgs.ghostty}";
+      terminal = "${lib.getExe pkgs.kitty}";
       # collection of keybinds grouped by functionality
       groups = {
         launchApps = {
