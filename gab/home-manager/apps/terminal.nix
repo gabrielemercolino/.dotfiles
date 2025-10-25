@@ -23,6 +23,7 @@ in {
         inherit (cfg.kitty) enable;
         settings = {
           confirm_os_window_close = 0;
+          cursor_trail = 10;
         };
       };
 
