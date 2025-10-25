@@ -70,6 +70,8 @@ in {
           };
         };
 
+      opacity.terminal = opacity;
+
       base16Scheme = theme.palette;
       image = background;
       targets = {
@@ -91,13 +93,9 @@ in {
         color_theme = "TTY";
         theme_background = false;
       };
-      ghostty.settings = {
-        background-opacity = opacity;
-      };
       alacritty.settings = {
         window = {
           decorations = lib.mkForce "None";
-          opacity = lib.mkForce opacity;
           blur = lib.mkForce false;
         };
       };
