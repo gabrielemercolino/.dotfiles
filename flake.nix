@@ -66,7 +66,10 @@
     };
 
     nixvim.url = "github:gabrielemercolino/.nixvim";
-    nvf.url = "github:gabrielemercolino/.nvf";
+    nvf = {
+      url = "github:gabrielemercolino/.nvf";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     stylix.url = "github:danth/stylix";
 
