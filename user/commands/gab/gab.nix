@@ -2,19 +2,20 @@
   stdenv,
   installShellFiles,
   bashly,
+  makeWrapper,
+  nh,
 }:
-
-stdenv.mkDerivation (finalAttrs: rec {
+stdenv.mkDerivation rec {
   name = "gab";
-  version = "1.3.2";
   src = ./.;
 
   nativeBuildInputs = [
     installShellFiles
     bashly
+    makeWrapper
   ];
 
-  buildInputs = [ ];
+  buildInputs = [nh];
 
   buildPhase = ''
     bashly add completions
@@ -25,9 +26,11 @@ stdenv.mkDerivation (finalAttrs: rec {
   installPhase = ''
     mkdir -p $out/bin
     cp gab $out/bin/${name}
+    wrapProgram $out/bin/${name} \
+      --prefix PATH : ${nh}/bin
   '';
 
   postInstall = ''
     installShellCompletion completions.bash
   '';
-})
+}
