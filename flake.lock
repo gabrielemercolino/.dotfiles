@@ -1250,11 +1250,11 @@
         "pre-commit-hooks": "pre-commit-hooks_3"
       },
       "locked": {
-        "lastModified": 1761425490,
-        "narHash": "sha256-r22ncdQk4fTnDdCHfA2haaNGNjzKEUE8OyIwd4zaGDY=",
+        "lastModified": 1761558510,
+        "narHash": "sha256-ULwwwEVmgXv7yzDIDtQTucbTPt2p0GmUOqG8GMKL0UA=",
         "owner": "gabrielemercolino",
         "repo": ".nvf",
-        "rev": "cb6f28e8cae78ec4270497b4125965b5f0b4592c",
+        "rev": "5a3d1b6e79845c92fd5dfe1ef4a27f21a00226e5",
         "type": "github"
       },
       "original": {
