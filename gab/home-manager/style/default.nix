@@ -11,7 +11,7 @@
   fonts = theme.fonts or {};
   opacity = theme.opacity or 1.0;
 in {
-  imports = [inputs.stylix.homeModules.stylix];
+  imports = [inputs.stylix.homeModules.stylix ./hyprnix.nix];
 
   options.gab.style = {
     theme = lib.mkOption {
@@ -45,14 +45,6 @@ in {
     };
   };
 
-  # fix: even if target is forced to false I need to re-add this otherwise it won't work
-  options.wayland.windowManager.hyprland.settings = {
-    decoration = lib.mkOption {default = {};};
-    general = lib.mkOption {default = {};};
-    group = lib.mkOption {default = {};};
-    misc = lib.mkOption {default = {};};
-  };
-
   config = {
     stylix = {
       enable = true;
@@ -76,7 +68,6 @@ in {
       image = background;
       targets = {
         mangohud.enable = false;
-        hyprland.enable = lib.mkForce false; # hyprland-nix is not compatible
         vscode.enable = false;
       };
     };
