@@ -34,7 +34,6 @@
 
       direnv.enable = true;
       docker.enable = true;
-      wireshark.enable = true;
     };
 
     style = {
