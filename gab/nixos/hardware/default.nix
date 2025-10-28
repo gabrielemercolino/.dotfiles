@@ -9,7 +9,6 @@ with lib.types; let
   cfg = config.gab.hardware;
 in {
   options.gab.hardware = {
-    amdvlk.enable = lib.mkEnableOption "amdvlk drivers";
     bluetooth.enable = lib.mkEnableOption "bluetooth";
     pipewire.enable = lib.mkEnableOption "pipewire";
     pulseaudio.enable = lib.mkEnableOption "pulseaudio";
@@ -46,6 +45,7 @@ in {
         description = "The time zone";
         example = "Europe/Rome";
       };
+      hardware-clock.enable = lib.mkEnableOption "hardware clock (for dual boot)";
     };
   };
 
@@ -77,9 +77,6 @@ in {
     hardware.graphics = {
       enable = true;
       enable32Bit = true;
-
-      extraPackages = lib.optionals cfg.amdvlk.enable [pkgs.amdvlk];
-      extraPackages32 = lib.optionals cfg.amdvlk.enable [pkgs.driversi686Linux.amdvlk];
     };
 
     ## bluetooth
@@ -129,7 +126,7 @@ in {
 
     ## timezone related settings
     time.timeZone = lib.mkIf (!cfg.time.automatic) cfg.time.timeZone;
-    time.hardwareClockInLocalTime = lib.mkDefault true; # needed for dual boot with windows but if not dual booting it doesn't hurt
+    time.hardwareClockInLocalTime = cfg.time.hardware-clock.enable; # needed for dual boot with windows
 
     ## networking related settings
     networking.hostName = lib.mkDefault "nixos";
