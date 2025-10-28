@@ -42,7 +42,7 @@ in {
 
     home.sessionVariables = lib.mkIf cfg.mangohud.enable {
       # forces the use of the config file as if used by gamescope it is not loaded
-      "MANGOHUD_CONFIGFILE" = "$HOME/.config/MangoHud/MangoHud.conf";
+      "MANGOHUD_CONFIGFILE" = "${config.home.homeDirectory}/.config/MangoHud/MangoHud.conf";
     };
   };
 }
