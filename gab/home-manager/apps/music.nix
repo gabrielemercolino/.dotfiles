@@ -20,17 +20,15 @@
     if [ -f "${fileName}.${format}" ]; then
       printf "\033[32;1mskipping ${fileName} \033[0m\n"
     else
+      audio_flags="--extract-audio --audio-format ${format}"
+      progress_flags="--progress --progress-template \"download-title:%(info.id)s-%(progress.eta)s\""
       printf "\033[33;1mdownloading ${fileName} \033[0m\n"
-      ${pkgs.yt-dlp}/bin/yt-dlp --extract-audio --audio-format ${format} --embed-thumbnail --quiet --progress --progress-template "download-title:%(info.id)s-%(progress.eta)s" -o "${fileName}.${format}" ${url}
+      ${lib.getExe pkgs.yt-dlp} $audio_flags --embed-thumbnail --quiet $progress_flags -o "${fileName}.${format}" ${url}
     fi
   '';
 
   downloadMusics = musics: ''
-    echo "Downloading tracks..."
-
-    ${lib.concatStringsSep "\n" (map downloadMusic musics)}
-
-    echo "All tracks downloaded."
+    ${musics |> map downloadMusic |> lib.concatStringsSep "\n"}
   '';
 in {
   imports = [inputs.spicetify-nix.homeManagerModules.default];
