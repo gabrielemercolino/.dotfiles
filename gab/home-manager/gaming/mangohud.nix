@@ -1,9 +1,10 @@
-{ config, lib, ... }:
-
-let
-  cfg = config.gab.gaming;
-in
 {
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.gab.gaming;
+in {
   options.gab.gaming = {
     mangohud.enable = lib.mkEnableOption "mangohud";
   };
@@ -13,29 +14,29 @@ in
       enable = cfg.mangohud.enable;
       settings = {
         hud_compact = true;
-        
-        arch = true;
-        fsr  = true;
 
-        ram  = true;
+        arch = true;
+        fsr = true;
+
+        ram = true;
         vram = true;
-      
+
         frametime = true;
         throttling_status_graph = true;
 
         vulkan_driver = true;
-        wine          = true;
-        gamemode      = true;
-        present_mode  = true;
+        wine = true;
+        gamemode = true;
+        present_mode = true;
 
-        cpu_mhz   = true;
+        cpu_mhz = true;
         cpu_power = true;
-        cpu_temp  = true;
+        cpu_temp = true;
 
         gpu_core_clock = true;
-        gpu_mem_clock  = true;
-        gpu_temp       = true;
-        gpu_power      = true;
+        gpu_mem_clock = true;
+        gpu_temp = true;
+        gpu_power = true;
       };
     };
 
