@@ -18,6 +18,15 @@
   services.getty.autologinUser = lib.mkDefault userSettings.userName;
   # to enable swaylock with any compositor other than sway this is needed
   security.pam.services.swaylock = lib.mkDefault {};
+  # needed for gpu-screen-recorder
+  security.wrappers.gsr-kms-server = {
+    owner = "root";
+    group = "root";
+    capabilities = "cap_sys_admin+ep";
+    source = "${pkgs.gpu-screen-recorder}/bin/gsr-kms-server";
+    setuid = false;
+    setgid = false;
+  };
 
   # Allow unfree packages
   nixpkgs.config = {
