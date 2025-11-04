@@ -4,7 +4,7 @@
   author = "Custom synthwave theme (desaturated)";
   polarity = "dark";
 
-  opacity = 0.7;
+  opacity = 0.8;
 
   background = pkgs.fetchurl {
     url = "https://images6.alphacoders.com/939/thumb-1920-939537.jpg";
