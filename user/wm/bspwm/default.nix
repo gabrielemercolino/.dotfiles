@@ -11,7 +11,7 @@
   services.sxhkd = {
     inherit (config.xsession.windowManager.bspwm) enable;
     keybindings = let
-      terminal = "${lib.getExe pkgs.alacritty}";
+      terminal = "${lib.getExe pkgs.kitty}";
       groups = {
         launchApps = {
           "super + Return" = "${terminal}";
