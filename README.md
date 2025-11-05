@@ -11,7 +11,7 @@ Also, if you decide to clone the repo in a different location as `~/.dotfiles`
 you have to follow the manual installation method
 
 ```sh
-nix-shell -p git    # ensure you have git
+nix shell nixpkgs#git    # ensure you have git
 cd
 git clone git@github.com:gabrielemercolino/.dotfiles.git
 cd .dotfiles/
@@ -35,3 +35,4 @@ nix run home-manager/master --extra-experimental-features nix-command --extra-ex
 
 - [librephoenix](https://github.com/librephoenix/nixos-config)
 - [sameeul-haque](https://github.com/sameemul-haque/dotfiles)
+- [brunoanesio](https://github.com/brunoanesio/waybar-config)
