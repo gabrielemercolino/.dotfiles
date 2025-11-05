@@ -58,17 +58,13 @@
       nvf.enable = true;
       idea-community.enable = true;
 
-      music.spotify.enable = true;
-      music.tracks = [
-        #        {
-        #          url = "https://youtu.be/Jrg9KxGNeJY?si=9_DfB4VwSDHVVBL8";
-        #          fileName = "Bury the light";
-        #        }
-        {
-          url = "https://youtu.be/qKn2lPyAyqQ";
-          fileName = "Bury the light - rock";
-        }
-      ];
+      music = {
+        mpd.enable = true;
+        rmpc.enable = true;
+        tracks = [
+          {url = "https://youtu.be/qKn2lPyAyqQ";}
+        ];
+      };
 
       resilio.enable = true;
     };
