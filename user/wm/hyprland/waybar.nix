@@ -15,132 +15,133 @@ in {
       mainBar = {
         layer = "top";
         position = "top";
+        height = 40;
+        spacing = 2;
+        exclusive = true;
+        gtk-layer-shell = true;
+        passthrough = false;
+        fixed-center = true;
 
         modules-left = [
           "hyprland/workspaces"
         ];
         modules-center = [
-          "clock"
         ];
         modules-right = [
-          "tray"
           "cpu"
           "memory"
           "pulseaudio"
+          "clock"
+          "clock#simpleclock"
           "network"
           "battery"
+          "tray"
           "custom/power"
         ];
 
         "hyprland/workspaces" = {
-          "format" = "{icon}";
-          "format-icons" = {
-            default = "";
-            "1" = "1";
-            "2" = "2";
-            "3" = "3";
-            "4" = "4";
-            "5" = "5";
-            "6" = "6";
-            "7" = "7";
-            "8" = "8";
-            "9" = "9";
-            active = "󰪥";
-            urgent = "󰪥";
-          };
-          "on-click" = "activate";
-          "persistent-workspaces" = {
+          format = "{id}";
+          on-click = "activate";
+          persistent-workspaces = {
             "1" = [];
             "2" = [];
             "3" = [];
-            "4" = [];
-            "5" = [];
           };
+          all-outputs = true;
+          disable-scroll = false;
+          active-only = false;
         };
 
-        clock = {
-          "interval" = 1;
-          "format" = "  {:%H:%M}";
-          "timezone" = "${timezone}";
-          "tooltip-format" = ''<tt>{calendar}</tt>'';
-        };
-
-        tray = {
-          "spacing" = 10;
+        "hyprland/window" = {
+          format = "{title}";
         };
 
         cpu = {
-          "interval" = 5;
-          "format" = " {icon}";
-          "format-icons" = ["╸    " "━╸   " "━━╸  " "━━━╸ " "━━━━╸" "━━━━━"];
+          interval = 5;
+          format = " {icon}";
+          format-icons = ["╸    " "━╸   " "━━╸  " "━━━╸ " "━━━━╸" "━━━━━"];
         };
 
         memory = {
-          "interval" = 5;
-          "format" = " {icon}";
-          "format-icons" = ["╸    " "━╸   " "━━╸  " "━━━╸ " "━━━━╸" "━━━━━"];
+          interval = 5;
+          format = " {icon}";
+          format-icons = ["╸    " "━╸   " "━━╸  " "━━━╸ " "━━━━╸" "━━━━━"];
         };
 
         pulseaudio = {
-          "tooltip-format" = "Volume : {volume}%";
-          "format" = "{icon}";
-          "format-muted" = "       ";
-          "format-icons" = {
-            "default" = [
-              "     "
-              " ╸   "
-              " ━╸  "
-              " ━━╸ "
-              " ━━━╸"
-              " ━━━━"
-            ];
+          tooltip-format = "Volume : {volume}%";
+          format = "{icon}";
+          format-muted = "       ";
+          format-icons = {
+            default = ["     " " ╸   " " ━╸  " " ━━╸ " " ━━━╸" " ━━━━"];
           };
-          "on-click" = "${pkgs.pavucontrol}/bin/pavucontrol";
+          on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
+        };
+
+        clock = {
+          interval = 1;
+          format = "󰸘 {:L%a %d %b}";
+          timezone = "${timezone}";
+          tooltip-format = ''<tt>{calendar}</tt>'';
+
+          calendar.format = {
+            today = "<span color='#${colors.base0E}' weight='700'>{}</span>";
+          };
+        };
+
+        "clock#simpleclock" = {
+          tooltip = false;
+          format = " {:%H:%M}";
         };
 
         network = {
-          "format-wifi" = "{icon}";
-          "format-icons" = ["󰤯" "󰤟" "󰤢" "󰤥" "󰤨"];
-          "format-ethernet" = "󰀂";
-          "format-alt" = "󱛇";
-          "format-disconnected" = "󰖪";
-          "tooltip-format-wifi" = "{icon} {essid}\n {bandwidthDownBytes}   {bandwidthUpBytes}";
-          "tooltip-format-ethernet" = "󰀂  {ifname}\n {bandwidthDownBytes}   {bandwidthUpBytes}";
-          "tooltip-format-disconnected" = "Disconnected";
-          "interval" = 5;
-          "nospacing" = 1;
+          format-wifi = "{icon}";
+          format-icons = ["󰤯" "󰤟" "󰤢" "󰤥" "󰤨"];
+          format-ethernet = "󰀂";
+          format-alt = "󱛇";
+          format-disconnected = "󰖪";
+          tooltip-format-wifi = "{icon} {essid}\n {bandwidthDownBytes}   {bandwidthUpBytes}";
+          tooltip-format-ethernet = "󰀂  {ifname}\n {bandwidthDownBytes}   {bandwidthUpBytes}";
+          tooltip-format-disconnected = "Disconnected";
+          interval = 5;
+          nospacing = 1;
         };
 
         battery = {
-          "states" = {
-            "good" = 95;
-            "warning" = 30;
-            "critical" = 15;
+          states = {
+            good = 95;
+            warning = 30;
+            critical = 15;
           };
-          "format" = "{capacity}% {icon}";
-          "format-icons" = {
-            "charging" = ["󰢜" "󰂆" "󰂇" "󰂈" "󰢝" "󰂉" "󰢞" "󰂊" "󰂋" "󰂅"];
-            "default" = ["󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹"];
+          format = "{capacity}% {icon}";
+          format-icons = {
+            charging = ["󰢜" "󰂆" "󰂇" "󰂈" "󰢝" "󰂉" "󰢞" "󰂊" "󰂋" "󰂅"];
+            default = ["󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹"];
           };
-          "format-full" = "Charged ";
-          "tooltip" = false;
+          format-full = "Charged ";
+          tooltip = false;
+        };
+
+        tray = {
+          spacing = 10;
+          show-passive-items = true;
         };
 
         "custom/power" = {
-          "format" = "󰤆";
-          "tooltip" = false;
-          "on-click" = "${pkgs.swaylock-effects}/bin/swaylock";
+          format = "󰤆";
+          tooltip = false;
+          on-click = "${pkgs.swaylock-effects}/bin/swaylock";
         };
       };
     };
 
     style = ''
       * {
-        border: none;
-        border-radius: 0;
         min-height: 0;
+        min-width: 0;
         font-family: ${fonts.monospace.name}, JetBrainsMono Nerd Font;
-        font-size: 13px;
+        font-size: 14px;
+        font-weight: 600;
       }
 
       window#waybar {
@@ -156,11 +157,9 @@ in {
       }
 
       #workspaces button {
-        min-width: 0; /* Fix weird spacing in materia (waybar #450) */
-        box-shadow: inset 0 -3px transparent; /* Use box-shadow instead of border so the text isn't offset */
-        padding: 6px 16px;
-        margin: 6px 3px;
-        border-radius: 4px;
+        padding: 0.3rem 1rem;
+        margin: 0.2rem;
+        border-radius: 6px;
         background-color: #${colors.base01};
         color: #${colors.base05};
       }
@@ -181,19 +180,17 @@ in {
         background-color: #${colors.base08};
       }
 
-      #memory,
       #cpu,
-      #custom-power,
-      #battery,
-      #backlight,
+      #memory,
       #pulseaudio,
-      #network,
       #clock,
-      #idle_inhibitor,
-      #tray {
-        border-radius: 4px;
-        margin: 6px 3px;
-        padding: 6px 12px;
+      #battery,
+      #network,
+      #tray,
+      #custom-power {
+        padding: 0.3rem 0.6rem;
+        margin: 0.2rem;
+        border-radius: 6px;
         background-color: #${colors.base01};
       }
 
