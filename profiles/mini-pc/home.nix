@@ -62,7 +62,10 @@
         mpd.enable = true;
         rmpc.enable = true;
         tracks = [
-          {url = "https://youtu.be/qKn2lPyAyqQ";}
+          {
+            url = "https://youtu.be/qKn2lPyAyqQ";
+            fileName = "Bury The Light (From ＂Devil May Cry 5 Special Edition＂)";
+          }
         ];
       };
 
