@@ -26,6 +26,7 @@ in {
           "hyprland/workspaces"
         ];
         modules-center = [
+          "hyprland/window"
         ];
         modules-right = [
           "cpu"
@@ -53,7 +54,7 @@ in {
         };
 
         "hyprland/window" = {
-          format = "{title}";
+          format = "{initialTitle}";
         };
 
         cpu = {
@@ -180,6 +181,7 @@ in {
         background-color: #${colors.base08};
       }
 
+      #window,
       #cpu,
       #memory,
       #pulseaudio,
@@ -192,6 +194,10 @@ in {
         margin: 0.2rem;
         border-radius: 6px;
         background-color: #${colors.base01};
+      }
+
+      window#waybar.empty #window {
+        background-color: transparent;
       }
 
       #custom-power {
