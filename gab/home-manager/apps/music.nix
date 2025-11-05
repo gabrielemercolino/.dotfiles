@@ -77,6 +77,8 @@ in {
     };
 
     spotify.enable = lib.mkEnableOption "spotify (with spicetify)";
+    mpd.enable = lib.mkEnableOption "mpd";
+    rmpc.enable = lib.mkEnableOption "rmpc";
   };
 
   config = {
@@ -84,14 +86,27 @@ in {
       ${downloadMusics cfg.tracks}
     '';
 
-    programs.spicetify = {
-      enable = cfg.spotify.enable;
+    programs = {
+      spicetify = {
+        inherit (cfg.spotify) enable;
 
-      enabledExtensions = with spicePkgs.extensions; [
-        adblock
-        hidePodcasts
-        shuffle # shuffle+ (special characters are sanitized out of extension names)
-      ];
+        enabledExtensions = with spicePkgs.extensions; [
+          adblock
+          hidePodcasts
+          shuffle # shuffle+ (special characters are sanitized out of extension names)
+        ];
+      };
+
+      rmpc = {
+        inherit (cfg.rmpc) enable;
+      };
+    };
+
+    services = {
+      mpd = {
+        inherit (cfg.mpd) enable;
+        musicDirectory = "${config.home.homeDirectory}/Music";
+      };
     };
   };
 }
