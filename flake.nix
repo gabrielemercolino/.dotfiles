@@ -65,22 +65,34 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixvim.url = "github:gabrielemercolino/.nixvim";
+    nixvim = {
+      url = "github:gabrielemercolino/.nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nvf = {
       url = "github:gabrielemercolino/.nvf";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    stylix.url = "github:danth/stylix";
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    spicetify-nix.url = "github:Gerg-L/spicetify-nix";
+    spicetify-nix = {
+      url = "github:Gerg-L/spicetify-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     hyprland-nix = {
       url = "github:hyprland-community/hyprnix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    zen-browser.url = "github:0xc000022070/zen-browser-flake";
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     silentSDDM = {
       url = "github:gabrielemercolino/SilentSDDM";
