@@ -14,7 +14,7 @@
     cp ${background} $out
   '';
 
-  sddm-theme = inputs.silentSDDM.packages.${pkgs.system}.default.override {
+  sddm-theme = inputs.silentSDDM.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
     extraBackgrounds = [background-derivation];
     theme-overrides = {
       "LoginScreen" = {

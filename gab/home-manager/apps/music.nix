@@ -7,7 +7,7 @@
 }: let
   cfg = config.gab.apps.music;
 
-  spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
+  spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 
   downloadMusic = music: let
     url = music.url;
