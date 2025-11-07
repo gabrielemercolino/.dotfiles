@@ -66,6 +66,10 @@
             url = "https://youtu.be/qKn2lPyAyqQ";
             fileName = "Bury The Light (From ＂Devil May Cry 5 Special Edition＂)";
           }
+          {
+            url = "https://music.youtube.com/watch?v=vVDYY2F43Vo";
+            fileName = "The Electro Suite";
+          }
         ];
       };
 
