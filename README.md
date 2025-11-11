@@ -36,3 +36,4 @@ nix run home-manager/master --extra-experimental-features nix-command --extra-ex
 - [librephoenix](https://github.com/librephoenix/nixos-config)
 - [sameeul-haque](https://github.com/sameemul-haque/dotfiles)
 - [brunoanesio](https://github.com/brunoanesio/waybar-config)
+- [woioeow](https://github.com/woioeow/hyprland-dotfiles)
