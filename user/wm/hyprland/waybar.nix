@@ -87,9 +87,9 @@ in {
         };
 
         network = {
-          format-wifi = "{icon} {signalStrength}%";
+          format-wifi = " {icon}  {signalStrength}%";
           format-icons = ["󰤯" "󰤟" "󰤢" "󰤥" "󰤨"];
-          format-ethernet = " 󰀂  wired";
+          format-ethernet = " 󰀂   wired";
           format-disconnected = "󰖪";
           tooltip-format-wifi = "{icon} {essid}\n {bandwidthDownBytes}   {bandwidthUpBytes}";
           tooltip-format-ethernet = "󰀂  {ifname}\n {bandwidthDownBytes}   {bandwidthUpBytes}";
@@ -99,7 +99,6 @@ in {
         };
 
         bluetooth = {
-          format = " {status}";
           format-on = " on";
           format-off = " off";
           format-disabled = " off";
@@ -112,19 +111,19 @@ in {
             warning = 30;
             critical = 15;
           };
-          format = "{icon} {capacity}%";
+          format = "{icon} {capacity}% ";
           format-icons = {
             charging = ["󰢜" "󰂆" "󰂇" "󰂈" "󰢝" "󰂉" "󰢞" "󰂊" "󰂋" "󰂅"];
             default = ["󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹"];
           };
-          format-full = "Charged ";
+          format-full = "Charged  ";
           tooltip = false;
         };
 
         pulseaudio = {
           tooltip-format = "Volume: {volume}%";
-          format = "{icon}  {volume}%";
-          format-muted = " ";
+          format = " {icon}  {volume}%";
+          format-muted = "  ";
           format-icons = {
             default = ["" "" ""];
           };
@@ -139,14 +138,14 @@ in {
 
         memory = {
           interval = 5;
-          format = "  {used:0.1f}G";
+          format = "  {used:0.1f}G ";
           tooltip = true;
           tooltip-format = "Ram: {used:0.2f}G/{total:0.2f}G";
         };
 
         clock = {
           interval = 1;
-          format = "󰸘 {:L%a %d %b}";
+          format = " 󰸘 {:L%a %d %b}";
           timezone = "${timezone}";
           tooltip-format = ''<tt>{calendar}</tt>'';
 
@@ -274,6 +273,11 @@ in {
         color: #${colors.base0C};
       }
 
+      #battery {
+        margin-right: 6px;
+        border-radius: 0px 10px 10px 0px;
+      }
+
       #battery.warning,
       #battery.critical,
       #battery.urgent {
@@ -296,19 +300,29 @@ in {
       }
 
       #pulseaudio {
+        margin-left: 6px;
         color: #${colors.base0A};
+        border-radius: 10px 0px 0px 10px;
       }
 
-      #memory,
-      #cpu {
+      #cpu,
+      #memory {
         color: #${colors.base09};
+      }
+
+      #memory {
+        margin-right: 6px;
+        border-radius: 0px 10px 10px 0px;
       }
 
       #clock {
         color: #${colors.base0E};
+        margin-left: 6px;
+        border-radius: 10px 0px 0px 10px;
       }
 
       #clock.simpleclock {
+        margin-left: 0px;
         margin-right: 6px;
         border-radius: 0px 10px 10px 0px;
       }
