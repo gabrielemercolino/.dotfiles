@@ -126,7 +126,7 @@ in {
             charging = ["󰢜" "󰂆" "󰂇" "󰂈" "󰢝" "󰂉" "󰢞" "󰂊" "󰂋" "󰂅"];
             default = ["󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹"];
           };
-          format-full = "Charged  ";
+          format-full = "Charged ";
           tooltip = false;
         };
 
