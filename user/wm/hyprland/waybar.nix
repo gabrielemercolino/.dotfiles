@@ -35,8 +35,8 @@ in {
         modules-right = [
           "network"
           "bluetooth"
-          "battery"
           "pulseaudio"
+          "battery"
           "cpu"
           "memory"
           "clock"
@@ -87,9 +87,9 @@ in {
         };
 
         network = {
-          format-wifi = " {icon}  {signalStrength}%";
+          format-wifi = " {icon} {signalStrength}%";
           format-icons = ["󰤯" "󰤟" "󰤢" "󰤥" "󰤨"];
-          format-ethernet = " 󰀂   wired";
+          format-ethernet = " 󰀂  wired";
           format-disconnected = "󰖪";
           tooltip-format-wifi = "{icon} {essid}\n {bandwidthDownBytes}   {bandwidthUpBytes}";
           tooltip-format-ethernet = "󰀂  {ifname}\n {bandwidthDownBytes}   {bandwidthUpBytes}";
@@ -99,25 +99,10 @@ in {
         };
 
         bluetooth = {
-          format-on = " on";
-          format-off = " off";
-          format-disabled = " off";
+          format-on = " on ";
+          format-off = " off ";
+          format-disabled = " off ";
           tooltip = true;
-        };
-
-        battery = {
-          states = {
-            good = 95;
-            warning = 30;
-            critical = 15;
-          };
-          format = "{icon} {capacity}% ";
-          format-icons = {
-            charging = ["󰢜" "󰂆" "󰂇" "󰂈" "󰢝" "󰂉" "󰢞" "󰂊" "󰂋" "󰂅"];
-            default = ["󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹"];
-          };
-          format-full = "Charged  ";
-          tooltip = false;
         };
 
         pulseaudio = {
@@ -128,6 +113,21 @@ in {
             default = ["" "" ""];
           };
           on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
+        };
+
+        battery = {
+          states = {
+            good = 95;
+            warning = 30;
+            critical = 15;
+          };
+          format = "{icon} {capacity}%";
+          format-icons = {
+            charging = ["󰢜" "󰂆" "󰂇" "󰂈" "󰢝" "󰂉" "󰢞" "󰂊" "󰂋" "󰂅"];
+            default = ["󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹"];
+          };
+          format-full = "Charged  ";
+          tooltip = false;
         };
 
         cpu = {
@@ -252,8 +252,8 @@ in {
 
       #network,
       #bluetooth,
-      #battery,
       #pulseaudio,
+      #battery,
       #cpu,
       #memory,
       #clock {
@@ -268,14 +268,20 @@ in {
         border-radius: 10px 0 0 10px;
       }
 
-      #bluetooth,
-      #battery {
+      #bluetooth {
         color: #${colors.base0C};
+        margin-right: 6px;
+        border-radius: 0px 10px 10px 0px;
+      }
+
+      #pulseaudio {
+        margin-left: 6px;
+        color: #${colors.base0A};
+        border-radius: 10px 0px 0px 10px;
       }
 
       #battery {
-        margin-right: 6px;
-        border-radius: 0px 10px 10px 0px;
+        color: #${colors.base0C};
       }
 
       #battery.warning,
@@ -297,12 +303,6 @@ in {
         to {
           color: #${colors.base0F};
         }
-      }
-
-      #pulseaudio {
-        margin-left: 6px;
-        color: #${colors.base0A};
-        border-radius: 10px 0px 0px 10px;
       }
 
       #cpu,
