@@ -44,7 +44,7 @@ in {
       env = {
         "XKB_DEFAULT_LAYOUT" = config.services.xserver.xkb.layout; # IMPORTANT: gamescope uses american keyboard layout by default
 
-        "-W" = "1980"; # window width
+        "-W" = "1920"; # window width
         "-H" = "1080"; # window height
         #"-r" = "60";    # max refresh rate
       };
