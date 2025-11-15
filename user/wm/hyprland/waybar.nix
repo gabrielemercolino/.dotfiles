@@ -90,7 +90,7 @@ in {
           format-wifi = " {icon} {signalStrength}%";
           format-icons = ["󰤯" "󰤟" "󰤢" "󰤥" "󰤨"];
           format-ethernet = " 󰀂  wired";
-          format-disconnected = "󰖪";
+          format-disconnected = " 󰖪";
           tooltip-format-wifi = "{icon} {essid}\n {bandwidthDownBytes}   {bandwidthUpBytes}";
           tooltip-format-ethernet = "󰀂  {ifname}\n {bandwidthDownBytes}   {bandwidthUpBytes}";
           tooltip-format-disconnected = "Disconnected";
