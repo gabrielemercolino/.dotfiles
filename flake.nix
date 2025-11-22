@@ -99,5 +99,10 @@
       url = "github:gabrielemercolino/SilentSDDM";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    ags-bar = {
+      url = "github:gabrielemercolino/ags-bar";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 }

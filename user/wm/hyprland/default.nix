@@ -3,6 +3,7 @@
   lib,
   pkgs,
   systemSettings,
+  inputs,
   ...
 }: {
   imports = [
@@ -16,7 +17,11 @@
   ];
 
   wayland.windowManager.hyprland = let
-    bar = pkgs.waybar;
+    bar = import ./ags-bar.nix {
+      inherit pkgs config;
+      inherit (inputs) ags-bar;
+    };
+    kill-bar = "pkill gjs";
   in {
     keyBinds = let
       MOUSE_L = "mouse:272";
@@ -60,7 +65,7 @@
           bind."SUPER_SHIFT, P" = "exec, systemctl poweroff";
         };
         bar = {
-          bind."SUPER, W" = "exec, pkill ${bar.pname}; ${lib.getExe bar}";
+          bind."SUPER, W" = "exec, ${kill-bar}; ${lib.getExe bar}";
         };
         moveFocus = {
           bind = {
