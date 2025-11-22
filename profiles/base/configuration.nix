@@ -38,6 +38,9 @@
   # whether using x11 or wayland in the end it's better to have it
   services.xserver.enable = true;
 
+  # for battery managment
+  services.upower.enable = true;
+
   # use zsh
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
