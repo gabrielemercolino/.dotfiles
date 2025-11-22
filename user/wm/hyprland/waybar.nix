@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: let
-  inherit (config.lib.stylix) colors;
+  colors = config.lib.stylix.colors.withHashtag;
   inherit (config.stylix) fonts;
   timezone =
     pkgs.runCommand "timezone" {} ''echo $(timedatectl show --property=Timezone --value) > $out'';
@@ -150,7 +150,7 @@ in {
           tooltip-format = ''<tt>{calendar}</tt>'';
 
           calendar.format = {
-            today = "<span color='#${colors.base0E}' weight='700'>{}</span>";
+            today = "<span color='${colors.base0E}' weight='700'>{}</span>";
           };
         };
 
@@ -180,7 +180,7 @@ in {
       #custom-reboot,
       #custom-lock {
         padding: 4px 2px;
-        background-color: #${colors.base01};
+        background-color: ${colors.base01};
         border-width: 0px;
         margin-top: 6px;
       }
@@ -188,32 +188,32 @@ in {
       #custom-power {
         margin-left: 6px;
         border-radius: 10px 0px 0px 10px;
-        color: #${colors.base0F};
+        color: ${colors.base0F};
       }
 
       #custom-reboot {
-        color: #${colors.base09};
+        color: ${colors.base09};
       }
 
       #custom-lock {
         padding-right: 4px; /* center gliph */
         margin-right: 6px;
         border-radius: 0px 10px 10px 0px;
-        color: #${colors.base0A};
+        color: ${colors.base0A};
       }
 
       #tray {
         padding: 4px 6px;
         margin: 6px;
         margin-bottom: 0px;
-        background-color: #${colors.base01};
+        background-color: ${colors.base01};
         border-radius: 10px;
         border-width: 0px;
       }
 
       #workspaces {
         padding: 4px;
-        background-color: #${colors.base01};
+        background-color: ${colors.base01};
         margin: 6px;
         margin-bottom: 0px;
         border-radius: 10px;
@@ -225,23 +225,23 @@ in {
         margin: 0 2px;
         border: none;
         background-color: transparent;
-        color: #${colors.base05};
+        color: ${colors.base05};
       }
 
       #workspaces button.active,
       #workspaces button:hover {
-        color: #${colors.base01};
-        background-color: #${colors.base05};
+        color: ${colors.base01};
+        background-color: ${colors.base05};
       }
 
       #workspaces button.urgent {
-        background-color: #${colors.base08};
+        background-color: ${colors.base08};
       }
 
       #window {
         padding: 4px 6px;
         margin-top: 6px;
-        background-color: #${colors.base01};
+        background-color: ${colors.base01};
         border-radius: 10px;
         border-width: 0px;
       }
@@ -259,35 +259,35 @@ in {
       #clock {
         padding: 4px 6px;
         margin-top: 6px;
-        background-color: #${colors.base01};
+        background-color: ${colors.base01};
         border-width: 0px;
       }
 
       #network {
-        color: #${colors.base0C};
+        color: ${colors.base0C};
         border-radius: 10px 0 0 10px;
       }
 
       #bluetooth {
-        color: #${colors.base0C};
+        color: ${colors.base0C};
         margin-right: 6px;
         border-radius: 0px 10px 10px 0px;
       }
 
       #pulseaudio {
         margin-left: 6px;
-        color: #${colors.base0A};
+        color: ${colors.base0A};
         border-radius: 10px 0px 0px 10px;
       }
 
       #battery {
-        color: #${colors.base0C};
+        color: ${colors.base0C};
       }
 
       #battery.warning,
       #battery.critical,
       #battery.urgent {
-        color: #${colors.base08};
+        color: ${colors.base08};
         animation-name: blink;
         animation-duration: 0.5s;
         animation-timing-function: linear;
@@ -296,18 +296,18 @@ in {
       }
 
       #battery.charging {
-        color: #${colors.base0B};
+        color: ${colors.base0B};
       }
 
       @keyframes blink {
         to {
-          color: #${colors.base0F};
+          color: ${colors.base0F};
         }
       }
 
       #cpu,
       #memory {
-        color: #${colors.base09};
+        color: ${colors.base09};
       }
 
       #memory {
@@ -316,7 +316,7 @@ in {
       }
 
       #clock {
-        color: #${colors.base0E};
+        color: ${colors.base0E};
         margin-left: 6px;
         border-radius: 10px 0px 0px 10px;
       }
@@ -330,7 +330,7 @@ in {
       tooltip {
         border-radius: 8px;
         padding: 15px;
-        background-color: #${colors.base01};
+        background-color: ${colors.base01};
       }
     '';
   };

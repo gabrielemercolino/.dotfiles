@@ -1,13 +1,13 @@
 {config}: let
   # mkLiteral strips the quotes
   inherit (config.lib.formats.rasi) mkLiteral;
-  inherit (config.lib.stylix) colors;
+  colors = config.lib.stylix.colors.withHashtag;
 in {
   "*" = {
-    background = mkLiteral "#${colors.base01}";
-    background-alt = mkLiteral "#${colors.base00}";
-    foreground = mkLiteral "#${colors.base05}";
-    selected = mkLiteral "#${colors.base0E}";
+    background = mkLiteral "${colors.base01}";
+    background-alt = mkLiteral "${colors.base00}";
+    foreground = mkLiteral "${colors.base05}";
+    selected = mkLiteral "${colors.base0E}";
   };
 
   window = {
