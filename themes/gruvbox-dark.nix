@@ -5,7 +5,7 @@
   polarity = "dark";
 
   background = pkgs.fetchurl {
-    url = "https://raw.githubusercontent.com/ChapST1/gruvbox-wallpapers-web/master/wallpapers/minimalistic/18.png";
+    url = "https://gruvbox-wallpapers.pages.dev/wallpapers/minimalistic/solar-system-minimal.png";
     hash = "sha256-wDJxF4amPaYiwEl80K9ff5dlHoab2rDjbjHAQS1s6sk=";
   };
 
