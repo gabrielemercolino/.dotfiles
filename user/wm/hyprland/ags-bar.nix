@@ -10,7 +10,7 @@
 in
   ags-bar.packages.${system}.default.override {
     commands = {
-      reboot = "${lib.getExe pkgs.swaylock}";
+      lock = "${pkgs.swaylock-effects}/bin/swaylock";
       audio = "${lib.getExe pkgs.pavucontrol}";
       bluetooth = "${pkgs.blueman}/bin/blueman-manager";
     };
