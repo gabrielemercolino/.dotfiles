@@ -37,7 +37,7 @@
     };
 
     style = {
-      theme = "tokyo-night";
+      theme = "gruvbox-dark";
       fonts.sizes = {
         applications = 14;
         desktop = 12;
