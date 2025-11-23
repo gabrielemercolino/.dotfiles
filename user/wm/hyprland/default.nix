@@ -18,7 +18,7 @@
 
   wayland.windowManager.hyprland = let
     bar = import ./ags-bar.nix {
-      inherit pkgs config;
+      inherit lib pkgs config;
       inherit (inputs) ags-bar;
     };
     kill-bar = "pkill gjs";
