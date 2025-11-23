@@ -1,4 +1,5 @@
 {
+  lib,
   ags-bar,
   pkgs,
   config,
@@ -8,6 +9,11 @@
   system = pkgs.stdenv.hostPlatform.system;
 in
   ags-bar.packages.${system}.default.override {
+    commands = {
+      reboot = "${lib.getExe pkgs.swaylock}";
+      audio = "${lib.getExe pkgs.pavucontrol}";
+      bluetooth = "${pkgs.blueman}/bin/blueman-manager";
+    };
     colors = {
       bg-color = colors.base01;
       fg-shutdown = colors.base0F;
