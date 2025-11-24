@@ -14,6 +14,7 @@ in
       audio = "${lib.getExe pkgs.pavucontrol}";
       bluetooth = "${pkgs.blueman}/bin/blueman-manager";
     };
+    fonts = [fonts.monospace];
     colors = {
       bg-color = colors.base01;
       fg-shutdown = colors.base0F;
