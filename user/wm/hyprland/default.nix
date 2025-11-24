@@ -5,7 +5,13 @@
   systemSettings,
   inputs,
   ...
-}: {
+}: let
+  bar = import ./ags-bar.nix {
+    inherit lib pkgs config;
+    inherit (inputs) ags-bar;
+  };
+  kill-bar = "pkill gjs";
+in {
   imports = [
     ./waybar.nix
   ];
@@ -16,13 +22,23 @@
     wl-clipboard
   ];
 
-  wayland.windowManager.hyprland = let
-    bar = import ./ags-bar.nix {
-      inherit lib pkgs config;
-      inherit (inputs) ags-bar;
-    };
-    kill-bar = "pkill gjs";
-  in {
+  home.activation.ags-bar = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    old_path="${config.home.homeDirectory}/.local/state/ags-bar-path"
+    new_path="${bar}"
+
+    if [ -f "$old_path" ] && [ "$(cat "$old_path")" = "$new_path" ]; then
+      echo "not restarting ags-bar"
+      exit 0
+    fi
+
+    echo "$new_path" > "$old_path"
+
+    echo "restarting ags-bar"
+    ${pkgs.procps}/bin/pkill gjs 2> /dev/null || true
+    ${lib.getExe bar} > /dev/null 2> /dev/null & exit 0
+  '';
+
+  wayland.windowManager.hyprland = {
     keyBinds = let
       MOUSE_L = "mouse:272";
       MOUSE_R = "mouse:273";
