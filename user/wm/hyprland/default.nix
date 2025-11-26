@@ -28,14 +28,12 @@ in {
 
     if [ -f "$old_path" ] && [ "$(cat "$old_path")" = "$new_path" ]; then
       echo "not restarting ags-bar"
-      exit 0
+    else
+      echo "$new_path" > "$old_path"
+      echo "restarting ags-bar"
+      ${pkgs.procps}/bin/pkill gjs 2> /dev/null || true
+      ${lib.getExe bar} > /dev/null 2> /dev/null &
     fi
-
-    echo "$new_path" > "$old_path"
-
-    echo "restarting ags-bar"
-    ${pkgs.procps}/bin/pkill gjs 2> /dev/null || true
-    ${lib.getExe bar} > /dev/null 2> /dev/null & exit 0
   '';
 
   wayland.windowManager.hyprland = {
