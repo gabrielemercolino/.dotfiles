@@ -12,7 +12,6 @@ in
     commands = {
       lock = "${pkgs.swaylock-effects}/bin/swaylock";
       audio = "${lib.getExe pkgs.pavucontrol}";
-      bluetooth = "${pkgs.blueman}/bin/blueman-manager";
     };
     fonts = [fonts.monospace];
     colors = {
@@ -28,6 +27,12 @@ in
 
       fg-connection = colors.base0C;
       fg-connection-hover = colors.base0E;
+
+      fg-bluetooth-header = colors.base0C;
+      fg-bluetooth-adapter-missing = colors.base0F;
+      fg-bluetooth-device = colors.base05;
+      fg-bluetooth-device-hover = colors.base0E;
+      fg-bluetooth-device-connected = colors.base0A;
 
       fg-battery = colors.base0A;
       fg-battery-charging = colors.base09;
