@@ -47,12 +47,16 @@
 
   system.stateVersion = "24.11";
 
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-    "pipe-operators"
-  ];
+  nix.settings = {
+    trusted-users = [userSettings.userName];
 
-  # optimise after every rebuild (not gc)
-  nix.settings.auto-optimise-store = true;
+    experimental-features = [
+      "nix-command"
+      "flakes"
+      "pipe-operators"
+    ];
+
+    # optimise after every rebuild (not gc)
+    auto-optimise-store = true;
+  };
 }
