@@ -81,6 +81,7 @@ in {
 
     ## bluetooth
     hardware.bluetooth.enable = cfg.bluetooth.enable;
+    hardware.bluetooth.powerOnBoot = true;
     services.blueman.enable = lib.mkDefault cfg.bluetooth.enable; # provide bluetooth control with blueman by default
 
     ### pipewire
