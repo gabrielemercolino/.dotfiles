@@ -81,7 +81,7 @@ in {
 
     ## bluetooth
     hardware.bluetooth.enable = cfg.bluetooth.enable;
-    hardware.bluetooth.powerOnBoot = true;
+    hardware.bluetooth.powerOnBoot = false;
 
     ### pipewire
     security.rtkit.enable = lib.mkDefault cfg.pipewire.enable; # rtkit is optional but recommended
