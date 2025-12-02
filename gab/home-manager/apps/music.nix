@@ -97,8 +97,10 @@ in {
         ];
       };
 
+      cava = {inherit (cfg.rmpc) enable;};
       rmpc = {
         inherit (cfg.rmpc) enable;
+        config = import ./configs/rmpc.nix {inherit config;};
       };
     };
 

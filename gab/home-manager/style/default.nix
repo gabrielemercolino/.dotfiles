@@ -95,5 +95,7 @@ in {
         statusline.lualine.theme = lib.mkForce "base16";
       };
     };
+
+    xdg.configFile."rmpc/theme.ron".text = import ./rmpc-theme.nix {inherit config;};
   };
 }
