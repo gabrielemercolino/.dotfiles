@@ -51,6 +51,7 @@
       steam.enable = true;
       gamemode.enable = true;
       gamescope.enable = true;
+      lsfg.enable = true;
       #rpcs3.enable = true;
       #suyu.enable = true;
     };
@@ -60,6 +61,4 @@
   };
 
   services.xserver.excludePackages = [pkgs.xterm];
-
-  environment.systemPackages = [pkgs.lsfg-vk-ui];
 }
