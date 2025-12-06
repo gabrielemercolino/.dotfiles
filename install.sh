@@ -1,5 +1,3 @@
-#!/bin/sh
-
 echo "IMPORTANT"
 echo "Remember to set the hardware configuration file in the desired profile (profiles/<name>/hardware-configuration.nix)"
 echo "To generate it you can use:"
@@ -7,7 +5,8 @@ echo "    sudo nixos-generate-config --show-hardware-config"
 echo "or just copy it from etc/nixos/hardware-configuration.nix"
 echo ""
 
-read -p "Did you do it? [y/N]" proceed
+printf "Did you do it? [y/N]"
+read -r proceed
 
 case $proceed in
   "y");;
@@ -22,7 +21,8 @@ echo "  - mini-pc"
 echo "  - chromebook"
 echo ""
 
-read -p "input: " profile
+printf "input: "
+read -r profile
 
 case $profile in
   "mini-pc");;
@@ -32,9 +32,9 @@ case $profile in
     exit 1
 esac
 
-sudo nixos-rebuild switch --flake ~/.dotfiles#$profile
+sudo nixos-rebuild switch --flake ~/.dotfiles#"$profile"
 
-nix run home-manager/master --extra-experimental-features nix-command --extra-experimental-features flakes -- switch --flake ~/.dotfiles#$profile
+nix run home-manager/master --extra-experimental-features nix-command --extra-experimental-features flakes -- switch --flake ~/.dotfiles#"$profile"
 
 clear
 
