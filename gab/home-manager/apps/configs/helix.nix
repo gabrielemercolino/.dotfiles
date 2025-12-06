@@ -49,16 +49,7 @@ in {
         C-s = ":w";
         C-f = ":fmt";
 
-        space.g.g = [
-          ":write-all"
-          ":new"
-          ":insert-output ${lib.getExe pkgs.lazygit}"
-          ":set mouse false"
-          ":set mouse true"
-          ":buffer-close!"
-          ":redraw"
-          ":reload-all"
-        ];
+        space.g.g = ":sh ${lib.getExe pkgs.kitty} -e ${lib.getExe pkgs.lazygit} 2> /dev/null";
       };
     };
 
