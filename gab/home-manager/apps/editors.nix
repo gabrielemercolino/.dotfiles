@@ -7,13 +7,14 @@
 }: let
   cfg = config.gab.apps;
 in {
-  imports = [inputs.nvf.homeManagerModules.default];
+  imports = [inputs.nvf.homeManagerModules.default ./configs/helix.nix];
 
   options.gab.apps = {
     idea-community.enable = lib.mkEnableOption "idea community edition";
     zed-editor.enable = lib.mkEnableOption "zed editor";
     nixvim.enable = lib.mkEnableOption "neovim (with nixvim)";
     nvf.enable = lib.mkEnableOption "neovim (with nvf)";
+    helix.enable = lib.mkEnableOption "helix";
   };
 
   config = {
@@ -22,8 +23,7 @@ in {
       ++ lib.optionals cfg.idea-community.enable [pkgs.jetbrains.idea-community-bin] # bin = latest 🙄
       ++ lib.optionals cfg.zed-editor.enable [pkgs.zed-editor];
 
-    programs.nvf = {
-      inherit (cfg.nvf) enable;
-    };
+    programs.nvf.enable = (cfg.nvf).enable;
+    programs.helix.enable = cfg.helix.enable;
   };
 }
