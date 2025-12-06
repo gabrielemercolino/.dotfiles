@@ -3,11 +3,9 @@
   lib,
   pkgs,
   ...
-}:
-let
+}: let
   cfg = config.gab.apps;
-in
-{
+in {
   programs.helix = lib.mkIf cfg.helix.enable {
     defaultEditor = true;
 
@@ -82,7 +80,7 @@ in
       language = [
         {
           name = "nix";
-          file-types = [ "nix" ];
+          file-types = ["nix"];
           formatter.command = "${lib.getExe pkgs.alejandra}";
         }
       ];

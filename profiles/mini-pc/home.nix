@@ -3,8 +3,7 @@
   pkgs,
   userSettings,
   ...
-}:
-{
+}: {
   imports = [
     ../base/home.nix
     ../../user/commands/gab
@@ -99,7 +98,7 @@
 
   programs.gh = {
     enable = true;
-    extensions = [ pkgs.gh-dash ];
+    extensions = [pkgs.gh-dash];
     settings = {
       git_protocol = "ssh";
       editor = "nvim"; # TODO: check if it supports something like "$EDITOR"
