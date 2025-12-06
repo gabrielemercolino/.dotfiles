@@ -78,6 +78,14 @@ in
         vscode-css-language-server.command = "${pkgs.vscode-langservers-extracted}/bin/vscode-css-language-server";
         typescript-language-server.command = "${lib.getExe pkgs.typescript-language-server}";
       };
+
+      language = [
+        {
+          name = "nix";
+          file-types = [ "nix" ];
+          formatter.command = "${lib.getExe pkgs.alejandra}";
+        }
+      ];
     };
   };
 }
