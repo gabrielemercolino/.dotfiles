@@ -50,6 +50,17 @@ in
         C-q = ":wq";
         C-s = ":w";
         C-f = ":fmt";
+
+        space.g.g = [
+          ":write-all"
+          ":new"
+          ":insert-output ${lib.getExe pkgs.lazygit}"
+          ":set mouse false"
+          ":set mouse true"
+          ":buffer-close!"
+          ":redraw"
+          ":reload-all"
+        ];
       };
     };
 
