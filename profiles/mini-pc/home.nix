@@ -1,8 +1,10 @@
 {
+  lib,
   pkgs,
   userSettings,
   ...
-}: {
+}:
+{
   imports = [
     ../base/home.nix
     ../../user/commands/gab
@@ -23,10 +25,14 @@
     };
 
     shell = {
-      aliases = {
-        ls = "${pkgs.eza}/bin/eza --icons";
-        ll = "${pkgs.eza}/bin/eza -l --icons";
-        la = "${pkgs.eza}/bin/eza -la --icons";
+      aliases = rec {
+        ls = "${lib.getExe pkgs.eza} --icons";
+        ll = "${lib.getExe pkgs.eza} -l --icons";
+        la = "${lib.getExe pkgs.eza} -la --icons";
+
+        vi = "${lib.getExe pkgs.helix}";
+        vim = vi;
+        nvim = vi;
 
         cd = "z"; # from zoxide
       };
@@ -54,7 +60,7 @@
       telegram.enable = true;
       discord.enable = true;
 
-      nvf.enable = true;
+      helix.enable = true;
       idea-community.enable = true;
 
       music = {
