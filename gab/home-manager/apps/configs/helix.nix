@@ -49,7 +49,7 @@ in {
         C-s = ":w";
         C-f = ":fmt";
 
-        space.g.g = ":sh ${lib.getExe pkgs.kitty} -e ${lib.getExe pkgs.lazygit} 2> /dev/null";
+        space.g.g = ":sh zellij run -c -f -x 10%% -y 10%% --width 80%% --height 80%% -- ${lib.getExe pkgs.lazygit}";
       };
     };
 
