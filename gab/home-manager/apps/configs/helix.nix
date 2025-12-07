@@ -65,7 +65,20 @@ in {
         markdown-oxide.command = "${lib.getExe pkgs.markdown-oxide}";
         rust-analyzer.command = "${lib.getExe pkgs.rust-analyzer}";
         vscode-css-language-server.command = "${pkgs.vscode-langservers-extracted}/bin/vscode-css-language-server";
-        typescript-language-server.command = "${lib.getExe pkgs.typescript-language-server}";
+        typescript-language-server = {
+          command = "${lib.getExe pkgs.typescript-language-server}";
+          config = {
+            typescript.inlayHints = {
+              includeInlayEnumMemberValueHints = true;
+              includeInlayFunctionLikeReturnTypeHints = false;
+              includeInlayFunctionParameterTypeHints = false;
+              includeInlayParameterNameHints = "literals";
+              includeInlayParameterNameHintsWhenArgumentMatchesName = true;
+              includeInlayPropertyDeclarationTypeHints = false;
+              includeInlayVariableTypeHints = true;
+            };
+          };
+        };
       };
 
       language = [
