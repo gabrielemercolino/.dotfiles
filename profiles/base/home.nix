@@ -24,4 +24,21 @@
 
   # use zsh by default
   gab.shell.zsh.enable = true;
+
+  programs.zellij = {
+    enable = true;
+    attachExistingSession = true;
+    exitShellOnExit = true;
+    enableBashIntegration = true;
+    enableFishIntegration = true;
+    enableZshIntegration = true;
+    settings = {
+      pane_frames = false;
+      default_layout = "compact";
+      default_mode = "locked";
+      show_release_notes = false;
+      show_startup_tips = false;
+      ui = {pane_frames = {hide_session_name = true;};};
+    };
+  };
 }
