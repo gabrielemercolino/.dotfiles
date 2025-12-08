@@ -32,7 +32,7 @@
         ll = "${lib.getExe pkgs.eza} -l --icons";
         la = "${lib.getExe pkgs.eza} -la --icons";
 
-        vi = "${lib.getExe pkgs.helix}";
+        vi = "hx";
         vim = vi;
         nvim = vi;
 

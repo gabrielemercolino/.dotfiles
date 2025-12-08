@@ -22,11 +22,11 @@
 
     shell = {
       aliases = rec {
-        ls = "${pkgs.eza}/bin/eza --icons";
-        ll = "${pkgs.eza}/bin/eza -l --icons";
-        la = "${pkgs.eza}/bin/eza -la --icons";
+        ls = "${lib.getExe pkgs.eza} --icons";
+        ll = "${lib.getExe pkgs.eza} -l --icons";
+        la = "${lib.getExe pkgs.eza} -la --icons";
 
-        vi = "${lib.getExe pkgs.helix}";
+        vi = "hx";
         vim = vi;
         nvim = vi;
 
