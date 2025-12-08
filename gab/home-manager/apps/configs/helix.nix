@@ -37,6 +37,12 @@ in {
         color-modes = true;
         popup-border = "all";
 
+        statusline = {
+          left = ["mode" "spacer" "file-name" "read-only-indicator" "file-modification-indicator"];
+          center = ["version-control"];
+          right = ["spinner" "file-type" "diagnostics" "position" "position-percentage"];
+        };
+
         cursor-shape = {
           normal = "block";
           insert = "bar";
