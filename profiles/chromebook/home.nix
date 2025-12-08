@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   userSettings,
   ...
@@ -20,10 +21,14 @@
     };
 
     shell = {
-      aliases = {
+      aliases = rec {
         ls = "${pkgs.eza}/bin/eza --icons";
         ll = "${pkgs.eza}/bin/eza -l --icons";
         la = "${pkgs.eza}/bin/eza -la --icons";
+
+        vi = "${lib.getExe pkgs.helix}";
+        vim = vi;
+        nvim = vi;
 
         cd = "z"; # from zoxide
       };
@@ -43,7 +48,7 @@
 
       telegram.enable = true;
 
-      nvf.enable = true;
+      helix.enable = true;
       idea-community.enable = true;
 
       resilio.enable = true;
