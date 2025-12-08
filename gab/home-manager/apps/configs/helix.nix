@@ -79,9 +79,8 @@ in {
         bash-language-server.command = "${lib.getExe pkgs.bash-language-server}";
         clangd.command = "${pkgs.clang-tools}/bin/clangd";
         cmake-language-server.command = "${lib.getExe pkgs.cmake-language-server}";
-        csharp-ls.command = "${lib.getExe pkgs.csharp-ls}";
         elixir-ls.command = "${lib.getExe pkgs.elixir-ls}";
-        kotlin-language-server.command = "${lib.getExe pkgs.kotlin-language-server}";
+        gopls.command = "${lib.getExe pkgs.gopls}";
         markdown-oxide.command = "${lib.getExe pkgs.markdown-oxide}";
         rust-analyzer.command = "${lib.getExe pkgs.rust-analyzer}";
         vscode-css-language-server.command = "${pkgs.vscode-langservers-extracted}/bin/vscode-css-language-server";
