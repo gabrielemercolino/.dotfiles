@@ -15,10 +15,7 @@ in {
     home.packages =
       lib.optionals cfg.telegram.enable [pkgs.telegram-desktop]
       ++ lib.optionals cfg.discord.enable [
-        (pkgs.discord.override {
-          withEquicord = true;
-          withOpenASAR = true;
-        })
+        (pkgs.discord.override {withEquicord = true;})
       ];
   };
 }
