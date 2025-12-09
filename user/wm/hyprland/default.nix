@@ -7,7 +7,7 @@
   ...
 }: let
   bar = import ./ags-bar.nix {
-    inherit lib pkgs config;
+    inherit pkgs config;
     inherit (inputs) ags-bar;
   };
   kill-bar = "pkill gjs";

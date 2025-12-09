@@ -1,5 +1,4 @@
 {
-  lib,
   ags-bar,
   pkgs,
   config,
@@ -9,12 +8,7 @@
   system = pkgs.stdenv.hostPlatform.system;
 in
   ags-bar.packages.${system}.default.override {
-    commands = {
-      lock = "${pkgs.swaylock-effects}/bin/swaylock";
-      audio = "${lib.getExe pkgs.pavucontrol}";
-    };
+    commands.lock = "${pkgs.swaylock-effects}/bin/swaylock";
     fonts = [fonts.monospace];
-    colors = {
-      base16 = colors;
-    };
+    colors.base16 = colors;
   }
