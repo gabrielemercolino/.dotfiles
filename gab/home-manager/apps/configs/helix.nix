@@ -114,7 +114,7 @@ in {
               includeInlayParameterNameHints = "literals";
               includeInlayParameterNameHintsWhenArgumentMatchesName = true;
               includeInlayPropertyDeclarationTypeHints = false;
-              includeInlayVariableTypeHints = true;
+              includeInlayVariableTypeHints = false;
             };
           };
         };
