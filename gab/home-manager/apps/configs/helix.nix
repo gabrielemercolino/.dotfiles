@@ -74,6 +74,7 @@ in {
         C-q = ":wq";
         C-s = ":w";
         C-f = [":fmt" ":w"];
+        C-w = ":buffer-close";
         C-right = ":buffer-next";
         C-left = ":buffer-previous";
 
