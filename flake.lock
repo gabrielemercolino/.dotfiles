@@ -34,11 +34,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1765366306,
-        "narHash": "sha256-ntQ7CB6JJUC3Osop/CjXC/dqqpySyWeTTl/rSkOvPyI=",
+        "lastModified": 1765448550,
+        "narHash": "sha256-0lvmMMvMJn91/6BFF85lwNbF+mDU5HaKS/l06H1wLs0=",
         "owner": "gabrielemercolino",
         "repo": "ags-bar",
-        "rev": "a46ec4db65fbb565a6607658162d55c8101ffe92",
+        "rev": "fbb6bb92e98bb68e1c523c9951946f3f47364eb6",
         "type": "github"
       },
       "original": {
