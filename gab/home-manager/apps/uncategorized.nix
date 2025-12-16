@@ -7,6 +7,8 @@
 }: let
   cfg = config.gab.apps;
 in {
+  imports = [./configs/yazi.nix];
+
   options.gab.apps = {
     yazi.enable = lib.mkEnableOption "yazi";
     gimp.enable = lib.mkEnableOption "gimp";
@@ -33,14 +35,7 @@ in {
       ++ lib.optionals cfg.resilio.enable [pkgs.resilio-sync];
 
     programs = {
-      yazi = {
-        inherit (cfg.yazi) enable;
-        settings = {
-          manager = {
-            show_hidden = true;
-          };
-        };
-      };
+      yazi.enable = (cfg.yazi).enable;
 
       swaylock = {
         inherit (cfg.swaylock) enable;
