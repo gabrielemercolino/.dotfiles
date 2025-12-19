@@ -101,7 +101,6 @@
     extensions = [pkgs.gh-dash];
     settings = {
       git_protocol = "ssh";
-      editor = "nvim"; # TODO: check if it supports something like "$EDITOR"
     };
   };
 }
