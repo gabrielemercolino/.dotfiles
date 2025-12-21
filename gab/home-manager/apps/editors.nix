@@ -20,7 +20,7 @@ in {
   config = {
     home.packages =
       lib.optionals cfg.nixvim.enable [inputs.nixvim.packages.${pkgs.stdenv.hostPlatform.system}.default]
-      ++ lib.optionals cfg.idea-community.enable [pkgs.jetbrains.idea-community-bin] # bin = latest 🙄
+      ++ lib.optionals cfg.idea-community.enable [pkgs.jetbrains.idea-oss]
       ++ lib.optionals cfg.zed-editor.enable [pkgs.zed-editor];
 
     programs.nvf.enable = (cfg.nvf).enable;
