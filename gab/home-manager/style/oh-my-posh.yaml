@@ -1,0 +1,47 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
+
+# modified robbyrussel
+
+final_space: true
+version: 4
+
+blocks:
+  - type: prompt
+    alignment: left
+    segments:
+      - type: text
+        style: plain
+        background: "transparent"
+        foreground: "green"
+        template: "➜"
+
+      - type: path
+        style: plain
+        background: "transparent"
+        foreground: "cyan"
+        template: "  <b>{{ .Path }}</>"
+        properties:
+          style: folder
+
+      - type: git
+        style: plain
+        background: "transparent"
+        foreground: "blue"
+        template: " <b>git:(<red>{{ .HEAD }}</>)</>"
+        properties:
+          branch_icon: ""
+
+      - type: git
+        style: plain
+        background: "transparent"
+        foreground: "yellow"
+        template: " {{if .Working.Changed}}✗{{end}}"
+        properties:
+          fetch_status: true
+    
+  - type: rprompt
+    segments:
+      - type: shell
+        style: plain
+        background: "transparent"
+        foreground: "magenta"

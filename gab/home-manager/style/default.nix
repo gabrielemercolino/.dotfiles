@@ -94,6 +94,7 @@ in {
         theme.name = lib.mkForce "base16";
         statusline.lualine.theme = lib.mkForce "base16";
       };
+      oh-my-posh.configFile = pkgs.writeText "oh-my-posh.yaml" (builtins.readFile ./oh-my-posh.yaml);
     };
 
     xdg.configFile."rmpc/theme.ron".text = import ./rmpc-theme.nix {inherit config;};

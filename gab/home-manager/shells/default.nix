@@ -22,12 +22,23 @@ in {
 
   config = {
     programs = {
+      bash = {
+        inherit (cfg.bash) enable;
+        shellAliases = cfg.aliases;
+      };
+
+      oh-my-posh = {
+        enable = true;
+        enableBashIntegration = true;
+        enableZshIntegration = true;
+        enableNushellIntegration = true;
+      };
+
       zsh = {
         inherit (cfg.zsh) enable;
         shellAliases = cfg.aliases;
         oh-my-zsh = {
           enable = true;
-          theme = "robbyrussell";
           plugins = ["git" "sudo"];
         };
         syntaxHighlighting.enable = true;
@@ -54,18 +65,6 @@ in {
             }
           }
         '';
-      };
-
-      carapace = {
-        inherit (cfg.nushell) enable;
-        enableNushellIntegration = true;
-      };
-
-      starship.enable = cfg.nushell.enable;
-
-      bash = {
-        inherit (cfg.bash) enable;
-        shellAliases = cfg.aliases;
       };
 
       # commands
