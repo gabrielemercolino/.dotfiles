@@ -118,6 +118,7 @@ in {
             };
           };
         };
+        yaml-language-server.command = "${lib.getExe pkgs.yaml-language-server}";
       };
 
       language = [
