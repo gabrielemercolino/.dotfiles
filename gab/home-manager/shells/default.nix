@@ -6,7 +6,7 @@
   cfg = config.gab.shell;
 in {
   options.gab.shell = {
-    bash.enable = lib.mkEnableOption "bash";
+    bash.enable = lib.mkEnableOption "bash" // {default = true;};
     zsh.enable = lib.mkEnableOption "zsh";
     nushell.enable = lib.mkEnableOption "nushell";
 
