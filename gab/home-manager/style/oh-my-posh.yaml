@@ -19,7 +19,7 @@ blocks:
         style: plain
         background: "transparent"
         foreground: "cyan"
-        template: "  <b>{{ .Path }}</>"
+        template: " <b>{{ .Path }}</>"
         properties:
           style: folder
 
@@ -38,7 +38,7 @@ blocks:
         template: " {{if .Working.Changed}}✗{{end}}"
         properties:
           fetch_status: true
-    
+
   - type: rprompt
     segments:
       - type: shell
