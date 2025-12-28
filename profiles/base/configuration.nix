@@ -1,6 +1,7 @@
 {
   lib,
   userSettings,
+  systemSettings,
   pkgs,
   ...
 }: {
@@ -59,9 +60,8 @@
     # optimise after every rebuild (not gc)
     auto-optimise-store = true;
 
-    # https://wiki.hypr.land/Nix/Cachix/
-    substituters = ["https://hyprland.cachix.org"];
-    trusted-substituters = ["https://hyprland.cachix.org"];
-    trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+    substituters = systemSettings.cache.substituters;
+    trusted-substituters = systemSettings.cache.substituters;
+    trusted-public-keys = systemSettings.cache.trusted-public-keys;
   };
 }
