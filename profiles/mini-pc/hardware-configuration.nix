@@ -13,8 +13,8 @@
   ];
 
   boot = {
-    initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "thunderbolt" "usbhid" "usb_storage" "sd_mod"];
-    initrd.kernelModules = [];
+    initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "thunderbolt" "usbhid" "usb_storage" "sd_mod" "uas" "usb_common" "usbcore" "typec"];
+    initrd.kernelModules = ["thunderbolt" "uas" "usb_storage"];
     kernelModules = ["kvm-amd"];
     extraModulePackages = [];
   };
