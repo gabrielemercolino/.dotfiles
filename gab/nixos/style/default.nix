@@ -9,29 +9,8 @@
   theme = import ../../../themes/${config.gab.style.theme}.nix {inherit pkgs;};
   background = theme.background or ./wallpaper.png;
   fonts = theme.fonts or {};
-
-  background-derivation = pkgs.runCommand "bg.jpg" {} ''
-    cp ${background} $out
-  '';
-
-  sddm-theme = inputs.silentSDDM.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
-    extraBackgrounds = [background-derivation];
-    theme-overrides = {
-      "LoginScreen" = {
-        blur = 32;
-        background = "${background-derivation.name}";
-      };
-      "LoginScreen.MenuArea.Keyboard" = {
-        display = false;
-      };
-      "LockScreen" = {
-        blur = 0;
-        background = "${background-derivation.name}";
-      };
-    };
-  };
 in {
-  imports = [inputs.stylix.nixosModules.stylix];
+  imports = [inputs.stylix.nixosModules.stylix inputs.silentSDDM.nixosModules.default];
 
   options.gab.style = {
     theme = lib.mkOption {
@@ -66,8 +45,6 @@ in {
   };
 
   config = {
-    environment.systemPackages = [sddm-theme];
-
     stylix = {
       enable = true;
       autoEnable = true;
@@ -88,9 +65,23 @@ in {
         };
     };
 
-    services.displayManager.sddm = {
-      theme = sddm-theme.pname;
-      extraPackages = sddm-theme.propagatedBuildInputs;
+    programs.silentSDDM = {
+      enable = true;
+      theme = "default";
+      backgrounds = {bg = config.stylix.image;};
+      settings = {
+        "LoginScreen" = {
+          blur = 32;
+          background = "${config.stylix.image.name}";
+        };
+        "LoginScreen.MenuArea.Keyboard" = {
+          display = false;
+        };
+        "LockScreen" = {
+          blur = 0;
+          background = "${config.stylix.image.name}";
+        };
+      };
     };
   };
 }
