@@ -12,10 +12,10 @@ in {
   config = {
     services.displayManager = {
       sddm = {
-        enable = cfg.sddm.enable;
-        enableHidpi = true;
-        wayland.enable = true;
-        autoNumlock = true;
+        enable = lib.mkForce cfg.sddm.enable;
+        enableHidpi = lib.mkForce true;
+        wayland.enable = lib.mkForce true;
+        autoNumlock = lib.mkForce true;
       };
     };
   };
