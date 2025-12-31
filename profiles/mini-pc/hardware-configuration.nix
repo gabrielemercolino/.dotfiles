@@ -20,7 +20,7 @@
   };
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/93cb7229-9cdb-4586-b62f-33d7aed3a8cb";
+    device = "/dev/disk/by-label/NIXOS_ROOT";
     fsType = "ext4";
   };
 
