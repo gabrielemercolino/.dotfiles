@@ -7,12 +7,7 @@
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  hardware = {
-    # for amd gpus
-    amdgpu.initrd.enable = true;
-    amdgpu.overdrive.enable = true;
-    graphics.extraPackages = [pkgs.libva];
-  };
+  hardware.graphics.extraPackages = [pkgs.libva];
   nixpkgs.config.rocmSupport = true;
 
   gab = {
