@@ -78,7 +78,8 @@ in {
         enable = true;
         theme = "default";
         backgrounds = {bg = config.stylix.image;};
-        profileIcons = lib.optionals (profile != null) {
+        # TODO: add default so themes without it won't have the last profile pic set
+        profileIcons = lib.mkIf (profile != null) {
           "${userSettings.userName}" = profile;
         };
         settings = {
