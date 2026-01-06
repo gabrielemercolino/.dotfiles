@@ -6,10 +6,11 @@
   ...
 }: let
   cfg = config.gab.style;
-  theme = import ../../../themes/${config.gab.style.theme}.nix {inherit pkgs;};
+  theme = import ../../../themes/${config.gab.style.theme}.nix {inherit pkgs lib;};
   background = theme.background or ./wallpaper.png;
   fonts = theme.fonts or {};
   opacity = theme.opacity or 1.0;
+  extras = theme.extras or {};
 in {
   imports = [inputs.stylix.homeModules.stylix ./hyprnix.nix];
 
@@ -97,6 +98,7 @@ in {
       oh-my-posh.configFile = pkgs.writeText "oh-my-posh.yaml" (builtins.readFile ./oh-my-posh.yaml);
     };
 
+    wayland.windowManager.hyprland.config = extras.hyprland or {};
     xdg.configFile."rmpc/theme.ron".text = import ./rmpc-theme.nix {inherit config;};
   };
 }

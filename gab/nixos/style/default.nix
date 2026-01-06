@@ -3,12 +3,20 @@
   config,
   inputs,
   pkgs,
+  userSettings,
   ...
 }: let
   cfg = config.gab.style;
-  theme = import ../../../themes/${config.gab.style.theme}.nix {inherit pkgs;};
+  theme = import ../../../themes/${config.gab.style.theme}.nix {inherit pkgs lib;};
   background = theme.background or ./wallpaper.png;
+  profile = theme.profile or null;
+  extras = theme.extras or {};
   fonts = theme.fonts or {};
+
+  imgName = img:
+    if lib.isDerivation img
+    then img.name
+    else builtins.baseNameOf img;
 in {
   imports = [inputs.stylix.nixosModules.stylix inputs.silentSDDM.nixosModules.default];
 
@@ -65,23 +73,29 @@ in {
         };
     };
 
-    programs.silentSDDM = {
-      enable = true;
-      theme = "default";
-      backgrounds = {bg = config.stylix.image;};
-      settings = {
-        "LoginScreen" = {
-          blur = 32;
-          background = "${config.stylix.image.name}";
+    programs.silentSDDM = lib.mkMerge [
+      {
+        enable = true;
+        theme = "default";
+        backgrounds = {bg = config.stylix.image;};
+        profileIcons = lib.optionals (profile != null) {
+          "${userSettings.userName}" = profile;
         };
-        "LoginScreen.MenuArea.Keyboard" = {
-          display = false;
+        settings = {
+          "LoginScreen" = {
+            blur = 32;
+            background = "${imgName config.stylix.image}";
+          };
+          "LoginScreen.MenuArea.Keyboard" = {
+            display = false;
+          };
+          "LockScreen" = {
+            blur = 0;
+            background = "${imgName config.stylix.image}";
+          };
         };
-        "LockScreen" = {
-          blur = 0;
-          background = "${config.stylix.image.name}";
-        };
-      };
-    };
+      }
+      (extras.silentSDDM or {})
+    ];
   };
 }
