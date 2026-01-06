@@ -55,7 +55,7 @@
     };
 
     style = {
-      theme = "gruvbox-dark";
+      theme = "roathe-dark";
       fonts.sizes = {
         applications = 14;
         desktop = 12;
