@@ -6,7 +6,7 @@
   ...
 }: let
   cfg = config.gab.style;
-  theme = import ../../../themes/${config.gab.style.theme}.nix {inherit pkgs lib;};
+  theme = import ../../../themes/${config.gab.style.theme}.nix {inherit config pkgs lib;};
   background = theme.background or ./wallpaper.png;
   fonts = theme.fonts or {};
   opacity = theme.opacity or 1.0;
@@ -70,11 +70,15 @@ in {
       targets = {
         mangohud.enable = false;
         vscode.enable = false;
+        rofi.enable = false;
       };
     };
 
     programs = {
-      rofi.theme = lib.mkForce (import ./rofi-theme.nix {inherit config;});
+      rofi.theme = lib.mkMerge [
+        (import ./rofi-theme.nix {inherit config;})
+        extras.rofi or {}
+      ];
       swaylock.settings = {
         effect-blur = "7x5";
         effect-vignette = "0.7:0.7";

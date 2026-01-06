@@ -7,7 +7,7 @@
   ...
 }: let
   cfg = config.gab.style;
-  theme = import ../../../themes/${config.gab.style.theme}.nix {inherit pkgs lib;};
+  theme = import ../../../themes/${config.gab.style.theme}.nix {inherit config pkgs lib;};
   background = theme.background or ./wallpaper.png;
   profile = theme.profile or null;
   extras = theme.extras or {};
