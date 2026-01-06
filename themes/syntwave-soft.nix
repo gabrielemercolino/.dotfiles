@@ -1,4 +1,4 @@
-{pkgs}: {
+{pkgs, ...}: {
   system = "base16";
   name = "Synthwave Soft";
   author = "Custom synthwave theme (desaturated)";

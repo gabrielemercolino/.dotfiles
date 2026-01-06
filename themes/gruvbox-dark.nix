@@ -1,4 +1,4 @@
-{pkgs}: {
+{pkgs, ...}: {
   system = "base16";
   name = "Gruvbox Dark";
   author = "https://github.com/morhetz/gruvbox";

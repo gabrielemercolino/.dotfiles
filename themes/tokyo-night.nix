@@ -1,4 +1,4 @@
-{pkgs}: {
+{pkgs, ...}: {
   system = "base16";
   name = "Tokyo Night";
   author = "https://github.com/enkia/tokyo-night-vscode-theme";
