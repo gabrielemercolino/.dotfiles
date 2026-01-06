@@ -39,7 +39,7 @@
     };
 
     style = {
-      theme = "syntwave-soft";
+      theme = "roathe-dark";
     };
 
     gaming = {
