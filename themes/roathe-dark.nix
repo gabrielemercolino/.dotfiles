@@ -1,4 +1,8 @@
-{lib, ...}: rec {
+{
+  config,
+  lib,
+  ...
+}: rec {
   system = "base16";
   name = "Warframe kim dark";
   author = "https://github.com/gabrielemercolino";
@@ -32,6 +36,13 @@
   extras = {
     hyprland = {
       general.active_border_color = lib.mkForce "rgb(${palette.base0A}) rgb(${palette.base08}) 90deg";
+    };
+    rofi = let
+      inherit (config.lib.formats.rasi) mkLiteral;
+    in {
+      "*" = {
+        selected = lib.mkForce (mkLiteral "#${palette.base0F}");
+      };
     };
   };
 }
