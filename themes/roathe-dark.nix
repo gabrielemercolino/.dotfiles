@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: rec {
   system = "base16";
@@ -34,6 +35,11 @@
   };
 
   extras = {
+    cursor = {
+      size = 28;
+      name = "LyraG-cursors";
+      package = pkgs.lyra-cursors;
+    };
     hyprland = {
       general.active_border_color = lib.mkForce "rgb(${palette.base0A}) rgb(${palette.base08}) 90deg";
     };
