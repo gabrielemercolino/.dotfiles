@@ -17,6 +17,7 @@ in {
     # fix: disabling hyprpaper as not used but automatically enables
     # if background is set
     stylix.targets.hyprpaper.enable = lib.mkForce false;
+    services.hyprpaper.enable = lib.mkForce false;
 
     wayland.windowManager.hyprland.config = {
       decoration.shadow.color = hypr.decoration.shadow.color;
