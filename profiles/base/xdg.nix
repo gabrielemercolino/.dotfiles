@@ -49,10 +49,12 @@
     imv = {
       name = "imv";
       exec = "${lib.getExe pkgs.imv}";
+      noDisplay = true;
     };
     mpv = {
       name = "mpv";
       exec = "${lib.getExe pkgs.mpv} --keep-open=yes";
+      noDisplay = true;
     };
   };
 }
