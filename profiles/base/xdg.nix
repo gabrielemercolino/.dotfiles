@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
   ...
@@ -54,6 +55,11 @@
     mpv = {
       name = "mpv";
       exec = "${lib.getExe pkgs.mpv} --keep-open=yes";
+      noDisplay = true;
+    };
+    editor = {
+      name = "Text Editor";
+      exec = "${config.home.sessionVariables.EDITOR or (lib.getExe pkgs.nano)} %f";
       noDisplay = true;
     };
   };
