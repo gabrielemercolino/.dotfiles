@@ -1,4 +1,5 @@
 {
+  config,
   userSettings,
   lib,
   pkgs,
@@ -25,7 +26,7 @@
   home.stateVersion = "24.11";
 
   xdg = let
-    xdg = import ./xdg.nix {inherit lib pkgs;};
+    xdg = import ./xdg.nix {inherit config lib pkgs;};
   in {
     enable = true;
     desktopEntries = xdg.desktopEntries;
