@@ -24,48 +24,14 @@
 
   home.stateVersion = "24.11";
 
-  xdg = {
+  xdg = let
+    xdg = import ./xdg.nix {inherit lib pkgs;};
+  in {
     enable = true;
+    desktopEntries = xdg.desktopEntries;
     mimeApps = {
       enable = true;
-      defaultApplications = let
-        browser = ["zen-beta.desktop"];
-        imageViewer = ["imv.desktop"];
-        imageEditor = ["gimp.desktop"];
-        videoViewer = ["mpv.desktop"];
-
-        commonImages = ["image/png" "image/jpeg" "image/jpg" "image/gif" "image/webp" "image/bmp" "image/tiff" "image/svg+xml"];
-        gimpFormats = ["image/x-xcf" "image/x-psd" "image/x-xcfgz"];
-
-        videoFormats = ["video/mp4" "video/x-matroska" "video/webm" "video/mpeg" "video/x-msvideo" "video/quicktime" "video/x-flv" "video/ogg"];
-
-        toMimeAttrs = formats: opener:
-          formats
-          |> map (n: {
-            name = n;
-            value = opener;
-          })
-          |> builtins.listToAttrs;
-      in
-        lib.mkMerge [
-          (toMimeAttrs commonImages imageViewer)
-          (toMimeAttrs gimpFormats imageEditor)
-          (toMimeAttrs videoFormats videoViewer)
-          {
-            "text/html" = browser;
-            "application/xhtml+xml" = browser;
-          }
-        ];
-    };
-    desktopEntries = {
-      imv = {
-        name = "imv";
-        exec = "${lib.getExe pkgs.imv}";
-      };
-      mpv = {
-        name = "mpv";
-        exec = "${lib.getExe pkgs.mpv} --keep-open=yes";
-      };
+      defaultApplications = xdg.defaultApplications;
     };
   };
 
