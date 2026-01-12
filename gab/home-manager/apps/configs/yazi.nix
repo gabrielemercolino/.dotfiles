@@ -6,13 +6,6 @@
       };
 
       opener = {
-        edit = [
-          {
-            run = ''$EDITOR "$@"'';
-            block = true;
-          }
-        ];
-
         xdg = [
           {
             run = ''xdg-open "$@"'';
@@ -24,7 +17,7 @@
         rules = [
           {
             mime = "text/*";
-            use = "edit";
+            use = "xdg";
           }
           {
             mime = "video/*";
@@ -32,6 +25,10 @@
           }
           {
             mime = "image/*";
+            use = "xdg";
+          }
+          {
+            mime = "application/*";
             use = "xdg";
           }
         ];
