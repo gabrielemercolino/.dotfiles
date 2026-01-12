@@ -1,8 +1,4 @@
-{
-  lib,
-  pkgs,
-  ...
-}: {
+{...}: {
   programs.yazi = {
     settings = {
       mgr = {
@@ -17,16 +13,9 @@
           }
         ];
 
-        video = [
+        xdg = [
           {
-            run = ''${lib.getExe pkgs.mpv} "$@"'';
-            block = true;
-          }
-        ];
-
-        image = [
-          {
-            run = ''${lib.getExe pkgs.imv} "$@"'';
+            run = ''xdg-open "$@"'';
             block = true;
           }
         ];
@@ -39,11 +28,11 @@
           }
           {
             mime = "video/*";
-            use = "video";
+            use = "xdg";
           }
           {
             mime = "image/*";
-            use = "image";
+            use = "xdg";
           }
         ];
       };
