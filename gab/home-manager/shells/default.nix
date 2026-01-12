@@ -36,11 +36,8 @@ in {
 
       zsh = {
         inherit (cfg.zsh) enable;
+        dotDir = "${config.xdg.configHome}/zsh";
         shellAliases = cfg.aliases;
-        oh-my-zsh = {
-          enable = true;
-          plugins = ["git" "sudo"];
-        };
         syntaxHighlighting.enable = true;
         autosuggestion.enable = true;
       };
