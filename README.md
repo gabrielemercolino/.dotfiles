@@ -31,6 +31,10 @@ sudo nixos-rebuild switch --flake .#mini-pc
 nix run home-manager/master --extra-experimental-features nix-command --extra-experimental-features flakes -- switch --flake .#mini-pc
 ```
 
+## Special thanks
+
+Big thanks to [Nyramu](https://github.com/Nyramu/) for helping and improving the config (check [his dotfiles](https://github.com/Nyramu/.dotfiles/))
+
 ## Credits
 
 - [librephoenix](https://github.com/librephoenix/nixos-config)
