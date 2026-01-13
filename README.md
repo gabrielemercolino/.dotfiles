@@ -41,3 +41,4 @@ Big thanks to [Nyramu](https://github.com/Nyramu/) for helping and improving the
 - [sameeul-haque](https://github.com/sameemul-haque/dotfiles)
 - [brunoanesio](https://github.com/brunoanesio/waybar-config)
 - [woioeow](https://github.com/woioeow/hyprland-dotfiles)
+- [Zaney](https://gitlab.com/Zaney/zaneyos)
