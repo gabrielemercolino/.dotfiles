@@ -3,7 +3,6 @@
     ./hardware-configuration.nix
 
     ../base/configuration.nix
-    ../../gab/nixos
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;

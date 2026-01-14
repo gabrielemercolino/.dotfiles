@@ -5,6 +5,10 @@
   pkgs,
   ...
 }: {
+  imports = [
+    ../../gab/nixos
+  ];
+
   boot.initrd.systemd.enable = true;
   boot.initrd.systemd.emergencyAccess = true;
   boot.loader.systemd-boot.enable = true;
