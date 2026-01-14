@@ -2,19 +2,11 @@
   config,
   pkgs,
 }: {
-  package = pkgs.ncmpcpp.override {visualizerSupport = true;};
   settings = let
     mpd = config.services.mpd;
   in {
     mpd_host = mpd.network.listenAddress;
     mpd_port = mpd.network.port;
-
-    visualizer_in_stereo = "yes";
-    visualizer_data_source = "/tmp/mpd.fifo";
-    visualizer_output_name = "my_fifo";
-    visualizer_type = "spectrum";
-    visualizer_look = "●▋";
-    visualizer_color = "magenta,red,yellow,white";
 
     autocenter_mode = "yes";
     centered_cursor = "yes";
