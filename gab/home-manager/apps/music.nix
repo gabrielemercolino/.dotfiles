@@ -2,12 +2,9 @@
   config,
   lib,
   pkgs,
-  inputs,
   ...
 }: let
   cfg = config.gab.apps.music;
-
-  spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 
   downloadMusic = music: let
     url = music.url;
@@ -31,8 +28,6 @@
     ${musics |> map downloadMusic |> lib.concatStringsSep "\n"}
   '';
 in {
-  imports = [inputs.spicetify-nix.homeManagerModules.default];
-
   options.gab.apps.music = {
     tracks = lib.mkOption {
       type = with lib.types;
@@ -76,7 +71,6 @@ in {
       default = [];
     };
 
-    spotify.enable = lib.mkEnableOption "spotify (with spicetify)";
     mpd.enable = lib.mkEnableOption "mpd";
     rmpc.enable = lib.mkEnableOption "rmpc";
   };
@@ -87,16 +81,6 @@ in {
     '';
 
     programs = {
-      spicetify = {
-        inherit (cfg.spotify) enable;
-
-        enabledExtensions = with spicePkgs.extensions; [
-          adblock
-          hidePodcasts
-          shuffle # shuffle+ (special characters are sanitized out of extension names)
-        ];
-      };
-
       cava = {inherit (cfg.rmpc) enable;};
       rmpc = {
         inherit (cfg.rmpc) enable;
