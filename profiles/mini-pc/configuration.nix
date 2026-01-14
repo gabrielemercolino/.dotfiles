@@ -14,8 +14,7 @@
 
     hardware = {
       bluetooth.enable = true;
-      pipewire.enable = true;
-      #pulseaudio.enable = true;
+      audio-server = "pipewire";
 
       i18n.locale = "it_IT.UTF-8";
       keyboard.layout = "it";

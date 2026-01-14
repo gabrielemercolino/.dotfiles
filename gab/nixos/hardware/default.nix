@@ -10,8 +10,12 @@ with lib.types; let
 in {
   options.gab.hardware = {
     bluetooth.enable = lib.mkEnableOption "bluetooth";
-    pipewire.enable = lib.mkEnableOption "pipewire";
-    pulseaudio.enable = lib.mkEnableOption "pulseaudio";
+
+    audio-server = lib.mkOption {
+      default = null;
+      type = nullOr (enum ["pipewire" "pulseaudio"]);
+      description = "The audio server to use";
+    };
 
     keyboard = {
       layout = lib.mkOption {
@@ -52,10 +56,6 @@ in {
   config = {
     assertions = [
       {
-        assertion = !(cfg.pipewire.enable && cfg.pulseaudio.enable);
-        message = "Error: cannot activate both pipewire and pulseaudio";
-      }
-      {
         assertion = cfg.keyboard.layout != null;
         message = "Error: keyboard layout is not set";
       }
@@ -84,9 +84,9 @@ in {
     hardware.bluetooth.powerOnBoot = false;
 
     ### pipewire
-    security.rtkit.enable = lib.mkDefault cfg.pipewire.enable; # rtkit is optional but recommended
+    security.rtkit.enable = lib.mkDefault (cfg.audio-server == "pipewire"); # rtkit is optional but recommended
     services.pipewire = {
-      enable = cfg.pipewire.enable;
+      enable = cfg.audio-server == "pipewire";
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
@@ -96,7 +96,7 @@ in {
 
     ### pulseaudio
     services.pulseaudio = {
-      enable = cfg.pulseaudio.enable;
+      enable = cfg.audio-server == "pulseaudio";
       support32Bit = true;
       package = pkgs.pulseaudioFull;
       extraConfig = "load-module module-combine-sink";
