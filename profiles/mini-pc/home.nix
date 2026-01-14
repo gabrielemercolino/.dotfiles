@@ -67,7 +67,7 @@
 
       music = {
         mpd.enable = true;
-        rmpc.enable = true;
+        ncmpcpp.enable = true;
         tracks = [
           {
             url = "https://youtu.be/qKn2lPyAyqQ";
