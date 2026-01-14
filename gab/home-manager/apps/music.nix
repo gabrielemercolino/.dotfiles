@@ -72,7 +72,7 @@ in {
     };
 
     mpd.enable = lib.mkEnableOption "mpd";
-    rmpc.enable = lib.mkEnableOption "rmpc";
+    ncmpcpp.enable = lib.mkEnableOption "ncmpcpp";
   };
 
   config = {
@@ -81,17 +81,36 @@ in {
     '';
 
     programs = {
-      cava = {inherit (cfg.rmpc) enable;};
-      rmpc = {
-        inherit (cfg.rmpc) enable;
-        config = import ./configs/rmpc.nix {inherit config;};
+      cava = {
+        inherit (cfg.mpd) enable;
+        settings = {
+          general.framerate = 60;
+        };
       };
+
+      ncmpcpp =
+        {inherit (cfg.ncmpcpp) enable;}
+        // (import ./configs/ncmpcpp.nix {inherit config pkgs;});
     };
 
     services = {
       mpd = {
         inherit (cfg.mpd) enable;
         musicDirectory = "${config.home.homeDirectory}/Music";
+        # TODO: fix the audio_output config
+        extraConfig = ''
+          audio_output {
+            type     "fifo"
+            name     "my_fifo"
+            path     "/tmp/mpd.fifo"
+            format   "44100:16:2"
+          }
+
+          audio_output {
+            type     "pipewire"
+            name     "Default Output"
+          }
+        '';
       };
     };
   };
