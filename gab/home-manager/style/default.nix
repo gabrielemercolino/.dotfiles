@@ -83,9 +83,10 @@ in {
     };
 
     programs = {
-      rofi.theme =
+      rofi.theme = lib.mkMerge [
         (import ./rofi-theme.nix {inherit config;})
-        // (extras.rofi or {});
+        (extras.rofi or {})
+      ];
 
       swaylock.settings = {
         effect-blur = "7x5";
