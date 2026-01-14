@@ -40,14 +40,26 @@
       name = "LyraG-cursors";
       package = pkgs.lyra-cursors;
     };
+
     hyprland = {
       general.active_border_color = lib.mkForce "rgb(${palette.base0A}) rgb(${palette.base08}) 90deg";
     };
+
     rofi = let
       inherit (config.lib.formats.rasi) mkLiteral;
     in {
       "*" = {
         selected = lib.mkForce (mkLiteral "#${palette.base0F}");
+      };
+    };
+
+    cava = {
+      color = {
+        gradient = 1;
+        gradient_color_1 = "'#${palette.base08}'";
+        gradient_color_2 = "'#${palette.base0F}'";
+        gradient_color_3 = "'#${palette.base09}'";
+        gradient_color_4 = "'#${palette.base0A}'";
       };
     };
   };
