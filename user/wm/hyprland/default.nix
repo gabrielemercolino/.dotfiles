@@ -63,8 +63,8 @@ in {
           bind = {
             "SUPER, G" = "togglegroup";
             "SUPER_SHIFT, G" = "moveoutofgroup";
-            "SUPER_CONTROL, left" = "hangegroupactive, b";
-            "SUPER_CONTROL, right" = "hangegroupactive, f";
+            "SUPER_CONTROL, left" = "changegroupactive, b";
+            "SUPER_CONTROL, right" = "changegroupactive, f";
           };
         };
         mouseWindowControl = {
