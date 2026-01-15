@@ -56,10 +56,10 @@
     cava = {
       color = {
         gradient = 1;
-        gradient_color_1 = "'#${palette.base08}'";
-        gradient_color_2 = "'#${palette.base0F}'";
-        gradient_color_3 = "'#${palette.base09}'";
-        gradient_color_4 = "'#${palette.base0A}'";
+        gradient_color_1 = lib.mkForce "'#${palette.base08}'";
+        gradient_color_2 = lib.mkForce "'#${palette.base0F}'";
+        gradient_color_3 = lib.mkForce "'#${palette.base09}'";
+        gradient_color_4 = lib.mkForce "'#${palette.base0A}'";
       };
     };
   };

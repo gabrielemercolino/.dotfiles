@@ -114,7 +114,7 @@ in {
 
       oh-my-posh.configFile = pkgs.writeText "oh-my-posh.yaml" (builtins.readFile ./oh-my-posh.yaml);
 
-      cava.settings =
+      cava.settings = lib.mkMerge [
         {
           general = {
             sensitivity = 50;
@@ -122,7 +122,8 @@ in {
             bar_spacing = 1;
           };
         }
-        // (extras.cava or {});
+        (extras.cava or {})
+      ];
     };
 
     wayland.windowManager.hyprland.config = extras.hyprland or {};
