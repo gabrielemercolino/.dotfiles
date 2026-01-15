@@ -124,7 +124,7 @@ in {
         groups.moveToWorkspace
         {
           bind."SUPER, Q" = "killactive";
-          bind."SUPER, M" = "exit";
+          bind."SUPER_SHIFT, M" = "exit";
         }
         {
           bind."SUPER CONTROL_L, S" = "exec, ${lib.getExe screenShot}";
@@ -140,6 +140,12 @@ in {
       ];
       exec = [
         "${lib.getExe pkgs.swaybg} -m fill -i ${config.stylix.image}"
+      ];
+
+      workspace = [
+        "1, persistent:true"
+        "2, persistent:true"
+        "3, persistent:true"
       ];
 
       general = {
