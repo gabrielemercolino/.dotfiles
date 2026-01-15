@@ -21,14 +21,10 @@
     };
 
     shell = {
-      aliases = rec {
+      aliases = {
         ls = "${lib.getExe pkgs.eza} --icons";
         ll = "${lib.getExe pkgs.eza} -l --icons";
         la = "${lib.getExe pkgs.eza} -la --icons";
-
-        vi = "hx";
-        vim = vi;
-        nvim = vi;
 
         cd = "z"; # from zoxide
       };
