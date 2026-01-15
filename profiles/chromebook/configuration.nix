@@ -6,7 +6,7 @@
     ../../gab/nixos
   ];
 
-  #boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   hardware = {
     graphics.extraPackages = with pkgs; [intel-media-driver];
