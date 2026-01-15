@@ -59,6 +59,14 @@ in {
             "SUPER, J" = "togglesplit";
           };
         };
+        groupControl = {
+          bind = {
+            "SUPER, G" = "togglegroup";
+            "SUPER_SHIFT, G" = "moveoutofgroup";
+            "SUPER_CONTROL, left" = "hangegroupactive, b";
+            "SUPER_CONTROL, right" = "hangegroupactive, f";
+          };
+        };
         mouseWindowControl = {
           bindm = {
             "SUPER, ${MOUSE_L}" = "movewindow";
@@ -118,6 +126,7 @@ in {
         groups.brightnessControl
         groups.mouseWindowControl
         groups.windowToggles
+        groups.groupControl
         groups.bar
         groups.moveFocus
         groups.changeWorkspace
@@ -167,6 +176,19 @@ in {
           enabled = true;
           range = 4;
           render_power = 3;
+        };
+      };
+
+      group = {
+        auto_group = true;
+
+        groupbar = {
+          font_size = 13;
+          gradients = false;
+          indicator_height = 2;
+          rounding = 8;
+          rounding_power = 4.0;
+          blur = true;
         };
       };
 
