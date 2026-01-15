@@ -25,6 +25,8 @@ in {
     # needed to make the renice setting work
     users.users.${userSettings.userName}.extraGroups = lib.optionals cfg.gamemode.enable ["gamemode"];
 
+    boot.kernelModules = lib.optionals cfg.steam.enable ["ntsync"];
+
     programs.steam = {
       enable = cfg.steam.enable;
       extraCompatPackages = [pkgs.proton-ge-bin];
