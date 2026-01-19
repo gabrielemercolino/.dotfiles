@@ -47,11 +47,6 @@ else
 fi
 
 # Check dependencies
-if ! command -v git &> /dev/null; then
-  print_error "Missing dependencies. Please run:"
-  echo -e "  ${GREEN}nix shell nixpkgs#git${NC}"
-  exit 1
-fi
 print_success "All dependencies found"
 echo ""
 
@@ -95,7 +90,7 @@ echo ""
 print_info "installing $profile profile"
 echo ""
 
-sudo nixos-rebuild switch --flake ~/.dotfiles#"$profile"
+sudo nixos-rebuild switch --option extra-experimental-features "nix-command flakes pipe-operators" --flake ~/.dotfiles#"$profile"
 
 echo ""
 print_success "system part of the $profile profile has been installed"
