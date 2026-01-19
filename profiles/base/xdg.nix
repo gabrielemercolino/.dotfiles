@@ -54,7 +54,7 @@
     };
     mpv = {
       name = "mpv";
-      exec = "${lib.getExe pkgs.mpv} --keep-open=yes";
+      exec = "${lib.getExe pkgs.mpv} --vo=gpu --keep-open=yes";
       noDisplay = true;
     };
     editor = {
