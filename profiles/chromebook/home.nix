@@ -6,6 +6,7 @@
 }: {
   imports = [
     ../base/home.nix
+    ./theme.nix
     ../../user/commands/gab
   ];
   gab = {
@@ -50,15 +51,7 @@
       resilio.enable = true;
     };
 
-    style = {
-      theme = "roathe-dark";
-      fonts.sizes = {
-        applications = 14;
-        desktop = 12;
-        popups = 12;
-        terminal = 14;
-      };
-    };
+
   };
 
   programs.git = {
