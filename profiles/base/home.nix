@@ -8,7 +8,6 @@
   imports = [
     # just import the config, enables actually control the installation
     ../../user/wm/hyprland
-    ../../user/wm/bspwm
     ../../gab/home-manager
   ];
 

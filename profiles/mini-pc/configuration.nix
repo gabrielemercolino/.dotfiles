@@ -47,7 +47,6 @@
     };
 
     wm.hyprland.enable = true;
-    wm.bspwm.enable = false;
   };
 
   services.xserver.excludePackages = [pkgs.xterm];

@@ -21,10 +21,6 @@
           "DP-1, 1920x1080@100, auto, 1"
         ];
       };
-
-      bspwm = {
-        enable = false;
-      };
     };
 
     shell = {

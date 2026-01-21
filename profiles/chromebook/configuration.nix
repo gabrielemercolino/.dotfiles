@@ -40,7 +40,6 @@
     gaming.steam.enable = true;
 
     wm.hyprland.enable = true;
-    wm.bspwm.enable = false;
   };
 
   services.logind.settings.Login = {
