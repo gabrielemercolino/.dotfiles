@@ -64,6 +64,8 @@
       mini-pc = createHomeProfile "mini-pc" "x86_64-linux";
       chromebook = createHomeProfile "chromebook" "x86_64-linux";
     };
+
+    formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
   };
 
   inputs = {
