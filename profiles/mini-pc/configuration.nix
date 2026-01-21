@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   imports = [
     ./hardware-configuration.nix
+    ./theme.nix
 
     ../base/configuration.nix
   ];
@@ -34,10 +35,6 @@
 
       direnv.enable = true;
       docker.enable = true;
-    };
-
-    style = {
-      theme = "roathe-dark";
     };
 
     gaming = {

@@ -6,6 +6,7 @@
 }: {
   imports = [
     ../base/home.nix
+    ./theme.nix
     ../../user/commands/gab
   ];
 
@@ -40,10 +41,6 @@
       };
 
       commands.z.enable = true;
-    };
-
-    style = {
-      theme = "roathe-dark";
     };
 
     apps = {
