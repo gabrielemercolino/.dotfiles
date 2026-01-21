@@ -1,6 +1,4 @@
-{ lib, ... }:
-
-{
+{lib, ...}: {
   options.gab.style = {
     theme = lib.mkOption {
       default = "catppuccin-mocha";

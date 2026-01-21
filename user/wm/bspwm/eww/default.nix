@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-let
+{pkgs, ...}: let
   deps = with pkgs; [
     brightnessctl
     pamixer
@@ -11,11 +9,10 @@ let
     name = "eww";
     runtimeInputs = deps;
     text = ''
-      exec ${pkgs.eww}/bin/eww "$@" 
+      exec ${pkgs.eww}/bin/eww "$@"
     '';
   };
-in
-{
+in {
   programs.eww = {
     enable = true;
     package = eww-wrapper;

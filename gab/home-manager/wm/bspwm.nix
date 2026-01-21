@@ -2,12 +2,9 @@
   config,
   lib,
   ...
-}:
-
-let
+}: let
   cfg = config.gab.wm.bspwm;
-in
-{
+in {
   options.gab.wm.bspwm = {
     enable = lib.mkEnableOption "bspwm";
   };
@@ -17,5 +14,4 @@ in
       enable = true;
     };
   };
-
 }

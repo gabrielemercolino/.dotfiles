@@ -36,8 +36,6 @@
       docker.enable = true;
     };
 
-
-
     # to run visual paradigm
     gaming.steam.enable = true;
 

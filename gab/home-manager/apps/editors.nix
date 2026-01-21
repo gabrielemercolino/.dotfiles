@@ -6,7 +6,7 @@
 }: let
   cfg = config.gab.apps;
 in {
-  imports = [ ./configs/helix.nix];
+  imports = [./configs/helix.nix];
 
   options.gab.apps = {
     idea-community.enable = lib.mkEnableOption "idea community edition";

@@ -1,6 +1,4 @@
-_:
-
-{
+_: {
   imports = [
     ./hyprland.nix
     ./bspwm.nix

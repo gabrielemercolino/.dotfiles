@@ -50,8 +50,6 @@
 
       resilio.enable = true;
     };
-
-
   };
 
   programs.git = {
