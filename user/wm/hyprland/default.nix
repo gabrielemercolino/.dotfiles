@@ -116,8 +116,8 @@ in {
             |> builtins.listToAttrs;
         };
       };
-      screenShot = pkgs.callPackage ../../commands/screen-shot {};
-      screenRecord = pkgs.callPackage ../../commands/screen-record {};
+      screenShot = pkgs.callPackage ../../../gab/cli/screen-shot {};
+      screenRecord = pkgs.callPackage ../../../gab/cli/screen-record {};
     in
       lib.mkMerge [
         groups.powerControl
