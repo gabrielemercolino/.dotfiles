@@ -6,8 +6,6 @@
   ...
 }: {
   imports = [
-    # just import the config, enables actually control the installation
-    ../../user/wm/hyprland
     ../../gab/home-manager
   ];
 
