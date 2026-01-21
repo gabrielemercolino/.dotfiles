@@ -11,11 +11,16 @@ in {
   options.gab.apps = {
     chrome.enable = lib.mkEnableOption "google chrome";
     firefox.enable = lib.mkEnableOption "firefox";
+    zen.enable = lib.mkEnableOption "zen";
   };
 
   config = {
     home.packages =
       lib.optionals cfg.chrome.enable [pkgs.google-chrome]
       ++ lib.optionals cfg.firefox.enable [pkgs.firefox];
+
+    programs.zen-browser = {
+      inherit (cfg.zen) enable;
+    };
   };
 }
