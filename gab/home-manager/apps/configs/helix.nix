@@ -119,6 +119,7 @@ in {
           };
         };
         yaml-language-server.command = "${lib.getExe pkgs.yaml-language-server}";
+        ruff.command = "${lib.getExe pkgs.ruff}";
       };
 
       language = [
