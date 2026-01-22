@@ -15,7 +15,7 @@ in {
   };
 
   config = {
-    home.packages = lib.optionals cfg.idea-community.enable [pkgs.jetbrains.idea-oss];
+    home.packages = lib.optionals cfg.idea-community.enable [pkgs.jetbrains.idea];
 
     programs = {
       helix.enable = cfg.helix.enable;
