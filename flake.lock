@@ -2,10 +2,7 @@
   "nodes": {
     "ags": {
       "inputs": {
-        "astal": [
-          "ags-bar",
-          "astal"
-        ],
+        "astal": "astal",
         "nixpkgs": [
           "ags-bar",
           "nixpkgs"
@@ -28,17 +25,16 @@
     "ags-bar": {
       "inputs": {
         "ags": "ags",
-        "astal": "astal",
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1769361780,
-        "narHash": "sha256-3dSJG9ZFr9xNdbD4FzMFPiWbSBoovZ5LTgRmF23qPVw=",
+        "lastModified": 1769442006,
+        "narHash": "sha256-Wutvf1iIrNftKA/eD/+B9m39tQ+m85xU/nr109hQ6MM=",
         "owner": "gabrielemercolino",
         "repo": "ags-bar",
-        "rev": "2767c77e59fead5bda977c62344dd70588f8299e",
+        "rev": "3f88565f6d6aeef07c324f8dfa78e717b47a7879",
         "type": "github"
       },
       "original": {
@@ -84,6 +80,7 @@
       "inputs": {
         "nixpkgs": [
           "ags-bar",
+          "ags",
           "nixpkgs"
         ]
       },
