@@ -12,7 +12,10 @@
   opacity = theme.opacity or 1.0;
   extras = theme.extras or {};
 in {
-  imports = [inputs.stylix.homeModules.stylix ./hyprnix.nix];
+  imports = [
+    inputs.stylix.homeModules.stylix
+    ./hyprnix.nix
+  ];
 
   config = {
     stylix = {
@@ -88,6 +91,14 @@ in {
         }
         (extras.cava or {})
       ];
+
+      ags-bar = let
+        inherit (config.lib.stylix) colors;
+        inherit (config.stylix) fonts;
+      in {
+        fonts = [fonts.monospace];
+        colors.base16 = colors.withHashtag;
+      };
     };
 
     wayland.windowManager.hyprland.config = extras.hyprland or {};

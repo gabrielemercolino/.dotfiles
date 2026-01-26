@@ -1,13 +1,10 @@
 {
-  bar,
   lib,
   pkgs,
   config,
   systemSettings,
 }: {
-  exec_once = [
-    "${lib.getExe bar}"
-  ];
+  exec_once = [];
   exec = [
     "${lib.getExe pkgs.swaybg} -m fill -i ${config.stylix.image}"
   ];

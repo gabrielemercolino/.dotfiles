@@ -1,8 +1,6 @@
 {
   lib,
   pkgs,
-  bar,
-  kill-bar,
   ...
 }: let
   screenShot = pkgs.callPackage ../../../cli/screen-shot {};
@@ -56,9 +54,6 @@
       bind."SUPER_SHIFT, R" = "exec, systemctl reboot";
       bind."SUPER_SHIFT, P" = "exec, systemctl poweroff";
     };
-    bar = {
-      bind."SUPER, W" = "exec, ${kill-bar}; ${lib.getExe bar}";
-    };
     moveFocus = {
       bind = {
         "SUPER, left" = "movefocus, l";
@@ -95,7 +90,6 @@ in
     groups.mouseWindowControl
     groups.windowToggles
     groups.groupControl
-    groups.bar
     groups.moveFocus
     groups.changeWorkspace
     groups.moveToWorkspace

@@ -5,16 +5,10 @@
   pkgs,
   systemSettings,
   ...
-}: let
-  bar = import ./ags-bar.nix {
-    inherit pkgs config;
-    inherit (inputs) ags-bar;
-  };
-
-  kill-bar = "pkill gjs";
-in {
+}: {
   imports = [
     inputs.hyprland-nix.homeManagerModules.default
+    inputs.ags-bar.homeManagerModules.default
   ];
 
   options.gab.wm.hyprland = {
@@ -32,19 +26,12 @@ in {
       wl-clipboard
     ];
 
-    home.activation.ags-bar = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      old_path="${config.home.homeDirectory}/.local/state/ags-bar-path"
-      new_path="${bar}"
+    programs.ags-bar = {
+      enable = true;
+      systemd.enable = true;
 
-      if [ -f "$old_path" ] && [ "$(cat "$old_path")" = "$new_path" ]; then
-        echo "not restarting ags-bar"
-      else
-        echo "$new_path" > "$old_path"
-        echo "restarting ags-bar"
-        ${pkgs.procps}/bin/pkill gjs 2> /dev/null || true
-        ${lib.getExe bar} > /dev/null 2> /dev/null &
-      fi
-    '';
+      commands.lock = "${pkgs.swaylock-effects}/bin/swaylock";
+    };
 
     wayland.windowManager.hyprland = {
       enable = true;
@@ -59,10 +46,10 @@ in {
 
       config = lib.mkMerge [
         {monitor = config.gab.wm.hyprland.monitors ++ [", preferred, auto, 1"];}
-        (import ./config.nix {inherit bar lib pkgs config systemSettings;})
+        (import ./config.nix {inherit lib pkgs config systemSettings;})
       ];
 
-      keyBinds = import ./keybinds.nix {inherit lib pkgs bar kill-bar;};
+      keyBinds = import ./keybinds.nix {inherit lib pkgs;};
 
       animations.animation = import ./animations.nix {};
     };
