@@ -15,7 +15,7 @@ in {
   };
 
   config = {
-    home.packages = lib.optionals cfg.idea-community.enable [pkgs.jetbrains.idea];
+    home.packages = lib.optionals cfg.idea-community.enable [(pkgs.callPackage ./custom-derivations/idea.nix {})];
 
     programs = {
       helix.enable = cfg.helix.enable;
