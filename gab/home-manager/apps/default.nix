@@ -1,5 +1,6 @@
 _: {
   imports = [
+    ./ai.nix
     ./browsers.nix
     ./control.nix
     ./editors.nix
