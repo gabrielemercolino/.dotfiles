@@ -20,7 +20,7 @@ in {
     programs.opencode = {
       inherit (cfg.opencode) enable;
       settings = with cfg.opencode.plugins; {
-        plugin = lib.optionals antigravity.enable [antigravity-cfg.plugin];
+        plugin = lib.optionals antigravity.enable antigravity-cfg.plugin;
         provider = lib.mkMerge [
           (lib.optionals antigravity.enable antigravity-cfg.provider)
         ];
