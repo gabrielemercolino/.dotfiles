@@ -96,13 +96,11 @@ in {
     languages = {
       language-server = {
         nil.command = "${lib.getExe pkgs.nil}";
+        nixd.command = "${lib.getExe pkgs.nixd}";
         bash-language-server.command = "${lib.getExe pkgs.bash-language-server}";
-        clangd.command = "${pkgs.clang-tools}/bin/clangd";
-        cmake-language-server.command = "${lib.getExe pkgs.cmake-language-server}";
         elixir-ls.command = "${lib.getExe pkgs.elixir-ls}";
         gopls.command = "${lib.getExe pkgs.gopls}";
         markdown-oxide.command = "${lib.getExe pkgs.markdown-oxide}";
-        rust-analyzer.command = "${lib.getExe pkgs.rust-analyzer}";
         vscode-css-language-server.command = "${pkgs.vscode-langservers-extracted}/bin/vscode-css-language-server";
         typescript-language-server = {
           command = "${lib.getExe pkgs.typescript-language-server}";
@@ -119,7 +117,6 @@ in {
           };
         };
         yaml-language-server.command = "${lib.getExe pkgs.yaml-language-server}";
-        ruff.command = "${lib.getExe pkgs.ruff}";
       };
 
       language = [
