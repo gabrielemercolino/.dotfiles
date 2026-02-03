@@ -30,7 +30,7 @@
   sources = {
     x86_64-linux = fetchurl {
       url = "https://download.jetbrains.com/idea/ideaIU-${version}.tar.gz";
-      hash = "sha256-OgZLIpYfPzm4ZrZLYoVY4ND3CNQjo/lWXUPw6BGWmXs=";
+      hash = "sha256-o0QsnxlTxm3LCCXpt4jH5077WG7b8dMO+LDfVT/hNuQ=";
     };
     aarch64-linux = fetchurl {
       url = "https://download.jetbrains.com/idea/ideaIU-${version}-aarch64.tar.gz";
