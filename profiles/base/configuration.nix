@@ -7,6 +7,7 @@
 }: {
   imports = [
     ../../gab/nixos
+    ./secrets.nix
   ];
 
   boot.initrd.systemd.enable = true;
