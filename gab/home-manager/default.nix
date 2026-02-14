@@ -1,10 +1,6 @@
-_: {
+{inputs, ...}: {
   imports = [
     ../common
-    ./apps
-    ./gaming
-    ./shells
-    ./style
-    ./wm
+    (inputs.import-tree ./modules)
   ];
 }
