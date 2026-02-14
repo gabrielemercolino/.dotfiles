@@ -4,6 +4,8 @@
   ...
 }: let
   hypr = config.wayland.windowManager.hyprland.settings;
+  theme = config.gab.style._theme;
+  extras = theme.extras or {};
 in {
   # fix: hyprnix deletes these but stylix still will try to use them
   options.wayland.windowManager.hyprland.settings = {
@@ -19,27 +21,30 @@ in {
     stylix.targets.hyprpaper.enable = lib.mkForce false;
     services.hyprpaper.enable = lib.mkForce false;
 
-    wayland.windowManager.hyprland.config = {
-      decoration.shadow.color = hypr.decoration.shadow.color;
+    wayland.windowManager.hyprland.config = lib.mkMerge [
+      {
+        decoration.shadow.color = hypr.decoration.shadow.color;
 
-      general = {
-        active_border_color = hypr.general."col.active_border";
-        inactive_border_color = hypr.general."col.inactive_border";
-      };
-
-      group = {
-        inactive_border_color = hypr.group."col.border_inactive";
-        active_border_color = hypr.group."col.border_active";
-        locked_active_border_color = hypr.group."col.border_locked_active";
-
-        groupbar = {
-          text_color = hypr.group.groupbar.text_color;
-          active_color = hypr.group.groupbar."col.active";
-          inactive_color = hypr.group.groupbar."col.inactive";
+        general = {
+          active_border_color = hypr.general."col.active_border";
+          inactive_border_color = hypr.general."col.inactive_border";
         };
-      };
 
-      misc.background_color = hypr.misc.background_color;
-    };
+        group = {
+          inactive_border_color = hypr.group."col.border_inactive";
+          active_border_color = hypr.group."col.border_active";
+          locked_active_border_color = hypr.group."col.border_locked_active";
+
+          groupbar = {
+            text_color = hypr.group.groupbar.text_color;
+            active_color = hypr.group.groupbar."col.active";
+            inactive_color = hypr.group.groupbar."col.inactive";
+          };
+        };
+
+        misc.background_color = hypr.misc.background_color;
+      }
+      (extras.hyprland or {})
+    ];
   };
 }
