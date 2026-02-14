@@ -25,8 +25,6 @@
 
         cd = "z"; # from zoxide
       };
-
-      commands.z.enable = true;
     };
     apps = {
       rofi.enable = true;
@@ -45,6 +43,7 @@
       idea-community.enable = true;
 
       resilio.enable = true;
+      zoxide.enable = true;
     };
   };
 
