@@ -1,5 +1,3 @@
-_: {
-  imports = [
-    ./style
-  ];
+{inputs, ...}: {
+  imports = [(inputs.import-tree ./modules)];
 }

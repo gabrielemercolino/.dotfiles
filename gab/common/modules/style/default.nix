@@ -3,7 +3,7 @@
     theme = lib.mkOption {
       default = "catppuccin-mocha";
       type = lib.types.enum (
-        builtins.readDir ../../../themes
+        builtins.readDir ../../../../themes
         |> builtins.attrNames
         |> builtins.filter (name: lib.strings.hasSuffix ".nix" name)
         |> map (lib.removeSuffix ".nix")
