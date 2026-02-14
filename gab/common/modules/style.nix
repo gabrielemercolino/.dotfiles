@@ -1,4 +1,11 @@
-{lib, ...}: {
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
+  theme = import ../../../themes/${config.gab.style.theme}.nix {inherit config pkgs lib;};
+in {
   options.gab.style = {
     theme = lib.mkOption {
       default = "catppuccin-mocha";
@@ -9,6 +16,12 @@
         |> map (lib.removeSuffix ".nix")
       );
       description = "The theme to use";
+    };
+
+    _theme = lib.mkOption {
+      type = lib.types.attrs;
+      internal = true;
+      default = theme;
     };
 
     fonts.sizes = {
