@@ -96,7 +96,6 @@ in {
     languages = {
       language-server = {
         nil.command = "${lib.getExe pkgs.nil}";
-        nixd.command = "${lib.getExe pkgs.nixd}";
         bash-language-server.command = "${lib.getExe pkgs.bash-language-server}";
         elixir-ls.command = "${lib.getExe pkgs.elixir-ls}";
         gopls.command = "${lib.getExe pkgs.gopls}";
