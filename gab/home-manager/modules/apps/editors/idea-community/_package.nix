@@ -20,8 +20,13 @@
   git,
   which,
   python3,
-  xorg,
-
+  
+  libxext,
+  libxi,
+  libxrender,
+  libxtst,
+  libxxf86vm,
+  
   pkgs
 }: let
   pname = "idea";
@@ -46,11 +51,11 @@
     libsecret
     e2fsprogs
     libnotify
-    xorg.libXext
-    xorg.libXi
-    xorg.libXrender
-    xorg.libXtst
-    xorg.libXxf86vm
+    libxext
+    libxi
+    libxrender
+    libxtst
+    libxxf86vm
   ];
 in
   stdenv.mkDerivation {
