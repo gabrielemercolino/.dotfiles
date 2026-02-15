@@ -19,10 +19,7 @@
 
       i18n.locale = "it_IT.UTF-8";
       keyboard.layout = "it";
-      time = {
-        timeZone = "Europe/Rome";
-        hardware-clock.enable = true;
-      };
+      time.timeZone = "Europe/Rome";
     };
 
     apps = {
