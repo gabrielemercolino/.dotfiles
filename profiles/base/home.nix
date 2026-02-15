@@ -20,7 +20,7 @@
   home.username = userSettings.userName;
   home.homeDirectory = "/home/${userSettings.userName}";
 
-  home.stateVersion = "24.11";
+  home.stateVersion = "26.05";
 
   xdg = let
     xdg = import ./xdg.nix {inherit config lib pkgs;};
