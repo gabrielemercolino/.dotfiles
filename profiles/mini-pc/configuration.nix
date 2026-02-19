@@ -9,6 +9,7 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
   hardware.graphics.extraPackages = [pkgs.libva];
   nixpkgs.config.rocmSupport = true;
+  networking.hostName = "mini-pc";
 
   gab = {
     login.sddm.enable = true;

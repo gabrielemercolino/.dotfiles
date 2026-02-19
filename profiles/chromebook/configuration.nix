@@ -8,10 +8,8 @@
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  hardware = {
-    graphics.extraPackages = with pkgs; [intel-media-driver];
-  };
+  hardware.graphics.extraPackages = with pkgs; [intel-media-driver];
+  networking.hostName = "chromebook";
 
   gab = {
     login.sddm.enable = true;
