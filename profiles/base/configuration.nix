@@ -1,4 +1,5 @@
 {
+  inputs,
   lib,
   userSettings,
   systemSettings,
@@ -7,7 +8,7 @@
 }: {
   imports = [
     ../../gab/nixos
-    ./secrets.nix
+    inputs.sops-nix.nixosModules.sops
   ];
 
   boot.initrd.systemd.enable = true;
@@ -21,6 +22,14 @@
     description = userSettings.name;
     extraGroups = ["wheel"];
     packages = [];
+  };
+
+  sops = {
+    defaultSopsFile = ../../secrets/secrets.yaml;
+    defaultSopsFormat = "yaml";
+    age.keyFile = "/home/${userSettings.userName}/.config/sops/age/keys.txt";
+
+    secrets = {};
   };
 
   services.getty.autologinUser = lib.mkDefault userSettings.userName;

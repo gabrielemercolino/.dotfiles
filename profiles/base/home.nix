@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   userSettings,
   lib,
   pkgs,
@@ -7,6 +8,7 @@
 }: {
   imports = [
     ../../gab/home-manager
+    inputs.sops-nix.homeManagerModules.sops
   ];
 
   nixpkgs.config = {
@@ -30,6 +32,21 @@
     mimeApps = {
       enable = true;
       defaultApplications = xdg.defaultApplications;
+    };
+  };
+
+  sops = {
+    defaultSopsFile = ../../secrets/secrets.yaml;
+    defaultSopsFormat = "yaml";
+    age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
+
+    secrets = {
+      "ssh/priv" = {
+        path = "${config.home.homeDirectory}/.ssh/id_ed25519";
+      };
+      "ssh/pub" = {
+        path = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
+      };
     };
   };
 
