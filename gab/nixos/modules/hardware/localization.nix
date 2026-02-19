@@ -1,8 +1,6 @@
 {
   config,
   lib,
-  pkgs,
-  userSettings,
   ...
 }:
 with lib.types; let
@@ -11,8 +9,7 @@ in {
   options.gab.hardware = {
     keyboard = {
       layout = lib.mkOption {
-        default = null;
-        type = nullOr str;
+        type = str;
         description = "Keyboard layout";
         example = "de";
       };
@@ -47,10 +44,6 @@ in {
 
   config = {
     assertions = [
-      {
-        assertion = cfg.keyboard.layout != null;
-        message = "Error: keyboard layout is not set";
-      }
       {
         assertion =
           (cfg.time.automatic && cfg.time.timeZone == null)
