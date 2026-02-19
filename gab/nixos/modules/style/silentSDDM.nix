@@ -40,6 +40,10 @@ in {
             blur = 0;
             background = "${imgName background}";
           };
+          "LockScreen.Date" = {
+            format = "dd/MM/yyyy";
+            locale = "it_IT";
+          };
         };
       }
       (extras.silentSDDM or {})
