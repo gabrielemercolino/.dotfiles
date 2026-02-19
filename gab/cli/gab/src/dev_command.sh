@@ -1,90 +1,71 @@
-flake_init () {
-  local unfree_config=""
-  
-  if [[ $unfree_enabled ]]; then
-    unfree_config="config.allowUnfree = true;"
-  fi
-
+flake_init() {
   cat > flake.nix << EOF
 {
   description = "template dev flake";
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-  inputs.flake-utils.url = "github:numtide/flake-utils";
 
-  outputs = { nixpkgs, flake-utils, ... }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = import nixpkgs {
-          inherit system;$unfree_config
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+  };
+
+  outputs = inputs@{ flake-parts, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
+
+      perSystem = { system, ... }:
+        let
+          pkgs = import inputs.nixpkgs {
+            inherit system;
+            # config.allowUnfree = true;
+          };
+        in {
+          devShells.default = pkgs.mkShell {
+            nativeBuildInputs = with pkgs; [];
+            buildInputs = with pkgs; [];
+            shellHook = "";
+          };
         };
-      in
-      {
-        devShells.default = pkgs.mkShell {
-          nativeBuildInputs = with pkgs; [];
-          buildInputs = with pkgs; [];
-          shellHook = "";
-        };
-      }
-    );
+    };
 }
 EOF
 }
-envrc_init () {
-  if [[ $unfree_enabled ]]; then
-    echo 'use flake . --impure' > .envrc
+
+envrc_init() {
+  echo 'use flake' > .envrc
+}
+
+confirm_override() {
+  local target="$1"
+  local response
+
+  read -rp "${target} already present, override? [y/N] " response
+  case "${response}" in
+    "y"|"Y") return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+handle_file() {
+  local file="$1"
+  local init_fn="$2"
+
+  if [[ -f "$file" ]]; then
+    if confirm_override "$file"; then
+      echo "Overriding $file"
+      "$init_fn"
+    else
+      echo "Skipping $file"
+    fi
   else
-    echo 'use flake' > .envrc
+    echo "Creating $file"
+    "$init_fn"
   fi
 }
 
-# check if in $HOME
-if [ $PWD == $HOME ]; then
-  echo 'Cannot create dev shell in HOME'
+if [[ "$PWD" == "$HOME" ]]; then
+  echo "Cannot create dev shell in ${HOME}"
   exit 1
 fi
 
-unfree_enabled="${args[--unfree]}"
-
-# check if flake.nix exists
-if [ -f "flake.nix" ]; then
-  read -p 'flake.nix already present, override? [y/N]' response
-  
-  case "$response" in
-    "n"|"N"|"") 
-      echo 'Not overriding'
-    ;;
-    "y"|"Y") 
-      echo 'Overriding flake.nix'
-      flake_init
-    ;;
-    *) 
-      echo 'Invalid input, not overriding'
-    ;;
-  esac
-else
-  echo 'Creating flake.nix'
-  touch flake.nix
-  flake_init
-fi
-
-# check if .envrc exists
-if [ -f ".envrc" ]; then
-  read -p '.envrc already present, override? [y/N]' response
-  
-  case "$response" in
-    "n"|"N"|"") 
-      echo 'Not overriding'
-    ;;
-    "y"|"Y") 
-      echo 'Overriding .envrc'
-      envrc_init
-    ;;
-    *) 
-      echo 'Invalid input, not overriding'
-    ;;
-  esac
-else
-  echo 'Creating .envrc'
-  touch .envrc
-  envrc_init
-fi
+handle_file "flake.nix" flake_init
+handle_file ".envrc"    envrc_init

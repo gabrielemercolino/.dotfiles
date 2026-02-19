@@ -1,6 +1,6 @@
 name: gab
 help: Utility script for managing Nix
-version: 1.5.0
+version: 1.6.0
 
 commands:
 - name: sync
@@ -10,9 +10,6 @@ commands:
    - name: config
      help: what config to use
      required: true
-     allowed:
-        - mini-pc
-        - chromebook
   
   examples:
   - gab sync mini-pc
@@ -39,11 +36,5 @@ commands:
 - name: dev
   help: Creates a flake.nix and a .envrc in the current dir
 
-  flags:
-  - long: --unfree
-    short: -u
-    help: add unfree packages setup
-
   examples:
   - gab dev
-  - gab dev -u
