@@ -33,6 +33,7 @@ in {
 
           cookies-txt
           youtube-recommended-videos
+          indie-wiki-buddy
         ];
       };
 
