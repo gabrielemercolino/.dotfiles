@@ -7,8 +7,6 @@
     ...
   } @ inputs: let
     systemSettings = {
-      hostName = "nixos";
-
       dotfiles = "~/.dotfiles";
 
       kb = {
