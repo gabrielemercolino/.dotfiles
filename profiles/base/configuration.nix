@@ -75,9 +75,5 @@
 
     # optimise after every rebuild (not gc)
     auto-optimise-store = true;
-
-    substituters = systemSettings.cache.substituters;
-    trusted-substituters = systemSettings.cache.substituters;
-    trusted-public-keys = systemSettings.cache.trusted-public-keys;
   };
 }
