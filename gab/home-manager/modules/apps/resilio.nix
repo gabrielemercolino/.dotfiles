@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  systemSettings,
   ...
 }: let
   cfg = config.gab.apps.resilio;
@@ -13,6 +12,10 @@ in {
       type = lib.types.int;
       default = 8888;
     };
+    deviceName = lib.mkOption {
+      type  = lib.types.str;
+      default = "nixos";
+    };
   };
 
   config = {
@@ -21,7 +24,7 @@ in {
     home.file = lib.mkIf cfg.enable {
       ".config/resilio-sync/sync.conf".text = ''
         {
-          "device_name": "${systemSettings.hostName}",
+          "device_name": "${cfg.deviceName}",
           "listening_port": 0,
           "storage_path": "/home/${config.home.username}/.config/resilio-sync",
           "webui": {
