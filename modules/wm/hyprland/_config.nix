@@ -2,7 +2,7 @@
   lib,
   pkgs,
   config,
-  systemSettings,
+  keyboard,
 }: {
   exec_once = [];
   exec = [
@@ -51,8 +51,8 @@
   };
 
   input = {
-    kb_layout = systemSettings.kb.layout;
-    kb_variant = systemSettings.kb.variant;
+    kb_layout = keyboard.layout;
+    kb_variant = keyboard.variant;
     follow_mouse = 1;
     touchpad.natural_scroll = "no";
   };
