@@ -28,9 +28,8 @@ in {
     };
   };
 
-  flake.homeModules.common = {...}: {
+  flake.homeModules.common = {pkgs, ...}: {
     imports = [
-      self.homeModules.gab
       self.homeModules.user
       self.homeModules.wm
     ];
@@ -39,6 +38,8 @@ in {
       allowUnfree = true;
       allowUnfreePredicate = _: true;
     };
+
+    home.packages = [self.packages.${pkgs.stdenv.hostPlatform.system}.gab];
 
     home.stateVersion = stateVersion;
   };
