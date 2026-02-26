@@ -11,6 +11,7 @@
   }: let
     cfg = config.gab.wm.hyprland;
   in {
+    imports = [self.nixosModules.screen-record];
     options.gab.wm.hyprland = {
       enable = lib.mkEnableOption "hyprland";
     };
@@ -83,7 +84,11 @@
           })
         ];
 
-        keyBinds = import ./_keybinds.nix {inherit lib pkgs;};
+        keyBinds = import ./_keybinds.nix {
+          inherit lib pkgs;
+          screen-record = self.packages.${pkgs.stdenv.hostPlatform.system}.screen-record;
+          screen-shot = self.packages.${pkgs.stdenv.hostPlatform.system}.screen-shot;
+        };
 
         animations = import ./_animations.nix {};
       };
