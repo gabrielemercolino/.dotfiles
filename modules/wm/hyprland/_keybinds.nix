@@ -1,11 +1,9 @@
 {
   lib,
   pkgs,
-  ...
+  screen-record,
+  screen-shot
 }: let
-  screenShot = pkgs.callPackage ../../../../cli/screen-shot {};
-  screenRecord = pkgs.callPackage ../../../../cli/screen-record {};
-
   MOUSE_L = "mouse:272";
   MOUSE_R = "mouse:273";
   terminal = "${lib.getExe pkgs.kitty}";
@@ -98,7 +96,7 @@ in
       bind."SUPER_SHIFT, M" = "exit";
     }
     {
-      bind."SUPER CONTROL_L, S" = "exec, ${lib.getExe screenShot}";
-      bind."SUPER_SHIFT, S" = "exec, ${lib.getExe screenRecord}";
+      bind."SUPER CONTROL_L, S" = "exec, ${lib.getExe screen-shot}";
+      bind."SUPER_SHIFT, S" = "exec, ${lib.getExe screen-record}";
     }
   ]
