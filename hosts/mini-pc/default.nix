@@ -37,6 +37,8 @@ in {
 
     gab = {
       user.name = username;
+
+      keyboard.layout = "it";
     };
   };
 }

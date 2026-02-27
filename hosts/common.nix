@@ -31,6 +31,8 @@ in {
   flake.homeModules.common = {pkgs, ...}: {
     imports = [
       self.homeModules.user
+      self.homeModules.keyboard
+      # self.homeModules.apps
       self.homeModules.wm
     ];
 

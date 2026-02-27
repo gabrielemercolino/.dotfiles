@@ -1,7 +1,7 @@
 {lib, ...}:
 with lib.types; {
-  flake.homeModules.hardware = {...}: {
-    options.gab.hardware.keyboard = {
+  flake.homeModules.keyboard = {...}: {
+    options.gab.keyboard = {
       layout = lib.mkOption {
         type = str;
         example = "it";

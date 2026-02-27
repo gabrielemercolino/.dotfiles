@@ -42,9 +42,9 @@
     cfg = config.gab.wm.hyprland;
   in {
     imports = [
-      self.homeModules.hardware
       inputs.hyprland-nix.homeManagerModules.default
       inputs.ags-bar.homeManagerModules.default
+      self.homeModules.keyboard
     ];
 
     options.gab.wm.hyprland = {
@@ -82,7 +82,7 @@
           {monitor = cfg.monitors ++ [", preferred, auto, 1"];}
           (import ./_config.nix {
             inherit lib pkgs config;
-            keyboard = config.gab.hardware.keyboard;
+            keyboard = config.gab.keyboard;
           })
         ];
 
