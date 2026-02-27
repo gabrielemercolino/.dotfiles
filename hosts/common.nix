@@ -34,7 +34,10 @@ in {
     imports = [
       self.homeModules.user
       self.homeModules.keyboard
-      # self.homeModules.apps
+      self.homeModules.apps
+      self.homeModules.socials
+      self.homeModules.browsers
+      self.homeModules.music
       self.homeModules.wm
     ];
 
