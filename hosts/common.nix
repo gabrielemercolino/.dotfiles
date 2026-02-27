@@ -5,7 +5,7 @@ in {
     imports = [
       self.nixosModules.user
       self.nixosModules.wm
-      # self.nixosModules.apps
+      self.nixosModules.apps
       self.nixosModules.gaming
     ];
     boot = {
