@@ -65,7 +65,9 @@
         commands.lock = "${pkgs.swaylock-effects}/bin/swaylock";
       };
 
-      wayland.windowManager.hyprland = {
+      wayland.windowManager.hyprland = let
+        system = pkgs.stdenv.hostPlatform.system;
+      in {
         enable = true;
         package = pkgs.hyprland;
 
@@ -86,8 +88,8 @@
 
         keyBinds = import ./_keybinds.nix {
           inherit lib pkgs;
-          screen-record = self.packages.${pkgs.stdenv.hostPlatform.system}.screen-record;
-          screen-shot = self.packages.${pkgs.stdenv.hostPlatform.system}.screen-shot;
+          screen-record = self.packages.${system}.screen-record;
+          screen-shot = self.packages.${system}.screen-shot;
         };
 
         animations = import ./_animations.nix {};
