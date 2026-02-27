@@ -28,7 +28,9 @@ in {
     };
   };
 
-  flake.homeModules.common = {pkgs, ...}: {
+  flake.homeModules.common = {pkgs, ...}: let
+    system = pkgs.stdenv.hostPlatform.system;
+  in {
     imports = [
       self.homeModules.user
       self.homeModules.keyboard
@@ -41,7 +43,7 @@ in {
       allowUnfreePredicate = _: true;
     };
 
-    home.packages = [self.packages.${pkgs.stdenv.hostPlatform.system}.gab];
+    home.packages = [self.packages.${system}.gab];
 
     home.stateVersion = stateVersion;
   };
