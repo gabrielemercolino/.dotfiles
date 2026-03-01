@@ -1,5 +1,9 @@
-{lib, ...}: {
-  flake.nixosModules.apps = {
+{
+  self,
+  lib,
+  ...
+}: {
+  flake.nixosModules.bashmount = {
     config,
     pkgs,
     ...
@@ -16,4 +20,6 @@
       services.udisks2.enable = true;
     };
   };
+
+  flake.nixosModules.apps = _: {imports = [self.nixosModules.bashmount];};
 }

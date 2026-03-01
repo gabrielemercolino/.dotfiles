@@ -1,6 +1,9 @@
-{...}: {
-  flake.nixosModules.gaming = {
-    lib,
+{
+  self,
+  lib,
+  ...
+}: {
+  flake.nixosModules.steam = {
     config,
     pkgs,
     ...
@@ -11,13 +14,15 @@
       steam.enable = lib.mkEnableOption "steam";
     };
 
-    config = {
-      boot.kernelModules = lib.optionals cfg.enable ["ntsync"];
+    config = lib.mkIf cfg.enable {
+      boot.kernelModules = ["ntsync"];
 
       programs.steam = {
-        enable = cfg.enable;
+        enable = true;
         extraCompatPackages = [pkgs.proton-ge-bin];
       };
     };
   };
+
+  flake.nixosModules.gaming = _: {imports = [self.nixosModules.steam];};
 }

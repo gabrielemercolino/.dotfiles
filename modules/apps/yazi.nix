@@ -1,5 +1,9 @@
-{lib, ...}: {
-  flake.homeModules.apps = {config, ...}: let
+{
+  self,
+  lib,
+  ...
+}: {
+  flake.homeModules.yazi = {config, ...}: let
     cfg = config.gab.apps.yazi;
   in {
     options.gab.apps.yazi = {
@@ -47,4 +51,6 @@
       };
     };
   };
+
+  flake.homeModules.apps = _: {imports = [self.homeModules.yazi];};
 }

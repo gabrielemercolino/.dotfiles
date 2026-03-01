@@ -1,5 +1,9 @@
-{lib, ...}: {
-  flake.nixosModules.apps = {config, ...}: let
+{
+  self,
+  lib,
+  ...
+}: {
+  flake.nixosModules.ssh = {config, ...}: let
     cfg = config.gab.apps.ssh;
   in {
     options.gab.apps.ssh = {
@@ -10,4 +14,6 @@
       services.openssh.enable = true;
     };
   };
+
+  flake.nixosModules.apps = _: {imports = [self.nixosModules.ssh];};
 }

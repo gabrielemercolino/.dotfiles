@@ -4,7 +4,7 @@
   lib,
   ...
 }: {
-  flake.nixosModules.wm = {
+  flake.nixosModules.hyprland = {
     config,
     pkgs,
     ...
@@ -34,7 +34,7 @@
     };
   };
 
-  flake.homeModules.wm = {
+  flake.homeModules.hyprland = {
     config,
     pkgs,
     ...
@@ -65,11 +65,15 @@
         commands.lock = "${pkgs.swaylock-effects}/bin/swaylock";
       };
 
+      programs.swaylock = {
+        enable = true;
+        package = pkgs.swaylock-effects;
+      };
+
       wayland.windowManager.hyprland = let
         system = pkgs.stdenv.hostPlatform.system;
       in {
         enable = true;
-        package = pkgs.hyprland;
 
         reloadConfig = true;
         systemd.enable = true;
@@ -96,4 +100,7 @@
       };
     };
   };
+
+  flake.nixosModules.wm = _: {imports = [self.nixosModules.hyprland];};
+  flake.homeModules.wm = _: {imports = [self.homeModules.hyprland];};
 }

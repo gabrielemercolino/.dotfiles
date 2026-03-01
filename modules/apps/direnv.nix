@@ -1,5 +1,9 @@
-{lib, ...}: {
-  flake.nixosModules.apps = {
+{
+  self,
+  lib,
+  ...
+}: {
+  flake.nixosModules.direnv = {
     config,
     pkgs,
     ...
@@ -14,4 +18,6 @@
       programs.direnv.enable = true;
     };
   };
+
+  flake.nixosModules.apps = _: {imports = [self.nixosModules.direnv];};
 }

@@ -1,6 +1,10 @@
-{lib, ...}:
+{
+  self,
+  lib,
+  ...
+}:
 with lib.types; {
-  flake.homeModules.music = {config, ...}: let
+  flake.homeModules.mpd = {config, ...}: let
     cfg = config.gab.music.mpd;
   in {
     options.gab.music.mpd = {
@@ -43,4 +47,6 @@ with lib.types; {
       };
     };
   };
+
+  flake.homeModules.music = _: {imports = [self.homeModules.mpd];};
 }

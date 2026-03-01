@@ -1,5 +1,9 @@
-{lib, ...}: {
-  flake.homeModules.socials = {
+{
+  self,
+  lib,
+  ...
+}: {
+  flake.homeModules.telegram = {
     config,
     pkgs,
     ...
@@ -14,4 +18,6 @@
       home.packages = [pkgs.telegram-desktop];
     };
   };
+
+  flake.homeModules.socials = _: {imports = [self.homeModules.telegram];};
 }
