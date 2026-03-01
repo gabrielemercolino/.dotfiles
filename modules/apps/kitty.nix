@@ -1,5 +1,9 @@
-{lib, ...}: {
-  flake.homeModules.apps = {config, ...}: let
+{
+  self,
+  lib,
+  ...
+}: {
+  flake.homeModules.kitty = {config, ...}: let
     cfg = config.gab.apps.kitty;
   in {
     options.gab.apps.kitty = {
@@ -17,4 +21,6 @@
       };
     };
   };
+
+  flake.homeModules.apps = _: {imports = [self.homeModules.kitty];};
 }

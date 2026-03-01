@@ -1,5 +1,9 @@
-{lib, ...}: {
-  flake.homeModules.apps = {
+{
+  self,
+  lib,
+  ...
+}: {
+  flake.homeModules.rofi = {
     config,
     pkgs,
     ...
@@ -24,4 +28,6 @@
       };
     };
   };
+
+  flake.homeModules.apps = _: {imports = [self.homeModules.rofi];};
 }

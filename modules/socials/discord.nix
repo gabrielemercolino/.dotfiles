@@ -1,5 +1,9 @@
-{lib, ...}: {
-  flake.homeModules.socials = {
+{
+  self,
+  lib,
+  ...
+}: {
+  flake.homeModules.discord = {
     config,
     pkgs,
     ...
@@ -14,4 +18,6 @@
       home.packages = [(pkgs.discord.override {withEquicord = true;})];
     };
   };
+
+  flake.homeModules.socials = _: {imports = [self.homeModules.discord];};
 }

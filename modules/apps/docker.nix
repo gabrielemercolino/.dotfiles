@@ -3,7 +3,7 @@
   lib,
   ...
 }: {
-  flake.nixosModules.apps = {config, ...}: let
+  flake.nixosModules.docker = {config, ...}: let
     cfg = config.gab.apps.docker;
   in {
     imports = [self.nixosModules.user];
@@ -18,4 +18,6 @@
       virtualisation.docker.enable = true;
     };
   };
+
+  flake.nixosModules.apps = _: {imports = [self.nixosModules.docker];};
 }

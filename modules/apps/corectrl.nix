@@ -3,7 +3,7 @@
   lib,
   ...
 }: {
-  flake.nixosModules.apps = {
+  flake.nixosModules.corectrl = {
     config,
     pkgs,
     ...
@@ -24,4 +24,6 @@
       programs.corectrl.enable = true;
     };
   };
+
+  flake.nixosModules.apps = _: {imports = [self.nixosModules.corectrl];};
 }

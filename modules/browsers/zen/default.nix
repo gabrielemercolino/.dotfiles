@@ -4,7 +4,7 @@
   lib,
   ...
 }: {
-  flake.homeModules.browsers = {
+  flake.homeModules.zen = {
     config,
     pkgs,
     ...
@@ -43,4 +43,6 @@
       };
     };
   };
+
+  flake.homeModules.browsers = _: {imports = [self.homeModules.zen];};
 }

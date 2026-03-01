@@ -1,5 +1,9 @@
-{lib, ...}: {
-  flake.homeModules.apps = {config, ...}: let
+{
+  self,
+  lib,
+  ...
+}: {
+  flake.homeModules.opencode = {config, ...}: let
     cfg = config.gab.apps.opencode;
 
     antigravity-cfg = builtins.readFile ./antigravity.json |> builtins.fromJSON;
@@ -24,4 +28,6 @@
       };
     };
   };
+
+  flake.homeModules.apps = _: {imports = [self.homeModules.opencode];};
 }

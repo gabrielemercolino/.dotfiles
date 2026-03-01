@@ -1,5 +1,9 @@
-{lib, ...}: {
-  flake.homeModules.apps = {
+{
+  self,
+  lib,
+  ...
+}: {
+  flake.homeModules.resilio = {
     config,
     pkgs,
     ...
@@ -54,4 +58,6 @@
       };
     };
   };
+
+  flake.homeModules.apps = _: {imports = [self.homeModules.resilio];};
 }
