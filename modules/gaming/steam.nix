@@ -10,8 +10,8 @@
   }: let
     cfg = config.gab.gaming.steam;
   in {
-    options.gab.gaming = {
-      steam.enable = lib.mkEnableOption "steam";
+    options.gab.gaming.steam = {
+      enable = lib.mkEnableOption "steam";
     };
 
     config = lib.mkIf cfg.enable {
