@@ -83,6 +83,14 @@
     };
   };
 
+  programs.jujutsu = {
+    enable = true;
+    settings.user = {
+      inherit (userSettings) name;
+      inherit (userSettings) email;
+    };
+  };
+
   programs.gh = {
     enable = true;
     extensions = [pkgs.gh-dash];
