@@ -14,7 +14,7 @@
       enable = lib.mkEnableOption "lsfg-vk[-ui]";
     };
 
-    config = cfg.enable {
+    config = lib.mkIf cfg.enable {
       environment.systemPackages = [pkgs.lsfg-vk-ui pkgs.lsfg-vk];
     };
   };
