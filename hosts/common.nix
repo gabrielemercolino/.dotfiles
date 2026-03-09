@@ -7,6 +7,7 @@ in {
       self.nixosModules.wm
       self.nixosModules.apps
       self.nixosModules.gaming
+      self.nixosModules.fonts
     ];
     boot = {
       initrd.systemd.enable = true;
