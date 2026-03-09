@@ -1,7 +1,7 @@
 {
   description = "My flake";
 
-  outputs = inputs:
+  outputs = {nixpkgs, ...} @ inputs:
     inputs.flake-parts.lib.mkFlake {inherit inputs;} {
       systems = ["x86_64-linux"];
       imports = [
@@ -9,7 +9,15 @@
         (inputs.import-tree ./hosts)
         (inputs.import-tree ./modules)
       ];
-      perSystem = {pkgs, ...}: {
+      perSystem = {
+        pkgs,
+        system,
+        ...
+      }: {
+        _module.args.pkgs = import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+        };
         formatter = pkgs.alejandra;
       };
     };
