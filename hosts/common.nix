@@ -8,6 +8,7 @@ in {
       self.nixosModules.apps
       self.nixosModules.gaming
       self.nixosModules.fonts
+      self.nixosModules.sops
     ];
     boot = {
       initrd.systemd.enable = true;
@@ -40,6 +41,7 @@ in {
       self.homeModules.browsers
       self.homeModules.music
       self.homeModules.wm
+      self.homeModules.sops
     ];
 
     nixpkgs.config = {
