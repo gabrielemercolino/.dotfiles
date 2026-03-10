@@ -3,6 +3,7 @@
 in {
   flake.nixosModules.common = {...}: {
     imports = [
+      self.nixosModules.hardware
       self.nixosModules.user
       self.nixosModules.wm
       self.nixosModules.apps
