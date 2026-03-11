@@ -7,6 +7,7 @@ in {
       self.nixosModules.user
       self.nixosModules.wm
       self.nixosModules.apps
+      self.nixosModules.clis
       self.nixosModules.gaming
       self.nixosModules.fonts
       self.nixosModules.sops
@@ -38,6 +39,7 @@ in {
       self.homeModules.user
       self.homeModules.keyboard
       self.homeModules.apps
+      self.homeModules.clis
       self.homeModules.socials
       self.homeModules.browsers
       self.homeModules.music

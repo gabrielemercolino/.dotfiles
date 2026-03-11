@@ -52,5 +52,5 @@
     };
   };
 
-  flake.homeModules.apps = _: {imports = [self.homeModules.yazi];};
+  flake.homeModules.clis = _: {imports = [self.homeModules.yazi];};
 }

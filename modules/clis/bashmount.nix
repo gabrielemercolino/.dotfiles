@@ -21,5 +21,5 @@
     };
   };
 
-  flake.nixosModules.apps = _: {imports = [self.nixosModules.bashmount];};
+  flake.nixosModules.clis = _: {imports = [self.nixosModules.bashmount];};
 }

@@ -1,4 +1,4 @@
-{...}: {
+{self, ...}: {
   flake.nixosModules.screen-record = {pkgs, ...}: {
     # needed for gpu-screen-recorder
     security.wrappers.gsr-kms-server = {
@@ -10,6 +10,8 @@
       setgid = false;
     };
   };
+
+  flake.nixosModules.clis = _: {imports = [self.nixosModules.screen-record];};
 
   perSystem = {pkgs, ...}: {
     packages.screen-record = pkgs.writeShellApplication {

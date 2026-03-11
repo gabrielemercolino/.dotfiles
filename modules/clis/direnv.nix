@@ -19,5 +19,5 @@
     };
   };
 
-  flake.nixosModules.apps = _: {imports = [self.nixosModules.direnv];};
+  flake.nixosModules.clis = _: {imports = [self.nixosModules.direnv];};
 }

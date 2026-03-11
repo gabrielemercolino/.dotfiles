@@ -29,5 +29,5 @@
     };
   };
 
-  flake.homeModules.apps = _: {imports = [self.homeModules.opencode];};
+  flake.homeModules.clis = _: {imports = [self.homeModules.opencode];};
 }
