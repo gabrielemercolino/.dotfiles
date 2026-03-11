@@ -26,6 +26,11 @@ in {
 
       hardware = {
         inherit keyboard;
+
+        localization = {
+          i18n.locale = "it/IT";
+          time.timeZone = "Europe/Rome";
+        };
       };
 
       wm = {
