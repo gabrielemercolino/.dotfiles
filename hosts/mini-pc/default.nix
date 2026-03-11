@@ -18,6 +18,7 @@ in {
     imports = [./_hardware-configuration.nix self.nixosModules.common];
 
     gab = {
+      host.name = "mini-pc";
       user.name = username;
 
       wm = {
