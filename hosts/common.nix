@@ -12,6 +12,7 @@ in {
       self.nixosModules.fonts
       self.nixosModules.sops
     ];
+
     boot = {
       initrd.systemd.enable = true;
       initrd.systemd.emergencyAccess = true;
@@ -37,7 +38,7 @@ in {
   in {
     imports = [
       self.homeModules.user
-      self.homeModules.keyboard
+      self.homeModules.hardware
       self.homeModules.apps
       self.homeModules.clis
       self.homeModules.socials
