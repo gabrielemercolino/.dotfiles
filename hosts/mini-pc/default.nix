@@ -4,6 +4,9 @@
   ...
 }: let
   username = "gabriele";
+  keyboard = {
+    layout = "it";
+  };
 in {
   flake.nixosConfigurations.mini-pc = inputs.nixpkgs.lib.nixosSystem {
     modules = [self.nixosModules.mini-pc];
@@ -21,11 +24,13 @@ in {
       host.name = "mini-pc";
       user.name = username;
 
+      hardware = {
+        inherit keyboard;
+      };
+
       wm = {
         hyprland.enable = true;
       };
-
-      # apps = {};
 
       gaming = {
         steam.enable = true;
@@ -39,7 +44,9 @@ in {
     gab = {
       user.name = username;
 
-      keyboard.layout = "it";
+      hardware = {
+        inherit keyboard;
+      };
     };
   };
 }
