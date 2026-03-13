@@ -2,17 +2,7 @@
   stateVersion = "26.05";
 in {
   flake.nixosModules.common = {...}: {
-    imports = [
-      self.nixosModules.host
-      self.nixosModules.hardware
-      self.nixosModules.user
-      self.nixosModules.wm
-      self.nixosModules.apps
-      self.nixosModules.clis
-      self.nixosModules.gaming
-      self.nixosModules.fonts
-      self.nixosModules.sops
-    ];
+    imports = with self.nixosModules; [host user hardware wm apps clis gaming fonts sops];
 
     boot = {
       initrd.systemd.enable = true;
@@ -37,17 +27,7 @@ in {
   flake.homeModules.common = {pkgs, ...}: let
     system = pkgs.stdenv.hostPlatform.system;
   in {
-    imports = [
-      self.homeModules.user
-      self.homeModules.hardware
-      self.homeModules.apps
-      self.homeModules.clis
-      self.homeModules.socials
-      self.homeModules.browsers
-      self.homeModules.music
-      self.homeModules.wm
-      self.homeModules.sops
-    ];
+    imports = with self.homeModules; [user hardware apps clis socials browsers music wm sops];
 
     nixpkgs.config = {
       allowUnfree = true;
