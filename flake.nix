@@ -1,61 +1,9 @@
 {
   description = "My flake";
 
-  outputs = {
-    nixpkgs,
-    home-manager,
-    ...
-  } @ inputs: let
-    systemSettings = {
-      dotfiles = "~/.dotfiles";
-
-      kb = {
-        layout = "it";
-        variant = "";
-      };
-    };
-
-    userSettings = {
-      userName = "gabriele";
-      name = "Gabriele";
-      email = "gmercolino2003@gmail.com";
-    };
-
-    inherit (nixpkgs) lib;
-
-    createNixosProfile = name: system:
-      lib.nixosSystem {
-        inherit system;
-        modules = [./profiles/${name}/configuration.nix];
-        specialArgs = {
-          inherit userSettings systemSettings inputs;
-        };
-      };
-
-    createHomeProfile = name: system:
-      home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs {
-          inherit system;
-          overlays = [];
-        };
-        modules = [./profiles/${name}/home.nix];
-        extraSpecialArgs = {
-          inherit userSettings systemSettings inputs;
-        };
-      };
-  in {
-    nixosConfigurations = {
-      mini-pc = createNixosProfile "mini-pc" "x86_64-linux";
-      chromebook = createNixosProfile "chromebook" "x86_64-linux";
-    };
-
-    homeConfigurations = {
-      mini-pc = createHomeProfile "mini-pc" "x86_64-linux";
-      chromebook = createHomeProfile "chromebook" "x86_64-linux";
-    };
-
-    formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
-  };
+  outputs =
+    { flake-parts, ... }@inputs:
+    flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
@@ -72,6 +20,11 @@
 
     import-tree.url = "github:vic/import-tree";
 
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     stylix = {
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -83,7 +36,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprland-nix = {
+    hyprnix = {
       url = "github:hyprland-community/hyprnix";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.hyprland.follows = "hyprland";
