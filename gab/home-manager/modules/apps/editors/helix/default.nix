@@ -3,7 +3,8 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.gab.apps.helix;
   helix-wrapped = pkgs.writeShellScriptBin "hx" ''
     if [ -z "$ZELLIJ" ]; then
@@ -23,10 +24,13 @@
       exec ${pkgs.helix}/bin/hx "$@"
     fi
   '';
-in {
+in
+{
   options.gab.apps.helix = {
     enable = lib.mkEnableOption "helix";
-    defaultEditor = lib.mkEnableOption "helix as default editor" // {default = true;};
+    defaultEditor = lib.mkEnableOption "helix as default editor" // {
+      default = true;
+    };
   };
 
   config = {
@@ -35,8 +39,8 @@ in {
 
       package = helix-wrapped;
 
-      settings = import ./_settings.nix {inherit pkgs lib;};
-      languages = import ./_languages.nix {inherit pkgs lib;};
+      settings = import ./_settings.nix { inherit pkgs lib; };
+      languages = import ./_languages.nix { inherit pkgs lib; };
     };
   };
 }

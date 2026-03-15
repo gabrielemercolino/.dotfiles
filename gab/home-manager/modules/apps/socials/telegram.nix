@@ -3,14 +3,16 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.gab.apps.telegram;
-in {
+in
+{
   options.gab.apps.telegram = {
     enable = lib.mkEnableOption "telegram desktop";
   };
 
   config = {
-    home.packages = lib.optionals cfg.enable [pkgs.telegram-desktop];
+    home.packages = lib.optionals cfg.enable [ pkgs.telegram-desktop ];
   };
 }

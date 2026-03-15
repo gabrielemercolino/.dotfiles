@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   imports = [
     ./hardware-configuration.nix
     ./theme.nix
@@ -8,7 +9,7 @@
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  hardware.graphics.extraPackages = with pkgs; [intel-media-driver];
+  hardware.graphics.extraPackages = with pkgs; [ intel-media-driver ];
   networking.hostName = "chromebook";
 
   gab = {
@@ -46,7 +47,7 @@
   };
 
   services.xserver = {
-    excludePackages = [pkgs.xterm];
+    excludePackages = [ pkgs.xterm ];
     displayManager.sessionCommands = "xrdb -merge <<< \"Xft.dpi: 120\"";
   };
 }

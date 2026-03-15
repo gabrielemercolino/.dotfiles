@@ -5,7 +5,8 @@
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   imports = [
     ../../gab/home-manager
     inputs.sops-nix.homeManagerModules.sops
@@ -14,7 +15,7 @@
   nixpkgs.config = {
     allowUnfree = true;
     allowUnfreePredicate = _: true;
-    permittedInsecurePackages = [];
+    permittedInsecurePackages = [ ];
   };
 
   # Home Manager needs a bit of information about you and the paths it should
@@ -24,16 +25,18 @@
 
   home.stateVersion = "26.05";
 
-  xdg = let
-    xdg = import ./xdg.nix {inherit config lib pkgs;};
-  in {
-    enable = true;
-    desktopEntries = xdg.desktopEntries;
-    mimeApps = {
+  xdg =
+    let
+      xdg = import ./xdg.nix { inherit config lib pkgs; };
+    in
+    {
       enable = true;
-      defaultApplications = xdg.defaultApplications;
+      desktopEntries = xdg.desktopEntries;
+      mimeApps = {
+        enable = true;
+        defaultApplications = xdg.defaultApplications;
+      };
     };
-  };
 
   sops = {
     defaultSopsFile = ../../secrets/secrets.yaml;
@@ -65,7 +68,11 @@
       default_mode = "locked";
       show_release_notes = false;
       show_startup_tips = false;
-      ui = {pane_frames = {hide_session_name = true;};};
+      ui = {
+        pane_frames = {
+          hide_session_name = true;
+        };
+      };
     };
   };
 }

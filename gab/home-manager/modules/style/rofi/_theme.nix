@@ -1,8 +1,10 @@
-{config}: let
+{ config }:
+let
   # mkLiteral strips the quotes
   inherit (config.lib.formats.rasi) mkLiteral;
   colors = config.lib.stylix.colors.withHashtag;
-in {
+in
+{
   "*" = {
     background = mkLiteral "${colors.base01}";
     background-alt = mkLiteral "${colors.base00}";
@@ -20,7 +22,10 @@ in {
 
   mainbox = {
     background-color = mkLiteral "transparent";
-    children = ["inputbar" "listview"];
+    children = [
+      "inputbar"
+      "listview"
+    ];
   };
 
   inputbar = {
@@ -28,7 +33,10 @@ in {
     padding = mkLiteral "15px";
     background-color = mkLiteral "@background-alt";
     text-color = mkLiteral "@selected";
-    children = ["prompt" "entry"];
+    children = [
+      "prompt"
+      "entry"
+    ];
   };
 
   prompt = {

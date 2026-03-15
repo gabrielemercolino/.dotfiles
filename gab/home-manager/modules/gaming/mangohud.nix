@@ -2,9 +2,11 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.gab.gaming.mangohud;
-in {
+in
+{
   options.gab.gaming.mangohud = {
     enable = lib.mkEnableOption "mangohud";
   };

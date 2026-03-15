@@ -1,7 +1,8 @@
 {
   pkgs,
   lib,
-}: {
+}:
+{
   editor = {
     auto-format = true;
     line-number = "relative";
@@ -10,9 +11,21 @@
     popup-border = "all";
 
     statusline = {
-      left = ["mode" "spacer" "file-name" "read-only-indicator" "file-modification-indicator"];
-      center = ["version-control"];
-      right = ["spinner" "file-type" "diagnostics" "position" "position-percentage"];
+      left = [
+        "mode"
+        "spacer"
+        "file-name"
+        "read-only-indicator"
+        "file-modification-indicator"
+      ];
+      center = [ "version-control" ];
+      right = [
+        "spinner"
+        "file-type"
+        "diagnostics"
+        "position"
+        "position-percentage"
+      ];
     };
 
     cursor-shape = {
@@ -45,7 +58,10 @@
   keys.normal = {
     C-q = ":wq";
     C-s = ":w";
-    C-f = [":fmt" ":w"];
+    C-f = [
+      ":fmt"
+      ":w"
+    ];
     C-w = ":buffer-close";
     C-right = ":buffer-next";
     C-left = ":buffer-previous";

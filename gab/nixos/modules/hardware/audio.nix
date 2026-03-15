@@ -5,13 +5,18 @@
   userSettings,
   ...
 }:
-with lib.types; let
+with lib.types;
+let
   cfg = config.gab.hardware;
-in {
+in
+{
   options.gab.hardware = {
     audio-server = lib.mkOption {
       default = null;
-      type = nullOr (enum ["pipewire" "pulseaudio"]);
+      type = nullOr (enum [
+        "pipewire"
+        "pulseaudio"
+      ]);
       description = "The audio server to use";
     };
   };

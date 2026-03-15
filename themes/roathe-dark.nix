@@ -3,7 +3,8 @@
   lib,
   pkgs,
   ...
-}: rec {
+}:
+rec {
   system = "base16";
   name = "Warframe kim dark";
   author = "https://github.com/gabrielemercolino";
@@ -54,13 +55,15 @@
       };
     };
 
-    rofi = let
-      inherit (config.lib.formats.rasi) mkLiteral;
-    in {
-      "*" = {
-        selected = lib.mkForce (mkLiteral "#${palette.base0F}");
+    rofi =
+      let
+        inherit (config.lib.formats.rasi) mkLiteral;
+      in
+      {
+        "*" = {
+          selected = lib.mkForce (mkLiteral "#${palette.base0F}");
+        };
       };
-    };
 
     cava = {
       color = {

@@ -3,8 +3,9 @@
   pkgs,
   config,
   systemSettings,
-}: {
-  exec_once = [];
+}:
+{
+  exec_once = [ ];
   exec = [
     "${lib.getExe pkgs.swaybg} -m fill -i ${config.stylix.image}"
   ];

@@ -1,3 +1,4 @@
-{inputs, ...}: {
-  imports = [(inputs.import-tree ./modules)];
+{ inputs, ... }:
+{
+  imports = [ (inputs.import-tree ./modules) ];
 }

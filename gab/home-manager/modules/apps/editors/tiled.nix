@@ -3,14 +3,16 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.gab.apps.tiled;
-in {
+in
+{
   options.gab.apps.tiled = {
     enable = lib.mkEnableOption "tiled";
   };
 
   config = {
-    home.packages = lib.optionals cfg.enable [pkgs.tiled];
+    home.packages = lib.optionals cfg.enable [ pkgs.tiled ];
   };
 }

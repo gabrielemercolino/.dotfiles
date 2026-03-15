@@ -3,14 +3,18 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.gab.gaming;
-in {
+in
+{
   options.gab.gaming = {
     suyu.enable = lib.mkEnableOption "suyu";
   };
 
   config = {
-    environment.systemPackages = lib.optionals cfg.suyu.enable [(pkgs.callPackage ./_custom-derivations/suyu.nix {})];
+    environment.systemPackages = lib.optionals cfg.suyu.enable [
+      (pkgs.callPackage ./_custom-derivations/suyu.nix { })
+    ];
   };
 }

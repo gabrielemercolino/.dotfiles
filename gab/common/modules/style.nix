@@ -3,9 +3,11 @@
   config,
   pkgs,
   ...
-}: let
-  theme = import ../../../themes/${config.gab.style.theme}.nix {inherit config pkgs lib;};
-in {
+}:
+let
+  theme = import ../../../themes/${config.gab.style.theme}.nix { inherit config pkgs lib; };
+in
+{
   options.gab.style = {
     theme = lib.mkOption {
       default = "catppuccin-mocha";

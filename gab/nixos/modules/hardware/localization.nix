@@ -3,9 +3,11 @@
   lib,
   ...
 }:
-with lib.types; let
+with lib.types;
+let
   cfg = config.gab.hardware;
-in {
+in
+{
   options.gab.hardware = {
     keyboard = {
       layout = lib.mkOption {

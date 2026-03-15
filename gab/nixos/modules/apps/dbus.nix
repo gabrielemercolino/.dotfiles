@@ -3,9 +3,11 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.gab.apps;
-in {
+in
+{
   options.gab.apps = {
     dbus.enable = lib.mkEnableOption "dbus";
   };
@@ -13,7 +15,7 @@ in {
   config = {
     services.dbus = {
       enable = cfg.dbus.enable;
-      packages = [pkgs.dconf];
+      packages = [ pkgs.dconf ];
     };
     programs.dconf.enable = cfg.dbus.enable;
   };

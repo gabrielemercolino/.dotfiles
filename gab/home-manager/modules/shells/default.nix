@@ -2,17 +2,23 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.gab.shell;
-in {
+in
+{
   options.gab.shell = {
-    bash.enable = lib.mkEnableOption "bash" // {default = true;};
+    bash.enable = lib.mkEnableOption "bash" // {
+      default = true;
+    };
     zsh.enable = lib.mkEnableOption "zsh";
     nushell.enable = lib.mkEnableOption "nushell";
 
     aliases = lib.mkOption {
       type = lib.types.attrsOf lib.types.str;
-      example = {l = "ls";};
+      example = {
+        l = "ls";
+      };
     };
   };
 

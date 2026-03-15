@@ -2,9 +2,11 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.gab.hardware;
-in {
+in
+{
   options.gab.hardware = {
     bluetooth.enable = lib.mkEnableOption "bluetooth";
   };

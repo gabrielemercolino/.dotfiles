@@ -3,14 +3,16 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.gab.apps.aseprite;
-in {
+in
+{
   options.gab.apps.aseprite = {
     enable = lib.mkEnableOption "aseprite";
   };
 
   config = {
-    home.packages = lib.optionals cfg.enable [pkgs.aseprite];
+    home.packages = lib.optionals cfg.enable [ pkgs.aseprite ];
   };
 }

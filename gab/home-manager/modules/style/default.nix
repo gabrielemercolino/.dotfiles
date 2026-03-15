@@ -2,14 +2,16 @@
   config,
   inputs,
   ...
-}: let
+}:
+let
   cfg = config.gab.style;
   theme = cfg._theme;
   background = theme.background or ./wallpaper.png;
-  fonts = theme.fonts or {};
+  fonts = theme.fonts or { };
   opacity = theme.opacity or 1.0;
-in {
-  imports = [inputs.stylix.homeModules.stylix];
+in
+{
+  imports = [ inputs.stylix.homeModules.stylix ];
 
   config = {
     stylix = {
@@ -17,16 +19,14 @@ in {
       autoEnable = true;
       inherit (theme) polarity;
 
-      fonts =
-        fonts
-        // {
-          sizes = {
-            inherit (cfg.fonts.sizes) applications;
-            inherit (cfg.fonts.sizes) desktop;
-            inherit (cfg.fonts.sizes) popups;
-            inherit (cfg.fonts.sizes) terminal;
-          };
+      fonts = fonts // {
+        sizes = {
+          inherit (cfg.fonts.sizes) applications;
+          inherit (cfg.fonts.sizes) desktop;
+          inherit (cfg.fonts.sizes) popups;
+          inherit (cfg.fonts.sizes) terminal;
         };
+      };
 
       opacity.terminal = opacity;
 

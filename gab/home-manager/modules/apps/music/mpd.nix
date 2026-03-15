@@ -2,9 +2,11 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.gab.apps.music;
-in {
+in
+{
   options.gab.apps.music = {
     mpd.enable = lib.mkEnableOption "mpd";
   };

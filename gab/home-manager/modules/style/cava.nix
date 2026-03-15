@@ -2,10 +2,12 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   theme = config.gab.style._theme;
-  extras = theme.extras or {};
-in {
+  extras = theme.extras or { };
+in
+{
   programs.cava.settings = lib.mkMerge [
     {
       general = {
@@ -14,6 +16,6 @@ in {
         bar_spacing = 1;
       };
     }
-    (extras.cava or {})
+    (extras.cava or { })
   ];
 }

@@ -2,11 +2,13 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.gab.apps;
 
   antigravity-cfg = builtins.readFile ./antigravity.json |> builtins.fromJSON;
-in {
+in
+{
   options.gab.apps = {
     opencode = {
       enable = lib.mkEnableOption "opencode";

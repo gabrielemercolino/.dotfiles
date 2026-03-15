@@ -1,7 +1,8 @@
 {
   pkgs,
   lib,
-}: {
+}:
+{
   language-server = {
     nil.command = "${lib.getExe pkgs.nil}";
     bash-language-server.command = "${lib.getExe pkgs.bash-language-server}";
@@ -29,7 +30,7 @@
   language = [
     {
       name = "nix";
-      file-types = ["nix"];
+      file-types = [ "nix" ];
       formatter.command = "${lib.getExe pkgs.alejandra}";
     }
   ];

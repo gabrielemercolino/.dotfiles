@@ -5,14 +5,16 @@
   inputs,
   userSettings,
   ...
-}: let
+}:
+let
   cfg = config.gab.apps.zen;
   # fix: needed for unfree packages
   firefox-addons = pkgs.callPackage inputs.firefox-addons {
     inherit (pkgs) fetchurl stdenv lib;
   };
-in {
-  imports = [inputs.zen-browser.homeModules.beta];
+in
+{
+  imports = [ inputs.zen-browser.homeModules.beta ];
 
   options.gab.apps.zen = {
     enable = lib.mkEnableOption "zen";
@@ -37,7 +39,7 @@ in {
         ];
       };
 
-      policies = import ./_policies.nix {inherit lib;};
+      policies = import ./_policies.nix { inherit lib; };
     };
   };
 }

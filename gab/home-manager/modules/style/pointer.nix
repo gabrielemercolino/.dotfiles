@@ -2,10 +2,12 @@
   config,
   pkgs,
   ...
-}: let
+}:
+let
   theme = config.gab.style._theme;
-  extras = theme.extras or {};
-in {
+  extras = theme.extras or { };
+in
+{
   home.pointerCursor = {
     enable = true;
     size = extras.cursor.size or 32;

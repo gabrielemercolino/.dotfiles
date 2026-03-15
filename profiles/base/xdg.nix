@@ -3,41 +3,54 @@
   lib,
   pkgs,
   ...
-}: {
-  defaultApplications = let
-    allMimeTypes = builtins.readFile "${pkgs.shared-mime-info}/share/mime/types";
+}:
+{
+  defaultApplications =
+    let
+      allMimeTypes = builtins.readFile "${pkgs.shared-mime-info}/share/mime/types";
 
-    expandMimeGlobExcluding = glob: exclude: let
-      globPrefix = lib.removeSuffix "*" glob;
-      matchesGlob = mime: lib.hasPrefix globPrefix mime;
-      isNotExcluded = mime: !(builtins.elem mime exclude);
+      expandMimeGlobExcluding =
+        glob: exclude:
+        let
+          globPrefix = lib.removeSuffix "*" glob;
+          matchesGlob = mime: lib.hasPrefix globPrefix mime;
+          isNotExcluded = mime: !(builtins.elem mime exclude);
+        in
+        allMimeTypes
+        |> lib.splitString "\n"
+        |> builtins.filter matchesGlob
+        |> builtins.filter isNotExcluded;
+
+      browser = "zen-beta.desktop";
+      imageViewer = "imv.desktop";
+      gimp = "gimp.desktop";
+      videoViewer = "mpv.desktop";
+      textEditor = "editor.desktop";
+
+      gimpFormats = [
+        "image/x-xcf"
+        "image/x-psd"
+        "image/x-xcfgz"
+      ];
+      browserFormats = [
+        "application/xhtml+xml"
+        "application/pdf"
+        "application/xml"
+      ];
+
+      imageFormats = expandMimeGlobExcluding "image/*" gimpFormats;
+      videoFormats = expandMimeGlobExcluding "video/*" [ ];
+      textFormats = expandMimeGlobExcluding "text/*" [ ];
+
+      toMimeAttrs =
+        formats: opener:
+        formats
+        |> map (n: {
+          name = n;
+          value = opener;
+        })
+        |> builtins.listToAttrs;
     in
-      allMimeTypes
-      |> lib.splitString "\n"
-      |> builtins.filter matchesGlob
-      |> builtins.filter isNotExcluded;
-
-    browser = "zen-beta.desktop";
-    imageViewer = "imv.desktop";
-    gimp = "gimp.desktop";
-    videoViewer = "mpv.desktop";
-    textEditor = "editor.desktop";
-
-    gimpFormats = ["image/x-xcf" "image/x-psd" "image/x-xcfgz"];
-    browserFormats = ["application/xhtml+xml" "application/pdf" "application/xml"];
-
-    imageFormats = expandMimeGlobExcluding "image/*" gimpFormats;
-    videoFormats = expandMimeGlobExcluding "video/*" [];
-    textFormats = expandMimeGlobExcluding "text/*" [];
-
-    toMimeAttrs = formats: opener:
-      formats
-      |> map (n: {
-        name = n;
-        value = opener;
-      })
-      |> builtins.listToAttrs;
-  in
     lib.mkMerge [
       (toMimeAttrs imageFormats imageViewer)
       (toMimeAttrs gimpFormats gimp)

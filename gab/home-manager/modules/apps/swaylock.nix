@@ -3,9 +3,11 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.gab.apps.swaylock;
-in {
+in
+{
   options.gab.apps.swaylock = {
     enable = lib.mkEnableOption "swaylock";
   };

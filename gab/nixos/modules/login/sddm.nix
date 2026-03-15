@@ -2,9 +2,11 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.gab.login;
-in {
+in
+{
   options.gab.login = {
     sddm.enable = lib.mkEnableOption "sddm";
   };

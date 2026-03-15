@@ -5,7 +5,8 @@
   systemSettings,
   pkgs,
   ...
-}: {
+}:
+{
   imports = [
     ../../gab/nixos
     inputs.sops-nix.nixosModules.sops
@@ -20,8 +21,8 @@
   users.users.${userSettings.userName} = {
     isNormalUser = true;
     description = userSettings.name;
-    extraGroups = ["wheel"];
-    packages = [];
+    extraGroups = [ "wheel" ];
+    packages = [ ];
   };
 
   sops = {
@@ -29,12 +30,12 @@
     defaultSopsFormat = "yaml";
     age.keyFile = "/home/${userSettings.userName}/.config/sops/age/keys.txt";
 
-    secrets = {};
+    secrets = { };
   };
 
   services.getty.autologinUser = lib.mkDefault userSettings.userName;
   # to enable swaylock with any compositor other than sway this is needed
-  security.pam.services.swaylock = lib.mkDefault {};
+  security.pam.services.swaylock = lib.mkDefault { };
   # needed for gpu-screen-recorder
   security.wrappers.gsr-kms-server = {
     owner = "root";
@@ -49,7 +50,7 @@
   nixpkgs.config = {
     allowUnfree = true;
     allowUnfreePredicate = _: true;
-    permittedInsecurePackages = [];
+    permittedInsecurePackages = [ ];
   };
 
   # whether using x11 or wayland in the end it's better to have it
@@ -65,7 +66,7 @@
   system.stateVersion = "26.05";
 
   nix.settings = {
-    trusted-users = [userSettings.userName];
+    trusted-users = [ userSettings.userName ];
 
     experimental-features = [
       "nix-command"

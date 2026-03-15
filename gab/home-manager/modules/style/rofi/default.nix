@@ -2,14 +2,16 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   theme = config.gab.style._theme;
-  extras = theme.extras or {};
-in {
+  extras = theme.extras or { };
+in
+{
   programs.rofi = {
     theme = lib.mkMerge [
-      (import ./_theme.nix {inherit config;})
-      (extras.rofi or {})
+      (import ./_theme.nix { inherit config; })
+      (extras.rofi or { })
     ];
   };
 }

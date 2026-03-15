@@ -2,17 +2,19 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   hypr = config.wayland.windowManager.hyprland.settings;
   theme = config.gab.style._theme;
-  extras = theme.extras or {};
-in {
+  extras = theme.extras or { };
+in
+{
   # fix: hyprnix deletes these but stylix still will try to use them
   options.wayland.windowManager.hyprland.settings = {
-    decoration = lib.mkOption {default = {};};
-    general = lib.mkOption {default = {};};
-    group = lib.mkOption {default = {};};
-    misc = lib.mkOption {default = {};};
+    decoration = lib.mkOption { default = { }; };
+    general = lib.mkOption { default = { }; };
+    group = lib.mkOption { default = { }; };
+    misc = lib.mkOption { default = { }; };
   };
 
   config = lib.mkIf config.stylix.enable {
@@ -44,7 +46,7 @@ in {
 
         misc.background_color = hypr.misc.background_color;
       }
-      (extras.hyprland or {})
+      (extras.hyprland or { })
     ];
   };
 }

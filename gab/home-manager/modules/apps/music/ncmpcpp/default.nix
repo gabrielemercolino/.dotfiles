@@ -3,9 +3,11 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.gab.apps.music;
-in {
+in
+{
   options.gab.apps.music = {
     ncmpcpp.enable = lib.mkEnableOption "ncmpcpp";
   };
@@ -14,7 +16,7 @@ in {
     programs.ncmpcpp = {
       inherit (cfg.ncmpcpp) enable;
 
-      settings = import ./_settings.nix {inherit config pkgs;};
+      settings = import ./_settings.nix { inherit config pkgs; };
     };
   };
 }

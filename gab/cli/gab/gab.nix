@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
     makeWrapper
   ];
 
-  buildInputs = [nh];
+  buildInputs = [ nh ];
 
   buildPhase = ''
     bashly add completions

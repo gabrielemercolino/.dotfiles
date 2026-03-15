@@ -3,7 +3,8 @@
   pkgs,
   userSettings,
   ...
-}: {
+}:
+{
   imports = [
     ../base/home.nix
     ./theme.nix
@@ -93,7 +94,7 @@
 
   programs.gh = {
     enable = true;
-    extensions = [pkgs.gh-dash];
+    extensions = [ pkgs.gh-dash ];
     settings = {
       git_protocol = "ssh";
     };

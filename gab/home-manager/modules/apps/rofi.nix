@@ -3,9 +3,11 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.gab.apps.rofi;
-in {
+in
+{
   options.gab.apps.rofi = {
     enable = lib.mkEnableOption "rofi";
   };

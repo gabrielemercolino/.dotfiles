@@ -2,9 +2,11 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.gab.apps.yazi;
-in {
+in
+{
   options.gab.apps.yazi = {
     enable = lib.mkEnableOption "yazi";
   };

@@ -2,9 +2,11 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.gab.apps;
-in {
+in
+{
   options.gab.apps = {
     direnv.enable = lib.mkEnableOption "direnv";
   };

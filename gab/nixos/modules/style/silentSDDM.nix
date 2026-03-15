@@ -4,26 +4,27 @@
   inputs,
   userSettings,
   ...
-}: let
+}:
+let
   cfg = config.gab.style;
   theme = cfg._theme;
   background = theme.background or ./wallpaper.png;
   profile = theme.profile or null;
-  extras = theme.extras or {};
+  extras = theme.extras or { };
 
-  imgName = img:
-    if lib.isDerivation img
-    then img.name
-    else builtins.baseNameOf img;
-in {
-  imports = [inputs.silentSDDM.nixosModules.default];
+  imgName = img: if lib.isDerivation img then img.name else builtins.baseNameOf img;
+in
+{
+  imports = [ inputs.silentSDDM.nixosModules.default ];
 
   config = {
     programs.silentSDDM = lib.mkMerge [
       {
         enable = true;
         theme = "default";
-        backgrounds = {bg = background;};
+        backgrounds = {
+          bg = background;
+        };
         # TODO: add default so themes without it won't have the last profile pic set
         profileIcons = lib.mkIf (profile != null) {
           "${userSettings.userName}" = profile;
@@ -46,7 +47,7 @@ in {
           };
         };
       }
-      (extras.silentSDDM or {})
+      (extras.silentSDDM or { })
     ];
   };
 }

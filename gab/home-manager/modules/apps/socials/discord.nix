@@ -3,14 +3,16 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.gab.apps.discord;
-in {
+in
+{
   options.gab.apps.discord = {
     enable = lib.mkEnableOption "discord";
   };
 
   config = {
-    home.packages = lib.optionals cfg.enable [(pkgs.discord.override {withEquicord = true;})];
+    home.packages = lib.optionals cfg.enable [ (pkgs.discord.override { withEquicord = true; }) ];
   };
 }

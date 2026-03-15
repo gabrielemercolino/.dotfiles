@@ -3,14 +3,16 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.gab.apps.gimp;
-in {
+in
+{
   options.gab.apps.gimp = {
     enable = lib.mkEnableOption "gimp";
   };
 
   config = {
-    home.packages = lib.optionals cfg.enable [pkgs.gimp];
+    home.packages = lib.optionals cfg.enable [ pkgs.gimp ];
   };
 }

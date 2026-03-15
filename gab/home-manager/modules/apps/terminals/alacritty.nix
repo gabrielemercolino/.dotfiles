@@ -2,9 +2,11 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.gab.apps.alacritty;
-in {
+in
+{
   options.gab.apps.alacritty = {
     enable = lib.mkEnableOption "alacritty";
   };

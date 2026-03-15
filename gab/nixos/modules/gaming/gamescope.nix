@@ -2,9 +2,11 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.gab.gaming;
-in {
+in
+{
   options.gab.gaming = {
     gamescope.enable = lib.mkEnableOption "gamescope";
   };

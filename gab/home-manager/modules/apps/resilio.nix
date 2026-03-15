@@ -3,9 +3,11 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.gab.apps.resilio;
-in {
+in
+{
   options.gab.apps.resilio = {
     enable = lib.mkEnableOption "resilio sync";
     port = lib.mkOption {
@@ -19,7 +21,7 @@ in {
   };
 
   config = {
-    home.packages = lib.optionals cfg.enable [pkgs.resilio-sync];
+    home.packages = lib.optionals cfg.enable [ pkgs.resilio-sync ];
 
     home.file = lib.mkIf cfg.enable {
       ".config/resilio-sync/sync.conf".text = ''
@@ -35,24 +37,26 @@ in {
     };
 
     systemd.user.services = lib.mkIf cfg.enable {
-      resilio-sync = let
-        start = pkgs.writeShellScriptBin "start-resilio-sync" ''
-          cp ~/.config/resilio-sync/sync.conf /tmp/resilio_sync.conf
-          ${pkgs.resilio-sync}/bin/rslsync --nodaemon --config /tmp/resilio_sync.conf
-        '';
-      in {
-        Unit = {
-          Description = "Resilio Sync User Service";
-          After = ["network.target"];
+      resilio-sync =
+        let
+          start = pkgs.writeShellScriptBin "start-resilio-sync" ''
+            cp ~/.config/resilio-sync/sync.conf /tmp/resilio_sync.conf
+            ${pkgs.resilio-sync}/bin/rslsync --nodaemon --config /tmp/resilio_sync.conf
+          '';
+        in
+        {
+          Unit = {
+            Description = "Resilio Sync User Service";
+            After = [ "network.target" ];
+          };
+          Service = {
+            ExecStart = "${start}/bin/start-resilio-sync";
+            Restart = "always";
+          };
+          Install = {
+            WantedBy = [ "default.target" ];
+          };
         };
-        Service = {
-          ExecStart = "${start}/bin/start-resilio-sync";
-          Restart = "always";
-        };
-        Install = {
-          WantedBy = ["default.target"];
-        };
-      };
     };
   };
 }

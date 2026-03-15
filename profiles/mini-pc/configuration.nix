@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   imports = [
     ./hardware-configuration.nix
     ./theme.nix
@@ -7,7 +8,7 @@
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  hardware.graphics.extraPackages = [pkgs.libva];
+  hardware.graphics.extraPackages = [ pkgs.libva ];
   nixpkgs.config.rocmSupport = true;
   networking.hostName = "mini-pc";
 
@@ -47,5 +48,5 @@
     wm.hyprland.enable = true;
   };
 
-  services.xserver.excludePackages = [pkgs.xterm];
+  services.xserver.excludePackages = [ pkgs.xterm ];
 }

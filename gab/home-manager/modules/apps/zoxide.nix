@@ -2,9 +2,11 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.gab.apps.zoxide;
-in {
+in
+{
   options.gab.apps.zoxide = {
     enable = lib.mkEnableOption "zoxide (smarter cd)";
   };

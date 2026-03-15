@@ -5,7 +5,8 @@
   pkgs,
   systemSettings,
   ...
-}: {
+}:
+{
   imports = [
     inputs.hyprland-nix.homeManagerModules.default
     inputs.ags-bar.homeManagerModules.default
@@ -15,7 +16,7 @@
     enable = lib.mkEnableOption "hyprland";
     monitors = lib.mkOption {
       type = with lib.types; listOf str;
-      default = [];
+      default = [ ];
     };
   };
 
@@ -42,16 +43,23 @@
       recommendedEnvironment = true;
       xwayland.enable = true;
 
-      environment = {};
+      environment = { };
 
       config = lib.mkMerge [
-        {monitor = config.gab.wm.hyprland.monitors ++ [", preferred, auto, 1"];}
-        (import ./_config.nix {inherit lib pkgs config systemSettings;})
+        { monitor = config.gab.wm.hyprland.monitors ++ [ ", preferred, auto, 1" ]; }
+        (import ./_config.nix {
+          inherit
+            lib
+            pkgs
+            config
+            systemSettings
+            ;
+        })
       ];
 
-      keyBinds = import ./_keybinds.nix {inherit lib pkgs;};
+      keyBinds = import ./_keybinds.nix { inherit lib pkgs; };
 
-      animations = import ./_animations.nix {};
+      animations = import ./_animations.nix { };
     };
   };
 }

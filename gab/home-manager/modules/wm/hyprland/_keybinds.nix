@@ -2,9 +2,10 @@
   lib,
   pkgs,
   ...
-}: let
-  screenShot = pkgs.callPackage ../../../../cli/screen-shot {};
-  screenRecord = pkgs.callPackage ../../../../cli/screen-record {};
+}:
+let
+  screenShot = pkgs.callPackage ../../../../cli/screen-shot { };
+  screenRecord = pkgs.callPackage ../../../../cli/screen-record { };
 
   MOUSE_L = "mouse:272";
   MOUSE_R = "mouse:273";
@@ -82,23 +83,23 @@
     };
   };
 in
-  lib.mkMerge [
-    groups.powerControl
-    groups.launchApps
-    groups.audioControl
-    groups.brightnessControl
-    groups.mouseWindowControl
-    groups.windowToggles
-    groups.groupControl
-    groups.moveFocus
-    groups.changeWorkspace
-    groups.moveToWorkspace
-    {
-      bind."SUPER, Q" = "killactive";
-      bind."SUPER_SHIFT, M" = "exit";
-    }
-    {
-      bind."SUPER CONTROL_L, S" = "exec, ${lib.getExe screenShot}";
-      bind."SUPER_SHIFT, S" = "exec, ${lib.getExe screenRecord}";
-    }
-  ]
+lib.mkMerge [
+  groups.powerControl
+  groups.launchApps
+  groups.audioControl
+  groups.brightnessControl
+  groups.mouseWindowControl
+  groups.windowToggles
+  groups.groupControl
+  groups.moveFocus
+  groups.changeWorkspace
+  groups.moveToWorkspace
+  {
+    bind."SUPER, Q" = "killactive";
+    bind."SUPER_SHIFT, M" = "exit";
+  }
+  {
+    bind."SUPER CONTROL_L, S" = "exec, ${lib.getExe screenShot}";
+    bind."SUPER_SHIFT, S" = "exec, ${lib.getExe screenRecord}";
+  }
+]

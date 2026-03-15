@@ -2,9 +2,11 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.gab.apps.ghostty;
-in {
+in
+{
   options.gab.apps.ghostty = {
     enable = lib.mkEnableOption "ghostty";
   };

@@ -1,4 +1,5 @@
-{lib}: {
+{ lib }:
+{
   AppAutoUpdate = false;
   AutofillAddressEnabled = false;
   AutofillCreditCardEnabled = false;
@@ -69,7 +70,14 @@
         Description = "Search NixOS options and packages";
       }
     ];
-    Remove = ["Bing" "Ecosia" "Google" "Perplexity" "Qwant" "Wikipedia (en)"];
+    Remove = [
+      "Bing"
+      "Ecosia"
+      "Google"
+      "Perplexity"
+      "Qwant"
+      "Wikipedia (en)"
+    ];
     Default = "Brave Search";
     PreventInstalls = true;
   };

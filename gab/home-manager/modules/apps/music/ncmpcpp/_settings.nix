@@ -1,9 +1,11 @@
 {
   config,
   pkgs,
-}: let
+}:
+let
   mpd = config.services.mpd;
-in {
+in
+{
   mpd_host = mpd.network.listenAddress;
   mpd_port = mpd.network.port;
 

@@ -2,9 +2,11 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.gab.apps.kitty;
-in {
+in
+{
   options.gab.apps.kitty = {
     enable = lib.mkEnableOption "kitty";
   };

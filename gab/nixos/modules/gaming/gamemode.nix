@@ -3,16 +3,18 @@
   lib,
   userSettings,
   ...
-}: let
+}:
+let
   cfg = config.gab.gaming;
-in {
+in
+{
   options.gab.gaming = {
     gamemode.enable = lib.mkEnableOption "gamemode";
   };
 
   config = {
     # needed to make the renice setting work
-    users.users.${userSettings.userName}.extraGroups = lib.optionals cfg.gamemode.enable ["gamemode"];
+    users.users.${userSettings.userName}.extraGroups = lib.optionals cfg.gamemode.enable [ "gamemode" ];
 
     programs.gamemode = {
       inherit (cfg.gamemode) enable;

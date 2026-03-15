@@ -1,4 +1,5 @@
-{lib, ...}: {
+{ lib, ... }:
+{
   programs.alacritty.settings = {
     window = {
       decorations = lib.mkForce "None";
