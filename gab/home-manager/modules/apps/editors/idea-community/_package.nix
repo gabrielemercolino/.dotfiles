@@ -7,7 +7,6 @@
   copyDesktopItems,
   makeDesktopItem,
   fontconfig,
-
   zlib,
   libGL,
   libX11,
@@ -20,14 +19,12 @@
   git,
   which,
   python3,
-  
   libxext,
   libxi,
   libxrender,
   libxtst,
   libxxf86vm,
-  
-  pkgs
+  pkgs,
 }: let
   pname = "idea";
   version = pkgs.jetbrains.idea.version;

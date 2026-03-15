@@ -13,7 +13,7 @@ in {
       default = 8888;
     };
     deviceName = lib.mkOption {
-      type  = lib.types.str;
+      type = lib.types.str;
       default = "nixos";
     };
   };
