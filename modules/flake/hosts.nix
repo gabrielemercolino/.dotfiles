@@ -35,6 +35,19 @@ let
         };
       };
 
+      keyboard = {
+        layout = mkOption {
+          type = types.str;
+          example = "it";
+        };
+
+        variant = mkOption {
+          type = types.str;
+          default = "";
+          example = "nodeadkeys";
+        };
+      };
+
       nixos = mkOption {
         type = types.deferredModule;
         default = { };
@@ -59,7 +72,7 @@ in
       inputs.nixpkgs.lib.nixosSystem {
         modules = [ host.nixos ];
         specialArgs = {
-          inherit (host) theme user;
+          inherit (host) theme user keyboard;
         };
       }
     ) config.hosts;
@@ -70,7 +83,7 @@ in
         pkgs = import inputs.nixpkgs { system = host.system; };
         modules = [ host.home ];
         extraSpecialArgs = {
-          inherit (host) theme user;
+          inherit (host) theme user keyboard;
         };
       }
     ) config.hosts;

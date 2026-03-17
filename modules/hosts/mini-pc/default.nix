@@ -6,6 +6,10 @@ in
   hosts.mini-pc = {
     system = "x86-64_linux";
 
+    keyboard = {
+      layout = "it";
+    };
+
     user = {
       name = "gabriele";
     };
