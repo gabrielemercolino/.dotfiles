@@ -6,7 +6,7 @@
   ...
 }:
 let
-  inherit (lib) mkOption types mapAttrs;
+  inherit (lib) mkOption mkDefault types mapAttrs;
 
   # TODO: check if it's actually working as expected
   themeDir = self.outPath + "/themes";
@@ -66,26 +66,53 @@ in
     default = { };
   };
 
-  config = {
-    flake.nixosConfigurations = mapAttrs (
-      name: host:
-      inputs.nixpkgs.lib.nixosSystem {
-        modules = [ host.nixos ];
-        specialArgs = {
-          inherit (host) theme user keyboard;
-        };
-      }
-    ) config.hosts;
+  config =
+    let
+      inherit (config.flake) modules;
 
-    flake.homeConfigurations = mapAttrs (
-      name: host:
-      inputs.home-manager.lib.homeManagerConfiguration {
-        pkgs = import inputs.nixpkgs { system = host.system; };
-        modules = [ host.home ];
-        extraSpecialArgs = {
-          inherit (host) theme user keyboard;
+      baseHost = rec {
+        stateVersion = "26.05";
+
+        nixos = {
+          imports = with modules.nixos; [
+            core
+            fonts
+          ];
+          system.stateVersion = mkDefault stateVersion;
         };
-      }
-    ) config.hosts;
-  };
+
+        home = {
+          imports = with modules.homeManager; [ core ];
+          home.stateVersion = mkDefault stateVersion;
+        };
+      };
+    in
+    {
+      flake.nixosConfigurations = mapAttrs (
+        name: host:
+        inputs.nixpkgs.lib.nixosSystem {
+          modules = [
+            baseHost.nixos
+            host.nixos
+          ];
+          specialArgs = {
+            inherit (host) theme user keyboard;
+          };
+        }
+      ) config.hosts;
+
+      flake.homeConfigurations = mapAttrs (
+        name: host:
+        inputs.home-manager.lib.homeManagerConfiguration {
+          pkgs = import inputs.nixpkgs { system = host.system; };
+          modules = [
+            baseHost.home
+            host.home
+          ];
+          extraSpecialArgs = {
+            inherit (host) theme user keyboard;
+          };
+        }
+      ) config.hosts;
+    };
 }

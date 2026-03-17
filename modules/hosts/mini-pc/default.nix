@@ -17,14 +17,11 @@ in
     theme = "roathe-dark";
 
     nixos = {
-      imports = [
-        ./_hardware-configuration.nix
-        nixos.common-host
-      ];
+      imports = [ ./_hardware-configuration.nix ];
     };
 
     home = {
-      imports = [ homeManager.common-host ];
+      imports = [ ];
     };
   };
 }
