@@ -6,7 +6,7 @@ in
 {
   flake.modules = {
     nixos.common-host = {
-      imports = with nixos; [ core ];
+      imports = with nixos; [ core fonts ];
 
       system.stateVersion = lib.mkDefault stateVersion;
     };
