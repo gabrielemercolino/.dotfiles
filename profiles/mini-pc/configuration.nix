@@ -2,7 +2,6 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./theme.nix
 
     ../base/configuration.nix
   ];
@@ -10,7 +9,6 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
   hardware.graphics.extraPackages = [ pkgs.libva ];
   nixpkgs.config.rocmSupport = true;
-  networking.hostName = "mini-pc";
 
   gab = {
     login.sddm.enable = true;
@@ -44,8 +42,6 @@
       #rpcs3.enable = true;
       #suyu.enable = true;
     };
-
-    wm.hyprland.enable = true;
   };
 
   services.xserver.excludePackages = [ pkgs.xterm ];

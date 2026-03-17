@@ -7,7 +7,6 @@
 {
   imports = [
     ../base/home.nix
-    ./theme.nix
     ../../gab/cli/gab
   ];
 
