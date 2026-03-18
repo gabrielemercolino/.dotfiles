@@ -13,16 +13,6 @@
   # for amd gpus
   nixpkgs.config.rocmSupport = true;
   gab = {
-    wm = {
-      hyprland = {
-        enable = true;
-        monitors = [
-          "HDMI-A-1, 1920x1080@100, auto, 1"
-          "DP-1, 1920x1080@100, auto, 1"
-        ];
-      };
-    };
-
     shell = {
       aliases = rec {
         ls = "${lib.getExe pkgs.eza} --icons";
