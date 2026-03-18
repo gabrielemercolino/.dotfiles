@@ -37,7 +37,7 @@
     };
 
     hyprnix = {
-      url = "github:hyprland-community/hyprnix";
+      url = "github:Nyramu/hyprnix";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.hyprland.follows = "hyprland";
     };
