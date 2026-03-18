@@ -178,11 +178,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1718015582,
-        "narHash": "sha256-VzK23WKktlJdTcoOh+rXKhSPYRWkl9ShIZh4tB44UV4=",
+        "lastModified": 1758221101,
+        "narHash": "sha256-UE1/k6jJbUm/uFPQUCyRnONwhJ+j/6L3ggzZb4qqSTU=",
         "owner": "spikespaz",
         "repo": "bird-nix-lib",
-        "rev": "95948f65ac043078661910cb23a123b4b2b9fb8c",
+        "rev": "12cf8bd99e2edb8c0edc1414416aef4cbf402801",
         "type": "github"
       },
       "original": {
@@ -544,15 +544,15 @@
         "systems": "systems_2"
       },
       "locked": {
-        "lastModified": 1759328258,
-        "narHash": "sha256-das+vqECDwhUnZddT0wiApEigAlFv+qTXzmEBYpDBj0=",
-        "owner": "hyprland-community",
+        "lastModified": 1773845904,
+        "narHash": "sha256-e8qChC4F1m/snGqnkJ69tYP5iN05P+yvEIu6C9fG4wM=",
+        "owner": "Nyramu",
         "repo": "hyprnix",
-        "rev": "118de583a1d26372618e3864afcfc6ce34079dd6",
+        "rev": "8a850b848f1acb9c566eeab3b1c92e9ba339cef1",
         "type": "github"
       },
       "original": {
-        "owner": "hyprland-community",
+        "owner": "Nyramu",
         "repo": "hyprnix",
         "type": "github"
       }
