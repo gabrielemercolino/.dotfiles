@@ -1,14 +1,9 @@
-{ pkgs, ... }:
-{
+{...}: {
   imports = [
     ./hardware-configuration.nix
 
     ../base/configuration.nix
   ];
-
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-  hardware.graphics.extraPackages = [ pkgs.libva ];
-  nixpkgs.config.rocmSupport = true;
 
   gab = {
     login.sddm.enable = true;
@@ -35,7 +30,6 @@
     };
 
     gaming = {
-      steam.enable = true;
       gamemode.enable = true;
       gamescope.enable = true;
       lsfg.enable = true;
@@ -44,5 +38,4 @@
     };
   };
 
-  services.xserver.excludePackages = [ pkgs.xterm ];
 }
