@@ -48,8 +48,6 @@
       aseprite.enable = false;
       tiled.enable = true;
 
-      zen.enable = true;
-
       telegram.enable = true;
       discord.enable = true;
 

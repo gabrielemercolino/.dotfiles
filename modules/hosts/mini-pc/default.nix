@@ -27,11 +27,16 @@ in
       imports = with homeManager; [
         stylix
         editors
+        browsers
       ];
 
       gab = {
         editors = {
           helix.enable = true;
+        };
+
+        browsers = {
+          zen.enable = true;
         };
       };
     };
