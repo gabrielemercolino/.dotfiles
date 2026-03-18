@@ -1,6 +1,8 @@
 { config, ... }:
 {
   flake.modules.nixos = {
+    core.imports = [ config.flake.modules.nixos.boot ];
+
     boot = {
       boot = {
         initrd = {
@@ -14,7 +16,5 @@
         };
       };
     };
-
-    core.imports = [ config.flake.modules.nixos.boot ];
   };
 }

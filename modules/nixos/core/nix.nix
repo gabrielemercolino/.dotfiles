@@ -1,6 +1,8 @@
 { config, ... }:
 {
   flake.modules.nixos = {
+    core.imports = [ config.flake.modules.nixos.nix ];
+
     nix =
       { user, ... }:
       {
@@ -71,6 +73,5 @@
         };
       };
 
-    core.imports = [ config.flake.modules.nixos.nix ];
   };
 }

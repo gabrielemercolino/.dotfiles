@@ -9,6 +9,8 @@ let
 in
 {
   flake.modules.nixos = {
+    wm.imports = [ nixos.hyprland ];
+
     hyprland = {
       imports = [ nixos.wayland ];
 
@@ -32,7 +34,5 @@ in
         };
       };
     };
-
-    wm.imports = [ nixos.hyprland ];
   };
 }

@@ -6,6 +6,8 @@
 }:
 {
   flake.modules.homeManager = {
+    wm.imports = [ config.modules.homeManager.hyprland ];
+
     hyprland =
       let
         cfg = config.gab.wm.hyprland;
@@ -56,7 +58,5 @@
           };
         };
       };
-
-    wm.imports = [ config.modules.homeManager.hyprland ];
   };
 }

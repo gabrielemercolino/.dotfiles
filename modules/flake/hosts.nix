@@ -6,7 +6,12 @@
   ...
 }:
 let
-  inherit (lib) mkOption mkDefault types mapAttrs;
+  inherit (lib)
+    mkOption
+    mkDefault
+    types
+    mapAttrs
+    ;
 
   # TODO: check if it's actually working as expected
   themeDir = self.outPath + "/themes";
@@ -74,10 +79,7 @@ in
         stateVersion = "26.05";
 
         nixos = {
-          imports = with modules.nixos; [
-            core
-            fonts
-          ];
+          imports = with modules.nixos; [ core ];
           system.stateVersion = mkDefault stateVersion;
         };
 
