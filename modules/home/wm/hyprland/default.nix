@@ -6,20 +6,21 @@
 }:
 {
   flake.modules.homeManager = {
-    wm.imports = [ config.modules.homeManager.hyprland ];
+    wm.imports = [ config.flake.modules.homeManager.hyprland ];
 
     hyprland =
-      let
-        cfg = config.gab.wm.hyprland;
-      in
       {
         config,
         pkgs,
         ...
       }:
+      let
+        cfg = config.gab.wm.hyprland;
+      in
       {
         imports = [
-          inputs.hyprland-nix.homeManagerModules.default
+          ./_style.nix
+          inputs.hyprnix.homeManagerModules.default
           inputs.ags-bar.homeManagerModules.default
         ];
 
@@ -47,7 +48,7 @@
 
           wayland.windowManager.hyprland = {
             enable = true;
-            # package = pkgs.hyprland;
+            package = pkgs.hyprland;
 
             reloadConfig = true;
             systemd.enable = true;

@@ -7,9 +7,9 @@
   flake.modules.homeManager.hyprland =
     { pkgs, ... }:
     let
-      system = pkgs.sdtenv.buildPlatform;
-      screenShot = config.packages.${system}.screen-shot;
-      screenRecord = config.packages.${system}.screen-record;
+      system = pkgs.stdenv.buildPlatform.system;
+      screenShot = config.flake.packages.${system}.screen-shot;
+      screenRecord = config.flake.packages.${system}.screen-record;
 
       MOUSE_L = "mouse:272";
       MOUSE_R = "mouse:273";
@@ -88,7 +88,7 @@
       };
     in
     {
-      ayland.windowManager.hyprland.keyBinds = lib.mkMerge [
+      wayland.windowManager.hyprland.keyBinds = lib.mkMerge [
         groups.powerControl
         groups.launchApps
         groups.audioControl
