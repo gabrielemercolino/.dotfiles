@@ -1,8 +1,10 @@
-{config, ...}: let
+{ config, ... }:
+let
   inherit (config.flake.modules) nixos homeManager;
-in {
+in
+{
   hosts.mini-pc = {
-    system = "x86-64_linux";
+    system = "x86_64-linux";
 
     keyboard = {
       layout = "it";
@@ -14,32 +16,40 @@ in {
 
     theme = "roathe-dark";
 
-    nixos = {pkgs, ...}: {
-      imports = with nixos; [
-        ./_hardware-configuration.nix
-        stylix
-        gaming
-      ];
+    nixos =
+      { pkgs, ... }:
+      {
+        imports = with nixos; [
+          ./_hardware-configuration.nix
+          stylix
+          gaming
+          wm
+        ];
 
-      boot.kernelPackages = pkgs.linuxPackages_latest;
-      hardware.graphics.extraPackages = [pkgs.libva];
-      nixpkgs.config.rocmSupport = true;
+        boot.kernelPackages = pkgs.linuxPackages_latest;
+        hardware.graphics.extraPackages = [ pkgs.libva ];
+        nixpkgs.config.rocmSupport = true;
 
-      gab = {
-        gaming = {
-          steam.enable = true;
+        gab = {
+          gaming = {
+            steam.enable = true;
+          };
+
+          wm = {
+            hyprland.enable = true;
+          };
         };
-      };
 
-      # TODO: consider putting this in the base config
-      services.xserver.excludePackages = [pkgs.xterm];
-    };
+        # TODO: consider putting this in the base config
+        services.xserver.excludePackages = [ pkgs.xterm ];
+      };
 
     home = {
       imports = with homeManager; [
         stylix
         editors
         browsers
+        wm
       ];
 
       gab = {
@@ -49,6 +59,16 @@ in {
 
         browsers = {
           zen.enable = true;
+        };
+
+        wm = {
+          hyprland = {
+            enable = true;
+            monitors = [
+              "HDMI-A-1, 1920x1080@100, auto, 1"
+              "DP-1, 1920x1080@100, auto, 1"
+            ];
+          };
         };
       };
     };
