@@ -53,7 +53,6 @@
       telegram.enable = true;
       discord.enable = true;
 
-      helix.enable = true;
       idea-community.enable = true;
 
       opencode = {

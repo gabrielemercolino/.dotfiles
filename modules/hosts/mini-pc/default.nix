@@ -24,7 +24,16 @@ in
     };
 
     home = {
-      imports = with homeManager; [ stylix ];
+      imports = with homeManager; [
+        stylix
+        editors
+      ];
+
+      gab = {
+        editors = {
+          helix.enable = true;
+        };
+      };
     };
   };
 }
