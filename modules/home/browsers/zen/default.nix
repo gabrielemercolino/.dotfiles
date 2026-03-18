@@ -6,7 +6,7 @@
 }:
 {
   flake.modules.homeManager = {
-    browsers.imports = [ config.flake.modules.home.zen ];
+    browsers.imports = [ config.flake.modules.homeManager.zen ];
 
     zen =
       {

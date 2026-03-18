@@ -5,7 +5,7 @@
   ...
 }:
 {
-  flake.modules.homeModules.stylix =
+  flake.modules.homeManager.stylix =
     {
       config,
       pkgs,
@@ -59,12 +59,12 @@
 
           fonts = fonts // cfg.fonts;
           opacity.terminal = opacity;
-
           targets = {
             mangohud.enable = false;
             vscode.enable = false;
             rofi.enable = false;
             zen-browser.enable = false;
+            hyprpaper.enable = lib.mkForce false;
           };
         };
       };

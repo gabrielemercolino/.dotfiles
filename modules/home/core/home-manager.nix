@@ -8,7 +8,7 @@
       {
         home = {
           stateVersion = "26.05";
-          userName = user.name;
+          username = user.name;
           homeDirectory = "/home/${user.name}";
         };
 
