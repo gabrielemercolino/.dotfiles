@@ -13,7 +13,6 @@ let
     mapAttrs
     ;
 
-  # TODO: check if it's actually working as expected
   themeDir = self.outPath + "/themes";
   themeType = types.enum (
     builtins.readDir themeDir

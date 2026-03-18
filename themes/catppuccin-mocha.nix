@@ -3,6 +3,7 @@ _: {
   name = "Catppuccin Mocha";
   author = "https://github.com/catppuccin/catppuccin";
   polarity = "dark";
+  background = ./default-background.png;
   palette = {
     base00 = "1e1e2e"; # base
     base01 = "181825"; # mantle

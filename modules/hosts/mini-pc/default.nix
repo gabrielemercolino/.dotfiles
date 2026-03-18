@@ -17,11 +17,14 @@ in
     theme = "roathe-dark";
 
     nixos = {
-      imports = [ ./_hardware-configuration.nix ];
+      imports = with nixos; [
+        ./_hardware-configuration.nix
+        stylix
+      ];
     };
 
     home = {
-      imports = [ ];
+      imports = with homeManager; [ stylix ];
     };
   };
 }
