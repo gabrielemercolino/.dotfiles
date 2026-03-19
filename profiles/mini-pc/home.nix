@@ -55,10 +55,6 @@
       resilio.enable = true;
       zoxide.enable = true;
     };
-
-    gaming = {
-      mangohud.enable = true;
-    };
   };
 
   programs.git = {

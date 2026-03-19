@@ -53,6 +53,7 @@ in
         editors
         browsers
         wm
+        gaming
       ];
 
       gab = {
@@ -62,6 +63,10 @@ in
 
         browsers = {
           zen.enable = true;
+        };
+
+        gaming = {
+          mangohud.enable = true;
         };
 
         wm = {
