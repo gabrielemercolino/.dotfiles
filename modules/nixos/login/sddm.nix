@@ -1,5 +1,4 @@
 {
-  self,
   inputs,
   config,
   lib,
@@ -14,18 +13,17 @@
         config,
         pkgs,
         user,
-        theme,
+        loadTheme,
         ...
       }:
       let
         cfg = config.gab.login.sddm;
 
-        themePath = self.outPath + "/themes/${theme}.nix";
-        loadedTheme = import themePath { inherit config lib pkgs; };
+        theme = loadTheme { inherit config lib pkgs; };
 
-        background = loadedTheme.background;
-        profile = loadedTheme.profile or null;
-        extras = loadedTheme.extras or { };
+        background = theme.background;
+        profile = theme.profile or null;
+        extras = theme.extras or { };
 
         imgName = img: if lib.isDerivation img then img.name else builtins.baseNameOf img;
       in

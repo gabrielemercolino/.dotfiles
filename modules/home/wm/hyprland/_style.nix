@@ -1,11 +1,13 @@
 {
   config,
   lib,
-  theme,
+  pkgs,
+  loadTheme,
   ...
 }:
 let
   hypr = config.wayland.windowManager.hyprland.settings;
+  theme = loadTheme {inherit config lib pkgs;};
   extras = theme.extras or { };
 in
 {

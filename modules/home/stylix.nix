@@ -1,5 +1,4 @@
 {
-  self,
   inputs,
   lib,
   ...
@@ -9,20 +8,19 @@
     {
       config,
       pkgs,
-      theme,
+      loadTheme,
       ...
     }:
     let
       cfg = config.gab.stylix;
 
-      themePath = self.outPath + "/themes/${theme}.nix";
-      loadedTheme = import themePath { inherit config lib pkgs; };
+      theme = loadTheme { inherit config lib pkgs; };
 
-      polarity = loadedTheme.polarity;
-      background = loadedTheme.background;
-      palette = loadedTheme.palette;
-      fonts = loadedTheme.fonts or { };
-      opacity = loadedTheme.opacity or 1.0;
+      polarity = theme.polarity;
+      background = theme.background;
+      palette = theme.palette;
+      fonts = theme.fonts or { };
+      opacity = theme.opacity or 1.0;
     in
     {
       imports = [ inputs.stylix.homeModules.default ];
