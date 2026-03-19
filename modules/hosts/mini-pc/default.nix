@@ -24,6 +24,7 @@ in
           stylix
           gaming
           wm
+          login
         ];
 
         boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -38,6 +39,8 @@ in
           wm = {
             hyprland.enable = true;
           };
+
+          login.sddm.enable = true;
         };
 
         # TODO: consider putting this in the base config
