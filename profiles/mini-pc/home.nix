@@ -34,7 +34,6 @@
       gimp.enable = true;
       yazi.enable = true;
       obsidian.enable = true;
-      swaylock.enable = true;
       aseprite.enable = false;
       tiled.enable = true;
 
