@@ -12,6 +12,7 @@ in
 
     user = {
       name = "gabriele";
+      email = "gmercolino2003@gmail.com";
     };
 
     theme = "roathe-dark";
@@ -60,6 +61,7 @@ in
       {
         lib,
         pkgs,
+        user,
         ...
       }:
       {
@@ -72,6 +74,22 @@ in
           cli
           shell
         ];
+
+        home.packages = [ config.flake.packages.${pkgs.stdenv.buildPlatform.system}.gab ];
+
+        programs.git = {
+          enable = true;
+          settings.user = {
+            inherit (user) name email;
+          };
+        };
+
+        programs.jujutsu = {
+          enable = true;
+          settings.user = {
+            inherit (user) name email;
+          };
+        };
 
         gab = {
           editors = {
