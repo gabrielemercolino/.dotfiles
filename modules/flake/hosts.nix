@@ -37,6 +37,11 @@ let
           type = types.str;
           default = "user";
         };
+
+        email = mkOption {
+          type = types.str;
+          default = "";
+        };
       };
 
       keyboard = {
