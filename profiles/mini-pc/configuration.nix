@@ -7,14 +7,11 @@
   ];
 
   gab = {
-    login.sddm.enable = true;
-
     hardware = {
       bluetooth.enable = true;
       audio-server = "pipewire";
 
       i18n.locale = "it_IT.UTF-8";
-      keyboard.layout = "it";
       time.timeZone = "Europe/Rome";
     };
 

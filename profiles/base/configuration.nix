@@ -1,7 +1,6 @@
 {
   inputs,
   userSettings,
-  pkgs,
   ...
 }:
 {
@@ -20,8 +19,4 @@
 
   # for battery managment
   services.upower.enable = true;
-
-  # use zsh
-  users.defaultUserShell = pkgs.zsh;
-  programs.zsh.enable = true;
 }

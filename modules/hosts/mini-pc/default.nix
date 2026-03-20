@@ -25,13 +25,22 @@ in
           gaming
           wm
           login
+          cli
         ];
 
         boot.kernelPackages = pkgs.linuxPackages_latest;
         hardware.graphics.extraPackages = [ pkgs.libva ];
         nixpkgs.config.rocmSupport = true;
 
+        # use zsh
+        users.defaultUserShell = pkgs.zsh;
+        programs.zsh.enable = true;
+
         gab = {
+          cli = {
+            bashmount.enable = true;
+          };
+
           gaming = {
             steam.enable = true;
           };
@@ -47,38 +56,63 @@ in
         services.xserver.excludePackages = [ pkgs.xterm ];
       };
 
-    home = {
-      imports = with homeManager; [
-        stylix
-        editors
-        browsers
-        wm
-        gaming
-      ];
+    home =
+      {
+        lib,
+        pkgs,
+        ...
+      }:
+      {
+        imports = with homeManager; [
+          stylix
+          editors
+          browsers
+          wm
+          gaming
+          cli
+          shell
+        ];
 
-      gab = {
-        editors = {
-          helix.enable = true;
-        };
+        gab = {
+          editors = {
+            helix.enable = true;
+          };
 
-        browsers = {
-          zen.enable = true;
-        };
+          browsers = {
+            zen.enable = true;
+          };
 
-        gaming = {
-          mangohud.enable = true;
-        };
+          gaming = {
+            mangohud.enable = true;
+          };
 
-        wm = {
-          hyprland = {
-            enable = true;
-            monitors = [
-              "HDMI-A-1, 1920x1080@100, auto, 1"
-              "DP-1, 1920x1080@100, auto, 1"
-            ];
+          cli = {
+            opencode.enable = true;
+            yazi.enable = true;
+          };
+
+          shell = {
+            zsh.enable = true;
+
+            aliases = {
+              ls = "${lib.getExe pkgs.eza} --icons";
+              ll = "${lib.getExe pkgs.eza} -l --icons";
+              la = "${lib.getExe pkgs.eza} -la --icons";
+
+              cd = "z"; # from zoxide
+            };
+          };
+
+          wm = {
+            hyprland = {
+              enable = true;
+              monitors = [
+                "HDMI-A-1, 1920x1080@100, auto, 1"
+                "DP-1, 1920x1080@100, auto, 1"
+              ];
+            };
           };
         };
       };
-    };
   };
 }

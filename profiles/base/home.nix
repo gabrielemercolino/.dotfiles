@@ -39,9 +39,6 @@
     };
   };
 
-  # use zsh by default
-  gab.shell.zsh.enable = true;
-
   programs.zellij = {
     enable = true;
     settings = {
