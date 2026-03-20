@@ -24,7 +24,7 @@
           size = extras.cursor.size or 32;
           name = extras.cursor.name or "Vanilla-DMZ";
           package = extras.cursor.package or pkgs.vanilla-dmz;
-          hyprcursor.enable = config.home.pointerCursor.hyprcursor.enable;
+          hyprcursor.enable = true;
         };
       };
   };

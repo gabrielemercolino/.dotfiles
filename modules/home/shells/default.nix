@@ -39,7 +39,7 @@
 
           oh-my-posh = {
             enable = true;
-            configFile = pkgs.writeText ./oh-my-posh.yaml;
+            configFile = ./oh-my-posh.yaml;
 
             enableBashIntegration = true;
             enableZshIntegration = true;
