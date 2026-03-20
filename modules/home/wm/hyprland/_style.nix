@@ -7,7 +7,7 @@
 }:
 let
   hypr = config.wayland.windowManager.hyprland.settings;
-  theme = loadTheme {inherit config lib pkgs;};
+  theme = loadTheme { inherit config lib pkgs; };
   extras = theme.extras or { };
 in
 {
