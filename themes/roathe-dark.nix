@@ -43,12 +43,12 @@ rec {
     };
 
     hyprland = {
-      general.active_border_color = lib.mkForce "rgb(${palette.base0A}) rgb(${palette.base08}) 90deg";
+      general.active_border_color = lib.mkForce "rgb(${lib.removePrefix "#" palette.base0A}) rgb(${lib.removePrefix "#" palette.base08}) 90deg";
       group = {
-        active_border_color = lib.mkForce "rgb(${palette.base08}) rgb(${palette.base0A}) 90deg";
+        active_border_color = lib.mkForce "rgb(${lib.removePrefix "#" palette.base08}) rgb(${lib.removePrefix "#" palette.base0A}) 90deg";
         groupbar = rec {
-          text_color = lib.mkForce "rgb(${palette.base08})";
-          text_color_inactive = lib.mkForce "rgb(${palette.base04})";
+          text_color = lib.mkForce "rgb(${lib.removePrefix "#" palette.base08})";
+          text_color_inactive = lib.mkForce "rgb(${lib.removePrefix "#" palette.base04})";
           active_color = text_color;
           inactive_color = text_color_inactive;
         };
@@ -61,17 +61,17 @@ rec {
       in
       {
         "*" = {
-          selected = lib.mkForce (mkLiteral "#${palette.base0F}");
+          selected = lib.mkForce (mkLiteral palette.base0F);
         };
       };
 
     cava = {
       color = {
         gradient = 1;
-        gradient_color_1 = lib.mkForce "'#${palette.base08}'";
-        gradient_color_2 = lib.mkForce "'#${palette.base0F}'";
-        gradient_color_3 = lib.mkForce "'#${palette.base09}'";
-        gradient_color_4 = lib.mkForce "'#${palette.base0A}'";
+        gradient_color_1 = lib.mkForce palette.base08;
+        gradient_color_2 = lib.mkForce palette.base0F;
+        gradient_color_3 = lib.mkForce palette.base09;
+        gradient_color_4 = lib.mkForce palette.base0A;
       };
     };
   };
