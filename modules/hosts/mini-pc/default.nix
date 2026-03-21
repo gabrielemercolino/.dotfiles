@@ -92,6 +92,7 @@ in
           gaming
           cli
           shell
+          socials
 
           inputs.sops-nix.homeManagerModules.sops
         ];
@@ -138,6 +139,11 @@ in
 
           gaming = {
             mangohud.enable = true;
+          };
+
+          socials = {
+            telegram.enable = true;
+            discord.enable = true;
           };
 
           cli = {
