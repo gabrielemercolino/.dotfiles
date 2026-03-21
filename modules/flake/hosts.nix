@@ -28,6 +28,16 @@ let
         default = "x86_64-linux";
       };
 
+      audio = mkOption {
+        type = types.nullOr (
+          types.enum [
+            "pulseaudio"
+            "pipewire"
+          ]
+        );
+        default = null;
+      };
+
       theme = mkOption {
         type = themeType;
       };
@@ -123,7 +133,7 @@ in
             host.nixos
           ];
           specialArgs = {
-            inherit (host) user keyboard;
+            inherit (host) audio user keyboard;
             loadTheme = themeFn host;
           };
         }
@@ -138,7 +148,7 @@ in
             host.home
           ];
           extraSpecialArgs = {
-            inherit (host) user keyboard;
+            inherit (host) audio user keyboard;
             loadTheme = themeFn host;
           };
         }

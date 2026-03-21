@@ -6,6 +6,8 @@ in
   hosts.mini-pc = {
     system = "x86_64-linux";
 
+    audio = "pipewire";
+
     keyboard = {
       layout = "it";
     };

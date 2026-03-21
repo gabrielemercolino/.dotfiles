@@ -9,7 +9,6 @@
   gab = {
     hardware = {
       bluetooth.enable = true;
-      audio-server = "pipewire";
 
       i18n.locale = "it_IT.UTF-8";
       time.timeZone = "Europe/Rome";
