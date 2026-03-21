@@ -8,6 +8,7 @@
 let
   inherit (lib)
     mkOption
+    mkEnableOption
     mkDefault
     types
     mapAttrs
@@ -54,16 +55,31 @@ let
         };
       };
 
-      keyboard = {
-        layout = mkOption {
-          type = types.str;
-          example = "it";
+      localization = {
+        keyboard = {
+          layout = mkOption {
+            type = types.str;
+            example = "it";
+          };
+
+          variant = mkOption {
+            type = types.str;
+            default = "";
+            example = "nodeadkeys";
+          };
         };
 
-        variant = mkOption {
+        locale = mkOption {
           type = types.str;
-          default = "";
-          example = "nodeadkeys";
+          example = "en_US.UTF-8";
+        };
+
+        time = {
+          zone = mkOption {
+            type = types.str;
+            example = "America/New_York";
+          };
+          hardware-clock.enable = mkEnableOption "hardware clock (for dual boot)";
         };
       };
 
@@ -133,7 +149,11 @@ in
             host.nixos
           ];
           specialArgs = {
-            inherit (host) audio user keyboard;
+            inherit (host)
+              audio
+              user
+              localization
+              ;
             loadTheme = themeFn host;
           };
         }
@@ -148,7 +168,11 @@ in
             host.home
           ];
           extraSpecialArgs = {
-            inherit (host) audio user keyboard;
+            inherit (host)
+              audio
+              user
+              localization
+              ;
             loadTheme = themeFn host;
           };
         }

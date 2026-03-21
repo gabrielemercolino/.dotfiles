@@ -9,9 +9,6 @@
   gab = {
     hardware = {
       bluetooth.enable = true;
-
-      i18n.locale = "it_IT.UTF-8";
-      time.timeZone = "Europe/Rome";
     };
 
     apps = {

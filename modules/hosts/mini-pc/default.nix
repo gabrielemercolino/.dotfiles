@@ -13,8 +13,10 @@ in
 
     audio = "pipewire";
 
-    keyboard = {
-      layout = "it";
+    localization = {
+      keyboard.layout = "it";
+      locale = "it_IT.UTF-8";
+      time.zone = "Europe/Rome";
     };
 
     user = {

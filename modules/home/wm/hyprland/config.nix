@@ -4,7 +4,7 @@
     {
       config,
       pkgs,
-      keyboard,
+      localization,
       ...
     }:
     let
@@ -60,8 +60,8 @@
         };
 
         input = {
-          kb_layout = keyboard.layout;
-          kb_variant = keyboard.variant;
+          kb_layout = localization.keyboard.layout;
+          kb_variant = localization.keyboard.variant;
           follow_mouse = 1;
           touchpad.natural_scroll = "no";
         };
