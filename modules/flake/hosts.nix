@@ -154,6 +154,7 @@ in
               user
               localization
               ;
+            host.name = name;
             loadTheme = themeFn host;
           };
         }
@@ -173,6 +174,7 @@ in
               user
               localization
               ;
+            host.name = name;
             loadTheme = themeFn host;
           };
         }
