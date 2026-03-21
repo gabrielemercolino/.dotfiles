@@ -1,4 +1,9 @@
-{ config, ... }:
+{
+  self,
+  inputs,
+  config,
+  ...
+}:
 let
   inherit (config.flake.modules) nixos homeManager;
 in
@@ -20,7 +25,7 @@ in
     theme = "roathe-dark";
 
     nixos =
-      { pkgs, ... }:
+      { pkgs, user, ... }:
       {
         imports = with nixos; [
           ./_hardware-configuration.nix
@@ -29,6 +34,8 @@ in
           wm
           login
           cli
+
+          inputs.sops-nix.nixosModules.sops
         ];
 
         boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -38,6 +45,14 @@ in
         # use zsh
         users.defaultUserShell = pkgs.zsh;
         programs.zsh.enable = true;
+
+        sops = {
+          defaultSopsFile = self.outPath + "/secrets/secrets.yaml";
+          defaultSopsFormat = "yaml";
+          age.keyFile = "/home/${user.name}/.config/sops/age/keys.txt";
+
+          secrets = { };
+        };
 
         gab = {
           cli = {
@@ -75,6 +90,8 @@ in
           gaming
           cli
           shell
+
+          inputs.sops-nix.homeManagerModules.sops
         ];
 
         home.packages = [ config.flake.packages.${pkgs.stdenv.buildPlatform.system}.gab ];
@@ -90,6 +107,21 @@ in
           enable = true;
           settings.user = {
             inherit (user) name email;
+          };
+        };
+
+        sops = {
+          defaultSopsFile = self.outPath + "/secrets/secrets.yaml";
+          defaultSopsFormat = "yaml";
+          age.keyFile = "/home/${user.name}/.config/sops/age/keys.txt";
+
+          secrets = {
+            "ssh/priv" = {
+              path = "/home/${user.name}/.ssh/id_ed25519";
+            };
+            "ssh/pub" = {
+              path = "/home/${user.name}/.ssh/id_ed25519.pub";
+            };
           };
         };
 

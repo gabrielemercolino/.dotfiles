@@ -1,6 +1,5 @@
 {
   config,
-  inputs,
   lib,
   pkgs,
   ...
@@ -8,7 +7,6 @@
 {
   imports = [
     ../../gab/home-manager
-    inputs.sops-nix.homeManagerModules.sops
   ];
 
   xdg =
@@ -24,20 +22,6 @@
       };
     };
 
-  sops = {
-    defaultSopsFile = ../../secrets/secrets.yaml;
-    defaultSopsFormat = "yaml";
-    age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
-
-    secrets = {
-      "ssh/priv" = {
-        path = "${config.home.homeDirectory}/.ssh/id_ed25519";
-      };
-      "ssh/pub" = {
-        path = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
-      };
-    };
-  };
 
   programs.zellij = {
     enable = true;
