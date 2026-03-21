@@ -36,6 +36,7 @@ in
           wm
           login
           cli
+          apps
 
           inputs.sops-nix.nixosModules.sops
         ];
@@ -59,6 +60,11 @@ in
         gab = {
           cli = {
             bashmount.enable = true;
+          };
+
+          apps = {
+            corectrl.enable = true;
+            lact.enable = true;
           };
 
           gaming = {

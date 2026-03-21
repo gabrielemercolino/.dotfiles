@@ -15,8 +15,6 @@
       ssh.enable = true;
       dbus.enable = true;
 
-      corectrl.enable = true;
-      lact.enable = true;
       bashmount.enable = true;
 
       direnv.enable = true;
