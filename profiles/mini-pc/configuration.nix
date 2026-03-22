@@ -7,10 +7,6 @@
   ];
 
   gab = {
-    hardware = {
-      bluetooth.enable = true;
-    };
-
     apps = {
       ssh.enable = true;
       dbus.enable = true;

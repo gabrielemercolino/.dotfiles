@@ -10,13 +10,6 @@
       rofi.enable = true;
       kitty.enable = true;
 
-      gimp.enable = true;
-      obsidian.enable = true;
-      aseprite.enable = false;
-      tiled.enable = true;
-
-      idea-community.enable = true;
-
       resilio.enable = true;
     };
   };

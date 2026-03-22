@@ -138,6 +138,10 @@ in
         gab = {
           editors = {
             helix.enable = true;
+            gimp.enable = true;
+            libresprite.enable = true;
+            tiled.enable = true;
+            obsidian.enable = true;
           };
 
           browsers = {

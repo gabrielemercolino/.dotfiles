@@ -28,10 +28,10 @@
         config = lib.mkIf cfg.enable {
           programs.opencode = {
             enable = true;
-            settings = with cfg.plugins; {
-              plugin = lib.optionals antigravity.enable antigravity-cfg.plugin;
-              provider = lib.optionals antigravity.enable antigravity-cfg.provider;
-            };
+            # settings = with cfg.plugins; {
+            # plugin = lib.optionals antigravity.enable antigravity-cfg.plugin;
+            # provider = lib.optionals antigravity.enable antigravity-cfg.provider;
+            # };
           };
         };
       };
