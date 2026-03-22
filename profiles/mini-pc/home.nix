@@ -1,16 +1,10 @@
-{
-  pkgs,
-  userSettings,
-  ...
-}:
+{ pkgs, ... }:
 {
   imports = [
     ../base/home.nix
     ../../gab/cli/gab
   ];
 
-  # for amd gpus
-  nixpkgs.config.rocmSupport = true;
   gab = {
     apps = {
       rofi.enable = true;
@@ -22,11 +16,6 @@
       tiled.enable = true;
 
       idea-community.enable = true;
-
-      music = {
-        mpd.enable = true;
-        ncmpcpp.enable = true;
-      };
 
       resilio.enable = true;
     };
