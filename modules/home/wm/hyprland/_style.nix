@@ -20,8 +20,6 @@ in
   };
 
   config = lib.mkIf config.stylix.enable {
-    services.hyprpaper.enable = lib.mkForce false;
-
     wayland.windowManager.hyprland.config = lib.mkMerge [
       {
         decoration.shadow.color = hypr.decoration.shadow.color;

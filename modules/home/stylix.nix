@@ -62,7 +62,6 @@
             vscode.enable = false;
             rofi.enable = false;
             zen-browser.enable = false;
-            hyprpaper.enable = lib.mkForce false;
           };
         };
       };

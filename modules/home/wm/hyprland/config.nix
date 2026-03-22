@@ -1,4 +1,3 @@
-{ lib, ... }:
 {
   flake.modules.homeManager.hyprland =
     {
@@ -14,9 +13,7 @@
       wayland.windowManager.hyprland.config = {
         monitor = cfg.monitors ++ [ ", preferred, auto, 1" ];
         exec_once = [ ];
-        exec = [
-          "${lib.getExe pkgs.swaybg} -m fill -i ${config.stylix.image}"
-        ];
+        exec = [ ];
 
         workspace = [
           "1, persistent:true"
