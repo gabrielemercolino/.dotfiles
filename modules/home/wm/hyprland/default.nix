@@ -43,12 +43,23 @@
           ];
 
           programs = {
-            swaylock.settings = {
-              package = pkgs.swaylock-effects;
-              effect-blur = "7x5";
-              effect-vignette = "0.7:0.7";
-              indicator = true;
-              clock = true;
+            kitty = {
+              enable = true;
+              settings = {
+                confirm_os_window_close = 0;
+                cursor_trail = 10;
+              };
+            };
+
+            swaylock = {
+              enable = true;
+              settings = {
+                package = pkgs.swaylock-effects;
+                effect-blur = "7x5";
+                effect-vignette = "0.7:0.7";
+                indicator = true;
+                clock = true;
+              };
             };
 
             ags-bar = {
