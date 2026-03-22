@@ -35,44 +35,48 @@ rec {
     base0F = "#c47a4a"; # orange alternate - bronzo ramato
   };
 
-  extras = {
-    cursor = {
-      size = 28;
-      name = "LyraG-cursors";
-      package = pkgs.lyra-cursors;
-    };
-
-    hyprland = {
-      general.active_border_color = lib.mkForce "rgb(${lib.removePrefix "#" palette.base0A}) rgb(${lib.removePrefix "#" palette.base08}) 90deg";
-      group = {
-        active_border_color = lib.mkForce "rgb(${lib.removePrefix "#" palette.base08}) rgb(${lib.removePrefix "#" palette.base0A}) 90deg";
-        groupbar = rec {
-          text_color = lib.mkForce "rgb(${lib.removePrefix "#" palette.base08})";
-          text_color_inactive = lib.mkForce "rgb(${lib.removePrefix "#" palette.base04})";
-          active_color = text_color;
-          inactive_color = text_color_inactive;
-        };
+  extras =
+    let
+      rawHex = lib.removePrefix "#";
+    in
+    {
+      cursor = {
+        size = 28;
+        name = "LyraG-cursors";
+        package = pkgs.lyra-cursors;
       };
-    };
 
-    rofi =
-      let
-        inherit (config.lib.formats.rasi) mkLiteral;
-      in
-      {
-        "*" = {
-          selected = lib.mkForce (mkLiteral palette.base0F);
+      hyprland = {
+        general.active_border_color = lib.mkForce "rgb(${rawHex palette.base0A}) rgb(${rawHex palette.base08}) 90deg";
+        group = {
+          active_border_color = lib.mkForce "rgb(${rawHex palette.base08}) rgb(${rawHex palette.base0A}) 90deg";
+          groupbar = rec {
+            text_color = lib.mkForce "rgb(${rawHex palette.base08})";
+            text_color_inactive = lib.mkForce "rgb(${rawHex palette.base04})";
+            active_color = text_color;
+            inactive_color = text_color_inactive;
+          };
         };
       };
 
-    cava = {
-      color = {
-        gradient = 1;
-        gradient_color_1 = lib.mkForce palette.base08;
-        gradient_color_2 = lib.mkForce palette.base0F;
-        gradient_color_3 = lib.mkForce palette.base09;
-        gradient_color_4 = lib.mkForce palette.base0A;
+      rofi =
+        let
+          inherit (config.lib.formats.rasi) mkLiteral;
+        in
+        {
+          "*" = {
+            selected = lib.mkForce (mkLiteral palette.base0F);
+          };
+        };
+
+      cava = {
+        color = {
+          gradient = 1;
+          gradient_color_1 = lib.mkForce "'${palette.base08}'";
+          gradient_color_2 = lib.mkForce "'${palette.base0F}'";
+          gradient_color_3 = lib.mkForce "'${palette.base09}'";
+          gradient_color_4 = lib.mkForce "'${palette.base0A}'";
+        };
       };
     };
-  };
 }
