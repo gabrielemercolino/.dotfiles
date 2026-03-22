@@ -18,6 +18,7 @@
       let
         cfg = config.gab.wm.hyprland;
         theme = loadTheme { inherit config lib pkgs; };
+        extras = theme.extras or { };
       in
       {
         imports = [
@@ -41,21 +42,40 @@
             wl-clipboard
           ];
 
-          programs.swaylock.settings = {
-            effect-blur = "7x5";
-            effect-vignette = "0.7:0.7";
-            indicator = true;
-            clock = true;
-          };
+          programs = {
+            swaylock.settings = {
+              package = pkgs.swaylock-effects;
+              effect-blur = "7x5";
+              effect-vignette = "0.7:0.7";
+              indicator = true;
+              clock = true;
+            };
 
-          programs.ags-bar = {
-            enable = true;
-            systemd.enable = true;
+            ags-bar = {
+              enable = true;
+              systemd.enable = true;
 
-            fonts = [ "DejaVu Sans Mono" ];
-            colors.base16 = theme.palette;
+              fonts = [ "DejaVu Sans Mono" ];
+              colors.base16 = theme.palette;
 
-            commands.lock = "${pkgs.swaylock-effects}/bin/swaylock";
+              commands.lock = "${pkgs.swaylock-effects}/bin/swaylock";
+            };
+
+            rofi = {
+              enable = true;
+              package = pkgs.rofi;
+              theme = lib.mkMerge [
+                (import ./_rofi-theme.nix { inherit config; })
+                (extras.rofi or { })
+              ];
+              extraConfig = {
+                modi = "drun";
+                show-icons = true;
+                icon-theme = "WhiteSur";
+                display-drun = "run";
+                drun-display-format = "{name}";
+              };
+            };
           };
 
           wayland.windowManager.hyprland = {
