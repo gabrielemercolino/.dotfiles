@@ -99,6 +99,7 @@ in
           cli
           shell
           socials
+          music
 
           inputs.sops-nix.homeManagerModules.sops
         ];
@@ -155,6 +156,11 @@ in
           cli = {
             opencode.enable = true;
             yazi.enable = true;
+          };
+
+          music = {
+            mpd.enable = true;
+            ncmpcpp.enable = true;
           };
 
           shell = {
