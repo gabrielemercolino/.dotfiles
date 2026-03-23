@@ -37,6 +37,7 @@ in
           login
           cli
           apps
+          services
 
           inputs.sops-nix.nixosModules.sops
         ];
@@ -75,10 +76,15 @@ in
             hyprland.enable = true;
           };
 
+          services = {
+            ssh.enable = true;
+            direnv.enable = true;
+            docker.enable = true;
+          };
+
           login.sddm.enable = true;
         };
 
-        # TODO: consider putting this in the base config
         services.xserver.excludePackages = [ pkgs.xterm ];
       };
 
