@@ -100,6 +100,7 @@ in
           shell
           socials
           music
+          services
 
           inputs.sops-nix.homeManagerModules.sops
         ];
@@ -165,6 +166,10 @@ in
           music = {
             mpd.enable = true;
             ncmpcpp.enable = true;
+          };
+
+          services = {
+            resilio.enable = true;
           };
 
           shell = {

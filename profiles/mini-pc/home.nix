@@ -1,18 +1,6 @@
 { pkgs, ... }:
 {
-  imports = [
-    ../base/home.nix
-    ../../gab/cli/gab
-  ];
-
-  gab = {
-    apps = {
-      rofi.enable = true;
-      kitty.enable = true;
-
-      resilio.enable = true;
-    };
-  };
+  imports = [ ../base/home.nix ];
 
   programs.gh = {
     enable = true;
