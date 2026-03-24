@@ -137,15 +137,6 @@ in
         inputs.nixpkgs.lib.nixosSystem {
           modules = [
             baseHost.nixos
-            {
-              users.users.${host.user.name} = {
-                isNormalUser = true;
-                description = host.user.name;
-                extraGroups = [ "wheel" ];
-              };
-
-              services.getty.autologinUser = mkDefault host.user.name;
-            }
             host.nixos
           ];
           specialArgs = {
