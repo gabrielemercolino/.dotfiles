@@ -20,6 +20,9 @@
         # fix: needed for unfree packages
         firefox-addons = pkgs.callPackage inputs.firefox-addons {
           inherit (pkgs) fetchurl stdenv lib;
+          buildMozillaXpiAddon =
+            (import "${inputs.firefox-addons}/../../lib/mozilla.nix" { lib = pkgs.lib; }).mkBuildMozillaXpiAddon
+              { inherit (pkgs) fetchurl stdenv; };
         };
       in
       {
