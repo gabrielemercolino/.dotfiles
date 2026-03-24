@@ -51,6 +51,7 @@ in
         # use zsh
         users.defaultUserShell = pkgs.zsh;
         programs.zsh.enable = true;
+        services.upower.enable = true;
 
         sops = {
           defaultSopsFile = self.outPath + "/secrets/secrets.yaml";
