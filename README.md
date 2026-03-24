@@ -22,8 +22,8 @@ Or manually, after cloning and cd into it
 
 ```sh
 # you could also copy the already existing hardware config with
-# cp /etc/nixos/hardware-configuration.nix ./profiles/mini-pc/hardware-configuration.nix
-sudo nixos-generate-config --show-hardware-config > ./profiles/mini-pc/hardware-configuration.nix
+# cp /etc/nixos/hardware-configuration.nix ./modules/hosts/mini-pc/_hardware-configuration.nix
+sudo nixos-generate-config --show-hardware-config > ./modules/hosts/mini-pc/_hardware-configuration.nix
 
 # you need to check what profiles exist
 sudo nixos-rebuild switch --flake .#mini-pc
@@ -42,3 +42,4 @@ Big thanks to [Nyramu](https://github.com/Nyramu/) for helping and improving the
 - [brunoanesio](https://github.com/brunoanesio/waybar-config)
 - [woioeow](https://github.com/woioeow/hyprland-dotfiles)
 - [Zaney](https://gitlab.com/Zaney/zaneyos)
+- [GaetanLepage](https://github.com/GaetanLepage/nix-config)
