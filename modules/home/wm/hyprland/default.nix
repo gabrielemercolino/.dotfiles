@@ -1,12 +1,12 @@
 {
+  self,
   inputs,
-  config,
   lib,
   ...
 }:
 {
   flake.modules.homeManager = {
-    wm.imports = [ config.flake.modules.homeManager.hyprland ];
+    wm.imports = [ self.modules.homeManager.hyprland ];
 
     hyprland =
       {

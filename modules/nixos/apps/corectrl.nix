@@ -1,7 +1,7 @@
-{ config, lib, ... }:
+{ self, lib, ... }:
 {
   flake.modules.nixos = {
-    apps.imports = [ config.flake.modules.nixos.corectrl ];
+    apps.imports = [ self.modules.nixos.corectrl ];
 
     corectrl =
       {

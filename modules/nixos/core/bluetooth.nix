@@ -1,7 +1,7 @@
-{ config, ... }:
+{ self, ... }:
 {
   flake.modules.nixos = {
-    core.imports = [ config.flake.modules.nixos.bluetooth ];
+    core.imports = [ self.modules.nixos.bluetooth ];
 
     bluetooth = {
       hardware.bluetooth = {

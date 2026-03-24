@@ -1,14 +1,7 @@
-{
-  config,
-  lib,
-  ...
-}:
-let
-  inherit (config.flake.modules) nixos;
-in
+{ self, lib, ... }:
 {
   flake.modules.nixos = {
-    wm.imports = [ nixos.hyprland ];
+    wm.imports = [ self.modules.nixos.hyprland ];
 
     hyprland =
       { config, ... }:
@@ -16,7 +9,7 @@ in
         cfg = config.gab.wm.hyprland;
       in
       {
-        imports = [ nixos.wayland ];
+        imports = [ self.modules.nixos.wayland ];
 
         options.gab.wm = {
           hyprland.enable = lib.mkEnableOption "hyprland";

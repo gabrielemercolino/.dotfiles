@@ -1,7 +1,7 @@
-{ config, lib, ... }:
+{ self, lib, ... }:
 {
   flake.modules.homeManager = {
-    editors.imports = [ config.flake.modules.homeManager.libresprite ];
+    editors.imports = [ self.modules.homeManager.libresprite ];
 
     libresprite =
       { config, pkgs, ... }:

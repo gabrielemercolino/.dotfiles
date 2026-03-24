@@ -1,7 +1,7 @@
-{ config, lib, ... }:
+{ self, lib, ... }:
 {
   flake.modules.nixos = {
-    core.imports = [ config.flake.modules.nixos.audio ];
+    core.imports = [ self.modules.nixos.audio ];
 
     audio =
       {

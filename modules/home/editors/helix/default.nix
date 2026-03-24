@@ -1,18 +1,10 @@
-{
-  config,
-  lib,
-  ...
-}:
+{ self, lib, ... }:
 {
   flake.modules.homeManager = {
-    editors.imports = [ config.flake.modules.homeManager.helix ];
+    editors.imports = [ self.modules.homeManager.helix ];
 
     helix =
-      {
-        config,
-        pkgs,
-        ...
-      }:
+      { config, pkgs, ... }:
       let
         cfg = config.gab.editors.helix;
       in

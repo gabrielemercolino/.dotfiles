@@ -1,14 +1,10 @@
-{ config, lib, ... }:
+{ self, lib, ... }:
 {
   flake.modules.nixos = {
-    gaming.imports = [ config.flake.modules.nixos.steam ];
+    gaming.imports = [ self.modules.nixos.steam ];
 
     steam =
-      {
-        config,
-        pkgs,
-        ...
-      }:
+      { config, pkgs, ... }:
       let
         cfg = config.gab.gaming.steam;
       in

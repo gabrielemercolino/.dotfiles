@@ -1,7 +1,7 @@
-{ config, lib, ... }:
+{ self, lib, ... }:
 {
   flake.modules.nixos = {
-    apps.imports = [ config.flake.modules.nixos.lact ];
+    apps.imports = [ self.modules.nixos.lact ];
 
     lact =
       { config, pkgs, ... }:

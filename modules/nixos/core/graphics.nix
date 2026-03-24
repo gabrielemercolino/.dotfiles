@@ -1,7 +1,7 @@
-{ config, ... }:
+{ self, ... }:
 {
   flake.modules.nixos = {
-    core.imports = [ config.flake.modules.nixos.graphics ];
+    core.imports = [ self.modules.nixos.graphics ];
 
     graphics = {
       hardware.graphics = {

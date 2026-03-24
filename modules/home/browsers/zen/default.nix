@@ -1,12 +1,12 @@
 {
+  self,
   inputs,
-  config,
   lib,
   ...
 }:
 {
   flake.modules.homeManager = {
-    browsers.imports = [ config.flake.modules.homeManager.zen ];
+    browsers.imports = [ self.modules.homeManager.zen ];
 
     zen =
       {

@@ -1,11 +1,7 @@
-{
-  config,
-  lib,
-  ...
-}:
+{ self, lib, ... }:
 {
   flake.modules.homeManager = {
-    core.imports = [ config.flake.modules.homeManager.pointer ];
+    core.imports = [ self.modules.homeManager.pointer ];
 
     pointer =
       {

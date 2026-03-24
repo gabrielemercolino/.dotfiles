@@ -1,12 +1,12 @@
 {
+  self,
   inputs,
-  config,
   lib,
   ...
 }:
 {
   flake.modules.nixos = {
-    login.imports = [ config.flake.modules.nixos.sddm ];
+    login.imports = [ self.modules.nixos.sddm ];
 
     sddm =
       {

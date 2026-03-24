@@ -1,7 +1,7 @@
-{ config, lib, ... }:
+{ self, lib, ... }:
 {
   flake.modules.homeManager = {
-    socials.imports = [ config.flake.modules.homeManager.discord ];
+    socials.imports = [ self.modules.homeManager.discord ];
 
     discord =
       { config, pkgs, ... }:

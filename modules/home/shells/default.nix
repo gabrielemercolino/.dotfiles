@@ -1,11 +1,7 @@
 { lib, ... }:
 {
   flake.modules.homeManager.shell =
-    {
-      config,
-      pkgs,
-      ...
-    }:
+    { config, pkgs, ... }:
     let
       cfg = config.gab.shell;
     in

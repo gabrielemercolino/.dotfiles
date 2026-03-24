@@ -1,11 +1,6 @@
-{
-  self,
-  inputs,
-  config,
-  ...
-}:
+{ self, inputs, ... }:
 let
-  inherit (config.flake.modules) nixos homeManager;
+  inherit (self.modules) nixos homeManager;
 in
 {
   hosts.chromebook = {
@@ -113,7 +108,7 @@ in
           inputs.sops-nix.homeManagerModules.sops
         ];
 
-        home.packages = [ config.flake.packages.${pkgs.stdenv.buildPlatform.system}.gab ];
+        home.packages = [ self.packages.${pkgs.stdenv.buildPlatform.system}.gab ];
 
         programs.git = {
           enable = true;

@@ -1,15 +1,11 @@
-{
-  config,
-  ...
-}:
+{ self, ... }:
 {
   flake.modules.nixos = {
-    core.imports = [ config.flake.modules.nixos.localization ];
+    core.imports = [ self.modules.nixos.localization ];
 
     localization =
       { localization, ... }:
       {
-
         console.keyMap = localization.keyboard.layout;
         services.xserver.xkb = {
           layout = localization.keyboard.layout;

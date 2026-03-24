@@ -1,11 +1,6 @@
-{
-  self,
-  inputs,
-  config,
-  ...
-}:
+{ self, inputs, ... }:
 let
-  inherit (config.flake.modules) nixos homeManager;
+  inherit (self.modules) nixos homeManager;
 in
 {
   hosts.mini-pc = {
@@ -114,7 +109,7 @@ in
           inputs.sops-nix.homeManagerModules.sops
         ];
 
-        home.packages = [ config.flake.packages.${pkgs.stdenv.buildPlatform.system}.gab ];
+        home.packages = [ self.packages.${pkgs.stdenv.hostPlatform.system}.gab ];
 
         programs.git = {
           enable = true;

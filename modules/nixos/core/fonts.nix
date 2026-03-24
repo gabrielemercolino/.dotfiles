@@ -1,7 +1,7 @@
-{ config, ... }:
+{ self, ... }:
 {
   flake.modules.nixos = {
-    core.imports = [ config.flake.modules.nixos.fonts ];
+    core.imports = [ self.modules.nixos.fonts ];
 
     fonts =
       { pkgs, ... }:

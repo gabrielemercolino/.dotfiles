@@ -1,7 +1,7 @@
-{ config, lib, ... }:
+{ self, lib, ... }:
 {
   flake.modules.homeManager = {
-    editors.imports = [ config.flake.modules.homeManager.tiled ];
+    editors.imports = [ self.modules.homeManager.tiled ];
 
     tiled =
       { config, pkgs, ... }:

@@ -1,7 +1,7 @@
-{ config, ... }:
+{ self, ... }:
 {
   flake.modules.homeManager = {
-    core.imports = [ config.flake.modules.homeManager.nix ];
+    core.imports = [ self.modules.homeManager.nix ];
 
     nix = {
       nixpkgs.config = {

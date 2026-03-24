@@ -1,11 +1,7 @@
-{
-  config,
-  lib,
-  ...
-}:
+{ self, lib, ... }:
 {
   flake.modules.homeManager = {
-    gaming.imports = [ config.flake.modules.homeManager.mangohud ];
+    gaming.imports = [ self.modules.homeManager.mangohud ];
 
     mangohud =
       { config, ... }:

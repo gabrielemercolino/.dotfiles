@@ -1,7 +1,7 @@
-{ config, ... }:
+{ self, ... }:
 {
   flake.modules.nixos = {
-    core.imports = [ config.flake.modules.nixos.boot ];
+    core.imports = [ self.modules.nixos.boot ];
 
     boot = {
       boot = {

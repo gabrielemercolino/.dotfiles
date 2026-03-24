@@ -1,7 +1,7 @@
-{ config, lib, ... }:
+{ self, lib, ... }:
 {
   flake.modules.homeManager = {
-    music.imports = [ config.flake.modules.homeManager.mpd ];
+    music.imports = [ self.modules.homeManager.mpd ];
 
     mpd =
       {

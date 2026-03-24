@@ -1,7 +1,8 @@
-{ config, lib, ... }:
+{ self, lib, ... }:
 {
   flake.modules.homeManager = {
-    core.imports = [ config.flake.modules.homeManager.xdg ];
+    core.imports = [ self.modules.homeManager.xdg ];
+
     xdg =
       { config, pkgs, ... }:
       let

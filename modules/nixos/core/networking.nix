@@ -1,7 +1,7 @@
-{ config, ... }:
+{ self, ... }:
 {
   flake.modules.nixos = {
-    core.imports = [ config.flake.modules.nixos.networking ];
+    core.imports = [ self.modules.nixos.networking ];
 
     networking =
       { user, host, ... }:

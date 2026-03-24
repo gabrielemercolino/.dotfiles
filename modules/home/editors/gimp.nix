@@ -1,7 +1,7 @@
-{ config, lib, ... }:
+{ self, lib, ... }:
 {
   flake.modules.homeManager = {
-    editors.imports = [ config.flake.modules.homeManager.gimp ];
+    editors.imports = [ self.modules.homeManager.gimp ];
 
     gimp =
       { config, pkgs, ... }:

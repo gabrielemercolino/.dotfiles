@@ -1,7 +1,7 @@
-{ config, lib, ... }:
+{ self, lib, ... }:
 {
   flake.modules.homeManager = {
-    services.imports = [ config.flake.modules.homeManager.resilio ];
+    services.imports = [ self.modules.homeManager.resilio ];
 
     resilio =
       {

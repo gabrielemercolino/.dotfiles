@@ -1,10 +1,7 @@
-{ config, lib, ... }:
-let
-  package = pkgs: config.flake.packages.${pkgs.stdenv.hostPlatform.system}.suyu;
-in
+{ self, lib, ... }:
 {
   flake.modules.nixos = {
-    gaming.imports = [ config.flake.modules.nixos.suyu ];
+    gaming.imports = [ self.modules.nixos.suyu ];
 
     suyu =
       { config, pkgs, ... }:
@@ -17,7 +14,7 @@ in
         };
 
         config = lib.mkIf cfg.enable {
-          environment.systemPackages = [ (package pkgs) ];
+          environment.systemPackages = [ (self.packages.${pkgs.stdenv.hostPlatform.system}) ];
         };
       };
   };

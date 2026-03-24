@@ -1,7 +1,7 @@
-{ config, lib, ... }:
+{ self, lib, ... }:
 {
   flake.modules.nixos = {
-    services.imports = [ config.flake.modules.nixos.ssh ];
+    services.imports = [ self.modules.nixos.ssh ];
 
     ssh =
       { config, pkgs, ... }:

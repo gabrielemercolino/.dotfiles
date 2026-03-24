@@ -1,7 +1,7 @@
-{ config, lib, ... }:
+{ self, lib, ... }:
 {
   flake.modules.homeManager = {
-    socials.imports = [ config.flake.modules.homeManager.telegram ];
+    socials.imports = [ self.modules.homeManager.telegram ];
 
     telegram =
       { config, pkgs, ... }:

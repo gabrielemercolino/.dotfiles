@@ -1,7 +1,7 @@
-{ config, lib, ... }:
+{ self, lib, ... }:
 {
   flake.modules.nixos = {
-    gaming.imports = [ config.flake.modules.nixos.gamemode ];
+    gaming.imports = [ self.modules.nixos.gamemode ];
 
     gamemode =
       {

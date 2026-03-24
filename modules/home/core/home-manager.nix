@@ -1,7 +1,7 @@
-{ config, ... }:
+{ self, ... }:
 {
   flake.modules.homeManager = {
-    core.imports = [ config.flake.modules.homeManager.home-manager ];
+    core.imports = [ self.modules.homeManager.home-manager ];
 
     home-manager =
       { user, ... }:

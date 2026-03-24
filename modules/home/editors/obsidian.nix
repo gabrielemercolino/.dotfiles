@@ -1,7 +1,7 @@
-{ config, lib, ... }:
+{ self, lib, ... }:
 {
   flake.modules.homeManager = {
-    editors.imports = [ config.flake.modules.homeManager.obsidian ];
+    editors.imports = [ self.modules.homeManager.obsidian ];
 
     obsidian =
       { config, pkgs, ... }:

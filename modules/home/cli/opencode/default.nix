@@ -1,11 +1,7 @@
-{
-  config,
-  lib,
-  ...
-}:
+{ self, lib, ... }:
 {
   flake.modules.homeManager = {
-    cli.imports = [ config.flake.modules.homeManager.opencode ];
+    cli.imports = [ self.modules.homeManager.opencode ];
 
     opencode =
       {

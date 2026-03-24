@@ -1,11 +1,7 @@
-{
-  config,
-  lib,
-  ...
-}:
+{ self, lib, ... }:
 {
   flake.modules.nixos = {
-    cli.imports = [ config.flake.modules.nixos.bashmount ];
+    cli.imports = [ self.modules.nixos.bashmount ];
     bashmount =
       {
         config,
