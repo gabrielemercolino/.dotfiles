@@ -13,8 +13,8 @@ rec {
   opacity = 0.8;
 
   #got it from https://x.com/shieldgating/status/2006520583383601201/
-  profile = ./roathe-dark-profile.png;
-  background = ./roathe-dark-background.png;
+  profile = ./profile.png;
+  background = ./background.png;
 
   palette = {
     base00 = "#1a0a0a"; # bg - rosso-marrone molto scuro

@@ -18,8 +18,8 @@ let
   themeType = types.enum (
     builtins.readDir themeDir
     |> builtins.attrNames
-    |> builtins.filter (name: lib.strings.hasSuffix ".nix" name)
-    |> map (lib.removeSuffix ".nix")
+    # |> builtins.filter (name: lib.strings.hasSuffix ".nix" name)
+    # |> map (lib.removeSuffix ".nix")
   );
 
   hostType = types.submodule {
@@ -127,7 +127,7 @@ in
           lib,
           config,
         }:
-        import (self.outPath + "/themes/${host.theme}.nix") {
+        import (self.outPath + "/themes/${host.theme}") {
           inherit config lib pkgs;
         };
     in
