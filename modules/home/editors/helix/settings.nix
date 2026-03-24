@@ -59,22 +59,19 @@
         keys.normal = {
           C-q = ":q";
           C-s = ":w";
-          C-f = [
-            ":fmt"
-            ":w"
-          ];
+          C-f = ":fmt";
           C-w = ":buffer-close";
           C-right = ":buffer-next";
           C-left = ":buffer-previous";
 
-          g.d = "goto_definition";
-          g.D = "goto_declaration";
-          g.t = "goto_type_definition";
-          g.y = "no_op";
+          g = {
+            d = "goto_definition";
+            D = "goto_declaration";
+            t = "goto_type_definition";
+            y = "no_op";
+          };
 
           space = {
-            g.g = ":sh ${pkgs.zellij}/bin/zellij run -c -f -x 10%% -y 10%% --width 80%% --height 80%% -- ${lib.getExe pkgs.lazygit}";
-
             f.g = "global_search";
             f.f = "file_picker";
             "/" = "no_op";
