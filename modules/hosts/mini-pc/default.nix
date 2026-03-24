@@ -70,6 +70,9 @@ in
 
           gaming = {
             steam.enable = true;
+            gamemode.enable = true;
+            gamescope.enable = true;
+            lsfg.enable = true;
           };
 
           wm = {
