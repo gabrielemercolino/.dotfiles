@@ -8,7 +8,8 @@
 let
   hypr = config.wayland.windowManager.hyprland.settings;
   theme = loadTheme { inherit config lib pkgs; };
-  extras = theme.extras or { };
+  home = theme.home or { };
+  hyprland = home.hyprland or { };
 in
 {
   # fix: hyprnix deletes these but stylix still will try to use them
@@ -43,7 +44,7 @@ in
 
         misc.background_color = hypr.misc.background_color;
       }
-      (extras.hyprland or { })
+      (hyprland.config or { })
     ];
   };
 }

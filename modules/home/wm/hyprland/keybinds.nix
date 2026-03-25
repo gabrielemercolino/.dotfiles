@@ -13,7 +13,7 @@
 
       MOUSE_L = "mouse:272";
       MOUSE_R = "mouse:273";
-      terminal = "${lib.getExe pkgs.kitty}";
+      terminal = "${lib.getExe pkgs.ghostty}";
       # collection of keybinds grouped by functionality
       groups = {
         launchApps = {
