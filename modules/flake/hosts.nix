@@ -15,12 +15,7 @@ let
     ;
 
   themeDir = self.outPath + "/themes";
-  themeType = types.enum (
-    builtins.readDir themeDir
-    |> builtins.attrNames
-    # |> builtins.filter (name: lib.strings.hasSuffix ".nix" name)
-    # |> map (lib.removeSuffix ".nix")
-  );
+  themeType = types.enum (builtins.readDir themeDir |> builtins.attrNames);
 
   hostType = types.submodule {
     options = {

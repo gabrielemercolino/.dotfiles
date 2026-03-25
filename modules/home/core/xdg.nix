@@ -4,8 +4,16 @@
     core.imports = [ self.modules.homeManager.xdg ];
 
     xdg =
-      { config, pkgs, ... }:
+      {
+        config,
+        pkgs,
+        loadTheme,
+        ...
+      }:
       let
+        theme = loadTheme { inherit config lib pkgs; };
+        home = theme.home or { };
+
         allMimeTypes = builtins.readFile "${pkgs.shared-mime-info}/share/mime/types";
 
         expandMimeGlobExcluding =
@@ -57,38 +65,44 @@
 
       in
       {
-        xdg = {
-          enable = true;
-
-          desktopEntries = {
-            imv = {
-              name = "imv";
-              exec = "${lib.getExe pkgs.imv}";
-              noDisplay = true;
-            };
-            mpv = {
-              name = "mpv";
-              exec = "${lib.getExe pkgs.mpv} --vo=gpu --keep-open=yes";
-              noDisplay = true;
-            };
-            editor = {
-              name = "Text Editor";
-              exec = "${config.home.sessionVariables.EDITOR or (lib.getExe pkgs.nano)} %f";
-              noDisplay = true;
-            };
-          };
-
-          mimeApps = {
+        xdg =
+          let
+            xdg = home.xdg;
+          in
+          {
             enable = true;
-            defaultApplications = lib.mkMerge [
-              (toMimeAttrs formats.image entries.imageViewer)
-              (toMimeAttrs formats.gimp entries.gimp)
-              (toMimeAttrs formats.video entries.videoViewer)
-              (toMimeAttrs formats.text entries.textEditor)
-              (toMimeAttrs formats.browser entries.browser)
-            ];
+
+            configFile = xdg.configFile or { };
+
+            desktopEntries = {
+              imv = {
+                name = "imv";
+                exec = "${lib.getExe pkgs.imv}";
+                noDisplay = true;
+              };
+              mpv = {
+                name = "mpv";
+                exec = "${lib.getExe pkgs.mpv} --vo=gpu --keep-open=yes";
+                noDisplay = true;
+              };
+              editor = {
+                name = "Text Editor";
+                exec = "${config.home.sessionVariables.EDITOR or (lib.getExe pkgs.nano)} %f";
+                noDisplay = true;
+              };
+            };
+
+            mimeApps = {
+              enable = true;
+              defaultApplications = lib.mkMerge [
+                (toMimeAttrs formats.image entries.imageViewer)
+                (toMimeAttrs formats.gimp entries.gimp)
+                (toMimeAttrs formats.video entries.videoViewer)
+                (toMimeAttrs formats.text entries.textEditor)
+                (toMimeAttrs formats.browser entries.browser)
+              ];
+            };
           };
-        };
       };
   };
 }

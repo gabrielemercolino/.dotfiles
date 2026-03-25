@@ -23,7 +23,6 @@
 
         background = theme.background;
         profile = theme.profile or null;
-        extras = theme.extras or { };
 
         imgName = img: if lib.isDerivation img then img.name else builtins.baseNameOf img;
       in
@@ -35,37 +34,34 @@
         };
 
         config = lib.mkIf cfg.enable {
-          programs.silentSDDM = lib.mkMerge [
-            {
-              enable = true;
-              theme = "default";
+          programs.silentSDDM = {
+            enable = true;
+            theme = "default";
 
-              backgrounds.bg = background;
+            backgrounds.bg = background;
 
-              # TODO: add default so themes without it won't have the last profile pic set
-              profileIcons = lib.mkIf (profile != null) {
-                "${user.name}" = profile;
+            # TODO: add default so themes without it won't have the last profile pic set
+            profileIcons = lib.mkIf (profile != null) {
+              "${user.name}" = profile;
+            };
+            settings = {
+              "LoginScreen" = {
+                blur = 32;
+                background = "${imgName background}";
               };
-              settings = {
-                "LoginScreen" = {
-                  blur = 32;
-                  background = "${imgName background}";
-                };
-                "LoginScreen.MenuArea.Keyboard" = {
-                  display = false;
-                };
-                "LockScreen" = {
-                  blur = 0;
-                  background = "${imgName background}";
-                };
-                "LockScreen.Date" = {
-                  format = "dd/MM/yyyy";
-                  locale = "it_IT";
-                };
+              "LoginScreen.MenuArea.Keyboard" = {
+                display = false;
               };
-            }
-            (extras.silentSDDM or { })
-          ];
+              "LockScreen" = {
+                blur = 0;
+                background = "${imgName background}";
+              };
+              "LockScreen.Date" = {
+                format = "dd/MM/yyyy";
+                locale = "it_IT";
+              };
+            };
+          };
         };
       };
   };

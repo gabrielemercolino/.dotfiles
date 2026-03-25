@@ -12,14 +12,14 @@
       }:
       let
         theme = loadTheme { inherit config lib pkgs; };
-        extras = theme.extras or { };
+        home = theme.home or { };
       in
       {
         home.pointerCursor = {
           enable = true;
-          size = extras.cursor.size or 32;
-          name = extras.cursor.name or "Vanilla-DMZ";
-          package = extras.cursor.package or pkgs.vanilla-dmz;
+          size = home.pointerCursor.size or 32;
+          name = home.pointerCursor.name or "Vanilla-DMZ";
+          package = home.pointerCursor.package or pkgs.vanilla-dmz;
           hyprcursor.enable = true;
         };
       };
