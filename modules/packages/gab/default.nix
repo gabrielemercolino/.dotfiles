@@ -22,9 +22,14 @@
 
         installPhase = ''
           mkdir -p $out/bin
+          mkdir -p $out/share
+
           cp gab $out/bin/${name}
+          cp -r templates $out/share/templates
+
           wrapProgram $out/bin/${name} \
-            --prefix PATH : ${pkgs.nh}/bin
+            --prefix PATH : ${pkgs.nh}/bin \
+            --set TEMPLATES_DIR "$out/share/templates"
         '';
 
         postInstall = ''

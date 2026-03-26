@@ -1,71 +1,40 @@
-flake_init() {
-  cat > flake.nix << EOF
-{
-  description = "template dev flake";
+force=${args[--force]}
 
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    flake-parts.url = "github:hercules-ci/flake-parts";
-  };
+confirm_overwrite() {
+  local file="$1"
 
-  outputs = inputs@{ flake-parts, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
+  if [[ ! -e "$file" ]]; then
+    return 0
+  fi
 
-      perSystem = { system, ... }:
-        let
-          pkgs = import inputs.nixpkgs {
-            inherit system;
-            # config.allowUnfree = true;
-          };
-        in {
-          devShells.default = pkgs.mkShell {
-            nativeBuildInputs = with pkgs; [];
-            buildInputs = with pkgs; [];
-            shellHook = "";
-          };
-        };
-    };
-}
-EOF
-}
+  read -rp "'$file' already present, override? [y/N] " answer
 
-envrc_init() {
-  echo 'use flake' > .envrc
-}
-
-confirm_override() {
-  local target="$1"
-  local response
-
-  read -rp "${target} already present, override? [y/N] " response
-  case "${response}" in
-    "y"|"Y") return 0 ;;
-    *) return 1 ;;
+  case "$answer" in
+    "y"|"Y")
+      rm "$file"
+      return 0
+      ;;
+    *)
+      echo "aborting"
+      exit 0
+      ;;
   esac
 }
 
-handle_file() {
-  local file="$1"
-  local init_fn="$2"
-
-  if [[ -f "$file" ]]; then
-    if confirm_override "$file"; then
-      echo "Overriding $file"
-      "$init_fn"
-    else
-      echo "Skipping $file"
-    fi
-  else
-    echo "Creating $file"
-    "$init_fn"
-  fi
-}
-
-if [[ "$PWD" == "$HOME" ]]; then
-  echo "Cannot create dev shell in ${HOME}"
-  exit 1
+if [[ $force ]]; then
+  rm -f flake.nix .envrc
+else
+  confirm_overwrite "flake.nix"
+  confirm_overwrite ".envrc"
 fi
 
-handle_file "flake.nix" flake_init
-handle_file ".envrc"    envrc_init
+echo "creating flake.nix"
+cp "$TEMPLATES_DIR/dev/flake.tpl" flake.nix
+chmod +w flake.nix
+
+echo "creating .envrc"
+cp "$TEMPLATES_DIR/dev/.envrc.tpl" .envrc
+chmod +w .envrc
+
+echo
+echo "Dev env ready"
