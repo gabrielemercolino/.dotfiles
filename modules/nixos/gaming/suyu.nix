@@ -4,7 +4,7 @@
     gaming.imports = [ self.modules.nixos.suyu ];
 
     suyu =
-      { config, pkgs, ... }:
+      { config, host, ... }:
       let
         cfg = config.gab.gaming.suyu;
       in
@@ -14,7 +14,7 @@
         };
 
         config = lib.mkIf cfg.enable {
-          environment.systemPackages = [ (self.packages.${pkgs.stdenv.hostPlatform.system}) ];
+          environment.systemPackages = [ (self.packages.${host.system}.suyu) ];
         };
       };
   };

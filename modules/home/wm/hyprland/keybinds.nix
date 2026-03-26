@@ -1,15 +1,10 @@
-{
-  config,
-  lib,
-  ...
-}:
+{ config, lib, ... }:
 {
   flake.modules.homeManager.hyprland =
-    { pkgs, ... }:
+    { pkgs, host, ... }:
     let
-      system = pkgs.stdenv.buildPlatform.system;
-      screenShot = config.flake.packages.${system}.screen-shot;
-      screenRecord = config.flake.packages.${system}.screen-record;
+      screenShot = config.flake.packages.${host.system}.screen-shot;
+      screenRecord = config.flake.packages.${host.system}.screen-record;
 
       MOUSE_L = "mouse:272";
       MOUSE_R = "mouse:273";

@@ -91,6 +91,7 @@ in
         lib,
         pkgs,
         user,
+        host,
         ...
       }:
       {
@@ -109,7 +110,7 @@ in
           inputs.sops-nix.homeManagerModules.sops
         ];
 
-        home.packages = [ self.packages.${pkgs.stdenv.hostPlatform.system}.gab ];
+        home.packages = [ self.packages.${host.system}.gab ];
 
         programs.git = {
           enable = true;

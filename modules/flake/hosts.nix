@@ -140,7 +140,10 @@ in
               user
               localization
               ;
-            host.name = name;
+            host = {
+              inherit name;
+              inherit (host) system;
+            };
             loadTheme = themeFn host;
           };
         }
@@ -160,7 +163,10 @@ in
               user
               localization
               ;
-            host.name = name;
+            host = {
+              inherit name;
+              inherit (host) system;
+            };
             loadTheme = themeFn host;
           };
         }
