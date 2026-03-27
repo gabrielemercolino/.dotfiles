@@ -22,11 +22,7 @@ in
     theme = "roathe-dark";
 
     nixos =
-      {
-        pkgs,
-        user,
-        ...
-      }:
+      { pkgs, user, ... }:
       {
         imports = with nixos; [
           ./_hardware-configuration.nix
@@ -36,6 +32,7 @@ in
           login
           cli
           apps
+          services
 
           inputs.sops-nix.nixosModules.sops
         ];
@@ -63,7 +60,6 @@ in
 
           apps = {
             corectrl.enable = true;
-            lact.enable = true;
           };
 
           gaming = {
@@ -72,6 +68,12 @@ in
 
           wm = {
             hyprland.enable = true;
+          };
+
+          services = {
+            ssh.enable = true;
+            direnv.enable = true;
+            docker.enable = true;
           };
 
           login.sddm.enable = true;
@@ -100,11 +102,11 @@ in
           editors
           browsers
           wm
-          gaming
           cli
           shell
           socials
           music
+          services
 
           inputs.sops-nix.homeManagerModules.sops
         ];
@@ -143,6 +145,7 @@ in
         gab = {
           editors = {
             helix.enable = true;
+            obsidian.enable = true;
           };
 
           browsers = {
@@ -161,6 +164,10 @@ in
           music = {
             mpd.enable = true;
             ncmpcpp.enable = true;
+          };
+
+          services = {
+            resilio.enable = true;
           };
 
           shell = {
