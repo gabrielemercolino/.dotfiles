@@ -57,7 +57,9 @@
 
           fonts = fonts // cfg.fonts;
           opacity.terminal = opacity;
+
           targets = {
+            gtksourceview.enable = false;
             mangohud.enable = false;
             vscode.enable = false;
             rofi.enable = false;

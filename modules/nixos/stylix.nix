@@ -51,6 +51,10 @@
           polarity = polarity;
 
           fonts = fonts // cfg.fonts;
+
+          targets = {
+            gtksourceview.enable = false;
+          };
         };
       };
     };
