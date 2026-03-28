@@ -45,15 +45,33 @@ rec {
       package = pkgs.lyra-cursors;
     };
 
-    hyprland.config = {
-      general.active_border_color = lib.mkForce "rgb(${rawHex palette.base0A}) rgb(${rawHex palette.base08}) 90deg";
-      group = {
-        active_border_color = lib.mkForce "rgb(${rawHex palette.base08}) rgb(${rawHex palette.base0A}) 90deg";
-        groupbar = rec {
-          text_color = lib.mkForce "rgb(${rawHex palette.base08})";
-          text_color_inactive = lib.mkForce "rgb(${rawHex palette.base04})";
-          active_color = text_color;
-          inactive_color = text_color_inactive;
+    hyprland = {
+      config =
+        let
+          active_border = "rgb(${rawHex palette.base0A}) rgb(${rawHex palette.base08})";
+        in
+        {
+          general.active_border_color = lib.mkForce active_border;
+
+          group = {
+            active_border_color = lib.mkForce active_border;
+            groupbar = rec {
+              text_color = lib.mkForce "rgb(${rawHex palette.base08})";
+              text_color_inactive = lib.mkForce "rgb(${rawHex palette.base04})";
+              active_color = text_color;
+              inactive_color = text_color_inactive;
+            };
+          };
+        };
+
+      animations = {
+        animation = {
+          borderangle = {
+            enable = true;
+            duration = 2000;
+            curve = "linear";
+            style = "loop";
+          };
         };
       };
     };
