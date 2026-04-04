@@ -59,13 +59,19 @@
         input = {
           kb_layout = localization.keyboard.layout;
           kb_variant = localization.keyboard.variant;
+          numlock_by_default = true;
           follow_mouse = 1;
           touchpad.natural_scroll = "no";
         };
 
+        ecosystem = {
+          no_update_news = true;
+          no_donation_nag = true;
+        };
+
         dwindle = {
-          pseudotile = "yes"; # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section
-          preserve_split = "yes"; # you probably want this
+          pseudotile = true; # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section
+          preserve_split = true; # you probably want this
         };
 
         master = {
