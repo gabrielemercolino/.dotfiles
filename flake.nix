@@ -38,8 +38,8 @@
 
     hyprnix = {
       url = "github:Nyramu/hyprnix";
+      # url = "path:/home/gabriele/programmazione/nix/hyprnix";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.hyprland.follows = "hyprland";
     };
 
     zen-browser = {

@@ -83,7 +83,7 @@
       };
     in
     {
-      wayland.windowManager.hyprland.keyBinds = lib.mkMerge [
+      hyprnix.keybinds = lib.mkMerge [
         groups.powerControl
         groups.launchApps
         groups.audioControl
