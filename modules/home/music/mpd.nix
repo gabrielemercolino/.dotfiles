@@ -8,13 +8,10 @@
         config,
         pkgs,
         audio,
-        loadTheme,
         ...
       }:
       let
         cfg = config.gab.music.mpd;
-        theme = loadTheme { inherit config lib pkgs; };
-        home = theme.home or { };
       in
       {
         options.gab.music.mpd = {
@@ -44,24 +41,17 @@
           };
 
           programs = {
-            cava =
-              let
-                cava = home.cava or { };
-              in
-              {
-                enable = true;
-                settings = lib.mkMerge [
-                  {
-                    general = {
-                      framerate = 60;
-                      sensitivity = 50;
-                      bar_width = 1;
-                      bar_spacing = 1;
-                    };
-                  }
-                  (cava.settings or { })
-                ];
+            cava = {
+              enable = true;
+              settings = {
+                general = {
+                  framerate = 60;
+                  sensitivity = 50;
+                  bar_width = 1;
+                  bar_spacing = 1;
+                };
               };
+            };
           };
         };
       };

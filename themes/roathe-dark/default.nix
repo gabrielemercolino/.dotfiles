@@ -5,7 +5,9 @@
   ...
 }:
 let
-  rawHex = lib.removePrefix "#";
+  inherit (lib) mkForce removePrefix;
+
+  rawHex = removePrefix "#";
 in
 rec {
   system = "base16";
@@ -39,68 +41,59 @@ rec {
   };
 
   home = {
-    pointerCursor = {
-      size = 28;
-      name = "LyraG-cursors";
-      package = pkgs.lyra-cursors;
+    home.pointerCursor = {
+      size = mkForce 28;
+      name = mkForce "LyraG-cursors";
+      package = mkForce pkgs.lyra-cursors;
     };
-
-    hyprland = {
-      config =
-        let
-          active_border = "rgb(${rawHex palette.base0A}) rgb(${rawHex palette.base08})";
-        in
-        {
-          general.active_border_color = lib.mkForce active_border;
-
-          group = {
-            active_border_color = lib.mkForce active_border;
-            groupbar = rec {
-              text_color = lib.mkForce "rgb(${rawHex palette.base08})";
-              text_color_inactive = lib.mkForce "rgb(${rawHex palette.base04})";
-              active_color = text_color;
-              inactive_color = text_color_inactive;
-            };
-          };
-        };
-
-      animations = {
-        animation = {
-          borderangle = {
-            enable = true;
-            duration = 2000;
-            curve = "linear";
-            style = "loop";
-          };
-        };
-      };
-    };
-
-    rofi.theme =
-      let
-        inherit (config.lib.formats.rasi) mkLiteral;
-      in
-      {
-        "*" = {
-          selected = lib.mkForce (mkLiteral palette.base0F);
-        };
-      };
 
     xdg.configFile = {
       "ghostty/shader.glsl".source = ./ghostty-blazing-cursor.glsl;
     };
 
-    ghostty.settings = {
-      custom-shader = "shader.glsl";
-    };
+    wayland.windowManager.hyprland.settings =
+      let
+        active_border = "rgb(${rawHex palette.base0A}) rgb(${rawHex palette.base08})";
+      in
+      {
+        general."col.active_border" = mkForce active_border;
 
-    cava.settings = {
-      color = {
-        gradient = 1;
-        gradient_color_1 = lib.mkForce "'${palette.base08}'";
-        gradient_color_2 = lib.mkForce "'${palette.base0F}'";
-        gradient_color_3 = lib.mkForce "'${palette.base09}'";
-        gradient_color_4 = lib.mkForce "'${palette.base0A}'";
+        group = {
+          "col.border_active" = mkForce active_border;
+          groupbar = rec {
+            text_color = mkForce "rgb(${rawHex palette.base08})";
+            text_color_inactive = mkForce "rgb(${rawHex palette.base04})";
+            "col.active" = text_color;
+            "col.inactive" = text_color_inactive;
+          };
+        };
+
+        animations.animation = [ "borderangle, 1, 20, linear, loop" ];
+      };
+
+    programs = {
+      rofi.theme =
+        let
+          inherit (config.lib.formats.rasi) mkLiteral;
+        in
+        {
+          "*" = {
+            selected = mkForce (mkLiteral palette.base0F);
+          };
+        };
+
+      ghostty.settings = {
+        custom-shader = "shader.glsl";
+      };
+
+      cava.settings = {
+        color = {
+          gradient = 1;
+          gradient_color_1 = mkForce "'${palette.base08}'";
+          gradient_color_2 = mkForce "'${palette.base0F}'";
+          gradient_color_3 = mkForce "'${palette.base09}'";
+          gradient_color_4 = mkForce "'${palette.base0A}'";
+        };
       };
     };
   };

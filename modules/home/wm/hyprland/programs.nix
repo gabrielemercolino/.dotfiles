@@ -10,21 +10,13 @@
     let
       cfg = config.gab.wm.hyprland;
       theme = loadTheme { inherit config lib pkgs; };
-      home = theme.home or { };
     in
     {
       imports = [ inputs.ags-bar.homeManagerModules.default ];
 
       config = lib.mkIf cfg.enable {
         programs = {
-          ghostty =
-            let
-              ghostty = home.ghostty or { };
-            in
-            {
-              enable = true;
-              settings = ghostty.settings or { };
-            };
+          ghostty.enable = true;
 
           swaylock = {
             enable = true;
@@ -47,25 +39,18 @@
             commands.lock = "${pkgs.swaylock-effects}/bin/swaylock";
           };
 
-          rofi =
-            let
-              rofi = home.rofi or { };
-            in
-            {
-              enable = true;
-              package = pkgs.rofi;
-              theme = lib.mkMerge [
-                (import ./_rofi-theme.nix { inherit config; })
-                (rofi.theme or { })
-              ];
-              extraConfig = {
-                modi = "drun";
-                show-icons = true;
-                icon-theme = "WhiteSur";
-                display-drun = "run";
-                drun-display-format = "{name}";
-              };
+          rofi = {
+            enable = true;
+            package = pkgs.rofi;
+            theme = (import ./_rofi-theme.nix { inherit config; });
+            extraConfig = {
+              modi = "drun";
+              show-icons = true;
+              icon-theme = "WhiteSur";
+              display-drun = "run";
+              drun-display-format = "{name}";
             };
+          };
         };
       };
     };

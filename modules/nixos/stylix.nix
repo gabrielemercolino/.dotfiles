@@ -16,6 +16,7 @@
       background = theme.background;
       palette = theme.palette;
       fonts = theme.fonts or { };
+      nixos = theme.nixos or { };
     in
     {
       imports = [ inputs.stylix.nixosModules.default ];
@@ -41,21 +42,24 @@
         };
       };
 
-      config = {
-        stylix = {
-          enable = true;
-          autoEnable = true;
+      config = lib.mkMerge [
+        (nixos)
+        {
+          stylix = {
+            enable = true;
+            autoEnable = true;
 
-          base16Scheme = palette;
-          image = background;
-          polarity = polarity;
+            base16Scheme = palette;
+            image = background;
+            polarity = polarity;
 
-          fonts = fonts // cfg.fonts;
+            fonts = fonts // cfg.fonts;
 
-          targets = {
-            gtksourceview.enable = false;
+            targets = {
+              gtksourceview.enable = false;
+            };
           };
-        };
-      };
+        }
+      ];
     };
 }

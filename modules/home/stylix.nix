@@ -21,6 +21,7 @@
       palette = theme.palette;
       fonts = theme.fonts or { };
       opacity = theme.opacity or 1.0;
+      home = theme.home or { };
     in
     {
       imports = [ inputs.stylix.homeModules.default ];
@@ -46,26 +47,29 @@
         };
       };
 
-      config = {
-        stylix = {
-          enable = true;
-          autoEnable = true;
+      config = lib.mkMerge [
+        (home)
+        {
+          stylix = {
+            enable = true;
+            autoEnable = true;
 
-          base16Scheme = palette;
-          image = background;
-          polarity = polarity;
+            base16Scheme = palette;
+            image = background;
+            polarity = polarity;
 
-          fonts = fonts // cfg.fonts;
-          opacity.terminal = opacity;
+            fonts = fonts // cfg.fonts;
+            opacity.terminal = opacity;
 
-          targets = {
-            gtksourceview.enable = false;
-            mangohud.enable = false;
-            vscode.enable = false;
-            rofi.enable = false;
-            zen-browser.enable = false;
+            targets = {
+              gtksourceview.enable = false;
+              mangohud.enable = false;
+              vscode.enable = false;
+              rofi.enable = false;
+              zen-browser.enable = false;
+            };
           };
-        };
-      };
+        }
+      ];
     };
 }
