@@ -31,11 +31,6 @@
       inputs.flake-parts.follows = "flake-parts";
     };
 
-    hyprland = {
-      url = "github:hyprwm/hyprland";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     hyprnix = {
       url = "github:Nyramu/hyprnix";
       # url = "path:/home/gabriele/programmazione/nix/hyprnix";

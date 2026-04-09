@@ -23,6 +23,7 @@
           bind = {
             "SUPER, V" = "togglefloating";
             "SUPER, F" = "fullscreen";
+            "SUPER, M" = "fullscreenstate, 1, toggle"; # maximize
             "SUPER, P" = "pseudo";
             "SUPER, J" = "togglesplit";
           };
@@ -83,7 +84,7 @@
       };
     in
     {
-      hyprnix.keybinds = lib.mkMerge [
+      hyprnix.settings.keybinds = lib.mkMerge [
         groups.powerControl
         groups.launchApps
         groups.audioControl

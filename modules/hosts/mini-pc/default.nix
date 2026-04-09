@@ -193,8 +193,16 @@ in
             hyprland = {
               enable = true;
               monitors = [
-                "HDMI-A-1, 1920x1080@100, auto, 1"
-                "DP-1, 1920x1080@100, auto, 1"
+                {
+                  output = "HDMI-A-1";
+                  mode = "1920x1080@100";
+                  position = "auto";
+                }
+                {
+                  output = "DP-1";
+                  mode = "1920x1080@100";
+                  position = "auto";
+                }
               ];
             };
           };

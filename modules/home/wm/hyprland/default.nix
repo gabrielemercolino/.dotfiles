@@ -9,7 +9,12 @@
     wm.imports = [ self.modules.homeManager.hyprland ];
 
     hyprland =
-      { config, pkgs, ... }:
+      {
+        config,
+        pkgs,
+        localization,
+        ...
+      }:
       let
         cfg = config.gab.wm.hyprland;
       in
@@ -19,7 +24,7 @@
         options.gab.wm.hyprland = {
           enable = lib.mkEnableOption "hyprland";
           monitors = lib.mkOption {
-            type = with lib.types; listOf str;
+            type = with lib.types; listOf attrs;
             default = [ ];
           };
         };
@@ -37,22 +42,20 @@
             xwayland.enable = true;
 
             settings = {
+              env = {
+                NIXOS_OZONE_WL = 1;
+              };
+
               dwindle = {
                 preserve_split = true;
                 pseudotile = true;
               };
 
-              monitors = [
-                {
-                  output = "HDMI-A-1";
-                  mode = "1920x1080@100";
-                  position = "auto";
-                }
-                {
-                  output = "DP-1";
-                  mode = "1920x1080@100";
-                  position = "auto";
-                }
+              scrolling = {
+                follow_min_visible = 0.1;
+              };
+
+              monitors = cfg.monitors ++ [
                 {
                   output = "";
                   mode = "preferred";
@@ -72,35 +75,27 @@
               };
 
               animations = {
-                beziers = [
-                  {
-                    name = "easeInOutCubic";
-                    points = [
-                      0.65
-                      0
-                      0.35
-                      1
-                    ];
-                  }
-                  {
-                    name = "easeOutCirc";
-                    points = [
-                      0
-                      0.55
-                      0.45
-                      1
-                    ];
-                  }
-                  {
-                    name = "linear";
-                    points = [
-                      0
-                      0
-                      1
-                      1
-                    ];
-                  }
-                ];
+                bezier = {
+                  easeInOutCubic = [
+                    0.65
+                    0
+                    0.35
+                    1
+                  ];
+                  easeOutCirc = [
+                    0
+                    0.55
+                    0.45
+                    1
+                  ];
+
+                  linear = [
+                    0
+                    0
+                    1
+                    1
+                  ];
+                };
 
                 animations = [
                   {
@@ -145,77 +140,70 @@
                   }
                 ];
               };
+
+              master = {
+                new_status = "master";
+              };
+
+              general = {
+                allow_tearing = false;
+                border_size = 2;
+                gaps_in = 5;
+                gaps_out = 20;
+                layout = "scrolling";
+              };
+
+              input = {
+                touchpad.natural_scroll = false;
+                follow_mouse = 1;
+                kb_layout = localization.keyboard.layout;
+                kb_variant = localization.keyboard.variant;
+                numlock_by_default = true;
+              };
+
+              gesture.gestures = [
+                {
+                  action = "workspace";
+                  direction = "vertical";
+                  fingers = 3;
+                }
+              ];
+
+              decoration = {
+                rounding = 10;
+
+                blur = {
+                  enabled = true;
+                  new_optimizations = true;
+                  passes = 1;
+                  size = 3;
+                };
+
+                shadow = {
+                  enabled = true;
+                  range = 4;
+                  render_power = 3;
+                };
+              };
+
+              group = {
+                auto_group = true;
+
+                groupbar = {
+                  enabled = true;
+                  blur = true;
+                  font_size = 13;
+                  indicator_height = 2;
+                  rounding = 8;
+                  rounding_power = 4;
+                };
+              };
+
+              ecosystem = {
+                no_donation_nag = true;
+                no_update_news = true;
+              };
             };
-
-            extraConfig =
-              #conf
-              ''
-                env = NIXOS_OZONE_WL,1
-
-                exec-once = systemctl --user stop hyprland-session.target
-                exec-once = systemctl --user start hyprland-session.target
-
-                master {
-                    new_status = master
-                }
-
-                general {
-                    allow_tearing = false
-                    border_size = 2
-                    gaps_in = 5
-                    gaps_out = 20
-                    layout = dwindle
-                }
-
-                input {
-                    touchpad {
-                        natural_scroll = false
-                    }
-
-                    follow_mouse = 1
-                    kb_layout = it
-                    kb_variant = 
-                    numlock_by_default = true
-                }
-
-                group {
-                    groupbar {
-                        blur = true
-                        font_size = 13
-                        gradients = false
-                        indicator_height = 2
-                        rounding = 8
-                        rounding_power = 4.000000
-                    }
-
-                    auto_group = true
-                }
-
-                decoration {
-                    rounding = 10
-
-                    blur {
-                        enabled = true
-                        passes = 1
-                        size = 3
-                    }
-
-                    shadow {
-                        color = rgba(1a0a0a99)
-                        enabled = true
-                        range = 4
-                        render_power = 3
-                    }
-                }
-
-
-                ecosystem {
-                    no_donation_nag = true
-                    no_update_news = true
-                }
-
-                gesture = 3, vertical, workspace
-              '';
           };
         };
       };
