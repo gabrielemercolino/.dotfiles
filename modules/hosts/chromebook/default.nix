@@ -186,8 +186,17 @@ in
             hyprland = {
               enable = true;
               monitors = [
-                "eDP-1, 1920x1080@60, auto, 1"
-                "DP-2, 1920x1080@60, auto, 1, mirror, eDP-1"
+                {
+                  output = "eDP-1";
+                  mode = "1920x1080@60";
+                  position = "auto";
+                }
+                {
+                  output = "DP-2";
+                  mode = "1920x1080@60";
+                  position = "auto";
+                  mirror = "eDP-1";
+                }
               ];
             };
           };
