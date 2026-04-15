@@ -167,8 +167,20 @@
                   direction = "vertical";
                   fingers = 3;
                 }
-                "3, left, dispatcher, movefocus, l"
-                "3, right, dispatcher, movefocus, r"
+                {
+                  direction = "left";
+                  fingers = 3;
+                  action = {
+                    dispatcher = "movefocus, l";
+                  };
+                }
+                {
+                  direction = "right";
+                  fingers = 3;
+                  action = {
+                    dispatcher = "movefocus, r";
+                  };
+                }
               ];
 
               decoration = {
