@@ -37,7 +37,14 @@ in
           inputs.sops-nix.nixosModules.sops
         ];
 
-        boot.kernelPackages = pkgs.linuxPackages_latest;
+        nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.pinned ];
+
+        nix.settings.substituters = [ "https://attic.xuyh0120.win/lantian" ];
+        nix.settings.trusted-substituters = [ "https://attic.xuyh0120.win/lantian" ];
+        nix.settings.trusted-public-keys = [ "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=" ];
+
+        # boot.kernelPackages = pkgs.linuxPackages_latest;
+        boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest-lto-x86_64-v3;
         hardware.graphics.extraPackages = [ pkgs.libva ];
         nixpkgs.config.rocmSupport = true;
 
