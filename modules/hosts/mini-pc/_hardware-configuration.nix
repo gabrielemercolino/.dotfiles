@@ -36,26 +36,61 @@
     extraModulePackages = [ ];
   };
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-partlabel/NIXOS_ROOT";
-    fsType = "ext4";
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-label/NIXOS_ROOT";
+      fsType = "btrfs";
+      options = [
+        "subvol=@"
+        "noatime"
+      ];
+    };
+
+    "/nix" = {
+      device = "/dev/disk/by-label/NIXOS_ROOT";
+      fsType = "btrfs";
+      options = [
+        "subvol=@nix"
+        "noatime"
+        "compress=zstd:3"
+      ];
+    };
+
+    "/boot" = {
+      device = "/dev/disk/by-label/NIXOS_BOOT";
+      fsType = "vfat";
+      options = [
+        "fmask=0022"
+        "dmask=0022"
+      ];
+    };
+
+    "/home" = {
+      device = "/dev/disk/by-label/NIXOS_HOME";
+      fsType = "btrfs";
+      options = [
+        "subvol=@home"
+        "noatime"
+      ];
+    };
+
+    "/swap" = {
+      device = "/dev/disk/by-label/NIXOS_HOME";
+      fsType = "btrfs";
+      options = [
+        "subvol=@swap"
+        "noatime"
+        "nodatacow"
+      ];
+    };
   };
 
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-partlabel/NIXOS_BOOT";
-    fsType = "vfat";
-    options = [
-      "fmask=0077"
-      "dmask=0077"
-    ];
-  };
-
-  fileSystems."/home" = {
-    device = "/dev/disk/by-partlabel/NIXOS_HOME";
-    fsType = "btrfs";
-  };
-
-  swapDevices = [ ];
+  swapDevices = [
+    {
+      device = "/swap/swapfile";
+      size = 8192;
+    }
+  ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's

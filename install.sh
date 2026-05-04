@@ -55,7 +55,7 @@ echo ""
 
 # Load profiles
 declare -A profiles
-for profile in profiles/*; do
+for profile in modules/hosts/*; do
   profile=$(basename "$profile")
   if [ "$profile" = "base" ]; then continue; fi
   profiles["$profile"]="$profile"
