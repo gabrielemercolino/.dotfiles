@@ -37,7 +37,16 @@ in
           inputs.sops-nix.nixosModules.sops
         ];
 
-        boot.kernelPackages = pkgs.linuxPackages_latest;
+        nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.pinned ];
+
+        nix.settings = rec {
+          substituters = [ "https://attic.xuyh0120.win/lantian" ];
+          trusted-substituters = substituters;
+          trusted-public-keys = [ "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=" ];
+        };
+
+        # boot.kernelPackages = pkgs.linuxPackages_latest;
+        boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest-lto-x86_64-v2;
         hardware.graphics.extraPackages = [ pkgs.intel-media-driver ];
 
         # use zsh
