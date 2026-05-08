@@ -15,7 +15,7 @@
           bind = {
             "SUPER, RETURN" = "exec, ${terminal}";
             "SUPER, T" = "exec, ${lib.getExe pkgs.telegram-desktop}";
-            "SUPER_SHIFT, H" = "exec, ${terminal} -e ${lib.getExe pkgs.btop}";
+            "SUPER_SHIFT, H" = "exec, ${terminal} -e ${lib.getExe pkgs.btop-rocm}";
             "SUPER, SPACE" = "exec, ${lib.getExe pkgs.rofi} -show drun";
           };
         };
