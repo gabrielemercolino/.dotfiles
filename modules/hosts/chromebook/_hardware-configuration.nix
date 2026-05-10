@@ -23,20 +23,27 @@
     initrd.kernelModules = [ ];
     kernelModules = [ "kvm-intel" ];
     extraModulePackages = [ ];
+    zswap = {
+      enable = true;
+      compressor = "zstd";
+      maxPoolPercent = 20;
+    };
   };
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/daab6baf-d034-4e53-9fb5-cc123b7ce1ab";
-    fsType = "ext4";
-  };
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-uuid/daab6baf-d034-4e53-9fb5-cc123b7ce1ab";
+      fsType = "ext4";
+    };
 
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/FE07-A093";
-    fsType = "vfat";
-    options = [
-      "fmask=0077"
-      "dmask=0077"
-    ];
+    "/boot" = {
+      device = "/dev/disk/by-uuid/FE07-A093";
+      fsType = "vfat";
+      options = [
+        "fmask=0077"
+        "dmask=0077"
+      ];
+    };
   };
 
   swapDevices = [
