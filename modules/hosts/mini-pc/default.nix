@@ -16,7 +16,7 @@ in
 
     user = {
       name = "gabriele";
-      email = "gmercolino2003@gmail.com";
+      email = "ciruzzo032@noreply.codeberg.org";
     };
 
     theme = "roathe-dark";
