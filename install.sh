@@ -50,28 +50,26 @@ fi
 print_success "All dependencies found"
 echo ""
 
-print_header "Profile selection"
+print_header "Host selection"
 echo ""
 
-# Load profiles
-declare -A profiles
-for profile in modules/hosts/*; do
-  profile=$(basename "$profile")
-  if [ "$profile" = "base" ]; then continue; fi
-  profiles["$profile"]="$profile"
+declare -A hosts
+for host in modules/hosts/*; do
+  host=$(basename "$host")
+  hosts["$host"]="$host"
 done
 
-echo "Select profile:"
-for profile in "${profiles[@]}"; do
-  echo -e "  - ${GREEN}${profile}${NC}"
+echo "Select host:"
+for host in "${hosts[@]}"; do
+  echo -e "  - ${GREEN}${host}${NC}"
 done
 
 echo ""
 printf "Selection: "
-read -r profile
+read -r host
 
-if [[ ! -v profiles["$profile"] ]]; then
-  print_error "profile ${profile} does not exist, aborting"
+if [[ ! -v hosts["$host"] ]]; then
+  print_error "host $host does not exist, aborting"
   exit 1
 fi
 
@@ -81,25 +79,25 @@ printf "[y/N]: "
 read -r generate
 
 if [[ $generate = "y" ]]; then
-  sudo nixos-generate-config --show-hardware-config > profiles/"${profile}"/hardware-configuration.nix
+  sudo nixos-generate-config --show-hardware-config > modules/hosts/"${host}"/_hardware-configuration.nix
 fi
 
 echo ""
-print_header "Profile installation"
+print_header "Host installation"
 echo ""
-print_info "installing $profile profile"
-echo ""
-
-sudo nixos-rebuild switch --option extra-experimental-features "nix-command flakes pipe-operators" --flake ~/.dotfiles#"$profile"
-
-echo ""
-print_success "system part of the $profile profile has been installed"
+print_info "installing $host host"
 echo ""
 
-nix run home-manager/master --extra-experimental-features nix-command --extra-experimental-features flakes -- switch --flake ~/.dotfiles#"$profile"
+sudo nixos-rebuild switch --option extra-experimental-features "nix-command flakes pipe-operators" --flake ~/.dotfiles#"$host"
 
 echo ""
-print_success "home-manager part of the $profile profile has been installed"
+print_success "system part of the $host host has been installed"
+echo ""
+
+nix run home-manager/master --extra-experimental-features nix-command --extra-experimental-features flakes -- switch --flake ~/.dotfiles#"$host"
+
+echo ""
+print_success "home-manager part of the $host host has been installed"
 echo ""
 
 print_success "Installation finished, you can reboot now"

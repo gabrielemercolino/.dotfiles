@@ -4,9 +4,6 @@ These are my dotfiles for NixOS
 
 ## Installation
 
-Before installing you should take a look at [flake.nix](flake.nix)
-and change the setting as you need.
-
 Also, if you decide to clone the repo in a different location as `~/.dotfiles`
 you have to follow the manual installation method
 
