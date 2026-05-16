@@ -34,6 +34,15 @@ let
         default = null;
       };
 
+      performance = mkOption {
+        type = types.enum [
+          "low"
+          "medium"
+          "high"
+        ];
+        default = "medium";
+      };
+
       theme = mkOption {
         type = themeType;
       };
@@ -123,7 +132,7 @@ in
           config,
         }:
         import (self.outPath + "/themes/${host.theme}") {
-          inherit config lib pkgs;
+          inherit config lib pkgs host;
         };
     in
     {

@@ -8,6 +8,8 @@ in
 
     audio = "pipewire";
 
+    performance = "low";
+
     localization = {
       keyboard.layout = "it";
       locale = "it_IT.UTF-8";

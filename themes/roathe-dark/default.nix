@@ -2,10 +2,16 @@
   config,
   lib,
   pkgs,
+  host,
   ...
 }:
 let
-  inherit (lib) mkForce removePrefix;
+  inherit (lib)
+    mkIf
+    mkForce
+    removePrefix
+    optionals
+    ;
 
   rawHex = removePrefix "#";
 in
@@ -47,7 +53,7 @@ rec {
       package = mkForce pkgs.lyra-cursors;
     };
 
-    xdg.configFile = {
+    xdg.configFile = mkIf (host.performance != "low") {
       "ghostty/shader.glsl".source = ./ghostty-blazing-cursor.glsl;
     };
 
@@ -68,7 +74,7 @@ rec {
           };
         };
 
-        animations.animation = [ "borderangle, 1, 20, linear, loop" ];
+        animations.animation = optionals (host.performance != "low") [ "borderangle, 1, 20, linear, loop" ];
       };
 
     programs = {
@@ -82,7 +88,7 @@ rec {
           };
         };
 
-      ghostty.settings = {
+      ghostty.settings = mkIf (host.performance != "low") {
         custom-shader = "shader.glsl";
       };
 

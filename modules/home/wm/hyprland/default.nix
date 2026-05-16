@@ -99,12 +99,6 @@
 
                 animations = [
                   {
-                    name = "borderangle";
-                    speed = 20;
-                    curve = "linear";
-                    style = "loop";
-                  }
-                  {
                     name = "fadeIn";
                     speed = 2;
                     curve = "easeOutCirc";
