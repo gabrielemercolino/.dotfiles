@@ -67,6 +67,7 @@
               vscode.enable = false;
               rofi.enable = false;
               zen-browser.enable = false;
+              qt.enable = true;
             };
           };
         }
