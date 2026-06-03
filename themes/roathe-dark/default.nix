@@ -56,26 +56,43 @@ rec {
     xdg.configFile = mkIf (host.performance != "low") {
       "ghostty/shader.glsl".source = ./ghostty-blazing-cursor.glsl;
     };
-
-    wayland.windowManager.hyprland.settings =
-      let
-        active_border = "rgb(${rawHex palette.base0A}) rgb(${rawHex palette.base08})";
-      in
-      {
-        general."col.active_border" = mkForce active_border;
-
-        group = {
-          "col.border_active" = mkForce active_border;
-          groupbar = rec {
-            text_color = mkForce "rgb(${rawHex palette.base08})";
-            text_color_inactive = mkForce "rgb(${rawHex palette.base04})";
-            "col.active" = text_color;
-            "col.inactive" = text_color_inactive;
+    wayland.windowManager.hyprland.settings = {
+      config =
+        let
+          active_border = {
+            colors = [
+              "rgb(${rawHex palette.base0A})"
+              "rgb(${rawHex palette.base08})"
+            ];
+          };
+        in
+        {
+          general."col.active_border" = mkForce active_border;
+          group = {
+            "col.border_active" = mkForce active_border;
+            groupbar = rec {
+              text_color = mkForce "rgb(${rawHex palette.base08})";
+              text_color_inactive = mkForce "rgb(${rawHex palette.base04})";
+              "col.active" = text_color;
+              "col.inactive" = text_color_inactive;
+            };
           };
         };
 
-        animations.animation = optionals (host.performance != "low") [ "borderangle, 1, 20, linear, loop" ];
-      };
+      animation = optionals (host.performance != "low") [
+        {
+          _args = [
+            {
+              leaf = "borderangle";
+              enabled = true;
+              speed = 20;
+              bezier = "linear";
+              style = "loop";
+            }
+          ];
+        }
+      ];
+    };
 
     programs = {
       rofi.theme =
