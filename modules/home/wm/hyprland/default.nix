@@ -39,16 +39,12 @@
           hyprnix = {
             enable = true;
             systemd.enable = true;
-            xwayland.enable = true;
 
             settings = {
+              xwayland.enabled = true;
+
               env = {
                 NIXOS_OZONE_WL = 1;
-              };
-
-              dwindle = {
-                preserve_split = true;
-                pseudotile = true;
               };
 
               scrolling = {
@@ -63,80 +59,67 @@
                 }
               ];
 
-              workspaces =
-                builtins.genList (i: i + 1) 3
-                |> map (i: {
-                  id = i;
-                  rules.persistent = true;
-                });
+              workspace_rule = {
+                "1".persistent = true;
+                "2".persistent = true;
+                "3".persistent = true;
+              };
 
               misc = {
                 force_default_wallpaper = 0;
               };
 
-              animations = {
-                bezier = {
-                  easeInOutCubic = [
-                    0.65
-                    0
-                    0.35
-                    1
-                  ];
-                  easeOutCirc = [
-                    0
-                    0.55
-                    0.45
-                    1
-                  ];
+              curve.bezier = {
+                easeInOutCubic = [
+                  0.65
+                  0
+                  0.35
+                  1
+                ];
+                easeOutCirc = [
+                  0
+                  0.55
+                  0.45
+                  1
+                ];
 
-                  linear = [
-                    0
-                    0
-                    1
-                    1
-                  ];
-                };
-
-                animations = [
-                  {
-                    name = "fadeIn";
-                    speed = 2;
-                    curve = "easeOutCirc";
-                  }
-                  {
-                    name = "fadeOut";
-                    speed = 2;
-                    curve = "easeOutCirc";
-                  }
-                  {
-                    name = "windowsIn";
-                    speed = 1;
-                    curve = "easeOutCirc";
-                    style = "popin 60%";
-                  }
-                  {
-                    name = "windowsMove";
-                    speed = 2;
-                    curve = "easeInOutCubic";
-                    style = "popin";
-                  }
-                  {
-                    name = "windowsOut";
-                    speed = 2;
-                    curve = "easeOutCirc";
-                    style = "popin 60%";
-                  }
-                  {
-                    name = "workspaces";
-                    speed = 2;
-                    curve = "easeOutCirc";
-                    style = "slidevert";
-                  }
+                linear = [
+                  0
+                  0
+                  1
+                  1
                 ];
               };
 
-              master = {
-                new_status = "master";
+              animation = {
+                fadeIn = {
+                  speed = 2;
+                  bezier = "easeOutCirc";
+                };
+                fadeOut = {
+                  speed = 2;
+                  bezier = "easeOutCirc";
+                };
+                windowsIn = {
+                  speed = 1;
+                  bezier = "easeOutCirc";
+                  style = "popin 60%";
+                };
+                windowsMove = {
+                  speed = 2;
+                  bezier = "easeInOutCubic";
+                  style = "popin";
+                };
+                windowsOut = {
+                  speed = 2;
+                  bezier = "easeOutCirc";
+                  style = "popin 60%";
+                };
+                workspaces = {
+                  speed = 2;
+                  bezier = "easeOutCirc";
+                  style = "slidevert";
+                };
               };
 
               general = {
@@ -160,20 +143,6 @@
                   action = "workspace";
                   direction = "vertical";
                   fingers = 3;
-                }
-                {
-                  direction = "left";
-                  fingers = 3;
-                  action = {
-                    dispatcher = "movefocus, l";
-                  };
-                }
-                {
-                  direction = "right";
-                  fingers = 3;
-                  action = {
-                    dispatcher = "movefocus, r";
-                  };
                 }
               ];
 
