@@ -28,7 +28,7 @@ in
       {
         imports = with nixos; [
           ./_hardware-configuration.nix
-          stylix
+          style
           gaming
           wm
           login
@@ -109,7 +109,7 @@ in
       }:
       {
         imports = with homeManager; [
-          stylix
+          style
           editors
           browsers
           wm

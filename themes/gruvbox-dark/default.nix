@@ -1,14 +1,6 @@
-{ pkgs, ... }:
-{
-  system = "base16";
-  name = "Gruvbox Dark";
-  author = "https://github.com/morhetz/gruvbox";
+{ self, lib, ... }:
+let
   polarity = "dark";
-
-  background = pkgs.fetchurl {
-    url = "https://gruvbox-wallpapers.pages.dev/wallpapers/minimalistic/solar-system-minimal.png";
-    hash = "sha256-wDJxF4amPaYiwEl80K9ff5dlHoab2rDjbjHAQS1s6sk=";
-  };
 
   palette = {
     base00 = "#282828"; # bg (background)
@@ -28,4 +20,95 @@
     base0E = "#d3869b"; # purple (bright purple)
     base0F = "#d65d0e"; # orange alternate (per flamingo)
   };
+
+  inherit (lib) mkForce;
+in
+{
+  nixos =
+    { user, pkgs, ... }:
+    let
+      nixos = self.modules.nixos;
+      background = pkgs.fetchurl {
+        url = "https://gruvbox-wallpapers.pages.dev/wallpapers/minimalistic/solar-system-minimal.png";
+        hash = "sha256-wDJxF4amPaYiwEl80K9ff5dlHoab2rDjbjHAQS1s6sk=";
+      };
+    in
+    {
+      imports = with nixos; [ sddm ];
+
+      stylix = {
+        base16Scheme = palette;
+        image = background;
+        polarity = polarity;
+      };
+
+      programs = {
+        silentSDDM =
+          let
+            imgName = img: if lib.isDerivation img then img.name else builtins.baseNameOf img;
+          in
+          {
+            backgrounds.bg = background;
+
+            settings = {
+              "LoginScreen" = {
+                blur = 32;
+                background = "${imgName background}";
+              };
+              "LockScreen" = {
+                blur = 0;
+                background = "${imgName background}";
+              };
+            };
+          };
+      };
+    };
+
+  home =
+    {
+      config,
+      pkgs,
+      host,
+      ...
+    }:
+    let
+      home = self.modules.homeManager;
+      background = pkgs.fetchurl {
+        url = "https://gruvbox-wallpapers.pages.dev/wallpapers/minimalistic/solar-system-minimal.png";
+        hash = "sha256-wDJxF4amPaYiwEl80K9ff5dlHoab2rDjbjHAQS1s6sk=";
+      };
+    in
+    {
+      imports = with home; [ hyprland ];
+
+      config = {
+        stylix = {
+          base16Scheme = palette;
+          image = background;
+          polarity = polarity;
+        };
+
+        programs = {
+          ags-bar.colors.base16 = palette;
+
+          rofi.theme =
+            let
+              inherit (config.lib.formats.rasi) mkLiteral;
+            in
+            {
+              "*".selected = mkForce (mkLiteral palette.base0F);
+            };
+
+          cava.settings = {
+            color = {
+              gradient = 1;
+              gradient_color_1 = mkForce "'${palette.base08}'";
+              gradient_color_2 = mkForce "'${palette.base0F}'";
+              gradient_color_3 = mkForce "'${palette.base09}'";
+              gradient_color_4 = mkForce "'${palette.base0A}'";
+            };
+          };
+        };
+      };
+    };
 }

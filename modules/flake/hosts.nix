@@ -122,23 +122,6 @@ in
           home.stateVersion = mkDefault stateVersion;
         };
       };
-
-      # utility that makes the theme usage easier for the external modules
-      themeFn =
-        host:
-        {
-          pkgs,
-          lib,
-          config,
-        }:
-        import (self.outPath + "/themes/${host.theme}") {
-          inherit
-            config
-            lib
-            pkgs
-            host
-            ;
-        };
     in
     {
       flake.nixosConfigurations = mapAttrs (
@@ -156,9 +139,8 @@ in
               ;
             host = {
               inherit name;
-              inherit (host) system;
+              inherit (host) system theme performance;
             };
-            loadTheme = themeFn host;
           };
         }
       ) config.hosts;
@@ -179,9 +161,8 @@ in
               ;
             host = {
               inherit name;
-              inherit (host) system;
+              inherit (host) system theme performance;
             };
-            loadTheme = themeFn host;
           };
         }
       ) config.hosts;

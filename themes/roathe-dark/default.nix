@@ -1,26 +1,6 @@
-{
-  config,
-  lib,
-  pkgs,
-  host,
-  ...
-}:
+{ self, lib, ... }:
 let
-  inherit (lib)
-    mkIf
-    mkForce
-    removePrefix
-    optionals
-    ;
-
-  rawHex = removePrefix "#";
-in
-rec {
-  system = "base16";
-  name = "Warframe kim dark";
-  author = "https://github.com/gabrielemercolino";
   polarity = "dark";
-
   opacity = 0.8;
 
   #got it from https://x.com/shieldgating/status/2006520583383601201/
@@ -46,78 +26,137 @@ rec {
     base0F = "#c47a4a"; # orange alternate - bronzo ramato
   };
 
-  home = {
-    home.pointerCursor = {
-      size = mkForce 28;
-      name = mkForce "LyraG-cursors";
-      package = mkForce pkgs.lyra-cursors;
-    };
+  inherit (lib) mkIf mkForce removePrefix;
 
-    xdg.configFile = mkIf (host.performance != "low") {
-      "ghostty/shader.glsl".source = ./ghostty-blazing-cursor.glsl;
-    };
-    wayland.windowManager.hyprland.settings = {
-      config =
-        let
-          active_border = {
-            colors = [
-              "rgb(${rawHex palette.base0A})"
-              "rgb(${rawHex palette.base08})"
-            ];
-          };
-        in
-        {
-          general."col.active_border" = mkForce active_border;
-          group = {
-            "col.border_active" = mkForce active_border;
-            groupbar = rec {
-              text_color = mkForce "rgb(${rawHex palette.base08})";
-              text_color_inactive = mkForce "rgb(${rawHex palette.base04})";
-              "col.active" = text_color;
-              "col.inactive" = text_color_inactive;
+  rawHex = removePrefix "#";
+in
+{
+  nixos =
+    { user, ... }:
+    let
+      nixos = self.modules.nixos;
+    in
+    {
+      imports = with nixos; [ sddm ];
+
+      stylix = {
+        base16Scheme = palette;
+        image = background;
+        polarity = polarity;
+        opacity.terminal = opacity;
+      };
+
+      programs = {
+        silentSDDM =
+          let
+            imgName = img: if lib.isDerivation img then img.name else builtins.baseNameOf img;
+          in
+          {
+            backgrounds.bg = background;
+
+            profileIcons."${user.name}" = profile;
+
+            settings = {
+              "LoginScreen" = {
+                blur = 32;
+                background = "${imgName background}";
+              };
+              "LockScreen" = {
+                blur = 0;
+                background = "${imgName background}";
+              };
             };
           };
-        };
-
-      animation = optionals (host.performance != "low") [
-        {
-          _args = [
-            {
-              leaf = "borderangle";
-              enabled = true;
-              speed = 20;
-              bezier = "linear";
-              style = "loop";
-            }
-          ];
-        }
-      ];
+      };
     };
 
-    programs = {
-      rofi.theme =
-        let
-          inherit (config.lib.formats.rasi) mkLiteral;
-        in
-        {
-          "*" = {
-            selected = mkForce (mkLiteral palette.base0F);
+  home =
+    {
+      config,
+      pkgs,
+      host,
+      ...
+    }:
+    let
+      home = self.modules.homeManager;
+    in
+    {
+      imports = with home; [ hyprland ];
+
+      config = {
+        stylix = {
+          base16Scheme = palette;
+          image = background;
+          polarity = polarity;
+          opacity.terminal = opacity;
+        };
+
+        home.pointerCursor = {
+          size = mkForce 28;
+          name = mkForce "LyraG-cursors";
+          package = mkForce pkgs.lyra-cursors;
+        };
+
+        xdg.configFile = mkIf (host.performance != "low") {
+          "ghostty/shader.glsl".source = ./ghostty-blazing-cursor.glsl;
+        };
+
+        hyprnix.settings =
+          let
+            active_border = {
+              colors = [
+                "rgb(${rawHex palette.base0A})"
+                "rgb(${rawHex palette.base08})"
+              ];
+            };
+          in
+          {
+            general.col.active_border = active_border;
+            group = {
+              col.border_active = mkForce active_border;
+              groupbar = rec {
+                text_color = mkForce "rgb(${rawHex palette.base08})";
+                text_color_inactive = mkForce "rgb(${rawHex palette.base04})";
+                col.active = text_color;
+                col.inactive = text_color_inactive;
+              };
+            };
+
+            animation = mkIf (host.performance != "low") {
+              borderangle = {
+                speed = 20;
+                bezier = "linear";
+                style = "loop";
+              };
+            };
           };
-        };
 
-      ghostty.settings = mkIf (host.performance != "low") {
-        custom-shader = "shader.glsl";
-      };
+        programs = {
+          ags-bar.colors.base16 = palette;
 
-      cava.settings = {
-        color = {
-          gradient = 1;
-          gradient_color_1 = mkForce "'${palette.base08}'";
-          gradient_color_2 = mkForce "'${palette.base0F}'";
-          gradient_color_3 = mkForce "'${palette.base09}'";
-          gradient_color_4 = mkForce "'${palette.base0A}'";
+          rofi.theme =
+            let
+              inherit (config.lib.formats.rasi) mkLiteral;
+            in
+            {
+              "*".selected = mkForce (mkLiteral palette.base0F);
+            };
+
+          ghostty.settings = mkIf (host.performance != "low") {
+            custom-shader = "shader.glsl";
+          };
+
+          cava.settings = {
+            color = {
+              gradient = 1;
+              gradient_color_1 = mkForce "'${palette.base08}'";
+              gradient_color_2 = mkForce "'${palette.base0F}'";
+              gradient_color_3 = mkForce "'${palette.base09}'";
+              gradient_color_4 = mkForce "'${palette.base0A}'";
+            };
+          };
+
         };
       };
     };
-  };
 }

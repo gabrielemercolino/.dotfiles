@@ -1,15 +1,9 @@
 { inputs, lib, ... }:
 {
   flake.modules.homeManager.hyprland =
-    {
-      config,
-      pkgs,
-      loadTheme,
-      ...
-    }:
+    { config, pkgs, ... }:
     let
       cfg = config.gab.wm.hyprland;
-      theme = loadTheme { inherit config lib pkgs; };
     in
     {
       imports = [ inputs.ags-bar.homeManagerModules.default ];
@@ -34,7 +28,6 @@
             systemd.enable = true;
 
             fonts = [ "DejaVu Sans Mono" ];
-            colors.base16 = theme.palette;
 
             commands.lock = "${pkgs.swaylock-effects}/bin/swaylock";
           };

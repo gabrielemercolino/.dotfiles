@@ -1,27 +1,29 @@
-{ inputs, lib, ... }:
 {
-  flake.modules.nixos.stylix =
+  self,
+  inputs,
+  lib,
+  ...
+}@params:
+{
+  flake.modules.homeManager.style =
     {
       config,
       pkgs,
-      loadTheme,
+      host,
       ...
     }:
     let
-      cfg = config.gab.stylix;
-
-      theme = loadTheme { inherit config lib pkgs; };
-
-      polarity = theme.polarity;
-      background = theme.background;
-      palette = theme.palette;
-      fonts = theme.fonts or { };
-      nixos = theme.nixos or { };
+      cfg = config.gab.style;
+      themePath = "${self.outPath}/themes/${host.theme}";
+      themeModule = (import themePath params).home;
     in
     {
-      imports = [ inputs.stylix.nixosModules.default ];
+      imports = [
+        themeModule
+        inputs.stylix.homeModules.default
+      ];
 
-      options.gab.stylix = {
+      options.gab.style = {
         fonts.sizes = {
           applications = lib.mkOption {
             description = "The font size used for applications";
@@ -42,24 +44,22 @@
         };
       };
 
-      config = lib.mkMerge [
-        (nixos)
-        {
-          stylix = {
-            enable = true;
-            autoEnable = true;
+      config = {
+        stylix = {
+          enable = true;
+          autoEnable = true;
 
-            base16Scheme = palette;
-            image = background;
-            polarity = polarity;
+          fonts = cfg.fonts;
 
-            fonts = fonts // cfg.fonts;
-
-            targets = {
-              gtksourceview.enable = false;
-            };
+          targets = {
+            gtksourceview.enable = false;
+            mangohud.enable = false;
+            vscode.enable = false;
+            rofi.enable = false;
+            zen-browser.enable = false;
+            qt.enable = true;
           };
-        }
-      ];
+        };
+      };
     };
 }
