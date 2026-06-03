@@ -132,7 +132,12 @@ in
           config,
         }:
         import (self.outPath + "/themes/${host.theme}") {
-          inherit config lib pkgs host;
+          inherit
+            config
+            lib
+            pkgs
+            host
+            ;
         };
     in
     {
