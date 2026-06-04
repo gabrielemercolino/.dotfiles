@@ -9,7 +9,7 @@
     login.imports = [ self.modules.nixos.sddm ];
 
     sddm =
-      { config, ... }:
+      { config, pkgs, ... }:
       let
         cfg = config.gab.login.sddm;
       in
@@ -21,6 +21,8 @@
         };
 
         config = lib.mkIf cfg.enable {
+          services.displayManager.sddm.extraPackages = [ pkgs.kdePackages.qtimageformats ];
+
           programs.silentSDDM = {
             enable = true;
             theme = "default";
