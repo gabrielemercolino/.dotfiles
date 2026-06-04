@@ -49,12 +49,13 @@
     };
 
     silentSDDM = {
-      url = "github:gabrielemercolino/SilentSDDM";
+      url = "github:uiriansan/SilentSDDM";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     ags-bar = {
       url = "github:gabrielemercolino/ags-bar";
+      # url = "path:/home/gabriele/programmazione/others/ags-bar";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
