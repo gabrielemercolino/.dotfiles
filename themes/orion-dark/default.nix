@@ -28,15 +28,19 @@ let
   inherit (lib) mkIf mkForce removePrefix;
 
   rawHex = removePrefix "#";
+
+  wfFont = "Ailerons";
 in
 {
   nixos =
-    { user, ... }:
+    { pkgs, user, ... }:
     let
       nixos = self.modules.nixos;
     in
     {
       imports = with nixos; [ sddm ];
+
+      fonts.packages = with pkgs; [ (callPackage ./ailerons.nix { }) ];
 
       stylix = {
         base16Scheme = palette;
@@ -56,14 +60,31 @@ in
             profileIcons."${user.name}" = profile;
 
             settings = {
-              "LoginScreen" = {
-                blur = 32;
-                background = "${imgName background}";
-              };
               "LockScreen" = {
                 blur = 0;
                 background = "${imgName background}";
               };
+              "LockScreen.Clock" = {
+                position = "top-left";
+                align = "center";
+                color = palette.base08;
+                font-size = 150;
+                font-family = wfFont;
+              };
+              # TODO: understand why it doesn't merge
+              "LockScreen.Date" = {
+                format = "dd/MM/yyyy";
+                locale = "it_IT";
+                color = palette.base08;
+                font-size = 40;
+                font-family = wfFont;
+              };
+              "LockScreen.Message".display = false;
+              "LoginScreen" = {
+                blur = 48;
+                background = "${imgName background}";
+              };
+              "LoginScreen.LoginArea.Username".font-family = wfFont;
             };
           };
       };
@@ -85,6 +106,12 @@ in
       config = {
         # for swaylock
         home.packages = with pkgs; [ webp-pixbuf-loader ];
+
+        home.pointerCursor = {
+          size = mkForce 28;
+          name = mkForce "LyraS-cursors";
+          package = mkForce pkgs.lyra-cursors;
+        };
 
         stylix = {
           base16Scheme = palette;
@@ -143,6 +170,14 @@ in
                   outline.today = palette.base08;
                 };
               };
+            };
+          };
+
+          hyprlock = {
+            settings = {
+              "$text" = "rgb(${palette.base05})";
+              "$text_alpha" = "rgba(${palette.base05}55)";
+              "$font" = wfFont;
             };
           };
 
