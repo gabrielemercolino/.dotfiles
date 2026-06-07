@@ -19,7 +19,7 @@ in
       email = "ciruzzo032@noreply.codeberg.org";
     };
 
-    theme = "roathe-dark";
+    theme = "orion-dark";
 
     nixos =
       { pkgs, user, ... }:
