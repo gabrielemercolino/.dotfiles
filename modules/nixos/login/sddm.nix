@@ -21,8 +21,6 @@
         };
 
         config = lib.mkIf cfg.enable {
-          services.displayManager.sddm.extraPackages = [ pkgs.kdePackages.qtimageformats ];
-
           programs.silentSDDM = {
             enable = true;
             theme = "default";
