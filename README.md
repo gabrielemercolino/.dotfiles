@@ -40,3 +40,4 @@ Big thanks to [Nyramu](https://github.com/Nyramu/) for helping and improving the
 - [woioeow](https://github.com/woioeow/hyprland-dotfiles)
 - [Zaney](https://gitlab.com/Zaney/zaneyos)
 - [GaetanLepage](https://github.com/GaetanLepage/nix-config)
+- [xaranx64](https://github.com/karanx64/haishi/tree/main)
