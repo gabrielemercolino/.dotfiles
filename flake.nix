@@ -26,7 +26,7 @@
     };
 
     stylix = {
-      url = "github:danth/stylix/pull/2337/head";
+      url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
     };
@@ -50,6 +50,7 @@
 
     silentSDDM = {
       url = "github:uiriansan/SilentSDDM";
+      # url = "path:/home/gabriele/programmazione/nix/SilentSDDM";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
