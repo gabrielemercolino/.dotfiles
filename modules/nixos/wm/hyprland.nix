@@ -21,9 +21,6 @@
             xwayland.enable = true;
           };
 
-          # to enable swaylock with any compositor other than sway this is needed
-          security.pam.services.swaylock = lib.mkDefault { };
-
           nix.settings = rec {
             substituters = [
               "https://hyprland.cachix.org"

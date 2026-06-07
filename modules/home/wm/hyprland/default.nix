@@ -36,9 +36,44 @@
             wl-clipboard
           ];
 
+          services.hypridle = {
+            enable = true;
+            settings = {
+              general = {
+                lock_cmd = "pidof hyprlock || hyprlock";
+                before_sleep_cmd = "loginctl lock-session";
+                after_sleep_cmd = ''hyprctl dispatch 'hl.dsp.dpms({ action = "enable" })' '';
+              };
+
+              listener = [
+                {
+                  timeout = 5 * 60;
+                  on-timeout = "loginctl lock-session";
+                }
+                {
+                  timeout = 10 * 60;
+                  on-timeout = ''hyprctl dispatch 'hl.dsp.dpms({ action = "disable" })' '';
+                  on-resume = ''hyprctl dispatch 'hl.dsp.dpms({ action = "enable" })' '';
+                }
+                {
+                  timeout = 30 * 60;
+                  on-timeout = "systemctl suspend";
+                }
+              ];
+            };
+          };
+
           hyprnix = {
             enable = true;
             systemd.enable = true;
+
+            extraConfig =
+              # lua
+              ''
+                hl.on("hyprland.start", function()
+                  hl.exec_cmd("${lib.getExe pkgs.hypridle}")
+                end)
+              '';
 
             settings = {
               xwayland.enabled = true;
@@ -63,6 +98,13 @@
                 "1".persistent = true;
                 "2".persistent = true;
                 "3".persistent = true;
+              };
+
+              window_rule = {
+                "inhibit_idle_when_fullscreen" = {
+                  match.fullscreen = true;
+                  idle_inhibit = "fullscreen";
+                };
               };
 
               misc = {
