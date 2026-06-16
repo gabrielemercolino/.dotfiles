@@ -149,6 +149,8 @@ in
           };
 
         programs = {
+          ags-bar.settings.colors = palette;
+
           ags-bar.colors = {
             base16 = palette;
             overrides = {

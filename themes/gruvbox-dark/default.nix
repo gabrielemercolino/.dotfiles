@@ -89,7 +89,7 @@ in
         };
 
         programs = {
-          ags-bar.colors.base16 = palette;
+          ags-bar.settings.colors = palette;
 
           rofi.theme =
             let

@@ -78,10 +78,6 @@
           ags-bar = {
             enable = true;
             systemd.enable = true;
-
-            fonts = [ "DejaVu Sans Mono" ];
-
-            commands.lock = "${lib.getExe pkgs.hyprlock}";
           };
 
           rofi = {

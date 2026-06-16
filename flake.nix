@@ -33,7 +33,7 @@
 
     hyprnix = {
       url = "github:Nyramu/hyprnix";
-      # url = "path:/home/gabriele/programmazione/nix/hyprnix";
+      # url = "path:/home/gabriele/dev/nix/hyprnix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -50,13 +50,13 @@
 
     silentSDDM = {
       url = "github:uiriansan/SilentSDDM";
-      # url = "path:/home/gabriele/programmazione/nix/SilentSDDM";
+      # url = "path:/home/gabriele/dev/nix/SilentSDDM";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     ags-bar = {
-      url = "github:gabrielemercolino/ags-bar";
-      # url = "path:/home/gabriele/programmazione/others/ags-bar";
+      url = "github:gabrielemercolino/ags-bar/v2";
+      # url = "path:/home/gabriele/dev/others/ags-bar";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

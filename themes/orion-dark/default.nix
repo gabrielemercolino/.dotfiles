@@ -151,23 +151,25 @@ in
           };
 
         programs = {
-          ags-bar.colors = {
-            base16 = palette;
-            overrides = {
-              connection = {
-                foreground = palette.base09;
-                foreground-hover = palette.base0A;
-              };
-
-              time = {
-                clock.foreground = palette.base08;
-                date.foreground = {
-                  normal = palette.base08;
-                  hover = palette.base0E;
+          ags-bar.settings = {
+            colors = palette;
+            widgets = {
+              system = {
+                fg = palette.base08;
+                popup = {
+                  calendar.day = {
+                    selected.bg = "base08";
+                    today = {
+                      bg = "base08";
+                      outline = "base08";
+                    };
+                  };
                 };
-                calendar = {
-                  background.selected = palette.base08;
-                  outline.today = palette.base08;
+                overlay = {
+                  shutdown.fg = "base08";
+                  reboot.fg = "base09";
+                  lock.fg = "base0B";
+                  logout.fg = "base0D";
                 };
               };
             };
