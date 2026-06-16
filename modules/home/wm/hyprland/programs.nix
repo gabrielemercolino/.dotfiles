@@ -79,9 +79,9 @@
             enable = true;
             systemd.enable = true;
 
-            fonts = [ "DejaVu Sans Mono" ];
+            # fonts = [ "DejaVu Sans Mono" ];
 
-            commands.lock = "${lib.getExe pkgs.hyprlock}";
+            # commands.lock = "${lib.getExe pkgs.hyprlock}";
           };
 
           rofi = {

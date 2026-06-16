@@ -150,28 +150,63 @@ in
             };
           };
 
-        programs = {
-          ags-bar.colors = {
-            base16 = palette;
-            overrides = {
-              connection = {
-                foreground = palette.base09;
-                foreground-hover = palette.base0A;
-              };
+        xdg.configFile."ags-bar/config.toml".text =
+          #toml
+          ''
+            [colors]
+            base00 = "${palette.base00}"
+            base01 = "${palette.base01}"
+            base02 = "${palette.base02}"
+            base03 = "${palette.base03}"
+            base04 = "${palette.base04}"
+            base05 = "${palette.base05}"
+            base06 = "${palette.base06}"
+            base07 = "${palette.base07}"
+            base08 = "${palette.base08}"
+            base09 = "${palette.base09}"
+            base0A = "${palette.base0A}"
+            base0B = "${palette.base0B}"
+            base0C = "${palette.base0C}"
+            base0D = "${palette.base0D}"
+            base0E = "${palette.base0E}"
+            base0F = "${palette.base0F}"
 
-              time = {
-                clock.foreground = palette.base08;
-                date.foreground = {
-                  normal = palette.base08;
-                  hover = palette.base0E;
-                };
-                calendar = {
-                  background.selected = palette.base08;
-                  outline.today = palette.base08;
-                };
-              };
-            };
-          };
+            [widgets.system]
+            fg = "${palette.base08}"
+
+            [widgets.system.overlay]
+            shutdown.fg = "base08"
+            reboot.fg = "base09"
+            lock.fg = "base0B"
+            logout.fg = "base0D"
+
+            [widgets.time.popup.calendar.day]
+            selected = { bg = "base08" }
+            today = { bg = "base08", outline = "base08" }
+          '';
+
+        programs = {
+          # ags-bar.colors = {
+          #   base16 = palette;
+          #   overrides = {
+          #     connection = {
+          #       foreground = palette.base09;
+          #       foreground-hover = palette.base0A;
+          #     };
+
+          #     time = {
+          #       clock.foreground = palette.base08;
+          #       date.foreground = {
+          #         normal = palette.base08;
+          #         hover = palette.base0E;
+          #       };
+          #       calendar = {
+          #         background.selected = palette.base08;
+          #         outline.today = palette.base08;
+          #       };
+          #     };
+          #   };
+          # };
 
           hyprlock = {
             settings = {

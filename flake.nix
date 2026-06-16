@@ -55,7 +55,7 @@
     };
 
     ags-bar = {
-      url = "github:gabrielemercolino/ags-bar";
+      url = "github:gabrielemercolino/ags-bar/v2";
       # url = "path:/home/gabriele/programmazione/others/ags-bar";
       inputs.nixpkgs.follows = "nixpkgs";
     };
