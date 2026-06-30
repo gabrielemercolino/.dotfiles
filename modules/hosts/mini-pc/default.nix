@@ -1,6 +1,12 @@
-{ self, inputs, ... }:
+{
+  self,
+  inputs,
+  lib,
+  ...
+}:
 let
   inherit (self.modules) nixos homeManager;
+  inherit (lib) getExe;
 in
 {
   hosts.mini-pc = {
@@ -19,7 +25,7 @@ in
       email = "ciruzzo032@noreply.codeberg.org";
     };
 
-    theme = "orion-dark";
+    theme = "roathe-dark";
 
     nixos =
       { pkgs, user, ... }:
@@ -37,15 +43,7 @@ in
           inputs.sops-nix.nixosModules.sops
         ];
 
-        nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.pinned ];
-
-        nix.settings = rec {
-          substituters = [ "https://attic.xuyh0120.win/lantian" ];
-          trusted-substituters = substituters;
-          trusted-public-keys = [ "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=" ];
-        };
-
-        # boot.kernelPackages = pkgs.linuxPackages_latest;
+        # has specific optimisations for this pc
         boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest-lto-x86_64-v3;
         hardware.graphics.extraPackages = [ pkgs.libva ];
         nixpkgs.config.rocmSupport = true;
@@ -63,6 +61,10 @@ in
         };
 
         gab = {
+          kernel = {
+            scx.enable = true;
+          };
+
           cli = {
             bashmount.enable = true;
           };
@@ -97,7 +99,6 @@ in
 
     home =
       {
-        lib,
         pkgs,
         user,
         host,
@@ -141,12 +142,8 @@ in
           age.keyFile = "/home/${user.name}/.config/sops/age/keys.txt";
 
           secrets = {
-            "ssh/priv" = {
-              path = "/home/${user.name}/.ssh/id_ed25519";
-            };
-            "ssh/pub" = {
-              path = "/home/${user.name}/.ssh/id_ed25519.pub";
-            };
+            "ssh/priv".path = "/home/${user.name}/.ssh/id_ed25519";
+            "ssh/pub".path = "/home/${user.name}/.ssh/id_ed25519.pub";
           };
         };
 
@@ -190,9 +187,9 @@ in
             zsh.enable = true;
 
             aliases = {
-              ls = "${lib.getExe pkgs.eza} --icons";
-              ll = "${lib.getExe pkgs.eza} -l --icons";
-              la = "${lib.getExe pkgs.eza} -la --icons";
+              ls = "${getExe pkgs.eza} --icons";
+              ll = "${getExe pkgs.eza} -l --icons";
+              la = "${getExe pkgs.eza} -la --icons";
 
               cd = "z"; # from zoxide
             };
