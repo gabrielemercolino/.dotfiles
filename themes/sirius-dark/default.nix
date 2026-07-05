@@ -31,15 +31,14 @@ let
 in
 {
   nixos =
-    { pkgs, user, ... }:
+    { host, user, ... }:
     let
       nixos = self.modules.nixos;
     in
     {
       imports = with nixos; [ sddm ];
 
-      fonts.packages = with pkgs; [ (callPackage ./ailerons.nix { }) ];
-
+      fonts.packages = [ self.packages.${host.system}.ailerons-font ];
       stylix = {
         base16Scheme = palette;
         image = background;

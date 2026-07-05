@@ -29,15 +29,19 @@ let
   inherit (lib) mkIf mkForce removePrefix;
 
   rawHex = removePrefix "#";
+
+  wfFont = "Ailerons";
 in
 {
   nixos =
-    { user, ... }:
+    { host, user, ... }:
     let
       nixos = self.modules.nixos;
     in
     {
       imports = with nixos; [ sddm ];
+
+      fonts.packages = [ self.packages.${host.system}.ailerons-font ];
 
       stylix = {
         base16Scheme = palette;
@@ -65,6 +69,15 @@ in
                 blur = 0;
                 background = "${imgName background}";
               };
+              "LockScreen.Clock" = {
+                font-size = 150;
+                font-family = wfFont;
+              };
+              "LockScreen.Date" = {
+                font-size = 30;
+                font-family = wfFont;
+              };
+              "LoginScreen.LoginArea.Username".font-family = wfFont;
             };
           };
       };
@@ -156,6 +169,9 @@ in
             };
           };
 
+          hyprlock = {
+            settings."$font" = wfFont;
+          };
         };
       };
     };
