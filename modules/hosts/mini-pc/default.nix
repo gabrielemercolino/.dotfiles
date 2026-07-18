@@ -52,14 +52,6 @@ in
         users.defaultUserShell = pkgs.zsh;
         programs.zsh.enable = true;
 
-        sops = {
-          defaultSopsFile = self.outPath + "/secrets/secrets.yaml";
-          defaultSopsFormat = "yaml";
-          age.keyFile = "/home/${user.name}/.config/sops/age/keys.txt";
-
-          secrets = { };
-        };
-
         gab = {
           kernel = {
             scx.enable = true;
@@ -136,15 +128,9 @@ in
           };
         };
 
-        sops = {
-          defaultSopsFile = self.outPath + "/secrets/secrets.yaml";
-          defaultSopsFormat = "yaml";
-          age.keyFile = "/home/${user.name}/.config/sops/age/keys.txt";
-
-          secrets = {
-            "ssh/priv".path = "/home/${user.name}/.ssh/id_ed25519";
-            "ssh/pub".path = "/home/${user.name}/.ssh/id_ed25519.pub";
-          };
+        sops.secrets = {
+          "ssh/priv".path = "/home/${user.name}/.ssh/id_ed25519";
+          "ssh/pub".path = "/home/${user.name}/.ssh/id_ed25519.pub";
         };
 
         gab = {
