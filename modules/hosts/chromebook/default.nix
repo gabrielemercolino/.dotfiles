@@ -154,6 +154,7 @@ in
 
           cli = {
             yazi.enable = true;
+            pi.enable = true;
           };
 
           music = {
