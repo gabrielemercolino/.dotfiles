@@ -158,6 +158,7 @@ in
           cli = {
             opencode.enable = true;
             yazi.enable = true;
+            pi.enable = true;
           };
 
           music = {
