@@ -57,7 +57,7 @@
       options = [
         "subvol=@nix"
         "noatime"
-        "compress=zstd:3"
+        "compress=zstd:6"
       ];
     };
 
