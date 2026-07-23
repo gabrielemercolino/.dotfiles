@@ -2,7 +2,7 @@
   description = "Project description";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/{{NIXPKGS_REV}}";
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";
@@ -34,7 +34,7 @@
 
           packages.default = pkgs.hello;
 
-          devShells.default = pkgs.mkShell {
+          devShells.default = pkgs.mkShellNoCC {
             buildInputs = with pkgs; [  ];
             shellHook =
               #sh
