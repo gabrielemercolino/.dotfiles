@@ -91,7 +91,11 @@ in
           logind.settings.Login = {
             HandlePowerKey = "ignore"; # don’t shutdown when power button is short-pressed
           };
+
+          tailscale.enable = true;
         };
+
+        environment.systemPackages = [ pkgs.moonlight-qt ];
       };
 
     home =
