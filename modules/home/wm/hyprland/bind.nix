@@ -64,6 +64,7 @@
         powerControl = {
           "SUPER + SHIFT + R".dispatcher.exec_cmd = "systemctl reboot";
           "SUPER + SHIFT + P".dispatcher.exec_cmd = "systemctl poweroff";
+          "SUPER + SHIFT + O".dispatcher.exec_cmd = "systemctl sleep";
         };
         moveFocus = {
           "SUPER + left".dispatcher.focus.direction = "left";
