@@ -112,7 +112,10 @@ in
           inputs.sops-nix.homeManagerModules.sops
         ];
 
-        home.packages = [ self.packages.${host.system}.gab ];
+        home.packages = [
+          self.packages.${host.system}.gab
+          pkgs.jetbrains.idea
+        ];
 
         programs.git = {
           enable = true;
@@ -156,7 +159,6 @@ in
           };
 
           cli = {
-            opencode.enable = true;
             yazi.enable = true;
             pi.enable = true;
           };
