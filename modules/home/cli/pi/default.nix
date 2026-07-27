@@ -29,7 +29,7 @@
 
             ".pi/agent/APPEND_SYSTEM.md".source = ./APPEND_SYSTEM.md;
 
-            ".pi/agent/extensions/coder.ts".source = ./coder.ts;
+            ".pi/agent/extensions/coder".source = ./coder;
           };
         };
       };
