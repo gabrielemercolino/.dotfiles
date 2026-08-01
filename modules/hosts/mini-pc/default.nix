@@ -118,8 +118,9 @@ in
           inputs.sops-nix.homeManagerModules.sops
         ];
 
-        home.packages = [
-          self.packages.${host.system}.gab
+        home.packages = with self.packages.${host.system}; [
+          gab
+          cisco-packet-tracer
           pkgs.jetbrains.idea
         ];
 
