@@ -7,14 +7,6 @@ import { formatSummary } from "./format.ts";
 import type { CoderResult } from "./runner.ts";
 
 export default function (pi: ExtensionAPI) {
-	// Guard: don't register the coder tool if we're already inside a coder sub-agent
-	if (process.env.PI_CODER_DISABLED) {
-		console.error(
-			"[coder] extension loaded but PI_CODER_DISABLED is set — skipping tool registration",
-		);
-		return;
-	}
-
 	pi.registerTool({
 		name: "coder",
 		label: "Coder",

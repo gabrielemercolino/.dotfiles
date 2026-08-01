@@ -1,5 +1,19 @@
-import { spawn } from "node:child_process";
-import { getPiInvocation, formatToolCall } from "./format.ts";
+import { formatToolCall } from "./format.ts";
+import {
+	createAgentSession,
+	createExtensionRuntime,
+	ModelRuntime,
+	SessionManager,
+	type ResourceLoader,
+} from "@earendil-works/pi-coding-agent";
+import * as fs from "node:fs";
+import * as path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const CODER_SYSTEM_PROMPT = fs.readFileSync(
+	path.join(path.dirname(fileURLToPath(import.meta.url)), "SYSTEM.md"),
+	"utf-8",
+).trim();
 
 const TIMEOUT_MS = 5 * 60 * 1000; // 5 minutes
 
@@ -30,91 +44,102 @@ export async function runCoder(
 	signal: AbortSignal | undefined,
 	onStatus: (status: string) => void,
 ): Promise<CoderResult> {
-	const args = [
-		"--model",
-		"deepseek/deepseek-v4-flash",
-		"--mode",
-		"json",
-		"-p",
-		"--no-session",
-		task,
-	];
-
-	const invocation = getPiInvocation(args);
-
-	const timeoutSignal = AbortSignal.timeout(TIMEOUT_MS);
-	const combinedSignal = signal
-		? AbortSignal.any([signal, timeoutSignal])
-		: timeoutSignal;
-
-	return new Promise((resolve) => {
-		const proc = spawn(invocation.command, invocation.args, {
-			signal: combinedSignal,
-			stdio: ["ignore", "pipe", "pipe"],
-			env: { ...process.env, PI_CODER_DISABLED: "1" },
-		});
-
-		const killWithEscalation = () => {
-			proc.kill("SIGTERM");
-			setTimeout(() => {
-				if (!proc.killed) proc.kill("SIGKILL");
-			}, 5000);
-		};
-		combinedSignal.addEventListener("abort", killWithEscalation, {
-			once: true,
-		});
-
-		let output = "";
-		let stderr = "";
-		const toolCalls: Array<{
-			toolName: string;
-			args: Record<string, unknown>;
-		}> = [];
-		let buffer = "";
-		const usage = {
+	const toolCalls: Array<{ toolName: string; args: Record<string, unknown> }> = [];
+	const usage = {
+		input: 0,
+		output: 0,
+		cacheRead: 0,
+		cacheWrite: 0,
+		totalTokens: 0,
+		cost: {
 			input: 0,
 			output: 0,
 			cacheRead: 0,
 			cacheWrite: 0,
-			totalTokens: 0,
-			cost: {
-				input: 0,
-				output: 0,
-				cacheRead: 0,
-				cacheWrite: 0,
-				total: 0,
-			},
+			total: 0,
+		},
+	};
+
+	// Placeholder abort wiring until we have a session to abort.
+	const timeoutId = setTimeout(() => {}, TIMEOUT_MS);
+	const onExternalAbort = () => {};
+	if (signal) {
+		signal.addEventListener("abort", onExternalAbort, { once: true });
+	}
+
+	let session: { abort(): Promise<void>; dispose(): void } | undefined;
+	let timeout: ReturnType<typeof setTimeout> | undefined;
+	let externalAbort: (() => void) | undefined;
+
+	try {
+		// Create model runtime and resolve model (prefer deepseek-v4-flash)
+		const modelRuntime = await ModelRuntime.create();
+		const available = await modelRuntime.getAvailable();
+		const coderModel =
+			available.find(
+				(m) => m.provider === "deepseek" && m.id === "deepseek-v4-flash",
+			) ?? available[0];
+
+		if (!coderModel) {
+			clearTimeout(timeoutId);
+			if (signal) signal.removeEventListener("abort", onExternalAbort);
+			return {
+				output: "",
+				exitCode: 1,
+				exitSignal: null,
+				toolCalls: [],
+				usage,
+				error: "No model available for coder sub-agent",
+			};
+		}
+
+		const resourceLoader = createCoderResourceLoader();
+
+		const { session: createdSession } = await createAgentSession({
+			resourceLoader,
+			modelRuntime,
+			model: coderModel,
+			tools: ["read", "write", "edit", "grep", "find", "ls"],
+			sessionManager: SessionManager.inMemory(),
+			thinkingLevel: "off",
+		});
+		session = createdSession;
+
+		// Wire up real abort handling now that we have the session.
+		clearTimeout(timeoutId);
+		if (signal) signal.removeEventListener("abort", onExternalAbort);
+		const abortSession = () => {
+			void session?.abort().catch(() => {});
 		};
+		timeout = setTimeout(abortSession, TIMEOUT_MS);
+		externalAbort = () => {
+			abortSession();
+		};
+		if (signal) {
+			signal.addEventListener("abort", externalAbort, { once: true });
+		}
 
-		proc.stdout.on("data", (d: Buffer) => {
-			buffer += d.toString();
+		let output = "";
 
-			const lines = buffer.split("\n");
-			// Keep the last (potentially incomplete) line in the buffer
-			buffer = lines.pop() ?? "";
-
-			for (const line of lines) {
-				const trimmed = line.trim();
-				if (!trimmed) continue;
-
-				try {
-					const event = JSON.parse(trimmed);
-					if (event.type === "tool_execution_start") {
-						const status = formatToolCall(event.toolName, event.args);
-						onStatus(status);
-						toolCalls.push({
-							toolName: event.toolName,
-							args: event.args,
-						});
-					} else if (event.type === "message_end") {
-						const msg = event.message;
-						if (msg?.role === "assistant" && Array.isArray(msg.content)) {
-							for (const block of msg.content) {
-								if (block.type === "text") {
-									output += block.text;
-								}
-							}
+		const done = new Promise<void>((resolve) => {
+			session!.subscribe((event) => {
+				switch (event.type) {
+					case "tool_execution_start": {
+						const toolName = event.toolName;
+						const args = event.args as Record<string, unknown>;
+						onStatus(formatToolCall(toolName, args));
+						toolCalls.push({ toolName, args });
+						break;
+					}
+					case "message_update": {
+						const updateEvent = event.assistantMessageEvent;
+						if (updateEvent?.type === "text_delta" && updateEvent?.delta) {
+							output += updateEvent.delta;
 						}
+						break;
+					}
+					case "message_end": {
+						const msg = event.message;
 						if (msg?.usage) {
 							usage.input += msg.usage.input || 0;
 							usage.output += msg.usage.output || 0;
@@ -127,40 +152,76 @@ export async function runCoder(
 							usage.cost.cacheWrite += msg.usage.cost?.cacheWrite || 0;
 							usage.cost.total += msg.usage.cost?.total || 0;
 						}
+						break;
 					}
-				} catch {
-					// Skip lines that are not valid JSON
+					case "agent_end":
+						resolve();
+						break;
 				}
-			}
-		});
-
-		proc.stderr.on("data", (d: Buffer) => {
-			stderr += d.toString();
-		});
-
-		proc.on("close", (code, exitSignal) => {
-			const result: CoderResult = {
-				output:
-					output.trim() ||
-					stderr.trim() ||
-					`Coder exited with code ${code}${exitSignal ? ` (signal: ${exitSignal})` : ""}`,
-				exitCode: code,
-				exitSignal,
-				toolCalls,
-				usage,
-			};
-			resolve(result);
-		});
-
-		proc.on("error", (err) => {
-			resolve({
-				output: "",
-				exitCode: null,
-				exitSignal: null,
-				toolCalls: [],
-				usage,
-				error: err.message,
 			});
 		});
-	});
+
+		await session.prompt(task);
+		await done;
+
+		if (timeout) clearTimeout(timeout);
+		if (externalAbort && signal) signal.removeEventListener("abort", externalAbort);
+		session.dispose();
+
+		return {
+			output: output.trim() || "Coder finished with no output.",
+			exitCode: 0,
+			exitSignal: null,
+			toolCalls,
+			usage,
+		};
+	} catch (err: any) {
+		clearTimeout(timeoutId);
+		if (signal) signal.removeEventListener("abort", onExternalAbort);
+		if (timeout) clearTimeout(timeout);
+		if (externalAbort && signal) signal.removeEventListener("abort", externalAbort);
+
+		// Check if it's a timeout/abort
+		if (
+			err?.name === "AbortError" ||
+			err?.name === "TimeoutError" ||
+			signal?.aborted
+		) {
+			void session?.abort().catch(() => {});
+			return {
+				output: "",
+				exitCode: null,
+				exitSignal: "SIGTERM",
+				toolCalls,
+				usage,
+				error: "Coder timed out or was cancelled",
+			};
+		}
+
+		session?.dispose();
+		return {
+			output: "",
+			exitCode: 1,
+			exitSignal: null,
+			toolCalls,
+			usage,
+			error: err?.message ?? String(err),
+		};
+	}
+}
+
+function createCoderResourceLoader(): ResourceLoader {
+	return {
+		getExtensions: () => ({ extensions: [], errors: [], runtime: createExtensionRuntime() }),
+		getSkills: () => ({ skills: [], diagnostics: [] }),
+		getPrompts: () => ({ prompts: [], diagnostics: [] }),
+		getThemes: () => ({ themes: [], diagnostics: [] }),
+		getAgentsFiles: () => ({ agentsFiles: [] }),
+		getSystemPrompt: () => CODER_SYSTEM_PROMPT,
+		getSystemPromptSource: () => undefined,
+		getAppendSystemPrompt: () => [],
+		getAppendSystemPromptSources: () => [],
+		extendResources: () => {},
+		reload: async () => {},
+	};
 }
