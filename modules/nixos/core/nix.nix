@@ -34,14 +34,8 @@
 
             # When free disk space in /nix/store drops below min-free during a build, Nix performs a
             # garbage-collection until max-free bytes are available or there is no more garbage.
-            # A value of 0 (the default) disables this feature.
-            min-free = 128000000; # 128 MB
-            max-free = 1000000000; # 1 GB
-
-            # Prevent garbage collection from altering nix-shells managed by nix-direnv
-            # https://github.com/nix-community/nix-direnv#installation
-            keep-outputs = true;
-            keep-derivations = true;
+            min-free = 3 * 1024 * 1024 * 1024; # 3 GB
+            max-free = 5 * 1024 * 1024 * 1024; # 5 GB
 
             # Automatically detect files in the store that have identical contents, and replaces
             # them with hard links to a single copy. This saves disk space.
@@ -67,7 +61,7 @@
             builders-use-substitutes = true;
 
             # If set to true, Nix will fall back to building from source if a binary substitute
-            # fails. This is equivalent to the –fallback flag. The default is false.
+            # fails. This is equivalent to the –fallback flag.
             fallback = false;
           };
         };
