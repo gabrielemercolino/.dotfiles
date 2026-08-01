@@ -60,6 +60,7 @@ export function formatToolCall(
 
 export function formatSummary(
 	toolCalls: Array<{ toolName: string; args: Record<string, unknown> }>,
+	output = "",
 ): string {
 	const groups = new Map<string, string[]>();
 
@@ -95,5 +96,16 @@ export function formatSummary(
 		lines.push(`${displayName} ${items.join(", ")}`);
 	}
 
-	return lines.join("\n");
+	const parts: string[] = [];
+	const trimmedOutput = output.trim();
+	if (trimmedOutput) {
+		parts.push(trimmedOutput);
+	}
+
+	const toolSummary = lines.join("\n");
+	if (toolSummary) {
+		parts.push(toolSummary);
+	}
+
+	return parts.join("\n\n");
 }

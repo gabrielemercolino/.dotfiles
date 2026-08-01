@@ -14,7 +14,13 @@ export interface CoderResult {
 		cacheRead: number;
 		cacheWrite: number;
 		totalTokens: number;
-		cost: number;
+		cost: {
+			input: number;
+			output: number;
+			cacheRead: number;
+			cacheWrite: number;
+			total: number;
+		};
 	};
 	error?: string;
 }
@@ -71,7 +77,13 @@ export async function runCoder(
 			cacheRead: 0,
 			cacheWrite: 0,
 			totalTokens: 0,
-			cost: 0,
+			cost: {
+				input: 0,
+				output: 0,
+				cacheRead: 0,
+				cacheWrite: 0,
+				total: 0,
+			},
 		};
 
 		proc.stdout.on("data", (d: Buffer) => {
@@ -109,7 +121,11 @@ export async function runCoder(
 							usage.cacheRead += msg.usage.cacheRead || 0;
 							usage.cacheWrite += msg.usage.cacheWrite || 0;
 							usage.totalTokens += msg.usage.totalTokens || 0;
-							usage.cost += msg.usage.cost?.total || 0;
+							usage.cost.input += msg.usage.cost?.input || 0;
+							usage.cost.output += msg.usage.cost?.output || 0;
+							usage.cost.cacheRead += msg.usage.cost?.cacheRead || 0;
+							usage.cost.cacheWrite += msg.usage.cost?.cacheWrite || 0;
+							usage.cost.total += msg.usage.cost?.total || 0;
 						}
 					}
 				} catch {

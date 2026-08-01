@@ -63,12 +63,12 @@ export default function (pi: ExtensionAPI) {
 				};
 			}
 
-			const finalSummary = formatSummary(result.toolCalls);
+			const finalSummary = formatSummary(result.toolCalls, result.output);
 
 			return {
-				content: [{ type: "text", text: finalSummary || result.output }],
+				content: [{ type: "text", text: finalSummary }],
 				details: {
-					status: finalSummary || result.output,
+					status: finalSummary,
 					toolCalls: result.toolCalls,
 					exitCode: result.exitCode,
 					exitSignal: result.exitSignal,
