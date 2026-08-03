@@ -30,6 +30,7 @@
             ".pi/agent/APPEND_SYSTEM.md".source = ./APPEND_SYSTEM.md;
 
             ".pi/agent/extensions/coder".source = ./coder;
+            ".pi/agent/extensions/basher".source = ./basher;
           };
         };
       };
