@@ -93,6 +93,7 @@ export default function (pi: ExtensionAPI) {
 	});
 
 	pi.on("session_start", () => {
-		pi.setActiveTools(["read", "grep", "find", "ls", "coder"]);
+		const current = pi.getActiveTools();
+		pi.setActiveTools([...new Set([...current, "coder"])]);
 	});
 }
