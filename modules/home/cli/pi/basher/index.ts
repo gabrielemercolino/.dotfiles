@@ -15,6 +15,14 @@ export default function (pi: ExtensionAPI) {
 			"Use when you need to inspect directories, run chains of shell commands, or perform file operations. " +
 			"The basher will verify safety before executing. " +
 			"Provide a clear description of what you need done.",
+		promptSnippet: "Delegate CLI operations",
+		promptGuidelines: [
+			"Use basher when you need to perform CLI operations — inspecting directories, removing files, " +
+			"running chains of shell commands. Describe the task in natural language; the basher will inspect, " +
+			"verify safety, and execute.",
+			"If the basher refuses, read its explanation carefully. You may need to clarify " +
+		  "the task or ask the user for more information.",
+		],
 		parameters: Type.Object({
 			task: Type.String({
 				description: "Detailed instructions for the basher",

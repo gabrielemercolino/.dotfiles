@@ -14,6 +14,12 @@ export default function (pi: ExtensionAPI) {
 			"Delegate code implementation to the coder. " +
 			"Use when the user agrees on a plan and wants code written. " +
 			"Provide clear, specific instructions.",
+		promptSnippet: "Delegate code implementation",
+		promptGuidelines: [
+			"Use coder when the user indicates they want to proceed with implementation " +
+			"'implement this', 'go ahead', 'let's do it', 'make the changes', 'use the coder', etc.).",
+			"Provide clear, specific instructions."
+		],
 		parameters: Type.Object({
 			task: Type.String({
 				description: "Detailed implementation instructions for the coder",
