@@ -1,9 +1,4 @@
-{
-  self,
-  inputs,
-  lib,
-  ...
-}:
+{ self, lib, ... }:
 let
   inherit (self.modules) nixos homeManager;
   inherit (lib) getExe;
@@ -39,8 +34,6 @@ in
           cli
           apps
           services
-
-          inputs.sops-nix.nixosModules.sops
         ];
 
         # has specific optimisations for this pc
@@ -114,8 +107,6 @@ in
           socials
           music
           services
-
-          inputs.sops-nix.homeManagerModules.sops
         ];
 
         home.packages = with self.packages.${host.system}; [

@@ -1,4 +1,4 @@
-{ self, ... }:
+{ self, inputs, ... }:
 {
   flake.modules.homeManager = {
     core.imports = [ self.modules.homeManager.sops ];
@@ -6,6 +6,8 @@
     sops =
       { user, ... }:
       {
+        imports = [ inputs.sops-nix.homeManagerModules.sops ];
+
         sops = {
           defaultSopsFile = self.outPath + "/secrets/secrets.yaml";
           defaultSopsFormat = "yaml";
