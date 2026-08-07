@@ -33,6 +33,7 @@
       "usb_storage"
     ];
     kernelModules = [ "kvm-amd" ];
+    # kernelParams = [ "usb-storage.quirks=0bda:9210:u" ]; # use usb-storage instead of uas
     extraModulePackages = [ ];
     zswap = {
       enable = true;
@@ -40,6 +41,11 @@
       maxPoolPercent = 20;
     };
   };
+
+  # SCSI timeout for RTL9210 USB NVMe enclosure
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="scsi", ATTRS{idVendor}=="0bda", ATTRS{idProduct}=="9210", ATTR{timeout}="15"
+  '';
 
   fileSystems = {
     "/" = {
