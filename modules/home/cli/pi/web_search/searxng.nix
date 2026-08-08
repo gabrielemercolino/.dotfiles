@@ -11,7 +11,13 @@
           sops.secrets."searxng/key" = { };
 
           xdg.configFile."searxng/settings.yml".text = ''
-            use_default_settings: true
+            use_default_settings:
+              engines:
+                keep_only:
+                  - duckduckgo
+                  - wikipedia
+                  - github
+                  - stackoverflow
             server:
               bind_address: "127.0.0.1"
               port: 18080
@@ -19,12 +25,6 @@
               formats:
                 - html
                 - json
-            engines:
-              keep_only:
-                - duckduckgo
-                - wikipedia
-                - github
-                - stackoverflow
           '';
 
           systemd.user.services.searx = {
