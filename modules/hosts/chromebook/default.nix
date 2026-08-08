@@ -41,8 +41,6 @@ in
           cli
           apps
           services
-
-          inputs.sops-nix.nixosModules.sops
         ];
 
         hardware.graphics.extraPackages = [ pkgs.intel-media-driver ];
@@ -116,8 +114,6 @@ in
           socials
           music
           services
-
-          inputs.sops-nix.homeManagerModules.sops
         ];
 
         home.packages = with self.packages.${host.system}; [
