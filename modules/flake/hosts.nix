@@ -132,6 +132,7 @@ in
             host.nixos
           ];
           specialArgs = {
+            inherit self;
             inherit (host)
               audio
               user
@@ -154,6 +155,7 @@ in
             host.home
           ];
           extraSpecialArgs = {
+            inherit self;
             inherit (host)
               audio
               user

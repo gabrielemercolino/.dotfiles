@@ -110,7 +110,6 @@ in
         ];
 
         home.packages = with self.packages.${host.system}; [
-          gab
           cisco-packet-tracer
           pkgs.jetbrains.idea
         ];

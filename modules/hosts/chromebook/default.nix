@@ -1,9 +1,4 @@
-{
-  self,
-  inputs,
-  lib,
-  ...
-}:
+{ self, lib, ... }:
 let
   inherit (self.modules) nixos homeManager;
   inherit (lib) getExe;
@@ -116,10 +111,7 @@ in
           services
         ];
 
-        home.packages = with self.packages.${host.system}; [
-          gab
-          cisco-packet-tracer
-        ];
+        home.packages = with self.packages.${host.system}; [ cisco-packet-tracer ];
 
         programs.git = {
           enable = true;

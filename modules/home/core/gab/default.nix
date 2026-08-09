@@ -1,3 +1,4 @@
+{ self, lib, ... }:
 {
   perSystem =
     { pkgs, ... }:
@@ -37,4 +38,25 @@
         '';
       };
     };
+
+  flake.modules.homeManager = {
+    core.imports = [ self.modules.homeManager.gab ];
+
+    gab =
+      { config, pkgs, ... }:
+      {
+        options.gab.dotfilesDir = lib.mkOption {
+          type = lib.types.str;
+          default = "$HOME/.dotfiles";
+          description = "Path to the dotfiles directory";
+        };
+
+        config = {
+          home = {
+            sessionVariables.GAB_DOTFILES_DIR = config.gab.dotfilesDir;
+            packages = [ self.packages.${pkgs.stdenv.hostPlatform.system}.gab ];
+          };
+        };
+      };
+  };
 }
