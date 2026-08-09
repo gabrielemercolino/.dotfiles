@@ -33,7 +33,6 @@
       "usb_storage"
     ];
     kernelModules = [ "kvm-amd" ];
-    # kernelParams = [ "usb-storage.quirks=0bda:9210:u" ]; # use usb-storage instead of uas
     extraModulePackages = [ ];
     zswap = {
       enable = true;
@@ -42,9 +41,11 @@
     };
   };
 
-  # SCSI timeout for RTL9210 USB NVMe enclosure
   services.udev.extraRules = ''
+    # Shorter SCSI timeout for RTL9210 enclosures
     ACTION=="add", SUBSYSTEM=="scsi", ATTRS{idVendor}=="0bda", ATTRS{idProduct}=="9210", ATTR{timeout}="15"
+    # Enable TRIM/UNMAP for ASM236X USB NVMe enclosures
+    ACTION=="add|change", SUBSYSTEM=="scsi", ATTR{type}=="0", ATTRS{idVendor}=="174c", ATTRS{idProduct}=="2362", ATTR{provisioning_mode}="unmap"
   '';
 
   fileSystems = {
