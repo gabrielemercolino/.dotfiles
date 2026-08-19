@@ -47,7 +47,7 @@ in
 
         gab = {
           kernel = {
-            scx.enable = true;
+            # scx.enable = true;
           };
 
           cli = {
