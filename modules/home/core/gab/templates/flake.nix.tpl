@@ -35,7 +35,7 @@
           packages.default = pkgs.hello;
 
           devShells.default = pkgs.mkShellNoCC {
-            buildInputs = with pkgs; [  ];
+            buildInputs = with pkgs; [ ];
             shellHook =
               #sh
               ''

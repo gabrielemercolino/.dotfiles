@@ -1,62 +1,73 @@
 { self, lib, ... }:
 {
   perSystem =
-    { pkgs, ... }:
+    { self', pkgs, ... }:
     {
-      packages.gab = pkgs.stdenv.mkDerivation rec {
-        name = "gab";
+      devshell.packages = with pkgs; [
+        go
+        gopls
+        gcc
+      ];
+
+      packages.gab_unwrapped = pkgs.buildGoModule {
+        pname = "gab_unwrapped";
+        version = "2.0.0";
         src = ./.;
 
+        vendorHash = null;
+
         nativeBuildInputs = with pkgs; [
-          installShellFiles
-          bashly
           makeWrapper
+          installShellFiles
         ];
 
-        buildInputs = with pkgs; [ nh ];
-
-        buildPhase = ''
-          bashly add completions
-          bashly generate
-          bashly add completions_script
-        '';
-
-        installPhase = ''
-          mkdir -p $out/bin
-          mkdir -p $out/share
-
-          cp gab $out/bin/${name}
-          cp -r templates $out/share/templates
-
-          wrapProgram $out/bin/${name} \
-            --prefix PATH : ${pkgs.nh}/bin \
-            --set TEMPLATES_DIR "$out/share/templates"
-        '';
-
         postInstall = ''
-          installShellCompletion completions.bash
+          installShellCompletion --cmd gab \
+            --bash <($out/bin/gab completion bash) \
+            --zsh <($out/bin/gab completion zsh) \
+            --fish <($out/bin/gab completion fish)
+        '';
+
+        postFixup = ''
+          wrapProgram $out/bin/gab \
+            --prefix PATH : ${pkgs.lib.makeBinPath [ pkgs.nh ]}
         '';
       };
+
     };
 
   flake.modules.homeManager = {
     core.imports = [ self.modules.homeManager.gab ];
 
     gab =
-      { config, pkgs, ... }:
+      {
+        config,
+        pkgs,
+        host,
+        ...
+      }:
       {
         options.gab.dotfilesDir = lib.mkOption {
           type = lib.types.str;
-          default = "$HOME/.dotfiles";
+          default = "${config.home.homeDirectory}/.dotfiles";
           description = "Path to the dotfiles directory";
         };
 
-        config = {
-          home = {
-            sessionVariables.GAB_DOTFILES_DIR = config.gab.dotfilesDir;
-            packages = [ self.packages.${pkgs.stdenv.hostPlatform.system}.gab ];
+        config =
+          let
+            gab = pkgs.symlinkJoin {
+              name = "gab";
+              paths = [ self.packages.${host.system}.gab_unwrapped ];
+              nativeBuildInputs = [ pkgs.makeWrapper ];
+              postBuild = ''
+                wrapProgram $out/bin/gab \
+                  --set DOTFILES_DIR "${config.gab.dotfilesDir}"
+              '';
+            };
+          in
+          {
+            home.packages = [ gab ];
           };
-        };
       };
   };
 }
