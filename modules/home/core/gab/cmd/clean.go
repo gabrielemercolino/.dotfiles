@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/gabrielemercolino/gab/internals"
+	"github.com/gabrielemercolino/gab/internals/cli"
 	"github.com/spf13/cobra"
 )
 
@@ -24,7 +24,7 @@ var clean = &cobra.Command{
 			command = BASE_CMD
 		}
 
-		return internals.Run(command)
+		return cli.Run(command)
 	},
 }
 

@@ -5,7 +5,10 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/gabrielemercolino/gab/internals"
+	"github.com/gabrielemercolino/gab/internals/cli"
+	"github.com/gabrielemercolino/gab/internals/files"
+	. "github.com/gabrielemercolino/gab/internals/helpers"
+	"github.com/gabrielemercolino/gab/internals/nix"
 	"github.com/spf13/cobra"
 )
 
@@ -14,39 +17,39 @@ var update = &cobra.Command{
 	Use:   "update",
 	Short: "Executes 'nix flake update' and updates nixpkgs hash",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		dotfilesDir := internals.Must(internals.ResolveDotfilesDir())
+		dotfilesDir := Must(files.ResolveDotfilesDir())
 		dotfilesFlake := filepath.Join(dotfilesDir, "flake.nix")
 
 		// Skip if flake.nix is not in the cwd
-		if !internals.Exists("flake.nix") {
+		if !files.Exists("flake.nix") {
 			fmt.Println("no flake.nix found, nothing more to update")
 			return nil
 		}
 
 		// Phase 1: basic update
-		internals.Check(internals.Run("nix flake update"))
+		Check(cli.Run("nix flake update"))
 
 		// Phase 2: retrieve the nixpkgs hash from the dotfiles flake
-		if !internals.Exists(dotfilesFlake) {
+		if !files.Exists(dotfilesFlake) {
 			return fmt.Errorf("%s not found", dotfilesFlake)
 		}
 
-		cwd := internals.Must(os.Getwd())
+		cwd := Must(os.Getwd())
 
 		// if the cwd is the dotfiles' one then we should check for an update
 		// oterwise check if the nixpkgs hash in the current flake matches the dotfiles'
-		same := internals.Must(internals.SameFile(cwd, dotfilesDir))
+		same := Must(files.SameFile(cwd, dotfilesDir))
 
 		if same {
-			rev := internals.Must(internals.FetchLatestRev())
-			return internals.UpdateNixpkgsPin(dotfilesFlake, rev)
+			rev := Must(nix.FetchLatestRev())
+			return nix.UpdateNixpkgsPin(dotfilesFlake, rev)
 		}
 
-		reference := internals.Must(internals.ExtractNixpkgsPin(dotfilesFlake))
+		reference := Must(nix.ExtractNixpkgsPin(dotfilesFlake))
 		if reference == "" {
 			return fmt.Errorf("could not determine target nixpkgs rev")
 		}
-		return internals.UpdateNixpkgsPin("flake.nix", reference)
+		return nix.UpdateNixpkgsPin("flake.nix", reference)
 	},
 }
 

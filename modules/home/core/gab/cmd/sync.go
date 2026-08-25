@@ -3,7 +3,9 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/gabrielemercolino/gab/internals"
+	"github.com/gabrielemercolino/gab/internals/cli"
+	"github.com/gabrielemercolino/gab/internals/files"
+	. "github.com/gabrielemercolino/gab/internals/helpers"
 	"github.com/spf13/cobra"
 )
 
@@ -15,15 +17,15 @@ var sync = &cobra.Command{
 	Use:   "sync",
 	Short: "Synchronizes the system based on the config",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		dotfilesDir := internals.Must(internals.ResolveDotfilesDir())
+		dotfilesDir := Must(files.ResolveDotfilesDir())
 
 		// System sync
 		command := fmt.Sprintf("nh os switch %s -H '%s'", dotfilesDir, profile)
-		internals.Check(internals.Run(command))
+		Check(cli.Run(command))
 
 		// Home-manager sync
 		command = fmt.Sprintf("nh home switch ~/.dotfiles -c '%s'", profile)
-		return internals.Run(command)
+		return cli.Run(command)
 	},
 }
 

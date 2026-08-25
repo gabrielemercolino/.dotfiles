@@ -7,7 +7,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/gabrielemercolino/gab/internals"
+	"github.com/gabrielemercolino/gab/internals/files"
+	. "github.com/gabrielemercolino/gab/internals/helpers"
+	"github.com/gabrielemercolino/gab/internals/nix"
 	"github.com/gabrielemercolino/gab/templates"
 	"github.com/spf13/cobra"
 )
@@ -17,22 +19,22 @@ var dev = &cobra.Command{
 	Use:   "dev",
 	Short: "Creates a flake.nix and .envrc for a dev env",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		dotfilesDir := internals.Must(internals.ResolveDotfilesDir())
+		dotfilesDir := Must(files.ResolveDotfilesDir())
 		dotfilesFlake := filepath.Join(dotfilesDir, "flake.nix")
 
-		cwd := internals.Must(os.Getwd())
-		home := internals.Must(os.UserCacheDir())
+		cwd := Must(os.Getwd())
+		home := Must(os.UserCacheDir())
 
-		same := internals.Must(internals.SameFile(cwd, home))
+		same := Must(files.SameFile(cwd, home))
 		if same {
 			return fmt.Errorf("refusing to run in $HOME")
 		}
 
-		if !internals.Exists(dotfilesFlake) {
+		if !files.Exists(dotfilesFlake) {
 			return fmt.Errorf("%s not found", dotfilesFlake)
 		}
 
-		storedHash := internals.Must(internals.ExtractNixpkgsPin(dotfilesFlake))
+		storedHash := Must(nix.ExtractNixpkgsPin(dotfilesFlake))
 		if storedHash == "" {
 			return fmt.Errorf("could not detect nixpkgs url in %s", dotfilesFlake)
 		}
@@ -40,8 +42,8 @@ var dev = &cobra.Command{
 		fmt.Println("using nixpkgs rev:", storedHash)
 
 		devFlake := strings.ReplaceAll(templates.FlakeTemplate, "{{NIXPKGS_REV}}", storedHash)
-		internals.Check(createIfAllowed("flake.nix", devFlake))
-		internals.Check(createIfAllowed(".envrc", templates.EnvrcTemplate))
+		Check(createIfAllowed("flake.nix", devFlake))
+		Check(createIfAllowed(".envrc", templates.EnvrcTemplate))
 
 		fmt.Println()
 		fmt.Println("Dev env ready")
