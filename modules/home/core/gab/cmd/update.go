@@ -41,14 +41,11 @@ var update = &cobra.Command{
 		same := Must(files.SameFile(cwd, dotfilesDir))
 
 		if same {
-			rev := Must(nix.FetchLatestRev())
+			rev := nix.FetchLatestRev()
 			return nix.UpdateNixpkgsPin(dotfilesFlake, rev)
 		}
 
-		reference := Must(nix.ExtractNixpkgsPin(dotfilesFlake))
-		if reference == "" {
-			return fmt.Errorf("could not determine target nixpkgs rev")
-		}
+		reference := nix.ExtractNixpkgsPin(dotfilesFlake)
 		return nix.UpdateNixpkgsPin("flake.nix", reference)
 	},
 }

@@ -34,10 +34,7 @@ var dev = &cobra.Command{
 			return fmt.Errorf("%s not found", dotfilesFlake)
 		}
 
-		storedHash := Must(nix.ExtractNixpkgsPin(dotfilesFlake))
-		if storedHash == "" {
-			return fmt.Errorf("could not detect nixpkgs url in %s", dotfilesFlake)
-		}
+		storedHash := nix.ExtractNixpkgsPin(dotfilesFlake)
 
 		fmt.Println("using nixpkgs rev:", storedHash)
 
