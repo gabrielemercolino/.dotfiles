@@ -93,8 +93,8 @@ let
       };
 
       home = mkOption {
-        type = types.deferredModule;
-        default = { };
+        type = types.nullOr types.deferredModule;
+        default = null;
       };
     };
   };
