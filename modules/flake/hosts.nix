@@ -97,6 +97,11 @@ let
         type = types.nullOr types.deferredModule;
         default = null;
       };
+
+      hjem = mkOption {
+        type = types.nullOr types.deferredModule;
+        default = null;
+      };
     };
   };
 in
@@ -130,6 +135,13 @@ in
           ++ lib.optional (host.home != null) modules.nixos.hm;
 
           system.stateVersion = mkDefault stateVersion;
+
+          assertions = [
+            {
+              assertion = !(host.home != null && host.hjem != null);
+              message = "host ${name}: home & hjem are mutually exclusive, use only one";
+            }
+          ];
         };
 
         home = name: host: {
@@ -148,6 +160,15 @@ in
             ];
           };
         };
+
+        hjem = name: host: {
+          imports = [ inputs.hjem.nixosModules.default ];
+
+          hjem = {
+            specialArgs = mkSpecialArgs name host;
+            users.${host.user.name}.imports = [ host.hjem ];
+          };
+        };
       };
     in
     {
@@ -156,8 +177,9 @@ in
         inputs.nixpkgs.lib.nixosSystem {
           modules = [
             (baseHost.nixos name host)
-            (baseHost.home name host)
-          ];
+          ]
+          ++ lib.optional (host.home != null) (baseHost.home name host)
+          ++ lib.optional (host.hjem != null) (baseHost.hjem name host);
           specialArgs = mkSpecialArgs name host;
         }
       ) config.hosts;
