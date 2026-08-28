@@ -31,7 +31,6 @@ in
           ./_hardware-configuration.nix
           style
           gaming
-          wm
           login
           cli
           apps
@@ -63,10 +62,6 @@ in
 
           gaming = {
             steam.enable = true;
-          };
-
-          wm = {
-            hyprland.enable = true;
           };
 
           services = {

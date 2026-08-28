@@ -121,8 +121,13 @@ in
       baseHost = rec {
         stateVersion = "26.11";
 
-        nixos = {
-          imports = with modules.nixos; [ core ];
+        nixos = name: host: {
+          imports = [
+            modules.nixos.core
+          ]
+          ++ [ host.nixos ]
+          ++ lib.optional (host.home != null) modules.nixos.hm;
+
           system.stateVersion = mkDefault stateVersion;
         };
 
@@ -149,7 +154,7 @@ in
         name: host:
         inputs.nixpkgs.lib.nixosSystem {
           modules = [
-            baseHost.nixos
+            (baseHost.nixos name host)
             host.nixos
             (baseHost.home name host)
           ];

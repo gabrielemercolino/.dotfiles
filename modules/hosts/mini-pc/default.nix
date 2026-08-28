@@ -29,7 +29,6 @@ in
           ./_hardware-configuration.nix
           style
           gaming
-          wm
           login
           cli
           apps
@@ -66,10 +65,6 @@ in
             lsfg.enable = true;
           };
 
-          wm = {
-            hyprland.enable = true;
-          };
-
           services = {
             ssh.enable = true;
             direnv.enable = true;
@@ -79,12 +74,14 @@ in
           login.sddm.enable = true;
         };
 
-        services.xserver.excludePackages = [ pkgs.xterm ];
-        services.tailscale.enable = true;
-        services.sunshine = {
-          enable = true;
-          autoStart = true;
-          capSysAdmin = true;
+        services = {
+          xserver.excludePackages = [ pkgs.xterm ];
+          tailscale.enable = true;
+          sunshine = {
+            enable = true;
+            autoStart = true;
+            capSysAdmin = true;
+          };
         };
       };
 
@@ -126,7 +123,7 @@ in
         };
 
         programs.lapce = {
-          enable  = true;
+          enable = true;
         };
 
         sops.secrets = {

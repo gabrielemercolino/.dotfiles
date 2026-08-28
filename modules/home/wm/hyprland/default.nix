@@ -5,6 +5,33 @@
   ...
 }:
 {
+  flake.modules.nixos = {
+    hm.imports = [ self.modules.nixos.hyprland-hm ];
+
+    hyprland-hm =
+      { config, user, ... }:
+      let
+        cfg = config.home-manager.users.${user.name}.gab.wm.hyprland
+        # or { enable = false; }
+        ;
+      in
+      {
+        config = lib.mkIf cfg.enable {
+          programs.hyprland = {
+            enable = true;
+            xwayland.enable = true;
+          };
+
+          nix.settings = rec {
+            substituters = [ "https://hyprland.cachix.org" ];
+            trusted-substituters = substituters;
+            trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
+          };
+        };
+      };
+
+  };
+
   flake.modules.homeManager = {
     wm.imports = [ self.modules.homeManager.hyprland ];
 
