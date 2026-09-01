@@ -109,10 +109,7 @@ in
           services
         ];
 
-        home.packages = with self.packages.${host.system}; [
-          cisco-packet-tracer
-          pkgs.jetbrains.idea
-        ];
+        home.packages = with self.packages.${host.system}; [ cisco-packet-tracer ];
 
         programs.git = {
           enable = true;
