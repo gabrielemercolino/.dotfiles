@@ -125,6 +125,10 @@ in
           };
         };
 
+        programs.lapce = {
+          enable  = true;
+        };
+
         sops.secrets = {
           "ssh/priv".path = "/home/${user.name}/.ssh/id_ed25519";
           "ssh/pub".path = "/home/${user.name}/.ssh/id_ed25519.pub";
