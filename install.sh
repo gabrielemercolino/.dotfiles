@@ -90,14 +90,4 @@ echo ""
 
 sudo nixos-rebuild switch --option extra-experimental-features "nix-command flakes pipe-operators" --flake ~/.dotfiles#"$host"
 
-echo ""
-print_success "system part of the $host host has been installed"
-echo ""
-
-nix run home-manager/master --extra-experimental-features nix-command --extra-experimental-features flakes -- switch --flake ~/.dotfiles#"$host"
-
-echo ""
-print_success "home-manager part of the $host host has been installed"
-echo ""
-
 print_success "Installation finished, you can reboot now"

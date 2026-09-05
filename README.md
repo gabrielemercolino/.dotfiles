@@ -24,8 +24,6 @@ sudo nixos-generate-config --show-hardware-config > ./modules/hosts/mini-pc/_har
 
 # you need to check what profiles exist
 sudo nixos-rebuild switch --flake .#mini-pc
-
-nix run home-manager/master --extra-experimental-features nix-command --extra-experimental-features flakes -- switch --flake .#mini-pc
 ```
 
 ## Special thanks
