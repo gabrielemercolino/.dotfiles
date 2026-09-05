@@ -47,6 +47,11 @@ in
 
         sops.secrets = { };
 
+        programs.wireshark = {
+          enable = true;
+        };
+        users.users.${user.name}.extraGroups = [ "wireshark" ];
+
         gab = {
           kernel = {
             # scx.enable = true;
@@ -83,7 +88,10 @@ in
           tailscale.enable = true;
         };
 
-        environment.systemPackages = [ pkgs.moonlight-qt ];
+        environment.systemPackages = [
+          pkgs.moonlight-qt
+          pkgs.wireshark
+        ];
       };
 
     home =
