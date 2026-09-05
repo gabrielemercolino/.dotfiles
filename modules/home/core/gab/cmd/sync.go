@@ -19,12 +19,7 @@ var sync = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		dotfilesDir := Must(files.ResolveDotfilesDir())
 
-		// System sync
 		command := fmt.Sprintf("nh os switch %s -H '%s'", dotfilesDir, profile)
-		Check(cli.Run(command))
-
-		// Home-manager sync
-		command = fmt.Sprintf("nh home switch ~/.dotfiles -c '%s'", profile)
 		return cli.Run(command)
 	},
 }

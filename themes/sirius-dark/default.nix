@@ -110,13 +110,6 @@ in
           package = mkForce pkgs.lyra-cursors;
         };
 
-        stylix = {
-          base16Scheme = palette;
-          image = background;
-          polarity = polarity;
-          opacity.terminal = opacity;
-        };
-
         hyprnix.settings =
           let
             active_border = {

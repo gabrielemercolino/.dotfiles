@@ -76,22 +76,11 @@ in
     }:
     let
       home = self.modules.homeManager;
-      background = pkgs.fetchurl {
-        url = "https://images6.alphacoders.com/939/thumb-1920-939537.jpg";
-        hash = "sha256-JClOUjwui6i9Bigcgp6F1xEZFJyxSVNmMtgVY0t5l8Y=";
-      };
     in
     {
       imports = with home; [ hyprland ];
 
       config = {
-        stylix = {
-          base16Scheme = palette;
-          image = background;
-          polarity = polarity;
-          opacity.terminal = opacity;
-        };
-
         programs = {
           ags-bar.settings.colors = palette;
 

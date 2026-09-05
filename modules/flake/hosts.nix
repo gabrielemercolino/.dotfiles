@@ -109,6 +109,15 @@ in
     let
       inherit (config.flake) modules;
 
+      mkSpecialArgs = name: host: {
+        inherit self;
+        inherit (host) audio user localization;
+        host = {
+          inherit name;
+          inherit (host) system theme performance;
+        };
+      };
+
       baseHost = rec {
         stateVersion = "26.11";
 
@@ -117,9 +126,21 @@ in
           system.stateVersion = mkDefault stateVersion;
         };
 
-        home = {
-          imports = with modules.homeManager; [ core ];
-          home.stateVersion = mkDefault stateVersion;
+        home = name: host: {
+          imports = [ inputs.home-manager.nixosModules.home-manager ];
+
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            extraSpecialArgs = mkSpecialArgs name host;
+            users.${host.user.name}.imports = [
+              {
+                imports = with modules.homeManager; [ core ];
+                home.stateVersion = mkDefault stateVersion;
+              }
+              host.home
+            ];
+          };
         };
       };
     in
@@ -130,42 +151,9 @@ in
           modules = [
             baseHost.nixos
             host.nixos
+            (baseHost.home name host)
           ];
-          specialArgs = {
-            inherit self;
-            inherit (host)
-              audio
-              user
-              localization
-              ;
-            host = {
-              inherit name;
-              inherit (host) system theme performance;
-            };
-          };
-        }
-      ) config.hosts;
-
-      flake.homeConfigurations = mapAttrs (
-        name: host:
-        inputs.home-manager.lib.homeManagerConfiguration {
-          pkgs = import inputs.nixpkgs { system = host.system; };
-          modules = [
-            baseHost.home
-            host.home
-          ];
-          extraSpecialArgs = {
-            inherit self;
-            inherit (host)
-              audio
-              user
-              localization
-              ;
-            host = {
-              inherit name;
-              inherit (host) system theme performance;
-            };
-          };
+          specialArgs = mkSpecialArgs name host;
         }
       ) config.hosts;
     };

@@ -1,9 +1,4 @@
-{
-  self,
-  inputs,
-  lib,
-  ...
-}@params:
+{ self, lib, ... }@params:
 {
   flake.modules.homeManager.style =
     {
@@ -18,10 +13,7 @@
       themeModule = (import themePath params).home;
     in
     {
-      imports = [
-        themeModule
-        inputs.stylix.homeModules.default
-      ];
+      imports = [ themeModule ];
 
       options.gab.style = {
         fonts.sizes = {

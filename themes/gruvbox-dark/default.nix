@@ -73,21 +73,11 @@ in
     }:
     let
       home = self.modules.homeManager;
-      background = pkgs.fetchurl {
-        url = "https://gruvbox-wallpapers.pages.dev/wallpapers/minimalistic/solar-system-minimal.png";
-        hash = "sha256-wDJxF4amPaYiwEl80K9ff5dlHoab2rDjbjHAQS1s6sk=";
-      };
     in
     {
       imports = with home; [ hyprland ];
 
       config = {
-        stylix = {
-          base16Scheme = palette;
-          image = background;
-          polarity = polarity;
-        };
-
         programs = {
           ags-bar.settings.colors = palette;
 

@@ -97,13 +97,6 @@ in
       imports = with home; [ hyprland ];
 
       config = {
-        stylix = {
-          base16Scheme = palette;
-          image = background;
-          polarity = polarity;
-          opacity.terminal = opacity;
-        };
-
         home.pointerCursor = {
           size = mkForce 28;
           name = mkForce "LyraG-cursors";

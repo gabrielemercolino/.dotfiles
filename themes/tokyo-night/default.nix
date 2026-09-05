@@ -75,22 +75,11 @@ in
     }:
     let
       home = self.modules.homeManager;
-      background = pkgs.fetchurl {
-        url = "https://raw.githubusercontent.com/ChapST1/gruvbox-wallpapers-web/master/wallpapers/mix/17.jpg";
-        hash = "sha256-p5Mo1xA4jBZh6PPP0HK2YsuEBkP/gA27YDvxtuUrPHE=";
-      };
     in
     {
       imports = with home; [ hyprland ];
 
       config = {
-        stylix = {
-          base16Scheme = palette;
-          image = background;
-          polarity = polarity;
-          opacity.terminal = opacity;
-        };
-
         programs = {
           ags-bar.settings.colors = palette;
 

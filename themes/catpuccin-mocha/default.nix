@@ -75,12 +75,6 @@ in
       imports = with home; [ hyprland ];
 
       config = {
-        stylix = {
-          base16Scheme = palette;
-          image = background;
-          polarity = polarity;
-        };
-
         programs = {
           ags-bar.settings.colors = palette;
 
