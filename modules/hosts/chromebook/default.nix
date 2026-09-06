@@ -147,6 +147,7 @@ in
 
           socials = {
             telegram.enable = true;
+            discord.enable = true;
           };
 
           cli = {
