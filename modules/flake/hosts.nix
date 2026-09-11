@@ -155,7 +155,6 @@ in
         inputs.nixpkgs.lib.nixosSystem {
           modules = [
             (baseHost.nixos name host)
-            host.nixos
             (baseHost.home name host)
           ];
           specialArgs = mkSpecialArgs name host;
