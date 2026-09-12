@@ -11,9 +11,7 @@
     hyprland-hm =
       { config, user, ... }:
       let
-        cfg = config.home-manager.users.${user.name}.gab.wm.hyprland
-        # or { enable = false; }
-        ;
+        cfg = config.home-manager.users.${user.name}.gab.wm.hyprland or { enable = false; };
       in
       {
         config = lib.mkIf cfg.enable {

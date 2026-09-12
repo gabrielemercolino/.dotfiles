@@ -12,7 +12,7 @@
         ...
       }:
       {
-        users.users.${user.name}.extraGroups = [
+        users.users.${user.name}.extraGroups = lib.mkIf (audio != null) [
           "audio"
           "jackaudio"
         ];

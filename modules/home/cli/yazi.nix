@@ -32,7 +32,7 @@
               opener = {
                 xdg = [
                   {
-                    run = ''xdg-open %s'';
+                    run = "xdg-open %s";
                     block = true;
                   }
                 ];
