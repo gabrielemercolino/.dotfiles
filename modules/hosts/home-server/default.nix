@@ -23,7 +23,12 @@ in
     theme = "roathe-dark";
 
     nixos =
-      { pkgs, user, ... }:
+      {
+        config,
+        pkgs,
+        user,
+        ...
+      }:
       {
         imports = with nixos; [
           ./_hardware-configuration.nix
@@ -31,6 +36,11 @@ in
           cli
           services
         ];
+
+        # ZFS pool config
+        boot.supportedFilesystems.zfs = true;
+        boot.zfs.package = config.boot.kernelPackages.zfs_cachyos;
+        networking.hostId = "23b06696";
 
         # has specific optimisations for this pc
         boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest-lto-x86_64-v3;
