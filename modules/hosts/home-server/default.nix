@@ -7,8 +7,6 @@ in
   hosts.home-server = {
     system = "x86_64-linux";
 
-    audio = "pipewire";
-
     localization = {
       keyboard.layout = "it";
       locale = "it_IT.UTF-8";
@@ -19,8 +17,6 @@ in
       name = "gabriele";
       email = "ciruzzo032@noreply.codeberg.org";
     };
-
-    theme = "roathe-dark";
 
     nixos =
       {
@@ -63,7 +59,6 @@ in
         };
 
         services = {
-          xserver.excludePackages = [ pkgs.xterm ];
           tailscale.enable = true;
         };
       };
