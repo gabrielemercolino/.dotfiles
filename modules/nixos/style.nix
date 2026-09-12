@@ -14,14 +14,13 @@
     }:
     let
       cfg = config.gab.style;
-      themePath = "${self.outPath}/themes/${host.theme}";
-      themeModule = (import themePath params).nixos;
     in
     {
-      imports = [
-        themeModule
-        inputs.stylix.nixosModules.default
-      ];
+      imports =
+        (lib.optionals (host.theme != null) [
+          ((import "${self.outPath}/themes/${host.theme}" params).nixos)
+        ])
+        ++ [ inputs.stylix.nixosModules.default ];
 
       options.gab.style = {
         fonts.sizes = {
@@ -44,7 +43,7 @@
         };
       };
 
-      config = {
+      config = lib.mkIf (host.theme != null) {
         stylix = {
           enable = true;
           autoEnable = true;

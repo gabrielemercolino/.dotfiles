@@ -9,11 +9,11 @@
     }:
     let
       cfg = config.gab.style;
-      themePath = "${self.outPath}/themes/${host.theme}";
-      themeModule = (import themePath params).home;
     in
     {
-      imports = [ themeModule ];
+      imports = lib.optionals (host.theme != null) [
+        ((import "${self.outPath}/themes/${host.theme}" params).home)
+      ];
 
       options.gab.style = {
         fonts.sizes = {
@@ -36,22 +36,27 @@
         };
       };
 
-      config = {
-        stylix = {
-          enable = true;
-          autoEnable = true;
+      # mkIf doesn't work in this case
+      config =
+        if (host.theme != null) then
+          {
+            stylix = {
+              enable = true;
+              autoEnable = true;
 
-          fonts = cfg.fonts;
+              fonts = cfg.fonts;
 
-          targets = {
-            gtksourceview.enable = false;
-            mangohud.enable = false;
-            vscode.enable = false;
-            rofi.enable = false;
-            zen-browser.enable = false;
-            qt.enable = true;
-          };
-        };
-      };
+              targets = {
+                gtksourceview.enable = false;
+                mangohud.enable = false;
+                vscode.enable = false;
+                rofi.enable = false;
+                zen-browser.enable = false;
+                qt.enable = true;
+              };
+            };
+          }
+        else
+          { };
     };
 }

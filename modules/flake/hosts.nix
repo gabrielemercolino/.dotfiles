@@ -44,7 +44,8 @@ let
       };
 
       theme = mkOption {
-        type = themeType;
+        type = types.nullOr themeType;
+        default = null;
       };
 
       user = {
