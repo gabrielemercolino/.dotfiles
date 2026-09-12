@@ -78,7 +78,7 @@
     };
 
     "/home" = {
-      device = "/dev/disk/by-label/NIXOS_HOME";
+      device = "/dev/disk/by-label/NIXOS_ROOT";
       fsType = "btrfs";
       options = [
         "subvol=@home"
@@ -87,7 +87,7 @@
     };
 
     "/swap" = {
-      device = "/dev/disk/by-label/NIXOS_HOME";
+      device = "/dev/disk/by-label/NIXOS_ROOT";
       fsType = "btrfs";
       options = [
         "subvol=@swap"
@@ -100,7 +100,7 @@
   swapDevices = [
     {
       device = "/swap/swapfile";
-      size = 8192;
+      size = 4 * 1024;
     }
   ];
 
