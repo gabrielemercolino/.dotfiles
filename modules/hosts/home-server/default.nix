@@ -1,4 +1,9 @@
-{ self, lib, ... }:
+{
+  inputs,
+  self,
+  lib,
+  ...
+}:
 let
   inherit (self.modules) nixos homeManager;
   inherit (lib) getExe;
@@ -31,6 +36,8 @@ in
           style
           cli
           services
+
+          inputs.playit-nixos-module.nixosModules.default
         ];
 
         # ZFS pool config
@@ -57,6 +64,10 @@ in
             direnv.enable = true;
             docker.enable = true;
           };
+        };
+
+        sops.secrets = {
+          "minecraft/playit/secret".path = "/var/lib/minecraft/playit.secret";
         };
 
         services = {
@@ -95,6 +106,32 @@ in
             enable = true;
             publish.enable = true;
             publish.userServices = true;
+          };
+
+          minecraft-server = {
+            enable = true;
+            eula = true;
+            declarative = true;
+
+            serverProperties = {
+              gamemode = "creative";
+              simulation-distance = 10;
+              level-seed = "4";
+              white-list = true;
+            };
+
+            whitelist = {
+              Sefiul = "c525f516-0bb1-4722-8a86-fc0f7b529dae";
+              Nyramu = "af3185c2-9e95-4af8-9dff-449cd683edfb";
+              supergman00 = "bcb2a8e2-33e0-4cfc-b2c1-2491120badf8";
+            };
+
+            jvmOpts = "-Xms4092M -Xmx4092M -XX:+UseG1GC -XX:+UseCompactObjectHeaders";
+          };
+
+          playit = {
+            enable = true;
+            secretPath = config.sops.secrets."minecraft/playit/secret".path;
           };
         };
       };
