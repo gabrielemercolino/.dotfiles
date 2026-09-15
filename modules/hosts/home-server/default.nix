@@ -54,6 +54,11 @@ in
         users.defaultUserShell = pkgs.zsh;
         programs.zsh.enable = true;
 
+        systemd.tmpfiles.rules  = [
+          "d /tank/jellyfin 0755 ${user.name} users -"
+          "d /tank/media 0755 ${user.name} users -"
+        ];
+
         gab = {
           cli = {
             bashmount.enable = true;
@@ -132,6 +137,13 @@ in
           playit = {
             enable = true;
             secretPath = config.sops.secrets."minecraft/playit/secret".path;
+          };
+
+          jellyfin = {
+            enable  = true;
+            dataDir = "/tank/jellyfin";
+            user = user.name;
+            openFirewall = true;
           };
         };
       };
