@@ -1,9 +1,4 @@
-{
-  inputs,
-  self,
-  lib,
-  ...
-}:
+{ self, lib, ... }:
 let
   inherit (self.modules) nixos homeManager;
   inherit (lib) getExe;
@@ -36,8 +31,6 @@ in
           style
           cli
           services
-
-          inputs.playit-nixos-module.nixosModules.default
         ];
 
         # ZFS pool config
@@ -54,13 +47,6 @@ in
         users.defaultUserShell = pkgs.zsh;
         programs.zsh.enable = true;
 
-        systemd.tmpfiles.rules = [
-          "d /tank/jellyfin 0755 ${user.name} users -"
-          "d /tank/media 0755 ${user.name} users -"
-          "d /tank/vaultwarden 0750 vaultwarden vaultwarden -"
-          "d /tank/vaultwarden/data 0750 vaultwarden vaultwarden -"
-        ];
-
         gab = {
           cli = {
             bashmount.enable = true;
@@ -73,116 +59,8 @@ in
           };
         };
 
-        sops.secrets = {
-          "minecraft/playit/secret".path = "/var/lib/minecraft/playit.secret";
-          "vaultwarden/env" = {
-            owner = "vaultwarden";
-            group = "vaultwarden";
-          };
-        };
-
         services = {
           tailscale.enable = true;
-
-          samba = {
-            enable = true;
-            openFirewall = true;
-
-            settings = {
-              global = {
-                "workgroup" = "WORKGROUP";
-                "server string" = "HomeServer";
-                "netbios name" = "HOMESERVER";
-                "security" = "user";
-                "map to guest" = "never";
-              };
-              share = {
-                path = "/tank/share";
-                browseable = "yes";
-                "read only" = "no";
-                "valid users" = "gabriele";
-                "force user" = "gabriele";
-              };
-            };
-          };
-
-          samba-wsdd = {
-            enable = true;
-            openFirewall = true;
-            discovery = true;
-            interface = "wlp6s0";
-          };
-
-          avahi = {
-            enable = true;
-            publish.enable = true;
-            publish.userServices = true;
-          };
-
-          minecraft-server = {
-            enable = true;
-            eula = true;
-            declarative = true;
-
-            serverProperties = {
-              gamemode = "creative";
-              simulation-distance = 10;
-              level-seed = "4";
-              white-list = true;
-            };
-
-            whitelist = {
-              Sefiul = "c525f516-0bb1-4722-8a86-fc0f7b529dae";
-              Nyramu = "af3185c2-9e95-4af8-9dff-449cd683edfb";
-              supergman00 = "bcb2a8e2-33e0-4cfc-b2c1-2491120badf8";
-            };
-
-            jvmOpts = "-Xms4092M -Xmx4092M -XX:+UseG1GC -XX:+UseCompactObjectHeaders";
-          };
-
-          playit = {
-            enable = true;
-            secretPath = config.sops.secrets."minecraft/playit/secret".path;
-          };
-
-          jellyfin = {
-            enable = true;
-            dataDir = "/tank/jellyfin";
-            user = user.name;
-            openFirewall = true;
-          };
-
-          vaultwarden = {
-            enable = true;
-            dbBackend = "sqlite";
-            environmentFile = config.sops.secrets."vaultwarden/env".path;
-            backupDir = "/tank/vaultwarden/backup";
-            config = {
-              SIGNUPS_ALLOWED = true;
-              DOMAIN = "https://home-server.taild25961.ts.net:8222";
-              ROCKET_ADDRESS = "127.0.0.1";
-              ROCKET_PORT = 8222;
-              DATA_FOLDER = "/tank/vaultwarden/data";
-            };
-          };
-        };
-
-        systemd.services = {
-          vaultwarden.serviceConfig.ReadWritePaths = [ "/tank/vaultwarden" ];
-          tailscale-serve-vaultwarden = {
-            description = "tailscale https serve for Vaultwarden";
-            after = [
-              "tailscaled.service"
-              "vaultwarden.service"
-            ];
-            wantedBy = [ "multi-user.target" ];
-            serviceConfig = {
-              Type = "oneshot";
-              RemainAfterExit = true;
-              ExecStart = "${pkgs.tailscale}/bin/tailscale serve --bg --https=8222 http://127.0.0.1:8222";
-              ExecStop = "${pkgs.tailscale}/bin/tailscale serve --https=8222 off";
-            };
-          };
         };
       };
 
