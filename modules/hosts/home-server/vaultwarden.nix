@@ -12,6 +12,7 @@
           owner = "vaultwarden";
           group = "vaultwarden";
         };
+        "cloudflared/vaultwarden" = { };
       };
 
       services = {
@@ -22,7 +23,7 @@
           backupDir = "/tank/vaultwarden/backup";
           config = {
             SIGNUPS_ALLOWED = true;
-            DOMAIN = "https://home-server.taild25961.ts.net:8222";
+            DOMAIN = "https://vaultwarden.ciruzzo.win";
             ROCKET_ADDRESS = "127.0.0.1";
             ROCKET_PORT = 8222;
             DATA_FOLDER = "/tank/vaultwarden/data";
@@ -32,18 +33,19 @@
 
       systemd.services = {
         vaultwarden.serviceConfig.ReadWritePaths = [ "/tank/vaultwarden" ];
-        tailscale-serve-vaultwarden = {
-          description = "tailscale https serve for Vaultwarden";
+        cloudflared-vaultwarden = {
+          description = "Cloudflare Tunnel";
           after = [
-            "tailscaled.service"
+            "network-online.target"
             "vaultwarden.service"
           ];
+          wants = [ "network-online.target" ];
           wantedBy = [ "multi-user.target" ];
           serviceConfig = {
-            Type = "oneshot";
-            RemainAfterExit = true;
-            ExecStart = "${pkgs.tailscale}/bin/tailscale serve --bg --https=8222 http://127.0.0.1:8222";
-            ExecStop = "${pkgs.tailscale}/bin/tailscale serve --https=8222 off";
+            DynamicUser = true;
+            LoadCredential = "token:${config.sops.secrets."cloudflared/vaultwarden".path}";
+            ExecStart = "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token-file=%d/token";
+            Restart = "on-failure";
           };
         };
       };
