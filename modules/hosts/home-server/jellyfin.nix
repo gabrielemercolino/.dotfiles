@@ -24,19 +24,26 @@
           };
         };
 
-        systemd.services.cloudflared-jellyfin = {
-          description = "Cloudflare Tunnel";
-          after = [
-            "network-online.target"
-            "jellyfin.service"
-          ];
-          wants = [ "network-online.target" ];
-          wantedBy = [ "multi-user.target" ];
-          serviceConfig = {
-            DynamicUser = true;
-            LoadCredential = "token:${config.sops.secrets."cloudflared/jellyfin".path}";
-            ExecStart = "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token-file=%d/token";
-            Restart = "on-failure";
+        systemd.services = {
+          jellyfin = {
+            after = [ "zfs-mount.service" ];
+            requires = [ "zfs-mount.service" ];
+          };
+
+          cloudflared-jellyfin = {
+            description = "Cloudflare Tunnel";
+            after = [
+              "network-online.target"
+              "jellyfin.service"
+            ];
+            wants = [ "network-online.target" ];
+            wantedBy = [ "multi-user.target" ];
+            serviceConfig = {
+              DynamicUser = true;
+              LoadCredential = "token:${config.sops.secrets."cloudflared/jellyfin".path}";
+              ExecStart = "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token-file=%d/token";
+              Restart = "on-failure";
+            };
           };
         };
       };

@@ -32,7 +32,11 @@
       };
 
       systemd.services = {
-        vaultwarden.serviceConfig.ReadWritePaths = [ "/tank/vaultwarden" ];
+        vaultwarden = {
+          after = [ "zfs-mount.service" ];
+          requires = [ "zfs-mount.service" ];
+          serviceConfig.ReadWritePaths = [ "/tank/vaultwarden" ];
+        };
         cloudflared-vaultwarden = {
           description = "Cloudflare Tunnel";
           after = [

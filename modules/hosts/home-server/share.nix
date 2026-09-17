@@ -40,6 +40,13 @@
           publish.userServices = true;
         };
       };
+
+      systemd.services = {
+        samba-smbd = {
+          after = [ "zfs-mount.service" ];
+          requires = [ "zfs-mount.service" ];
+        };
+      };
     };
   };
 }

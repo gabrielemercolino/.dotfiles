@@ -62,6 +62,13 @@ in
         services = {
           tailscale.enable = true;
         };
+
+        systemd.services = {
+          systemd-tmpfiles-setup = {
+            after = [ "zfs-mount.service" ];
+            requires = [ "zfs-mount.service" ];
+          };
+        };
       };
 
     home =
