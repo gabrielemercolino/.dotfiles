@@ -88,6 +88,6 @@ echo ""
 print_info "installing $host host"
 echo ""
 
-sudo nixos-rebuild switch --option extra-experimental-features "nix-command flakes pipe-operators" --flake ~/.dotfiles#"$host"
+sudo nixos-rebuild switch --option extra-experimental-features "nix-command flakes pipe-operators" --flake ~/.dotfiles#"$host" --accept-flake-config
 
 print_success "Installation finished, you can reboot now"

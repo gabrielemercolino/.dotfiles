@@ -19,7 +19,7 @@ var sync = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		dotfilesDir := Must(files.ResolveDotfilesDir())
 
-		command := fmt.Sprintf("nh os switch %s -H '%s'", dotfilesDir, profile)
+		command := fmt.Sprintf("nh os switch %s -H '%s' --accept-flake-config", dotfilesDir, profile)
 		return cli.Run(command)
 	},
 }
