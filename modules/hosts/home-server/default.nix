@@ -59,6 +59,11 @@ in
           };
         };
 
+        sops = {
+          secrets.cloudflared = { };
+          templates.cloudflared-secret.content = config.sops.placeholder.cloudflared;
+        };
+
         services = {
           tailscale.enable = true;
         };
@@ -67,6 +72,16 @@ in
           systemd-tmpfiles-setup = {
             after = [ "zfs-mount.service" ];
             requires = [ "zfs-mount.service" ];
+          };
+          cloudflared = {
+            description = "Cloudflare Tunnel";
+            after = [ "network-online.target" ];
+            wants = [ "network-online.target" ];
+            wantedBy = [ "multi-user.target" ];
+            serviceConfig = {
+              ExecStart = "${getExe pkgs.cloudflared} tunnel --no-autoupdate run --token-file=${config.sops.templates.cloudflared-secret.path}";
+              Restart = "on-failure";
+            };
           };
         };
       };

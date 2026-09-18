@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ ... }:
 {
   hosts.home-server = {
     nixos = { config, pkgs, ... }: {
@@ -7,16 +7,10 @@
         "d /tank/vaultwarden/data 0750 vaultwarden vaultwarden -"
       ];
 
-      sops = {
-        secrets = {
-          "vaultwarden/env" = {
-            owner = "vaultwarden";
-            group = "vaultwarden";
-          };
-          "cloudflared/vaultwarden" = { };
-        };
-        templates = {
-          cloudflared-vaultwarden-secret.content = config.sops.placeholder."cloudflared/vaultwarden";
+      sops.secrets = {
+        "vaultwarden/env" = {
+          owner = "vaultwarden";
+          group = "vaultwarden";
         };
       };
 
@@ -41,21 +35,6 @@
           after = [ "zfs-mount.service" ];
           requires = [ "zfs-mount.service" ];
           serviceConfig.ReadWritePaths = [ "/tank/vaultwarden" ];
-        };
-        cloudflared-vaultwarden = {
-          description = "Cloudflare Tunnel";
-          after = [
-            "network-online.target"
-            "vaultwarden.service"
-          ];
-          wants = [ "network-online.target" ];
-          wantedBy = [ "multi-user.target" ];
-          serviceConfig = {
-            ExecStart = "${lib.getExe pkgs.cloudflared} tunnel --no-autoupdate run --token-file=${
-              config.sops.templates."cloudflared-vaultwarden-secret".path
-            }";
-            Restart = "on-failure";
-          };
         };
       };
     };

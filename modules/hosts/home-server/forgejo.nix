@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ ... }:
 {
   hosts.home-server = {
     nixos =
@@ -9,15 +9,6 @@
         ...
       }:
       {
-        sops = {
-          secrets = {
-            "cloudflared/forgejo" = { };
-          };
-          templates = {
-            cloudflared-forgejo-secret.content = config.sops.placeholder."cloudflared/forgejo";
-          };
-        };
-
         services = {
           forgejo = {
             enable = true;
@@ -36,22 +27,6 @@
           forgejo = {
             after = [ "zfs-mount.service" ];
             requires = [ "zfs-mount.service" ];
-          };
-
-          cloudflared-forgejo = {
-            description = "Cloudflare Tunnel";
-            after = [
-              "network-online.target"
-              "forgejo.service"
-            ];
-            wants = [ "network-online.target" ];
-            wantedBy = [ "multi-user.target" ];
-            serviceConfig = {
-              ExecStart = "${lib.getExe pkgs.cloudflared} tunnel --no-autoupdate run --token-file=${
-                config.sops.templates."cloudflared-forgejo-secret".path
-              }";
-              Restart = "on-failure";
-            };
           };
         };
       };
