@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 {
   hosts.home-server = {
     nixos = { config, pkgs, ... }: {
@@ -7,12 +7,17 @@
         "d /tank/vaultwarden/data 0750 vaultwarden vaultwarden -"
       ];
 
-      sops.secrets = {
-        "vaultwarden/env" = {
-          owner = "vaultwarden";
-          group = "vaultwarden";
+      sops = {
+        secrets = {
+          "vaultwarden/env" = {
+            owner = "vaultwarden";
+            group = "vaultwarden";
+          };
+          "cloudflared/vaultwarden" = { };
         };
-        "cloudflared/vaultwarden" = { };
+        templates = {
+          cloudflared-vaultwarden-secret.content = config.sops.placeholder."cloudflared/vaultwarden";
+        };
       };
 
       services = {
@@ -46,9 +51,9 @@
           wants = [ "network-online.target" ];
           wantedBy = [ "multi-user.target" ];
           serviceConfig = {
-            DynamicUser = true;
-            LoadCredential = "token:${config.sops.secrets."cloudflared/vaultwarden".path}";
-            ExecStart = "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token-file=%d/token";
+            ExecStart = "${lib.getExe pkgs.cloudflared} tunnel --no-autoupdate run --token-file=${
+              config.sops.templates."cloudflared-vaultwarden-secret".path
+            }";
             Restart = "on-failure";
           };
         };

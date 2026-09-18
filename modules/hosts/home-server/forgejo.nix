@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 {
   hosts.home-server = {
     nixos =
@@ -9,8 +9,13 @@
         ...
       }:
       {
-        sops.secrets = {
-          "cloudflared/forgejo" = { };
+        sops = {
+          secrets = {
+            "cloudflared/forgejo" = { };
+          };
+          templates = {
+            cloudflared-forgejo-secret.content = config.sops.placeholder."cloudflared/forgejo";
+          };
         };
 
         services = {
@@ -42,9 +47,9 @@
             wants = [ "network-online.target" ];
             wantedBy = [ "multi-user.target" ];
             serviceConfig = {
-              DynamicUser = true;
-              LoadCredential = "token:${config.sops.secrets."cloudflared/forgejo".path}";
-              ExecStart = "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token-file=%d/token";
+              ExecStart = "${lib.getExe pkgs.cloudflared} tunnel --no-autoupdate run --token-file=${
+                config.sops.templates."cloudflared-forgejo-secret".path
+              }";
               Restart = "on-failure";
             };
           };

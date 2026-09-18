@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 {
   hosts.home-server = {
     nixos =
@@ -11,8 +11,13 @@
       {
         systemd.tmpfiles.rules = [ "d /tank/jellyfin 0755 ${user.name} users -" ];
 
-        sops.secrets = {
-          "cloudflared/jellyfin" = { };
+        sops = {
+          secrets = {
+            "cloudflared/jellyfin" = { };
+          };
+          templates = {
+            cloudflared-jellyfin-secret.content = config.sops.placeholder."cloudflared/jellyfin";
+          };
         };
 
         services = {
@@ -39,9 +44,9 @@
             wants = [ "network-online.target" ];
             wantedBy = [ "multi-user.target" ];
             serviceConfig = {
-              DynamicUser = true;
-              LoadCredential = "token:${config.sops.secrets."cloudflared/jellyfin".path}";
-              ExecStart = "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token-file=%d/token";
+              ExecStart = "${lib.getExe pkgs.cloudflared} tunnel --no-autoupdate run --token-file=${
+                config.sops.templates."cloudflared-jellyfin-secret".path
+              }";
               Restart = "on-failure";
             };
           };
