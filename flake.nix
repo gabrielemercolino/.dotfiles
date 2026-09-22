@@ -68,6 +68,7 @@
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
 
     playit-nixos-module.url = "github:pedorich-n/playit-nixos-module";
+    nix-minecraft.url = "github:Infinidoge/nix-minecraft";
   };
 
   nixConfig = {
