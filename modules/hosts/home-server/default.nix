@@ -64,7 +64,11 @@ in
         };
 
         services = {
-          tailscale.enable = true;
+          tailscale = {
+            enable = true;
+            openFirewall = true;
+            useRoutingFeatures = "server";
+          };
         };
 
         systemd.services = {
