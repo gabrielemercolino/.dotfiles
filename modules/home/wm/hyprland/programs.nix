@@ -84,7 +84,7 @@
             enable = true;
             package = pkgs.rofi;
             theme = (import ./_rofi-theme.nix { inherit config; });
-            extraConfig = {
+            settings = {
               modi = "drun";
               show-icons = true;
               icon-theme = "WhiteSur";
