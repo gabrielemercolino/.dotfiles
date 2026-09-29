@@ -7,8 +7,15 @@
         "d /tank/vaultwarden/data 0750 vaultwarden vaultwarden -"
       ];
 
-      sops.secrets = {
-        "vaultwarden/env" = {
+      sops = {
+        secrets = {
+          "vaultwarden/admin/token" = {
+            owner = "vaultwarden";
+            group = "vaultwarden";
+          };
+        };
+        templates."vaultwarden.env" = {
+          content = "ADMIN_TOKEN=${config.sops.placeholder."vaultwarden/admin/token"}";
           owner = "vaultwarden";
           group = "vaultwarden";
         };
@@ -18,7 +25,7 @@
         vaultwarden = {
           enable = true;
           dbBackend = "sqlite";
-          environmentFile = config.sops.secrets."vaultwarden/env".path;
+          environmentFile = config.sops.templates."vaultwarden.env".path;
           backupDir = "/tank/vaultwarden/backup";
           config = {
             SIGNUPS_ALLOWED = true;

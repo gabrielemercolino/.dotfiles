@@ -5,9 +5,7 @@
       { config, pkgs, ... }:
       {
         sops = {
-          secrets = {
-            "homepage/jellyfin/key" = { };
-          };
+          secrets."homepage/jellyfin/key" = { };
           templates."homepage.env".content = ''
             HOMEPAGE_VAR_JELLYFIN=${config.sops.placeholder."homepage/jellyfin/key"}
           '';

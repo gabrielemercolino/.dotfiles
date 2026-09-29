@@ -4,12 +4,12 @@
     core.imports = [ self.modules.homeManager.sops ];
 
     sops =
-      { user, ... }:
+      { host, user, ... }:
       {
         imports = [ inputs.sops-nix.homeManagerModules.sops ];
 
         sops = {
-          defaultSopsFile = self.outPath + "/secrets/secrets.yaml";
+          defaultSopsFile = self.outPath + "/secrets/${host.name}.yaml";
           defaultSopsFormat = "yaml";
           age.keyFile = "/home/${user.name}/.config/sops/age/keys.txt";
         };
