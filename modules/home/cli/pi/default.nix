@@ -30,6 +30,8 @@
             ".pi/agent/APPEND_SYSTEM.md".source = ./APPEND_SYSTEM.md;
 
             ".pi/agent/extensions".source = ./extensions;
+
+            ".pi/agent/skills".source = ./skills;
           };
         };
       };

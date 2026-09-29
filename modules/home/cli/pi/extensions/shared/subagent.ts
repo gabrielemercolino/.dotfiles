@@ -1,10 +1,24 @@
 import {
   createAgentSession,
   createExtensionRuntime,
+  getAgentDir,
+  loadSkillsFromDir,
   ModelRuntime,
   SessionManager,
   type ResourceLoader,
 } from "@earendil-works/pi-coding-agent";
+import * as fs from "node:fs";
+import * as path from "node:path";
+
+const GLOBAL_SKILLS = loadSkillsFromDir({
+  dir: path.join(getAgentDir(), "skills"),
+  source: "user",
+});
+
+const COMMON_PROMPT = (() => {
+  const file = path.join(getAgentDir(), "APPEND_SYSTEM.md");
+  return fs.existsSync(file) ? fs.readFileSync(file, "utf-8").trim() : "";
+})();
 
 export interface SubAgentUsage {
   input: number;
@@ -56,7 +70,7 @@ function emptyUsage(): SubAgentUsage {
 function createResourceLoader(systemPrompt: string): ResourceLoader {
   return {
     getExtensions: () => ({ extensions: [], errors: [], runtime: createExtensionRuntime() }),
-    getSkills: () => ({ skills: [], diagnostics: [] }),
+    getSkills: () => GLOBAL_SKILLS,
     getPrompts: () => ({ prompts: [], diagnostics: [] }),
     getThemes: () => ({ themes: [], diagnostics: [] }),
     getAgentsFiles: () => ({ agentsFiles: [] }),
@@ -79,6 +93,10 @@ export function createSubAgentRunner(config: SubAgentRunnerConfig) {
     timeoutMs = DEFAULT_TIMEOUT_MS,
     formatToolCall = (toolName) => toolName,
   } = config;
+
+  const fullSystemPrompt = COMMON_PROMPT
+    ? systemPrompt + "\n\n" + COMMON_PROMPT
+    : systemPrompt;
 
   return async function runSubAgent(
     task: string,
@@ -112,7 +130,7 @@ export function createSubAgentRunner(config: SubAgentRunnerConfig) {
       }
 
       const { session: createdSession } = await createAgentSession({
-        resourceLoader: createResourceLoader(systemPrompt),
+        resourceLoader: createResourceLoader(fullSystemPrompt),
         modelRuntime,
         model,
         tools,
