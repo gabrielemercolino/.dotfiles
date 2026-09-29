@@ -29,10 +29,7 @@
 
             ".pi/agent/APPEND_SYSTEM.md".source = ./APPEND_SYSTEM.md;
 
-            ".pi/agent/extensions/architect".source = ./architect;
-            ".pi/agent/extensions/coder".source = ./coder;
-            ".pi/agent/extensions/basher".source = ./basher;
-            ".pi/agent/extensions/web_search".source = ./web_search;
+            ".pi/agent/extensions".source = ./extensions;
           };
         };
       };
