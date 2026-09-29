@@ -27,7 +27,7 @@ var update = &cobra.Command{
 		}
 
 		// Phase 1: basic update
-		Check(cli.Run("nix flake update"))
+		Check(cli.Run("nix flake update --accept-flake-config"))
 
 		// Phase 2: retrieve the nixpkgs hash from the dotfiles flake
 		if !files.Exists(dotfilesFlake) {
