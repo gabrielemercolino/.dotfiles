@@ -14,6 +14,10 @@
             enable = true;
             stateDir = "/tank/forgejo";
             settings = {
+              "git.timeout" = {
+                MIGRATE = 60 * 30; # seconds
+                CLONE = 60 * 30;
+              };
               server = {
                 DOMAIN = "forgejo.ciruzzo.win";
                 ROOT_URL = "https://forgejo.ciruzzo.win/";
