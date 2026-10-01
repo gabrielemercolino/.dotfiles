@@ -53,6 +53,13 @@
                       description = "Password manager";
                     };
                   }
+                  {
+                    "Duplicati" = {
+                      href = "https://duplicati.ciruzzo.win";
+                      icon = "duplicati.png";
+                      description = "Backup automatici";
+                    };
+                  }
                 ];
               }
               {
@@ -75,12 +82,22 @@
                 ];
               }
               {
-                "Backup" = [
+                "Dev" = [
                   {
-                    "Duplicati" = {
-                      href = "https://duplicati.ciruzzo.win";
-                      icon = "duplicati.png";
-                      description = "Backup automatici";
+                    "Forgejo" = {
+                      href = "https://forgejo.ciruzzo.win";
+                      icon = "forgejo.png";
+                      description = "Hosting di codice sorgente e collaborazione";
+                    };
+                  }
+                ];
+              }
+              {
+                "Utilità" = [
+                  {
+                    "Transmute" = {
+                      href = "https://transmute.ciruzzo.win";
+                      description = "Conversione e compressione file";
                     };
                   }
                 ];
