@@ -117,6 +117,8 @@ in
         };
 
         gab = {
+          nixpkgsFlake = "git+https://forgejo.ciruzzo.win/Ciruzzo032/nixpkgs?ref=nixpkgs-unstable";
+
           editors.helix.enable = true;
 
           cli = {
