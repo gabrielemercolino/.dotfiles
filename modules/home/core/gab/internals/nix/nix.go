@@ -14,9 +14,34 @@ import (
 
 var nixpkgsPinRe = regexp.MustCompile(`nixpkgs/([^";]+)`)
 
+const defaultNixpkgsFlake = "github:nixos/nixpkgs/nixpkgs-unstable"
+
+func appendQueryParam(query, key, value string) string {
+	if strings.Contains(query, key+"=") {
+		return query
+	}
+	sep := "?"
+	if strings.Contains(query, "?") {
+		sep = "&"
+	}
+	return query + sep + key + "=" + value
+}
+
+func ResolveNixpkgsFlake() string {
+	flake := defaultNixpkgsFlake
+	if v, ok := os.LookupEnv("NIXPKGS_FLAKE"); ok && v != "" {
+		flake = v
+	}
+	if strings.HasPrefix(flake, "git+") {
+		flake = appendQueryParam(flake, "shallow", "1")
+	}
+	return flake
+}
+
 func FetchLatestRev() string {
-	fmt.Println("fetching latest nixpkgs rev...")
-	result := Must(cli.RunWithOutput("nix flake metadata github:nixos/nixpkgs/nixpkgs-unstable --json"))
+	flake := ResolveNixpkgsFlake()
+	fmt.Printf("fetching latest nixpkgs rev from %s...\n", flake)
+	result := Must(cli.RunWithOutput(fmt.Sprintf("nix flake metadata '%s' --json", flake)))
 	var meta struct {
 		Locked struct {
 			Rev string `json:"rev"`

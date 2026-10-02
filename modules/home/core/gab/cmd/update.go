@@ -26,10 +26,6 @@ var update = &cobra.Command{
 			return nil
 		}
 
-		// Phase 1: basic update
-		Check(cli.Run("nix flake update --accept-flake-config"))
-
-		// Phase 2: retrieve the nixpkgs hash from the dotfiles flake
 		if !files.Exists(dotfilesFlake) {
 			return fmt.Errorf("%s not found", dotfilesFlake)
 		}
@@ -40,13 +36,23 @@ var update = &cobra.Command{
 		// oterwise check if the nixpkgs hash in the current flake matches the dotfiles'
 		same := Must(files.SameFile(cwd, dotfilesDir))
 
+		// Phase 1: update the nixpkgs pin
 		if same {
 			rev := nix.FetchLatestRev()
-			return nix.UpdateNixpkgsPin(dotfilesFlake, rev)
+			if err := nix.UpdateNixpkgsPin(dotfilesFlake, rev); err != nil {
+				return err
+			}
+		} else {
+			reference := nix.ExtractNixpkgsPin(dotfilesFlake)
+			if err := nix.UpdateNixpkgsPin("flake.nix", reference); err != nil {
+				return err
+			}
 		}
 
-		reference := nix.ExtractNixpkgsPin(dotfilesFlake)
-		return nix.UpdateNixpkgsPin("flake.nix", reference)
+		// Phase 2: update the remaining flake inputs
+		Check(cli.Run("nix flake update --accept-flake-config"))
+
+		return nil
 	},
 }
 
