@@ -11,7 +11,7 @@
 
       packages.gab_unwrapped = pkgs.buildGoModule {
         pname = "gab_unwrapped";
-        version = "2.2.0";
+        version = "2.3.0";
         src = ./.;
 
         vendorHash = null;
@@ -53,12 +53,6 @@
           description = "Path to the dotfiles directory";
         };
 
-        options.gab.nixpkgsFlake = lib.mkOption {
-          type = lib.types.str;
-          default = "github:nixos/nixpkgs/nixpkgs-unstable";
-          description = "Flake ref for the nixpkgs source tracked by 'gab update'";
-        };
-
         config =
           let
             gab = pkgs.symlinkJoin {
@@ -67,8 +61,7 @@
               nativeBuildInputs = [ pkgs.makeWrapper ];
               postBuild = ''
                 wrapProgram $out/bin/gab \
-                  --set DOTFILES_DIR "${config.gab.dotfilesDir}" \
-                  --set NIXPKGS_FLAKE "${config.gab.nixpkgsFlake}"
+                  --set DOTFILES_DIR "${config.gab.dotfilesDir}"
               '';
             };
           in

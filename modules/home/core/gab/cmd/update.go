@@ -31,22 +31,22 @@ var update = &cobra.Command{
 		}
 
 		cwd := Must(os.Getwd())
-
-		// if the cwd is the dotfiles' one then we should check for an update
-		// oterwise check if the nixpkgs hash in the current flake matches the dotfiles'
 		same := Must(files.SameFile(cwd, dotfilesDir))
 
-		// Phase 1: update the nixpkgs pin
+		target := "flake.nix"
+		branch := nix.UnstableNixpkgs
 		if same {
-			rev := nix.FetchLatestRev()
-			if err := nix.UpdateNixpkgsPin(dotfilesFlake, rev); err != nil {
-				return err
-			}
-		} else {
-			reference := nix.ExtractNixpkgsPin(dotfilesFlake)
-			if err := nix.UpdateNixpkgsPin("flake.nix", reference); err != nil {
-				return err
-			}
+			target = dotfilesFlake
+			branch = nix.UnstableNixos
+		}
+
+		flake := nix.Flake{Path: target}
+		url := Must(flake.NixpkgsURL())
+		ref := Must(nix.ParseNixpkgsRef(url))
+
+		rev := ref.LatestRev(branch)
+		if err := flake.UpdateNixpkgsURL(url, ref.Pin(rev)); err != nil {
+			return err
 		}
 
 		// Phase 2: update the remaining flake inputs
