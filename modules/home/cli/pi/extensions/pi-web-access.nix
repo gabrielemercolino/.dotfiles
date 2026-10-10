@@ -8,24 +8,40 @@
       in
       {
         config = lib.mkIf cfg.enable {
+          programs.pi-coding-agent = {
+            extraPackages = [ pkgs.nodejs ];
+            settings = {
+              packages = [ "npm:pi-web-access" ];
+            };
+          };
+
           sops.secrets."searxng/key" = { };
 
-          xdg.configFile."searxng/settings.yml".text = ''
-            use_default_settings:
-              engines:
-                keep_only:
-                  - duckduckgo
-                  - wikipedia
-                  - github
-                  - stackoverflow
-            server:
-              bind_address: "127.0.0.1"
-              port: 18080
-            search:
-              formats:
-                - html
-                - json
-          '';
+          xdg.configFile = {
+            "pi/agent/web-search.json".text = builtins.toJSON {
+              provider = "searxng";
+              webSearch.allowedProviders = [ "searxng" ];
+              searxngBaseUrl = "http://127.0.0.1:18080";
+              ssrf.allowRanges = [ "127.0.0.1/32" ];
+            };
+
+            "searxng/settings.yml".text = ''
+              use_default_settings:
+                engines:
+                  keep_only:
+                    - duckduckgo
+                    - wikipedia
+                    - github
+                    - stackoverflow
+              server:
+                bind_address: "127.0.0.1"
+                port: 18080
+              search:
+                formats:
+                  - html
+                  - json
+            '';
+          };
 
           systemd.user.services.searx = {
             Unit = {
