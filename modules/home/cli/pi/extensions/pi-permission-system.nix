@@ -9,6 +9,7 @@
       {
         config = lib.mkIf cfg.enable {
           programs.pi-coding-agent = {
+            extraPackages = [ pkgs.nodejs ];
             settings = {
               theme = "cc-dark";
               packages = [ "npm:@gotgenes/pi-permission-system" ];
