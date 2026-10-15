@@ -152,7 +152,10 @@ in
 
           cli = {
             yazi.enable = true;
-            pi.enable = true;
+            pi = {
+              enable = true;
+              rea.native.enable = true;
+            };
           };
 
           music = {
