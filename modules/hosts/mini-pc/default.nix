@@ -81,6 +81,11 @@ in
             enable = true;
             autoStart = true;
             capSysAdmin = true;
+            settings = {
+              capture = "wlr"; # avoids the XDG portal picker
+              output_name = "DP-1";
+              locale = "it";
+            };
           };
         };
       };
