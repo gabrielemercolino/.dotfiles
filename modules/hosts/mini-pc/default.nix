@@ -36,7 +36,7 @@ in
         ];
 
         # has specific optimisations for this pc
-        boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest-lto-x86_64-v3;
+        # boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest-lto-x86_64-v3;
         hardware.graphics.extraPackages = [ pkgs.libva ];
         nixpkgs.config.rocmSupport = true;
 

@@ -35,12 +35,12 @@ in
 
         # ZFS pool config
         boot.supportedFilesystems.zfs = true;
-        boot.zfs.package = config.boot.kernelPackages.zfs_cachyos;
+        # boot.zfs.package = config.boot.kernelPackages.zfs_cachyos; # falls back to default zfs
         boot.zfs.extraPools = [ "tank" ];
         networking.hostId = "23b06696";
 
         # has specific optimisations for this pc
-        boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest-lto-x86_64-v3;
+        # boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest-lto-x86_64-v3;
         hardware.graphics.extraPackages = [ pkgs.libva ];
 
         # use zsh

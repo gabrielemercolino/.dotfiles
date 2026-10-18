@@ -39,9 +39,10 @@ in
 
         config = {
           # cachyos kernel stuff
-          nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.pinned ];
+          # nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.pinned ];
 
-          boot.kernelPackages = mkDefault pkgs.cachyosKernels.linuxPackages-cachyos-latest-lto;
+          # boot.kernelPackages = mkDefault pkgs.cachyosKernels.linuxPackages-cachyos-latest-lto;
+          boot.kernelPackages = mkDefault pkgs.linuxPackages_latest;
 
           services.scx = mkIf cfg.scx.enable {
             enable = true;

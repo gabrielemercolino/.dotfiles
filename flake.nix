@@ -74,12 +74,12 @@
   nixConfig = {
     extra-substituters = [
       "https://playit-nixos-module.cachix.org"
-      "https://attic.xuyh0120.win/lantian"
+      # "https://attic.xuyh0120.win/lantian"
       "https://hyprland.cachix.org"
     ];
     extra-trusted-public-keys = [
       "playit-nixos-module.cachix.org-1:22hBXWXBbd/7o1cOnh+p0hpFUVk9lPdRLX3p5YSfRz4="
-      "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
+      # "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
       "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
     ];
   };
