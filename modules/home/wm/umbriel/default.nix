@@ -50,7 +50,12 @@
           |> lib.concatStringsSep " && ";
       in
       {
-        imports = [ inputs.umbriel.homeModules.default ];
+        imports = [
+          inputs.umbriel.homeModules.default
+          self.modules.homeManager.rofi
+          self.modules.homeManager.hyprlock
+          self.modules.homeManager.hypridle
+        ];
 
         options.gab.wm.umbriel = {
           enable = lib.mkEnableOption "umbriel";
@@ -62,6 +67,14 @@
         };
 
         config = lib.mkIf cfg.enable {
+          gab.apps.rofi.enable = true;
+          gab.apps.hyprlock.enable = true;
+          gab.services.hypridle.enable = true;
+
+          home.packages = with pkgs; [
+            wl-clipboard
+          ];
+
           programs.ghostty.enable = true;
 
           programs.umbriel = {
@@ -72,9 +85,18 @@
                 xwayland = true;
               };
 
+              environment = {
+                NIXOS_OZONE_WL = "1";
+              };
+
               input.keyboard = {
                 layout = localization.keyboard.layout;
+                variant = localization.keyboard.variant;
                 numlock_toggle = true;
+              };
+
+              input.touchpad = {
+                natural_scroll = false;
               };
 
               input.focus.follows_mouse = true;
@@ -84,6 +106,40 @@
                 gap = 8;
                 scrolling.default_extent_fraction = 0.5; # extent for windows that aren't alone
                 tabs.default_display = "tabbed"; # closest to hyprland group.auto_group
+              };
+
+              animation = {
+                enabled = true;
+
+                beziers = {
+                  easeOutCirc = [ 0.0 0.55 0.45 1.0 ];
+                  easeInOutCubic = [ 0.65 0.0 0.35 1.0 ];
+                };
+
+                windows_in = {
+                  curve = "easeOutCirc";
+                  style = "popin";
+                  scale = 0.6;
+                };
+
+                windows_out = {
+                  curve = "easeOutCirc";
+                  style = "popin";
+                  scale = 0.6;
+                };
+
+                windows_move = {
+                  curve = "easeInOutCubic";
+                };
+
+                windows_resize = {
+                  curve = "easeInOutCubic";
+                };
+
+                workspaces = {
+                  curve = "easeOutCirc";
+                  style = "slide";
+                };
               };
 
               # first (only) tiled window is full width; later windows are 0.5
@@ -113,7 +169,12 @@
 
               output =
                 cfg.monitors
-                |> builtins.map (m: lib.nameValuePair m.output (builtins.removeAttrs m [ "output" ]))
+                |> builtins.map (
+                  m:
+                  lib.nameValuePair m.output (
+                    (builtins.removeAttrs m [ "output" ]) // { min_workspaces = 3; }
+                  )
+                )
                 |> builtins.listToAttrs;
 
               events = {

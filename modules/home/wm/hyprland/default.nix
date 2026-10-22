@@ -38,7 +38,12 @@
         cfg = config.gab.wm.hyprland;
       in
       {
-        imports = [ inputs.hyprnix.homeModules.default ];
+        imports = [
+          inputs.hyprnix.homeModules.default
+          self.modules.homeManager.rofi
+          self.modules.homeManager.hyprlock
+          self.modules.homeManager.hypridle
+        ];
 
         options.gab.wm.hyprland = {
           enable = lib.mkEnableOption "hyprland";
@@ -49,50 +54,19 @@
         };
 
         config = lib.mkIf cfg.enable {
+          gab.apps.rofi.enable = true;
+          gab.apps.hyprlock.enable = true;
+          gab.services.hypridle.enable = true;
+
           home.packages = with pkgs; [
             wev
             wlr-randr
             wl-clipboard
           ];
 
-          services.hypridle = {
-            enable = true;
-            settings = {
-              general = {
-                lock_cmd = "pidof hyprlock || hyprlock";
-                before_sleep_cmd = "loginctl lock-session";
-                after_sleep_cmd = ''hyprctl dispatch 'hl.dsp.dpms({ action = "enable" })' '';
-              };
-
-              listener = [
-                {
-                  timeout = 5 * 60;
-                  on-timeout = "loginctl lock-session";
-                }
-                {
-                  timeout = 10 * 60;
-                  on-timeout = ''hyprctl dispatch 'hl.dsp.dpms({ action = "disable" })' '';
-                  on-resume = ''hyprctl dispatch 'hl.dsp.dpms({ action = "enable" })' '';
-                }
-                {
-                  timeout = 30 * 60;
-                  on-timeout = "systemctl suspend";
-                }
-              ];
-            };
-          };
-
           hyprnix = {
             enable = true;
             systemd.enable = true;
-
-            extraConfig =
-              # lua
-              ''
-                hl.on("hyprland.start", function()
-                  hl.exec_cmd("${lib.getExe pkgs.hypridle}")
-                end)
-              '';
 
             settings = {
               xwayland.enabled = true;
