@@ -185,6 +185,21 @@ in
           };
 
           wm = {
+            umbriel = {
+              enable = true;
+              monitors = [
+                {
+                  output = "eDP-1";
+                  mode = "1920x1080@60";
+                  position = [
+                    0
+                    0
+                  ];
+                  scale = 1.0;
+                }
+              ];
+            };
+
             hyprland = {
               enable = true;
               monitors = [
