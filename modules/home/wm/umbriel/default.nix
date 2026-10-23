@@ -140,6 +140,12 @@
                   curve = "easeOutCirc";
                   style = "slide";
                 };
+
+                # Instant focus-border switch; the default spring reads as a flash
+                # when toggling between windows in a tab group.
+                border = {
+                  enabled = false;
+                };
               };
 
               # first (only) tiled window is full width; later windows are 0.5
