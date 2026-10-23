@@ -44,7 +44,16 @@ var update = &cobra.Command{
 		url := Must(flake.NixpkgsURL())
 		ref := Must(nix.ParseNixpkgsRef(url))
 
-		rev := ref.LatestRev(branch)
+		var rev string
+		if same {
+			rev = ref.LatestRev(branch)
+		} else {
+			rev = nix.Flake{Path: dotfilesFlake}.NixpkgsPin()
+			if rev == "" {
+				return fmt.Errorf("could not detect nixpkgs pin in %s", dotfilesFlake)
+			}
+		}
+
 		if err := flake.UpdateNixpkgsURL(url, ref.Pin(rev)); err != nil {
 			return err
 		}

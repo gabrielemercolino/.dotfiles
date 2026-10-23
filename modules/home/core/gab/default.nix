@@ -11,7 +11,7 @@
 
       packages.gab_unwrapped = pkgs.buildGoModule {
         pname = "gab_unwrapped";
-        version = "2.3.0";
+        version = "2.3.1";
         src = ./.;
 
         vendorHash = null;
