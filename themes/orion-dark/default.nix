@@ -101,7 +101,7 @@ in
       home = self.modules.homeManager;
     in
     {
-      imports = with home; [ hyprland ];
+      imports = with home; [ hyprland umbriel ];
 
       config = {
         # for swaylock
@@ -168,12 +168,32 @@ in
             };
           };
 
-          hyprlock = {
-            settings = {
-              "$text" = "rgb(${palette.base05})";
-              "$text_alpha" = "rgba(${palette.base05}55)";
-              "$font" = wfFont;
+          umbriel.settings.colors = {
+            background = palette.base00;
+            text_primary = palette.base05;
+            text_muted = palette.base04;
+            accent_primary = palette.base0E;
+            accent_secondary = palette.base0A;
+            warning = palette.base09;
+            error = palette.base08;
+
+            border = {
+              focused = palette.base0A;
+              unfocused = palette.base02;
             };
+
+            tab_bar = {
+              background = palette.base01;
+              text = palette.base04;
+              active = palette.base01;
+              active_text = palette.base08;
+              active_unfocused = palette.base01;
+              active_unfocused_text = palette.base04;
+            };
+          };
+
+          hyprlock = {
+            settings."$font" = wfFont;
           };
 
           rofi.theme =

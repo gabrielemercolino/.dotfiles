@@ -75,7 +75,7 @@ in
       home = self.modules.homeManager;
     in
     {
-      imports = with home; [ hyprland ];
+      imports = with home; [ hyprland umbriel ];
 
       config = {
         programs = {
