@@ -8,15 +8,30 @@
       let
         cfg = config.gab.cli.pi;
         agentDir = "${config.xdg.configHome}/pi/agent";
+        realPi = pkgs.pi-coding-agent;
+
+        piWithEnv = pkgs.writeShellScriptBin "pi" (
+          cfg.envFiles
+          |> builtins.map (f: "[ -r ${lib.escapeShellArg f} ] && . ${lib.escapeShellArg f}")
+          |> lib.concatStringsSep "\n"
+          |> (lines: lines + "\nexec ${lib.getExe realPi} \"$@\"\n")
+        );
       in
       {
         options.gab.cli.pi = {
           enable = lib.mkEnableOption "pi coding agent";
+
+          envFiles = lib.mkOption {
+            type = lib.types.listOf lib.types.str;
+            default = [ ];
+            description = "Files sourced when pi launches. Meant to be used with sops templates            ";
+          };
         };
 
         config = lib.mkIf cfg.enable {
           programs.pi-coding-agent = {
             enable = true;
+            package = piWithEnv;
             configDir = agentDir;
             settings = {
               defaultProvider = "deepseek";
