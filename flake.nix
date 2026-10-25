@@ -6,7 +6,7 @@
     flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 
   inputs = {
-    nixpkgs.url = "nixpkgs/e7439b6b14ad3cc35d05608ebca9bce01a25f5f8";
+    nixpkgs.url = "nixpkgs/3ec636362e1816bc2f0888fa0fa2c69f1bc9e504";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -57,7 +57,7 @@
     };
 
     ags-bar = {
-      url = "github:gabrielemercolino/ags-bar/v2";
+      url = "github:gabrielemercolino/ags-bar";
       # url = "path:/home/gabriele/dev/others/ags-bar";
       inputs.nixpkgs.follows = "nixpkgs";
     };
