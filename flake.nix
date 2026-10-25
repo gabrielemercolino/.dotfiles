@@ -76,13 +76,13 @@
   nixConfig = {
     extra-substituters = [
       "https://playit-nixos-module.cachix.org"
-      # "https://attic.xuyh0120.win/lantian"
+      "https://cache.lantian.pub/lantian"
       "https://hyprland.cachix.org"
       "https://umbriel.cachix.org"
     ];
     extra-trusted-public-keys = [
       "playit-nixos-module.cachix.org-1:22hBXWXBbd/7o1cOnh+p0hpFUVk9lPdRLX3p5YSfRz4="
-      # "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
+      "lantian:WVGO7vsRMSEN+h7Lp7kv6SAmrkEXgUGbbXm7jMDjBuQ="
       "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
       "umbriel.cachix.org-1:JfNq/2yg2S6D6z4Z2dVSZrZlDPQTKtexB6GAVLD98nw="
     ];
