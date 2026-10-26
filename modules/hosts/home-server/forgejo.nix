@@ -22,6 +22,7 @@
                 DOMAIN = "forgejo.ciruzzo.win";
                 ROOT_URL = "https://forgejo.ciruzzo.win/";
                 HTTP_ADDR = "127.0.0.1";
+                SSH_DOMAIN = "git.ciruzzo.win";
               };
             };
           };
