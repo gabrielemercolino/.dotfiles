@@ -6,7 +6,7 @@
     flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 
   inputs = {
-    nixpkgs.url = "nixpkgs/f9a75f41be3a74eab55d3a7679d34ad6cc0da977";
+    nixpkgs.url = "nixpkgs/f4a03c008967841f2a0b3cb7c436fc6fc31671f6";
 
     home-manager = {
       url = "github:nix-community/home-manager";
