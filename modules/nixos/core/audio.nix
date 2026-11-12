@@ -12,10 +12,7 @@
         ...
       }:
       {
-        users.users.${user.name}.extraGroups = lib.mkIf (audio != null) [
-          "audio"
-          "jackaudio"
-        ];
+        users.users.${user.name}.extraGroups = lib.mkIf (audio != null) [ "audio" ];
 
         security.rtkit.enable = lib.mkDefault (audio == "pipewire"); # rtkit is optional but recommended
 
@@ -25,7 +22,6 @@
             alsa.enable = true;
             alsa.support32Bit = true;
             pulse.enable = true;
-            jack.enable = true;
             wireplumber.enable = true;
           };
 

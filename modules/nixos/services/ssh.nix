@@ -15,9 +15,22 @@
         config = lib.mkIf config.gab.services.ssh.enable {
           home-manager.users.${user.name}.programs.ssh = {
             enable = true;
-            matchBlocks."git.ciruzzo.win" = {
-              user = "forgejo";
-              proxyCommand = "${lib.getExe pkgs.cloudflared} access ssh --hostname %h";
+            enableDefaultConfig = false;
+            settings."*" = {
+              ForwardAgent = false;
+              AddKeysToAgent = "no";
+              Compression = false;
+              ServerAliveInterval = 0;
+              ServerAliveCountMax = 3;
+              HashKnownHosts = false;
+              UserKnownHostsFile = "~/.ssh/known_hosts";
+              ControlMaster = "no";
+              ControlPath = "~/.ssh/master-%r@%n:%p";
+              ControlPersist = "no";
+            };
+            settings."git.ciruzzo.win" = {
+              User = "forgejo";
+              ProxyCommand = "${lib.getExe pkgs.cloudflared} access ssh --hostname %h";
             };
           };
         };
