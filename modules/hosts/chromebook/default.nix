@@ -138,7 +138,6 @@ in
         gab = {
           editors = {
             helix.enable = true;
-            obsidian.enable = true;
           };
 
           browsers = {
@@ -147,7 +146,6 @@ in
 
           socials = {
             telegram.enable = true;
-            discord.enable = true;
           };
 
           cli = {
