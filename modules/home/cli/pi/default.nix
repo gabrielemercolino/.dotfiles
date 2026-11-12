@@ -42,14 +42,7 @@
             appendSystem = ./APPEND_SYSTEM.md;
           };
 
-          sops.secrets."deepseek/key" = { };
-
-          xdg.configFile."pi/agent/auth.json".text = builtins.toJSON {
-            deepseek = {
-              type = "api_key";
-              key = "!cat ${config.sops.secrets."deepseek/key".path}";
-            };
-          };
+          sops.secrets."deepseek/key" = { };      
         };
       };
   };
