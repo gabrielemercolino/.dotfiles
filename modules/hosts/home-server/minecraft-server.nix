@@ -23,7 +23,7 @@
 
         services = {
           minecraft-servers = {
-            enable = true;
+            enable = false;
             eula = true;
             openFirewall = true;
 
@@ -84,7 +84,7 @@
           };
 
           playit = {
-            enable = true;
+            enable = false;
             secretPath = config.sops.secrets."minecraft/playit/secret".path;
           };
         };
