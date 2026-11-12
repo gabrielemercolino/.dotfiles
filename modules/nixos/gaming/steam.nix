@@ -19,7 +19,7 @@
           programs.steam = {
             enable = true;
             extraCompatPackages = [ pkgs.proton-ge-bin ];
-            extest.enable = true;
+            extest.enable = false; # ain't compiling allat
           };
         };
       };
