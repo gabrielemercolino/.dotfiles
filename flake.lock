@@ -372,11 +372,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1794066761,
-        "narHash": "sha256-O/h6+kEcTTrA+aPrq13o+pbBDNiyDJMT3FWcm9xWvdU=",
+        "lastModified": 1794758302,
+        "narHash": "sha256-mp677aDWQ1qb62NkCtXOR6BFQ7p2QlG362icsNtJtto=",
         "owner": "Nyramu",
         "repo": "hyprnix",
-        "rev": "d6dfe05dfc0086623795228627677416596a46d3",
+        "rev": "40b2396bd72c5b57bfdc220818a173bdeed2158e",
         "type": "github"
       },
       "original": {

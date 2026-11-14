@@ -67,7 +67,8 @@
 
           hyprnix = {
             enable = true;
-            systemd.enable = true;
+            uwsm.enable = true;
+            systemd.enable = false;
 
             settings = {
               xwayland.enabled = true;

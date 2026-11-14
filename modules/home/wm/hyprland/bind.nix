@@ -9,13 +9,16 @@
       MOUSE_L = "mouse:272";
       MOUSE_R = "mouse:273";
       terminal = "${lib.getExe pkgs.ghostty}";
+      uwsmLaunch = "${lib.getExe pkgs.uwsm} app --";
       # collection of keybinds grouped by functionality
       groups = {
         launchApps = {
-          "SUPER + RETURN".dispatcher.exec_cmd = terminal;
-          "SUPER + T".dispatcher.exec_cmd = lib.getExe pkgs.telegram-desktop;
-          "SUPER + SHIFT + H".dispatcher.exec_cmd = "${terminal} -e ${lib.getExe pkgs.btop-rocm}";
-          "SUPER + SPACE".dispatcher.exec_cmd = "${lib.getExe pkgs.rofi} -show drun";
+          "SUPER + RETURN".dispatcher.exec_cmd = "${uwsmLaunch} ${terminal}";
+          "SUPER + T".dispatcher.exec_cmd = "${uwsmLaunch} ${lib.getExe pkgs.telegram-desktop}";
+          "SUPER + SHIFT + H".dispatcher.exec_cmd =
+            "${uwsmLaunch} ${terminal} -e ${lib.getExe pkgs.btop-rocm}";
+          "SUPER + SPACE".dispatcher.exec_cmd =
+            "${lib.getExe pkgs.rofi} -show drun -run-command '${uwsmLaunch} {cmd}'";
         };
         windowToggles = {
           "SUPER + Q".dispatcher.window.close = { };
@@ -109,7 +112,7 @@
         groups.groupControl
         groups.moveFocus
         {
-          "SUPER + SHIFT + M".dispatcher.exit = { };
+          "SUPER + SHIFT + M".dispatcher.exec_cmd = "${lib.getExe pkgs.uwsm} stop";
         }
         {
           "SUPER + CONTROL + S".dispatcher.exec_cmd = lib.getExe screenShot;
