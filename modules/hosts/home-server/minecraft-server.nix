@@ -4,90 +4,130 @@
     nixos =
       {
         config,
+        host,
+        lib,
         pkgs,
+        self,
         user,
         ...
       }:
+      let
+        rconAddress = config.services.pumpkin.settings.networking.rcon.address;
+        rconHost = lib.head (lib.splitString ":" rconAddress);
+        rconPort = lib.last (lib.splitString ":" rconAddress);
+
+        # pumpkin only ever reads <dataDir>/data/*.json; services.pumpkin's own
+        # whitelist.entries option writes <dataDir>/whitelist.json, which nothing
+        # reads, so the whitelist would stay empty and everyone gets kicked.
+        whitelist = [
+          {
+            name = "Sefiul";
+            uuid = "c525f516-0bb1-4722-8a86-fc0f7b529dae";
+          }
+          {
+            name = "Nyramu";
+            uuid = "af3185c2-9e95-4af8-9dff-449cd683edfb";
+          }
+          {
+            name = "supergman00";
+            uuid = "bcb2a8e2-33e0-4cfc-b2c1-2491120badf8";
+          }
+        ];
+        whitelistFile = (pkgs.formats.json { }).generate "whitelist.json" whitelist;
+      in
       {
         imports = [
           inputs.playit-nixos-module.nixosModules.default
-          inputs.nix-minecraft.nixosModules.minecraft-servers
         ];
-        nixpkgs.overlays = [ inputs.nix-minecraft.overlay ];
-
-        users.users.${user.name}.extraGroups = [ "minecraft" ];
 
         sops.secrets = {
           "minecraft/playit/secret".path = "/var/lib/minecraft/playit.secret";
+          # left on the default path (/run/secrets/...) so the rcon cli can read it
+          "minecraft/rcon/password" = {
+            owner = user.name;
+            mode = "0400";
+          };
         };
 
         services = {
-          minecraft-servers = {
-            enable = false;
-            eula = true;
+          pumpkin = {
+            enable = true;
             openFirewall = true;
+            package = self.packages.${host.system}.pumpkin;
 
-            servers.minchiaraft = {
-              # to enter: `tmux -S /run/minecraft/minchiaraft.sock attach`
-              enable = true;
-              package = pkgs.fabricServers.fabric-26_3.override {
-                jre_headless = pkgs.jdk25_headless;
-              };
-              jvmOpts = "-Xms4092M -Xmx4092M -XX:+UseG1GC -XX:+UseCompactObjectHeaders";
+            settings = {
+              seed = "4";
+              default_gamemode = "Creative";
+              white_list = true;
+              enforce_whitelist = true;
 
-              serverProperties = {
-                server-port = 25565;
-                gamemode = "creative";
-                simulation-distance = 10;
-                level-seed = "4";
-                white-list = true;
-                motd = "bismillah wallahi";
-              };
+              networking = {
+                java = {
+                  address = "0.0.0.0:25565";
+                  motd = "bismillah wallahi";
+                  view_distance = 64; # max
+                  simulation_distance = 10;
+                  max_players = 20;
+                };
 
-              whitelist = {
-                Sefiul = "c525f516-0bb1-4722-8a86-fc0f7b529dae";
-                Nyramu = "af3185c2-9e95-4af8-9dff-449cd683edfb";
-                supergman00 = "bcb2a8e2-33e0-4cfc-b2c1-2491120badf8";
-              };
-
-              symlinks = {
-                mods = pkgs.linkFarmFromDrvs "mods" (
-                  builtins.attrValues {
-                    Lithium = pkgs.fetchurl {
-                      url = "https://cdn.modrinth.com/data/gvQqBUqZ/versions/WXHRsMRl/lithium-fabric-0.26.1%2Bmc26.3.jar?mr_download_reason=standalone&mr_game_version=26.3&mr_loader=fabric";
-                      sha256 = "sha256-NOXhl8QNo3L2dQDtSWuyGT2RR8EtUPmI4EpRMgXRgBU=";
-                    };
-                    FerriteCore = pkgs.fetchurl {
-                      url = "https://cdn.modrinth.com/data/uXXizFIs/versions/d5ddUdiB/ferritecore-9.0.0-fabric.jar?mr_download_reason=standalone&mr_game_version=26.3&mr_loader=fabric";
-                      sha256 = "sha256-ITlmxy7ZZ6zHOSvrKKhm+6MB/1a5l2wueAHC233mvyI=";
-                    };
-                    ModernFix = pkgs.fetchurl {
-                      url = "https://cdn.modrinth.com/data/TjSm1wrD/versions/iKbywnU7/modernfix-5.27.20-build.1.jar?mr_download_reason=standalone&mr_game_version=26.3&mr_loader=fabric";
-                      sha256 = "sha256-wY7N/M9UcBlcPqDrM1BgeEJMBg7XSbXq2nNibEDOEE0=";
-                    };
-                    FabricAPI = pkgs.fetchurl {
-                      url = "https://cdn.modrinth.com/data/P7dR8mSH/versions/bNnaTiuM/fabric-api-0.161.0%2B26.3.jar?mr_download_reason=standalone&mr_game_version=26.3&mr_loader=fabric";
-                      sha256 = "sha256-hvFheKPOzIh6haTP6aedkvpzQdjzm1lRpNatgAq2V6Y=";
-                    };
-                    C2ME = pkgs.fetchurl {
-                      url = "https://cdn.modrinth.com/data/VSNURh3q/versions/cfKRtp0m/c2me-fabric-mc26.3-0.4.2-alpha.0.87.jar?mr_download_reason=standalone&mr_game_version=26.3&mr_loader=fabric";
-                      sha256 = "sha256-gKTfTqHYlP5U4FhMJarlxFElsH8XIobU7DX32JKoyD4=";
-                    };
-                    ScalableLux = pkgs.fetchurl {
-                      url = "https://cdn.modrinth.com/data/Ps1zyz6x/versions/g4eqNSKd/ScalableLux-fabric-mc26.3-0.3.0-alpha.0.6-all.jar?mr_download_reason=standalone&mr_game_version=26.3&mr_loader=fabric";
-                      sha256 = "sha256-6RN6BP3vyk/R9HQKs9xhlLXqfBVFbGaRN2uRAFOFOik=";
-                    };
-                  }
-                );
+                rcon = {
+                  enabled = true;
+                  address = "127.0.0.1:25575";
+                  passwordFile = config.sops.secrets."minecraft/rcon/password".path;
+                };
               };
             };
           };
 
           playit = {
-            enable = false;
+            enable = true;
             secretPath = config.sops.secrets."minecraft/playit/secret".path;
           };
         };
+
+        systemd.services.pumpkin.preStart = lib.mkAfter ''
+          install -Dm600 ${whitelistFile} data/whitelist.json
+        '';
+
+        # custom cli for easy command access
+        environment.systemPackages = [
+          (pkgs.writeShellApplication {
+            name = "minchiaraft";
+            runtimeInputs = [ pkgs.mcrcon ];
+            text = ''
+              secret=${config.sops.secrets."minecraft/rcon/password".path}
+
+              if [ ! -r "$secret" ]; then
+                echo "minchiaraft: cannot read $secret" >&2
+                exit 1
+              fi
+
+              password=$(< "$secret")
+
+              usage() {
+                echo "usage: minchiaraft                # interactive console" >&2
+                echo "       minchiaraft send \"<command>\"" >&2
+              }
+
+              if [ "$#" -eq 0 ]; then
+                exec mcrcon -H ${rconHost} -P ${rconPort} -p "$password"
+              fi
+
+              if [ "$1" != send ]; then
+                usage
+                exit 2
+              fi
+              shift
+
+              if [ "$#" -eq 0 ]; then
+                usage
+                exit 2
+              fi
+
+              exec mcrcon -H ${rconHost} -P ${rconPort} -p "$password" -c "$*"
+            '';
+          })
+        ];
       };
   };
 }
