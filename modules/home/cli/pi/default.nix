@@ -38,6 +38,7 @@
               defaultModel = "deepseek-v4-pro";
               defaultThinkingLevel = "high";
               markdown.mermaid = "final";
+              skills = [ ./skills ];
             };
             appendSystem = ./APPEND_SYSTEM.md;
           };
