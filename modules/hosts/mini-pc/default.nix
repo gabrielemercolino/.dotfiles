@@ -75,6 +75,19 @@ in
         };
 
         services = {
+          pipewire.wireplumber = {
+            extraScripts."mini-pc-headset.lua" = builtins.readFile ./headset-route.lua;
+            extraConfig."90-mini-pc-headset" = {
+              "wireplumber.components" = [
+                {
+                  name = "mini-pc-headset.lua";
+                  type = "script/lua";
+                  provides = "hooks.mini-pc-headset";
+                }
+              ];
+              "wireplumber.profiles".main."hooks.mini-pc-headset" = "required";
+            };
+          };
           xserver.excludePackages = [ pkgs.xterm ];
           tailscale.enable = true;
           sunshine = {
