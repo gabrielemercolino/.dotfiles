@@ -35,7 +35,7 @@
             configDir = agentDir;
             settings = {
               defaultProvider = "deepseek";
-              defaultModel = "deepseek-v4-pro";
+              defaultModel = "deepseek-flash";
               defaultThinkingLevel = "high";
               markdown.mermaid = "final";
               skills = [ ./skills ];
