@@ -43,7 +43,7 @@
             appendSystem = ./APPEND_SYSTEM.md;
           };
 
-          sops.secrets."deepseek/key" = { };      
+          sops.secrets."deepseek/key" = { };
         };
       };
   };
