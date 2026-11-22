@@ -1,0 +1,6 @@
+# One new row for the dsh-tui profile: a footer field that prices the session
+# in US dollars. The plugin reads the session event stream and writes only
+# through ctx.tuiStatus.setField; no host row is overridden here.
+- insert:
+    - id: cost-usd
+      name: 'dsh-cost-usd'

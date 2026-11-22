@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "会话花费（美元）",
+    "description": "在终端底栏显示本会话的美元花费，按 DeepSeek 官方美元价目、区分高峰与空闲时段估算。",
+    "detail": "docs/DETAIL.md"
+  }
+}

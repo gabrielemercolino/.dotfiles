@@ -1,0 +1,26 @@
+{
+  "name": "dsh-cost-usd",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Session cost in US dollars in the dsh-tui footer, priced with DeepSeek's official USD list.",
+  "type": "module",
+  "main": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "icon": "./icon.svg",
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "docs",
+    "icon.svg"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "Session cost in dollars",
+    "description": "Shows this session's spend in US dollars in the terminal footer, priced with DeepSeek's official USD list for peak and off-peak hours.",
+    "detail": "docs/DETAIL.md"
+  }
+}
