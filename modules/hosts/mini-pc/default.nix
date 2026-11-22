@@ -168,6 +168,7 @@ in
           cli = {
             yazi.enable = true;
             pi.enable = true;
+            dsh.enable = true;
           };
 
           music = {

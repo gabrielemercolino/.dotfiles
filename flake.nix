@@ -69,18 +69,24 @@
 
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
 
+    # Pinned without `follows`: builds are hash-locked against its own
+    # nixpkgs, which is also what its cachix cache has.
+    deepseek-harness.url = "github:moraxyc/deepseek-harness.nix";
+
     playit-nixos-module.url = "github:pedorich-n/playit-nixos-module";
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
   };
 
   nixConfig = {
     extra-substituters = [
+      "https://deepseek-harness-nix.cachix.org"
       "https://playit-nixos-module.cachix.org"
       "https://cache.lantian.pub/lantian"
       "https://hyprland.cachix.org"
       "https://umbriel.cachix.org"
     ];
     extra-trusted-public-keys = [
+      "deepseek-harness-nix.cachix.org-1:5NrkwLN9veNMhiINtU5ZeV4isXFhFsOwn6Ms7J1M+TA="
       "playit-nixos-module.cachix.org-1:22hBXWXBbd/7o1cOnh+p0hpFUVk9lPdRLX3p5YSfRz4="
       "lantian:WVGO7vsRMSEN+h7Lp7kv6SAmrkEXgUGbbXm7jMDjBuQ="
       "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
