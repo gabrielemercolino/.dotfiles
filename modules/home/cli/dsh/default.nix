@@ -134,6 +134,11 @@
             content = "DEEPSEEK_API_KEY=${config.sops.placeholder."deepseek/key"}\n";
           };
 
+          services.dsh = {
+            enable = true;
+            autoStart = true;
+          };
+
           home.activation.dshTuiSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
             run install -Dm600 ${tuiSettings} "$HOME/.dsh-tui/settings.json"
             run install -Dm644 ${tuiThemeChoice} "$HOME/.dsh-tui/theme.json"
