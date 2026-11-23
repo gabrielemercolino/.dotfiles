@@ -75,6 +75,8 @@
 
     playit-nixos-module.url = "github:pedorich-n/playit-nixos-module";
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
+
+    hermes-agent.url = "github:NousResearch/hermes-agent";
   };
 
   nixConfig = {
