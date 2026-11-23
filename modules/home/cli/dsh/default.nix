@@ -19,6 +19,7 @@
     dsh =
       {
         config,
+        lib,
         pkgs,
         host,
         ...
@@ -35,6 +36,8 @@
               toolBackground = "subtle";
               scrollGutter = "hidden";
               codeFrameStyle = "light";
+              # Default `normal` reserves one blank row above and below the UI.
+              pageMargin = "2x0";
               statusBar = {
                 tokens = true;
                 compact = true;
