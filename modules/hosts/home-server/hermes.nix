@@ -93,7 +93,8 @@
           };
         };
 
-        # ── Secrets (invariati) ──────────────────────────────────────────
+        systemd.services.hermes-agent.unitConfig.RequiresMountsFor = [ "/tank/hermes" ];
+
         sops = {
           secrets = {
             "deepseek/key" = { };
