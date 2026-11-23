@@ -25,6 +25,30 @@
       }:
       let
         cfg = config.gab.cli.dsh;
+
+        tuiSettings = pkgs.writeText "dsh-tui-settings.json" (
+          builtins.toJSON {
+            version = 1;
+            values = {
+              lang = "en";
+              thinkingFold = "full";
+              toolBackground = "subtle";
+              scrollGutter = "hidden";
+              codeFrameStyle = "light";
+              statusBar = {
+                tokens = true;
+                compact = true;
+                contextBar = false;
+                activity = false;
+                tps = false;
+                trajectory = false;
+                cost = false;
+              };
+            };
+          }
+        );
+
+        tuiThemeChoice = pkgs.writeText "dsh-tui-theme.json" (builtins.toJSON { theme = "cc-dark"; });
       in
       {
         imports = [ inputs.deepseek-harness.homeModules.default ];
@@ -110,7 +134,14 @@
             content = "DEEPSEEK_API_KEY=${config.sops.placeholder."deepseek/key"}\n";
           };
 
+          home.activation.dshTuiSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+            run install -Dm600 ${tuiSettings} "$HOME/.dsh-tui/settings.json"
+            run install -Dm644 ${tuiThemeChoice} "$HOME/.dsh-tui/theme.json"
+          '';
+
           home.file = {
+            ".dsh-tui/themes/cc-dark.json".source = ./themes/cc-dark.json;
+
             ".dsh/AGENTS.md".source = ../pi/APPEND_SYSTEM.md;
 
             ".dsh/skills/versioning-preferences".source = ../pi/skills/versioning-preferences;
