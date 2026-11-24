@@ -166,6 +166,7 @@ in
           };
 
           cli = {
+            hermes.enable = true;
             yazi.enable = true;
             pi.enable = true;
             dsh.enable = true;
