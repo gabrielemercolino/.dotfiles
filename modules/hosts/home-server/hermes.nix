@@ -5,6 +5,7 @@
       {
         config,
         pkgs,
+        host,
         ...
       }:
       {
@@ -13,8 +14,12 @@
         services.hermes-agent = {
           enable = true;
 
+          package = inputs.hermes-agent.packages.${host.system}.minimal;
+
           user = "hermes";
           group = "hermes";
+          addToSystemPackages = true;
+          container.hostUsers = [ "gabriele" ];
           stateDir = "/tank/hermes";
 
           settings = {
@@ -38,6 +43,13 @@
             dashboard = {
               public_url = "https://hermes.ciruzzo.win";
               basic_auth.username = "admin";
+            };
+
+            webapp = {
+              enabled = true;
+              host = "127.0.0.1";
+              port = 9119;
+              public_url = "https://hermes.ciruzzo.win";
             };
           };
 
@@ -71,12 +83,12 @@
             ];
           };
 
-          environment = {
-            HERMES_DASHBOARD = "1";
-            HERMES_DASHBOARD_HOST = "127.0.0.1";
-            HERMES_DASHBOARD_PORT = "9119";
-          };
-
+           environment = {
+             HERMES_DASHBOARD = "1";
+             HERMES_DASHBOARD_HOST = "127.0.0.1";
+             HERMES_DASHBOARD_PORT = "9119";
+           };
+ 
           environmentFiles = [ config.sops.templates."hermes.env".path ];
 
           container = {
@@ -84,8 +96,6 @@
             backend = "docker";
             image = "ubuntu:24.04";
             extraOptions = [
-              "--network=host"
-              "--security-opt=no-new-privileges"
               "--pids-limit=1024"
               "--memory=8g"
               "--cpus=4"
