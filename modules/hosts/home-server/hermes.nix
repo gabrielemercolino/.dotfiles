@@ -16,6 +16,16 @@
 
           package = inputs.hermes-agent.packages.${host.system}.minimal;
 
+          extraPlugins = [
+            (pkgs.fetchFromGitHub {
+              owner = "DietrichGebert";
+              repo = "ponytail";
+              name = "ponytail";
+              rev = "v5.3.3";
+              hash = "sha256-CY0EifTY0UVc6/FPGVJjEfYEf/8QLsINQmoYYKZYh98=";
+            })
+          ];
+
           user = "hermes";
           group = "hermes";
           addToSystemPackages = true;
