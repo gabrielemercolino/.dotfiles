@@ -36,6 +36,7 @@
             model = {
               provider = "deepseek";
               default = "deepseek-flash";
+              context_length = 200000;
             };
 
             agent = {
@@ -51,6 +52,11 @@
             };
 
             display.language = "it";
+
+            compression = {
+              enabled = true;
+              threshold = 0.90;
+            };
 
             dashboard = {
               public_url = "https://hermes.ciruzzo.win";
