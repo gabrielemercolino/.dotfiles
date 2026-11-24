@@ -112,8 +112,18 @@
                 enabled = true;
 
                 beziers = {
-                  easeOutCirc = [ 0.0 0.55 0.45 1.0 ];
-                  easeInOutCubic = [ 0.65 0.0 0.35 1.0 ];
+                  easeOutCirc = [
+                    0.0
+                    0.55
+                    0.45
+                    1.0
+                  ];
+                  easeInOutCubic = [
+                    0.65
+                    0.0
+                    0.35
+                    1.0
+                  ];
                 };
 
                 windows_in = {
@@ -176,10 +186,7 @@
               output =
                 cfg.monitors
                 |> builtins.map (
-                  m:
-                  lib.nameValuePair m.output (
-                    (builtins.removeAttrs m [ "output" ]) // { min_workspaces = 3; }
-                  )
+                  m: lib.nameValuePair m.output ((builtins.removeAttrs m [ "output" ]) // { min_workspaces = 3; })
                 )
                 |> builtins.listToAttrs;
 

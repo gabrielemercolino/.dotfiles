@@ -83,12 +83,12 @@
             ];
           };
 
-           environment = {
-             HERMES_DASHBOARD = "1";
-             HERMES_DASHBOARD_HOST = "127.0.0.1";
-             HERMES_DASHBOARD_PORT = "9119";
-           };
- 
+          environment = {
+            HERMES_DASHBOARD = "1";
+            HERMES_DASHBOARD_HOST = "127.0.0.1";
+            HERMES_DASHBOARD_PORT = "9119";
+          };
+
           environmentFiles = [ config.sops.templates."hermes.env".path ];
 
           container = {
