@@ -50,6 +50,8 @@
               ];
             };
 
+            display.language = "it";
+
             dashboard = {
               public_url = "https://hermes.ciruzzo.win";
               basic_auth.username = "admin";
