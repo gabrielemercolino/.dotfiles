@@ -33,6 +33,7 @@ in
           cli
           apps
           services
+          preservation
         ];
 
         # has specific optimisations for this pc
@@ -45,6 +46,17 @@ in
         programs.zsh.enable = true;
 
         gab = {
+          preservation = {
+            enable = true;
+
+            directories = [
+              "/var/lib/docker"
+              "/var/lib/tailscale"
+              "/var/lib/bluetooth"
+              "/var/lib/sddm"
+            ];
+          };
+
           kernel = {
             # scx.enable = true;
           };

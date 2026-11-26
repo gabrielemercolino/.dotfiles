@@ -77,6 +77,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # no inputs of its own: nothing to follow
+    preservation.url = "github:nix-community/preservation";
+
     nix-cachyos-kernel = {
       url = "github:xddxdd/nix-cachyos-kernel/release";
       inputs.flake-parts.follows = "flake-parts";

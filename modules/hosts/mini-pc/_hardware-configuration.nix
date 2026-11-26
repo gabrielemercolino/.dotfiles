@@ -49,12 +49,14 @@
   '';
 
   fileSystems = {
+    # ephemeral root: everything outside /nix, /persistent, /home and /swap
+    # lives in RAM and is gone at the next boot (see gab.preservation)
     "/" = {
-      device = "/dev/disk/by-label/NIXOS_ROOT";
-      fsType = "btrfs";
+      device = "tmpfs";
+      fsType = "tmpfs";
       options = [
-        "subvol=@"
-        "noatime"
+        "size=25%"
+        "mode=755"
       ];
     };
 
@@ -66,6 +68,18 @@
         "noatime"
         "compress=zstd:6"
       ];
+      neededForBoot = true;
+    };
+
+    "/persistent" = {
+      device = "/dev/disk/by-label/NIXOS_ROOT";
+      fsType = "btrfs";
+      options = [
+        "subvol=@persistent"
+        "noatime"
+        "compress=zstd:6"
+      ];
+      neededForBoot = true;
     };
 
     "/boot" = {
