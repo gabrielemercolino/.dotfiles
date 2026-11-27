@@ -27,22 +27,32 @@
 
     stylix = {
       url = "github:danth/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-parts.follows = "flake-parts";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-parts.follows = "flake-parts";
+      };
     };
 
     hyprnix = {
       url = "github:Nyramu/hyprnix";
       # url = "path:/home/gabriele/dev/nix/hyprnix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+        flake-parts.follows = "flake-parts";
+        import-tree.follows = "import-tree";
+        treefmt-nix.follows = "treefmt-nix";
+      };
     };
 
     umbriel.url = "github:noctalia-dev/umbriel/cachix";
 
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
     };
 
     firefox-addons = {
@@ -67,16 +77,29 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
+    nix-cachyos-kernel = {
+      url = "github:xddxdd/nix-cachyos-kernel/release";
+      inputs.flake-parts.follows = "flake-parts";
+    };
 
-    # Pinned without `follows`: builds are hash-locked against its own
-    # nixpkgs, which is also what its cachix cache has.
-    deepseek-harness.url = "github:moraxyc/deepseek-harness.nix";
+    deepseek-harness = {
+      url = "github:moraxyc/deepseek-harness.nix";
+      inputs.flake-parts.follows = "flake-parts";
+    };
 
-    playit-nixos-module.url = "github:pedorich-n/playit-nixos-module";
+    playit-nixos-module = {
+      url = "github:pedorich-n/playit-nixos-module";
+      inputs.flake-parts.follows = "flake-parts";
+    };
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
 
-    hermes-agent.url = "github:NousResearch/hermes-agent";
+    hermes-agent = {
+      url = "github:NousResearch/hermes-agent";
+      inputs = {
+        home-manager.follows = "home-manager";
+        flake-parts.follows = "flake-parts";
+      };
+    };
   };
 
   nixConfig = {
