@@ -45,6 +45,13 @@ in
         users.defaultUserShell = pkgs.zsh;
         programs.zsh.enable = true;
 
+        # /etc/shadow is on the tmpfs root and starts empty at every boot, so
+        # the password cannot live in mutable state. Read the hash from the
+        # persistent volume instead; mutableUsers=false makes activation
+        # rewrite the entry each time instead of keeping the stale one.
+        users.mutableUsers = false;
+        users.users.${user.name}.hashedPasswordFile = "/persistent/user-password";
+
         gab = {
           preservation = {
             enable = true;
