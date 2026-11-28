@@ -5,6 +5,7 @@
 
     sops =
       {
+        lib,
         pkgs,
         host,
         user,
@@ -18,7 +19,9 @@
         sops = {
           defaultSopsFile = self.outPath + "/secrets/${host.name}.yaml";
           defaultSopsFormat = "yaml";
-          age.keyFile = "/home/${user.name}/.config/sops/age/keys.txt";
+          # an ephemeral root cannot read a key from /home during activation;
+          # such hosts override this with a path on a neededForBoot volume
+          age.keyFile = lib.mkDefault "/home/${user.name}/.config/sops/age/keys.txt";
         };
       };
   };

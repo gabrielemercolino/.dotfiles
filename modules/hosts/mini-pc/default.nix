@@ -23,7 +23,7 @@ in
     theme = "roathe-dark";
 
     nixos =
-      { pkgs, user, ... }:
+      { pkgs, config, user, ... }:
       {
         imports = with nixos; [
           ./_hardware-configuration.nix
@@ -46,11 +46,15 @@ in
         programs.zsh.enable = true;
 
         # /etc/shadow is on the tmpfs root and starts empty at every boot, so
-        # the password cannot live in mutable state. Read the hash from the
-        # persistent volume instead; mutableUsers=false makes activation
-        # rewrite the entry each time instead of keeping the stale one.
+        # the password cannot live in mutable state. The hash comes from sops,
+        # which installs neededForUsers secrets in /run/secrets-for-users from
+        # the activation script, before users are created; mutableUsers=false
+        # makes activation rewrite the entry instead of keeping the stale one.
         users.mutableUsers = false;
-        users.users.${user.name}.hashedPasswordFile = "/persistent/user-password";
+        users.users.${user.name}.hashedPasswordFile = config.sops.secrets."user/password".path;
+        sops.secrets."user/password".neededForUsers = true;
+        # /home is not mounted yet when users are created, but /persistent is
+        sops.age.keyFile = "/persistent/sops/age/keys.txt";
 
         gab = {
           preservation = {
