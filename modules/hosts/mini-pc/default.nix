@@ -153,6 +153,11 @@ in
 
         home.packages = with self.packages.${host.system}; [ cisco-packet-tracer ];
 
+        # the age key sits on the persistent volume: system activation reads it
+        # before /home exists, and home-manager plus the sops CLI look here
+        sops.age.keyFile = "/persistent/sops/age/keys.txt";
+        home.sessionVariables.SOPS_AGE_KEY_FILE = "/persistent/sops/age/keys.txt";
+
         programs.git = {
           enable = true;
           settings.user = {
