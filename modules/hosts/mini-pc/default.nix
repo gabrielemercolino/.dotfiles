@@ -54,6 +54,7 @@ in
               "/var/lib/tailscale"
               "/var/lib/bluetooth"
               "/var/lib/sddm"
+              "/var/log/journal"
             ];
           };
 
@@ -102,6 +103,9 @@ in
           };
           xserver.excludePackages = [ pkgs.xterm ];
           tailscale.enable = true;
+          # journal lives on /persistent/var/log/journal; without a cap it grows
+          # to 10% of the filesystem (4G here)
+          journald.settings.Journal.SystemMaxUse = "1G";
           sunshine = {
             enable = true;
             autoStart = true;
