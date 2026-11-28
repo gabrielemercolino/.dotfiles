@@ -61,6 +61,12 @@ in
 
         boot.tmp.cleanOnBoot = true;
 
+        # /etc/machine-id is bind-mounted from the persistent volume, so the
+        # unit that saves an initrd-generated transient id has nothing to do
+        # and fails ("/etc/machine-id is not on a temporary file system"),
+        # leaving systemd degraded on every boot
+        systemd.suppressedSystemUnits = [ "systemd-machine-id-commit.service" ];
+
         preservation = {
           enable = true;
 
